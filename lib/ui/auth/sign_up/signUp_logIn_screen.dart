@@ -10,7 +10,6 @@ import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/auth/sign_up/signUp_logIn_controller.dart';
 
-
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
@@ -28,11 +27,13 @@ class SignUpScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               100.space(),
-              (ctrl.isLogin ? LocaleKeys.logIn : LocaleKeys.register).plural(21)
+              (ctrl.isLogin ? LocaleKeys.logIn : LocaleKeys.register)
+                  .plural(21)
                   .appCommonText(
                       color: whiteColor, size: 40.sp, weight: FontWeight.w700)
                   .paddingOnly(bottom: 10.w, left: 20.w, right: 20.w),
-              (ctrl.isLogin ? LocaleKeys.logInText : LocaleKeys.registerText).plural(21)
+              (ctrl.isLogin ? LocaleKeys.logInText : LocaleKeys.registerText)
+                  .plural(21)
                   .appCommonText(
                       color: whiteColor, size: 16.sp, weight: FontWeight.w400)
                   .paddingSymmetric(horizontal: 20.w),
@@ -53,41 +54,7 @@ class SignUpScreen extends StatelessWidget {
                     30.space(),
                     tabBar(ctrl),
                     40.space(),
-                    LocaleKeys.enterEmail.plural(21)
-                        .appCommonText(
-                            weight: FontWeight.w400,
-                            color: hintTextColor,
-                            size: 14.sp)
-                        .paddingOnly(bottom: 8.w),
-                    CommonTextField(
-                      prefixIcon: Assets.icons.mail,
-                      hintText: LocaleKeys.enterEmail.plural(21),
-                      controller: ctrl.emailController,
-                    ),
-                    28.space(),
-                    LocaleKeys.password.plural(21).appCommonText(
-                            weight: FontWeight.w400,
-                            color: hintTextColor,
-                            size: 14.sp)
-                        .paddingOnly(bottom: 8.w),
-                    CommonTextField(
-                      prefixPadding: 15.w,
-                      isPasswordField: true,
-                      suffixIcon: (ctrl.isPasswordVisible
-                              ? Assets.icons.openEye
-                              : Assets.icons.closeEye)
-                          .svg(height: 18.w, width: 18.w, fit: BoxFit.contain)
-                          .paddingAll(15.w)
-                          .onTap(
-                        () {
-                          ctrl.isPasswordVisible = !ctrl.isPasswordVisible;
-                          ctrl.update();
-                        },
-                      ),
-                      prefixIcon: Assets.icons.lock,
-                      hintText: LocaleKeys.enterPassword.plural(21),
-                      controller: ctrl.passwordController,
-                    )
+                    ctrl.isLogin ? signInScreen(ctrl) : signUpScreen(ctrl),
                   ],
                 ).paddingSymmetric(horizontal: 20.w),
               )
@@ -107,6 +74,115 @@ class SignUpScreen extends StatelessWidget {
         decoration: BoxDecoration(
             color: skyColor, borderRadius: BorderRadius.circular(100)),
       ),
+    );
+  }
+
+  Widget signInScreen(SignUpLogInController ctrl) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LocaleKeys.enterEmail
+            .plural(21)
+            .appCommonText(
+                weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
+            .paddingOnly(bottom: 8.w),
+        CommonTextField(
+          prefixIcon: Assets.icons.mail,
+          hintText: LocaleKeys.enterEmail.plural(21),
+          controller: ctrl.emailController,
+        ),
+        28.space(),
+        LocaleKeys.password
+            .plural(21)
+            .appCommonText(
+                weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
+            .paddingOnly(bottom: 8.w),
+        CommonTextField(
+          prefixPadding: 15.w,
+          isPasswordField: true,
+          suffixIcon: (ctrl.isPasswordVisible
+                  ? Assets.icons.openEye
+                  : Assets.icons.closeEye)
+              .svg(height: 18.w, width: 18.w, fit: BoxFit.contain)
+              .paddingAll(15.w)
+              .onTap(
+            () {
+              ctrl.isPasswordVisible = !ctrl.isPasswordVisible;
+              ctrl.update();
+            },
+          ),
+          prefixIcon: Assets.icons.lock,
+          hintText: LocaleKeys.enterPassword.plural(21),
+          controller: ctrl.passwordController,
+        )
+      ],
+    );
+  }
+  Widget signUpScreen(SignUpLogInController ctrl) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LocaleKeys.enterEmail
+            .plural(21)
+            .appCommonText(
+                weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
+            .paddingOnly(bottom: 8.w),
+        CommonTextField(
+          prefixIcon: Assets.icons.mail,
+          hintText: LocaleKeys.enterEmail.plural(21),
+          controller: ctrl.emailController,
+        ),
+        10.space(),
+        LocaleKeys.password
+            .plural(21)
+            .appCommonText(
+                weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
+            .paddingOnly(bottom: 8.w),
+        CommonTextField(
+          prefixPadding: 15.w,
+          isPasswordField: true,
+          suffixIcon: (ctrl.isPasswordVisible
+                  ? Assets.icons.openEye
+                  : Assets.icons.closeEye)
+              .svg(height: 18.w, width: 18.w, fit: BoxFit.contain)
+              .paddingAll(15.w)
+              .onTap(
+            () {
+              ctrl.isPasswordVisible = !ctrl.isPasswordVisible;
+              ctrl.update();
+            },
+          ),
+          prefixIcon: Assets.icons.lock,
+          hintText: LocaleKeys.enterPassword.plural(21),
+          controller: ctrl.passwordController,
+        ),
+        10.space(),
+        LocaleKeys.password
+            .plural(21)
+            .appCommonText(
+            weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
+            .paddingOnly(bottom: 8.w),
+        CommonTextField(
+          prefixPadding: 15.w,
+          isPasswordField: true,
+          suffixIcon: (ctrl.isPasswordVisible
+                  ? Assets.icons.openEye
+                  : Assets.icons.closeEye)
+              .svg(height: 18.w, width: 18.w, fit: BoxFit.contain)
+              .paddingAll(15.w)
+              .onTap(
+            () {
+              ctrl.isPasswordVisible = !ctrl.isPasswordVisible;
+              ctrl.update();
+            },
+          ),
+          prefixIcon: Assets.icons.lock,
+          hintText: LocaleKeys.enterPassword.plural(21),
+          controller: ctrl.passwordController,
+        )
+      ],
     );
   }
 
