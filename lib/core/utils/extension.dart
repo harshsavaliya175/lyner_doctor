@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:gap/gap.dart';
 
 import '../constants/app_color.dart';
 
@@ -19,6 +19,9 @@ extension AddSpace on num {
 
   Widget W() {
     return SizedBox(width: toDouble());
+  }
+  Gap space() {
+    return Gap(toDouble());
   }
 }
 

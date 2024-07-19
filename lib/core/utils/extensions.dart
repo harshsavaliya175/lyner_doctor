@@ -80,7 +80,7 @@ extension AddPadding on Widget {
 
   Widget onTap(GestureTapCallback onTap) {
     return InkWell(
-      overlayColor: WidgetStateProperty.all(Colors.transparent),
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: onTap,
       child: this,
     );

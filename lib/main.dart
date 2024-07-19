@@ -1,11 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_logger/easy_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
+import 'package:lynerdoctor/generated/codegen_loader.g.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  EasyLocalization.logger.enableLevels = [
+    LevelMessages.error,
+    LevelMessages.warning
+  ];
+  runApp(EasyLocalization(
+    supportedLocales: const [Locale('en', '')],
+    path: 'assets/translations',
+    assetLoader: const CodegenLoader(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +33,8 @@ class MyApp extends StatelessWidget {
       builder: (context2, child) {
         // ScreenUtil.init(context);
         return GetMaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
           debugShowCheckedModeBanner: false,
           title: 'Lyner Doctor',
           getPages: Routes.pages,

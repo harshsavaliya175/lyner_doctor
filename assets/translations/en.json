@@ -1,0 +1,10 @@
+{
+  "appName": "Lyner Doctor",
+  "register" : "Register",
+  "logIn" : "Log In",
+  "registerText": "Create an account to enjoy all the benefits",
+  "logInText" : "Let’s Log In for explore contiunes",
+  "enterEmail" : "Enter Email",
+  "password" : "Password",
+  "enterPassword" : "Enter password"
+}

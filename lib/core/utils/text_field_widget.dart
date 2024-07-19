@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../gen/assets.gen.dart';
 import '../constants/app_color.dart';
@@ -103,7 +102,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
                       .svg(
                           height: 20.w,
                           width: 20.w,
-                          color: _focus.hasFocus ? primaryBrown : hintColor,
+                          colorFilter: ColorFilter.mode(_focus.hasFocus ? primaryBrown : hintColor, BlendMode.srcIn),
                           fit: BoxFit.contain)
                       .paddingAll(widget.prefixPadding??12.w))
                   .paddingOnly(left: 5.w)

@@ -51,9 +51,9 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_daemon-4.0.2",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_daemon-4.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_resolvers",
@@ -63,15 +63,15 @@
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_runner-2.4.11",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_runner-2.4.9",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_runner_core-7.3.1",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/build_runner_core-7.3.0",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.0"
     },
     {
       "name": "built_collection",
@@ -188,6 +188,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "easy_localization",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/easy_localization-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "easy_logger",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/easy_logger-0.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/fake_async-1.3.1",
       "packageUri": "lib/",
@@ -207,7 +219,7 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/file_picker-8.0.6",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/file_picker-8.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -243,9 +255,9 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_cache_manager",
@@ -272,10 +284,16 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.20",
+      "name": "flutter_localizations",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.19",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_screenutil",
@@ -291,13 +309,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -306,6 +324,12 @@
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "gap",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/gap-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "get",
@@ -363,9 +387,9 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+5",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+1",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.3"
     },
     {
       "name": "image_picker_for_web",
@@ -411,9 +435,9 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "io",
@@ -435,21 +459,21 @@
     },
     {
       "name": "leak_tracker",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker-10.0.4",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker-10.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.1"
     },
     {
       "name": "leak_tracker_flutter_testing",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.3",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-2.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.1"
     },
     {
       "name": "leak_tracker_testing",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/leak_tracker_testing-2.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.1"
     },
     {
       "name": "logging",
@@ -471,7 +495,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/meta-1.12.0",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/meta-1.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -519,9 +543,9 @@
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/path_provider_android-2.2.7",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/path_provider_android-2.2.4",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "path_provider_foundation",
@@ -633,9 +657,9 @@
     },
     {
       "name": "shared_preferences_android",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.3",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.2",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "shared_preferences_foundation",
@@ -651,9 +675,9 @@
     },
     {
       "name": "shared_preferences_platform_interface",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.3.2",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "shared_preferences_web",
@@ -675,13 +699,13 @@
     },
     {
       "name": "shelf_web_socket",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.0",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/shelf_web_socket-1.0.4",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/imac/Documents/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -747,7 +771,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/test_api-0.7.0",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/test_api-0.6.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -801,9 +825,9 @@
     },
     {
       "name": "vm_service",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/vm_service-14.2.1",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/vm_service-13.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.0"
     },
     {
       "name": "watcher",
@@ -818,22 +842,16 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "web_socket",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/web_socket-0.1.6",
-      "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
       "name": "web_socket_channel",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/web_socket_channel-3.0.1",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/web_socket_channel-2.4.5",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
     {
       "name": "win32",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/win32-5.5.1",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/win32-5.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.3"
     },
     {
       "name": "xdg_directories",
@@ -857,13 +875,10 @@
       "name": "lynerdoctor",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-07-18T10:40:37.291465Z",
+  "generated": "2024-07-19T08:57:09.783821Z",
   "generator": "pub",
-  "generatorVersion": "3.4.3",
-  "flutterRoot": "file:///Users/imac/Documents/flutter",
-  "flutterVersion": "3.22.2",
-  "pubCache": "file:///Users/imac/.pub-cache"
+  "generatorVersion": "3.3.4"
 }

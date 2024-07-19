@@ -14,4 +14,10 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+For Assets Generated :-
 dart run build_runner build
+
+For String Generated:-
+dart run easy_localization:generate -f keys -o locale_keys.g.dart -S assets/translations
+dart run easy_localization:generate -o codegen_loader.g.dart -S assets/translations
