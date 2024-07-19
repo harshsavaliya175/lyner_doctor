@@ -8,7 +8,7 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-import 'package:lynerdoctor/ui/auth/sign_up/signUp_logIn_controller.dart';
+import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -185,7 +185,6 @@ class SignUpScreen extends StatelessWidget {
       ],
     );
   }
-
   Container tabBar(SignUpLogInController ctrl) {
     return Container(
       height: 60.w,

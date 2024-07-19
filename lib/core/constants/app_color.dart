@@ -8,3 +8,4 @@ const Color skyColor = Color(0xffD3DBDF);
 const Color darkSkyColor = Color(0xffB9C5CC);
 const Color disableTextFiledColor = Color(0xffD3DBDF);
 const Color hintColor = Color(0xff8C9DAB);
+const Color hintStepColor = Color(0xff92A3B0);

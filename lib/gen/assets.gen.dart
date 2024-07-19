@@ -63,6 +63,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close_eye.svg
   SvgGenImage get closeEye => const SvgGenImage('assets/icons/close_eye.svg');
 
+  /// File path: assets/icons/ic_back.svg
+  SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
+
+  /// File path: assets/icons/ic_select.svg
+  SvgGenImage get icSelect => const SvgGenImage('assets/icons/ic_select.svg');
+
   /// File path: assets/icons/lock.svg
   SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
 
@@ -74,7 +80,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values =>
-      [mail, user, clinic, closeEye, lock, openEye, phone];
+      [mail, user, clinic, closeEye, icBack, icSelect, lock, openEye, phone];
 }
 
 class $AssetsImagesGen {
@@ -88,12 +94,23 @@ class $AssetsImagesGen {
   List<SvgGenImage> get values => [imgSplash];
 }
 
+class $AssetsTranslationsGen {
+  const $AssetsTranslationsGen();
+
+  /// File path: assets/translations/en.json
+  String get en => 'assets/translations/en.json';
+
+  /// List of all assets
+  List<String> get values => [en];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 
 class SvgGenImage {

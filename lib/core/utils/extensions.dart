@@ -8,15 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
-extension AddSpace on num {
-  Widget spaceH() {
-    return SizedBox(height: toDouble());
-  }
-
-  Widget spaceW() {
-    return SizedBox(width: toDouble());
-  }
-}
 
 extension DateTimeExtension on DateTime {
   DateTime toLocalDateTime({String format = "yyyy-MM-dd HH:mm:ss"}) {
