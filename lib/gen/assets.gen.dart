@@ -48,6 +48,35 @@ class $AssetsFontsGen {
       ];
 }
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/Mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/Mail.svg');
+
+  /// File path: assets/icons/User.svg
+  SvgGenImage get user => const SvgGenImage('assets/icons/User.svg');
+
+  /// File path: assets/icons/clinic.svg
+  SvgGenImage get clinic => const SvgGenImage('assets/icons/clinic.svg');
+
+  /// File path: assets/icons/close_eye.svg
+  SvgGenImage get closeEye => const SvgGenImage('assets/icons/close_eye.svg');
+
+  /// File path: assets/icons/lock.svg
+  SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
+
+  /// File path: assets/icons/open_eye.svg
+  SvgGenImage get openEye => const SvgGenImage('assets/icons/open_eye.svg');
+
+  /// File path: assets/icons/phone.svg
+  SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values =>
+      [mail, user, clinic, closeEye, lock, openEye, phone];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -63,6 +92,7 @@ class Assets {
   Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

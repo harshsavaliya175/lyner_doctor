@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 
@@ -12,11 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Lyner Doctor',
-      getPages: Routes.pages,
-      initialRoute: Routes.splash,
+    return  ScreenUtilInit(
+      designSize: const Size(430, 932),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context2, child) {
+        // ScreenUtil.init(context);
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Lyner Doctor',
+          getPages: Routes.pages,
+          initialRoute: Routes.splash,);
+      },
     );
   }
 }

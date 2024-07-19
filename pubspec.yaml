@@ -65,7 +65,7 @@ dependencies:
 
   # for asking permission
   permission_handler: ^11.3.1
-
+  flutter_screenutil: ^5.9.3
   #
   package_info: ^2.0.2
 
