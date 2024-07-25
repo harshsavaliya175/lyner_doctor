@@ -1,0 +1,49 @@
+{  "status":0,
+  "msg":"",
+  "data": [
+    {
+      "tooth_case_id": 4,
+      "case_name": "LYNER LIGHT",
+      "case_price": "Contention incluse",
+      "case_desc": "1 finition incluse contenant \r\njusqu'\u00e0 10 goutti\u00e8res suppl\u00e9mentaires",
+      "case_steps": "10 goutti\u00e8res par arcade",
+      "is_active": 1,
+      "is_deleted": 0,
+      "created_at": "2024-05-31T06:34:13.000000Z",
+      "updated_at": "2024-06-10T18:00:18.000000Z"
+    },
+    {
+      "tooth_case_id": 5,
+      "case_name": "LYNER 20",
+      "case_price": "Contention incluse",
+      "case_desc": "2 finitions incluses contenant \r\njusqu'\u00e0 40 goutti\u00e8res suppl\u00e9mentaires",
+      "case_steps": "20 goutti\u00e8res par arcade",
+      "is_active": 1,
+      "is_deleted": 0,
+      "created_at": "2024-05-31T06:34:55.000000Z",
+      "updated_at": "2024-06-06T14:04:22.000000Z"
+    },
+    {
+      "tooth_case_id": 6,
+      "case_name": "LYNER ADVANCED",
+      "case_price": "Contention incluse",
+      "case_desc": "3 finitions incluses contenant\r\njusqu'\u00e0 90 goutti\u00e8res suppl\u00e9mentaires",
+      "case_steps": "30 goutti\u00e8res par arcade",
+      "is_active": 1,
+      "is_deleted": 0,
+      "created_at": "2024-05-31T06:35:35.000000Z",
+      "updated_at": "2024-06-06T14:04:13.000000Z"
+    },
+    {
+      "tooth_case_id": 8,
+      "case_name": "LYNER EXPERT",
+      "case_price": "Contention incluse",
+      "case_desc": "Lyner choisit pour vous le traitement adapt\u00e9 et optimis\u00e9.",
+      "case_steps": "Analyse Orthodontiste",
+      "is_active": 1,
+      "is_deleted": 0,
+      "created_at": "2024-06-06T13:56:06.000000Z",
+      "updated_at": "2024-06-06T14:09:41.000000Z"
+    }
+  ]
+}

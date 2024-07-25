@@ -66,6 +66,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
 
+  /// File path: assets/icons/ic_document.svg
+  SvgGenImage get icDocument =>
+      const SvgGenImage('assets/icons/ic_document.svg');
+
+  /// File path: assets/icons/ic_down.svg
+  SvgGenImage get icDown => const SvgGenImage('assets/icons/ic_down.svg');
+
   /// File path: assets/icons/ic_select.svg
   SvgGenImage get icSelect => const SvgGenImage('assets/icons/ic_select.svg');
 
@@ -79,19 +86,86 @@ class $AssetsIconsGen {
   SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values =>
-      [mail, user, clinic, closeEye, icBack, icSelect, lock, openEye, phone];
+  List<SvgGenImage> get values => [
+        mail,
+        user,
+        clinic,
+        closeEye,
+        icBack,
+        icDocument,
+        icDown,
+        icSelect,
+        lock,
+        openEye,
+        phone
+      ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/img_face.png
+  AssetGenImage get imgFace =>
+      const AssetGenImage('assets/images/img_face.png');
+
+  /// File path: assets/images/img_inter_face.png
+  AssetGenImage get imgInterFace =>
+      const AssetGenImage('assets/images/img_inter_face.png');
+
+  /// File path: assets/images/img_inter_left.png
+  AssetGenImage get imgInterLeft =>
+      const AssetGenImage('assets/images/img_inter_left.png');
+
+  /// File path: assets/images/img_inter_right.png
+  AssetGenImage get imgInterRight =>
+      const AssetGenImage('assets/images/img_inter_right.png');
+
+  /// File path: assets/images/img_intra_mand.png
+  AssetGenImage get imgIntraMand =>
+      const AssetGenImage('assets/images/img_intra_mand.png');
+
+  /// File path: assets/images/img_intra_max.png
+  AssetGenImage get imgIntraMax =>
+      const AssetGenImage('assets/images/img_intra_max.png');
+
+  /// File path: assets/images/img_profile.png
+  AssetGenImage get imgProfile =>
+      const AssetGenImage('assets/images/img_profile.png');
+
+  /// File path: assets/images/img_smile.png
+  AssetGenImage get imgSmile =>
+      const AssetGenImage('assets/images/img_smile.png');
+
   /// File path: assets/images/img_splash.svg
   SvgGenImage get imgSplash =>
       const SvgGenImage('assets/images/img_splash.svg');
 
+  /// File path: assets/images/img_tab.png
+  AssetGenImage get imgTab => const AssetGenImage('assets/images/img_tab.png');
+
   /// List of all assets
-  List<SvgGenImage> get values => [imgSplash];
+  List<dynamic> get values => [
+        imgFace,
+        imgInterFace,
+        imgInterLeft,
+        imgInterRight,
+        imgIntraMand,
+        imgIntraMax,
+        imgProfile,
+        imgSmile,
+        imgSplash,
+        imgTab
+      ];
+}
+
+class $AssetsJsonGen {
+  const $AssetsJsonGen();
+
+  /// File path: assets/json/lyner_cases.json
+  String get lynerCases => 'assets/json/lyner_cases.json';
+
+  /// List of all assets
+  List<String> get values => [lynerCases];
 }
 
 class $AssetsTranslationsGen {
@@ -110,7 +184,89 @@ class Assets {
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsJsonGen json = $AssetsJsonGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
+}
+
+class AssetGenImage {
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
+
+  final String _assetName;
+
+  final Size? size;
+  final Set<String> flavors;
+
+  Image image({
+    Key? key,
+    AssetBundle? bundle,
+    ImageFrameBuilder? frameBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
+    bool excludeFromSemantics = false,
+    double? scale,
+    double? width,
+    double? height,
+    Color? color,
+    Animation<double>? opacity,
+    BlendMode? colorBlendMode,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    ImageRepeat repeat = ImageRepeat.noRepeat,
+    Rect? centerSlice,
+    bool matchTextDirection = false,
+    bool gaplessPlayback = false,
+    bool isAntiAlias = false,
+    String? package,
+    FilterQuality filterQuality = FilterQuality.low,
+    int? cacheWidth,
+    int? cacheHeight,
+  }) {
+    return Image.asset(
+      _assetName,
+      key: key,
+      bundle: bundle,
+      frameBuilder: frameBuilder,
+      errorBuilder: errorBuilder,
+      semanticLabel: semanticLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      scale: scale,
+      width: width,
+      height: height,
+      color: color,
+      opacity: opacity,
+      colorBlendMode: colorBlendMode,
+      fit: fit,
+      alignment: alignment,
+      repeat: repeat,
+      centerSlice: centerSlice,
+      matchTextDirection: matchTextDirection,
+      gaplessPlayback: gaplessPlayback,
+      isAntiAlias: isAntiAlias,
+      package: package,
+      filterQuality: filterQuality,
+      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight,
+    );
+  }
+
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
 }
 
 class SvgGenImage {

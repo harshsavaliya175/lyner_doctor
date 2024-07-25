@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,12 +27,12 @@ class SignUpScreen extends StatelessWidget {
             children: [
               100.space(),
               (ctrl.isLogin ? LocaleKeys.logIn : LocaleKeys.register)
-                  .plural(21)
+                  .translateText
                   .appCommonText(
                       color: whiteColor, size: 40.sp, weight: FontWeight.w700)
                   .paddingOnly(bottom: 10.w, left: 20.w, right: 20.w),
               (ctrl.isLogin ? LocaleKeys.logInText : LocaleKeys.registerText)
-                  .plural(21)
+                  .translateText
                   .appCommonText(
                       color: whiteColor, size: 16.sp, weight: FontWeight.w400)
                   .paddingSymmetric(horizontal: 20.w),
@@ -83,18 +82,18 @@ class SignUpScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LocaleKeys.enterEmail
-            .plural(21)
+            .translateText
             .appCommonText(
                 weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
             .paddingOnly(bottom: 8.w),
         CommonTextField(
           prefixIcon: Assets.icons.mail,
-          hintText: LocaleKeys.enterEmail.plural(21),
+          hintText: LocaleKeys.enterEmail.translateText,
           controller: ctrl.emailController,
         ),
         28.space(),
         LocaleKeys.password
-            .plural(21)
+            .translateText
             .appCommonText(
                 weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
             .paddingOnly(bottom: 8.w),
@@ -113,7 +112,7 @@ class SignUpScreen extends StatelessWidget {
             },
           ),
           prefixIcon: Assets.icons.lock,
-          hintText: LocaleKeys.enterPassword.plural(21),
+          hintText: LocaleKeys.enterPassword.translateText,
           controller: ctrl.passwordController,
         )
       ],
@@ -125,18 +124,18 @@ class SignUpScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LocaleKeys.enterEmail
-            .plural(21)
+            .translateText
             .appCommonText(
                 weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
             .paddingOnly(bottom: 8.w),
         CommonTextField(
           prefixIcon: Assets.icons.mail,
-          hintText: LocaleKeys.enterEmail.plural(21),
+          hintText: LocaleKeys.enterEmail.translateText,
           controller: ctrl.emailController,
         ),
         10.space(),
         LocaleKeys.password
-            .plural(21)
+            .translateText
             .appCommonText(
                 weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
             .paddingOnly(bottom: 8.w),
@@ -155,12 +154,12 @@ class SignUpScreen extends StatelessWidget {
             },
           ),
           prefixIcon: Assets.icons.lock,
-          hintText: LocaleKeys.enterPassword.plural(21),
+          hintText: LocaleKeys.enterPassword.translateText,
           controller: ctrl.passwordController,
         ),
         10.space(),
         LocaleKeys.password
-            .plural(21)
+            .translateText
             .appCommonText(
             weight: FontWeight.w400, color: hintTextColor, size: 14.sp)
             .paddingOnly(bottom: 8.w),
@@ -179,7 +178,7 @@ class SignUpScreen extends StatelessWidget {
             },
           ),
           prefixIcon: Assets.icons.lock,
-          hintText: LocaleKeys.enterPassword.plural(21),
+          hintText: LocaleKeys.enterPassword.translateText,
           controller: ctrl.passwordController,
         )
       ],
@@ -200,7 +199,7 @@ class SignUpScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100)),
             margin: EdgeInsets.all(6.w),
             child: Center(
-              child: LocaleKeys.logIn.plural(21).appCommonText(
+              child: LocaleKeys.logIn.translateText.appCommonText(
                   size: 16.sp,
                   weight: FontWeight.w700,
                   color: ctrl.isLogin ? primaryBrown : darkSkyColor),
@@ -219,7 +218,7 @@ class SignUpScreen extends StatelessWidget {
                   color: !ctrl.isLogin ? whiteColor : skyColor,
                   borderRadius: BorderRadius.circular(100)),
               child: Center(
-                child: LocaleKeys.register.plural(21).appCommonText(
+                child: LocaleKeys.register.translateText.appCommonText(
                     size: 16.sp,
                     weight: FontWeight.w700,
                     color: !ctrl.isLogin ? primaryBrown : darkSkyColor),

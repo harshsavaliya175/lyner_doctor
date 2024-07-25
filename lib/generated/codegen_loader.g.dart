@@ -22,7 +22,26 @@ class CodegenLoader extends AssetLoader{
   "logInText": "Let’s Log In for explore contiunes",
   "enterEmail": "Enter Email",
   "password": "Password",
-  "enterPassword": "Enter password"
+  "enterPassword": "Enter password",
+  "addNewPatient": "Add New Patient",
+  "chooseTheProduct": "Choose the Product",
+  "selected": "Selected",
+  "notSelected": "Not Selected",
+  "next": "Next",
+  "patientInformation": "Patient Information",
+  "enterName": "Enter name",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "enterEmailAddress": "Enter email address",
+  "emailAddress": "E-mail Address",
+  "dateField": "DD/MM/YYYY",
+  "dateOfBirth": "Date of Birth",
+  "select": "___Select___",
+  "doctor": "Doctor",
+  "billingAddress": "Billing Address",
+  "deliveryAddress": "Delivery Address",
+  "uploadPhotographs": "Upload Photographs",
+  "arcadeTraiter": "Arcade a Traiter"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

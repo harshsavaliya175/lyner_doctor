@@ -1,3 +1,4 @@
+import 'package:codonnier_network/network/api_type.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class ApiUrl {
@@ -14,57 +15,46 @@ class ApiUrl {
 
 class MethodNames {
   static const String updateDeviceToken = "updateDeviceToken";
-  static const String registration = "registration";
-  static const String login = "login";
-  static const String forgotPassword = "forgotPassword";
-  static const String changePassword = "changePassword";
-  static const String updateUserDetails = "updateUserDetails";
-  static const String getUserDetails = "getUserDetailsFromId";
-  static const String saveUserLatLng = "saveUserLatLng";
-  static const String checkEmailExistsOrNot = "checkEmailExistsOrNot";
-  static const String getAllStateList = "getAllStateList";
-  static const String getAllCompaniesList = "getAllCompaniesList";
-  static const String stateNotifyOnOff = "stateNotifyOnOff";
-  static const String changePasswordWithVerifyCode =
-      "changePasswordWithVerifyCode";
-  static const String logOut = "logout";
-  static const String deleteAccount = "deleteAccount";
-  static const String addAlignerSchedule = "addAlignerSchedule";
-  static const String getAlignerScheduleList = "getAlignerScheduleList";
-  static const String editAlignerSchedule = "editAlignerSchedule";
-  static const String getAlignerDetails = "getAlignerDetails";
-  static const String getUserChatList = "getUserChatList";
-  static const String addSmileGallery = "addSmileGallery";
-  static const String getSmileGallery = "getSmileGallery";
-  static const String getMessageHistoryList = "getMessageHistoryList";
-  static const String sendMessage = "sendMessage";
+  static const String getChefRecommendedList = "getChefRecommendedList";
+}
+class RequestHeaderKey {
+  static const contentType = "Content-Type";
+  static const userAgent = "User-Agent";
+  static const appSecret = "App-Secret";
+  static const appTrackVersion = "App-Track-Version";
+  static const appDeviceType = "App-Device-Type";
+  static const appStoreVersion = "App-Store-Version";
+  static const appDeviceModel = "App-Device-Model";
+  static const appOsVersion = "App-Os-Version";
+  static const appStoreBuildNumber = "App-Store-Build-Number";
+  static const authToken = "Auth-Token";
 }
 
 class RequestParam {
-  static const String service = "Service"; // -> pass method name
-  static const String showError = "show_error"; // -> bool in String
+  static const service = "Service"; // -> pass method name
+  static const showError = "show_error"; // -> bool in String
 }
 
 const String SHOW_ERROR = "false";
 
-Map<String, String> requestHeaders(bool passAuthToken) {
+Map<String, String> requestHeader(APIType apiType) {
   return {
-    "Content-Type": "application/json",
-    "App-Secret": "LYNERAPP@GK2023#",
-    "App-Track-Version": "v1",
-    "App-Device-Type":
-        preferences.getString(SharedPreference.APP_DEVICE_TYPE) ?? '',
-    "App-Store-Version":
-        preferences.getString(SharedPreference.APP_STORE_VERSION) ?? '',
-    "App-Device-Model":
-        preferences.getString(SharedPreference.APP_DEVICE_MODEL) ?? '',
-    "App-Os-Version":
-        preferences.getString(SharedPreference.APP_OS_VERSION) ?? '',
-    "App-Store-Build-Number":
-        preferences.getString(SharedPreference.APP_STORE_BUILD_NUMBER) ?? '',
-    "App-TimeZone": preferences.getString(SharedPreference.TIME_ZONE) ?? '',
-    if (passAuthToken)
-      "Auth-Token": preferences.getString(SharedPreference.AUTH_TOKEN) ?? '',
+    RequestHeaderKey.contentType: "application/json",
+    RequestHeaderKey.appSecret: "chefPop#App@2024",
+    RequestHeaderKey.appTrackVersion: "v1",
+    RequestHeaderKey.appDeviceType:
+    preferences.getString(SharedPreference.APP_DEVICE_TYPE) ?? '',
+    RequestHeaderKey.appStoreVersion:
+    preferences.getString(SharedPreference.APP_STORE_VERSION) ?? '',
+    RequestHeaderKey.appDeviceModel:
+    preferences.getString(SharedPreference.APP_DEVICE_MODEL) ?? '',
+    RequestHeaderKey.appOsVersion:
+    preferences.getString(SharedPreference.APP_OS_VERSION) ?? '',
+    RequestHeaderKey.appStoreBuildNumber:
+    preferences.getString(SharedPreference.APP_STORE_BUILD_NUMBER) ?? '',
+    if (apiType == APIType.protected)
+      RequestHeaderKey.authToken:
+      preferences.getString(SharedPreference.AUTH_TOKEN) ?? '',
   };
 }
 

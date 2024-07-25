@@ -61,7 +61,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
 
   # for date formating
-  intl: ^0.18.1
+  intl: ^0.19.0
   # for Spacing
   gap: ^3.0.1
   # for asking permission
@@ -84,6 +84,12 @@ dependencies:
   #localization
   easy_localization: ^3.0.6
   easy_logger: ^0.0.2
+  dio: ^5.4.1
+  dotted_border: ^2.1.0
+  codonnier_network:
+    git:
+      url: https://github.com/priyankgandhi0/codonnier_network.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
@@ -117,6 +123,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/translations/
+    - assets/json/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

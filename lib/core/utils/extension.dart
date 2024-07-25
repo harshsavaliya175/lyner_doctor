@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -70,6 +71,22 @@ extension EmailValidator on String {
   }
 }
 
+extension StringExtension on String {
+  String? get appendZeroPrefix {
+    return length <= 1 ? "0$this" : this;
+  }
+
+  List<double> get toDoubleList {
+    return replaceAll('[', '')
+        .replaceAll(']', '')
+        .split(',')
+        .map((e) => e.isEmpty ? 0.1 : double.parse(e))
+        .toList();
+  }
+  String get translateText {
+    return this.tr();
+  }
+}
 extension AddText on String {
   Widget appCommonText(
       {Color color = blackColor,
@@ -79,7 +96,7 @@ extension AddText on String {
       FontWeight weight = FontWeight.w500,
       TextDecoration? decoration,
       Color decorationColor = blackColor,
-      // FontStyle fontStyle = FontStyle.normal,
+      FontStyle fontStyle = FontStyle.normal,
       int? maxLine,
       TextOverflow? overflow}) {
     return Text(
@@ -92,7 +109,7 @@ extension AddText on String {
           fontWeight: weight,
           fontFamily: 'maax-medium-medium',
           decorationColor: decorationColor,
-          // fontStyle: fontStyle,
+          fontStyle: fontStyle,
           decoration: decoration),
       textAlign: align,
       overflow: overflow,
