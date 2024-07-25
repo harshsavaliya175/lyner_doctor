@@ -21,6 +21,7 @@ class CommonTextField extends StatefulWidget {
       this.keyboardType,
       this.suffixIcon,
       this.prefixIcon,
+      this.prefixIconSize,
       this.height,
       this.hintTextSize,
       this.obscureText,
@@ -41,6 +42,7 @@ class CommonTextField extends StatefulWidget {
   final bool? readOnly;
   final Widget? suffixIcon;
   final SvgGenImage? prefixIcon;
+  final double? prefixIconSize;
   final double? prefixPadding;
   Color fillColor;
 
@@ -101,8 +103,8 @@ class _CommonTextFieldState extends State<CommonTextField> {
           prefixIcon: widget.prefixIcon != null
               ? (widget.prefixIcon!
                       .svg(
-                          height: 20.w,
-                          width: 20.w,
+                          height:widget.prefixIconSize?? 20.w,
+                          width: widget.prefixIconSize??20.w,
                           colorFilter: ColorFilter.mode(
                               _focus.hasFocus ? primaryBrown : hintColor,
                               BlendMode.srcIn),

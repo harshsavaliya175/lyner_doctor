@@ -781,28 +781,34 @@ Widget photoCardWidget({required String title, required String image}) {
   );
 }
 
+
+
 Widget arcadeTraiter(AddPatientController ctrl) {
   return Stack(
     children: [
       ListView(
         children: [
           5.space(),
-          LocaleKeys.arcadeTraiter.translateText.appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          ),
-          "((ou la simulation sera réalisée)".appCommonText(
-            align: TextAlign.start,
-            size: 16,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w400,
-            color: hintStepColor,
-          ),
+          LocaleKeys.arcadeTraiter.translateText
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
+          "((ou la simulation sera réalisée)"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 16,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w400,
+                color: hintStepColor,
+              )
+              .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
             height: 55,
@@ -826,7 +832,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                 ).paddingOnly(right: 13)
               ],
             ),
-          ).onClick(() {
+          ).paddingSymmetric(horizontal: 15).onClick(() {
             ctrl.changeArcadeValue(1);
           }),
           10.space(),
@@ -852,7 +858,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                 ).paddingOnly(right: 13)
               ],
             ),
-          ).onClick(() {
+          ).paddingSymmetric(horizontal: 15).onClick(() {
             ctrl.changeArcadeValue(2);
           }),
           10.space(),
@@ -878,7 +884,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                 ).paddingOnly(right: 13)
               ],
             ),
-          ).onClick(() {
+          ).paddingSymmetric(horizontal: 15).onClick(() {
             ctrl.changeArcadeValue(3);
           }),
           10.space(),
@@ -890,24 +896,33 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                 fontStyle: FontStyle.italic,
                 size: 16,
               )
-              .paddingSymmetric(horizontal: 5),
+              .paddingSymmetric(horizontal: 15),
           10.space(),
-          "Objectifs Du Traitement".appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
+          treatmentGoals(ctrl),
+          techniquesPatient(ctrl),
+          Divider(
+            color: dividerColor,
+            height: 2,
+            thickness: 3,
           ),
-          "(demande du patient)".appCommonText(
-            align: TextAlign.start,
-            size: 16,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w400,
-            color: hintStepColor,
+          dentalHistory(ctrl),
+
+          Divider(
+            color: dividerColor,
+            height: 2,
+            thickness: 3,
           ),
+          12.space(),
+          "Classe Dentaire"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
             height: 55,
@@ -918,7 +933,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Les deux"
+                "Maintenir"
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -927,12 +942,12 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 1,
-                  groupValue: ctrl.isObjectTraitement,
+                  groupValue: ctrl.isClassesDental,
                 ).paddingOnly(right: 13)
               ],
             ),
-          ).onClick(() {
-            ctrl.changeObjectValue(1);
+          ).paddingSymmetric(horizontal: 15).onClick(() {
+            ctrl.changeClassesDentalValue(1);
           }),
           10.space(),
           Container(
@@ -944,7 +959,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Maxillaire"
+                "Améliorer vers classe 1"
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -953,14 +968,24 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 2,
-                  groupValue: ctrl.isObjectTraitement,
-                ).paddingOnly(right: 13),
+                  groupValue: ctrl.isClassesDental,
+                ).paddingOnly(right: 13)
               ],
             ),
-          ).onClick(() {
-            ctrl.changeObjectValue(2);
+          ).paddingSymmetric(horizontal: 15).onClick(() {
+            ctrl.changeClassesDentalValue(2);
           }),
-          10.space(),
+          7.space(),
+          "Notes"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
           AppTextField(
             textEditingController: TextEditingController(text: ''),
             onChanged: (value) {},
@@ -975,29 +1000,38 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             },
             textFieldPadding: EdgeInsets.zero,
             keyboardType: TextInputType.text,
+
             isError: ctrl.emailError,
             hintText: "Saisir une remarque",
             maxLines: 3,
-            labelText: LocaleKeys.deliveryAddress.translateText,
+            // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
+          ).paddingSymmetric(horizontal: 15),
+          20.space(),
+          Divider(
+            color: dividerColor,
+            height: 2,
+            thickness: 3,
           ),
+          12.space(),
+          "Milieu Incisif Maxillaire"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
           10.space(),
-          "Techniques Acceptees Pour Ce Patient".appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          ),
           ListView.builder(
-            itemCount: ctrl.patientTechniquesItems.length,
+            itemCount: ctrl.middleMaxillaryItems.length,
             physics: PageScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              final item = ctrl.patientTechniquesItems[index];
+              final item = ctrl.middleMaxillaryItems[index];
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 5),
                 height: 55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
@@ -1015,85 +1049,693 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                         color: Colors.black,
                       ),
                     ).paddingOnly(left: 15),
-                    GestureDetector(
-                      onTap: () =>
-                          ctrl.toggleSelection(index),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 20.0,
-                        height: 20.0,
-                        decoration: BoxDecoration(
-                          color: item.requiresNote?primaryBrown:Colors.transparent,
-                          border: Border.all(color: primaryBrown, width: 1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: item.requiresNote
-                            ? Icon(Icons.check,
-                                color: Colors.white, size: 16)
-                            : Container(),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 20.0,
+                      height: 20.0,
+                      decoration: BoxDecoration(
+                        color:
+                            item.isSelected ? primaryBrown : Colors.transparent,
+                        border: Border.all(color: primaryBrown, width: 1),
+                        shape: BoxShape.circle,
                       ),
+                      child: item.isSelected
+                          ? Icon(Icons.check, color: Colors.white, size: 16)
+                          : Container(),
                     ).paddingOnly(right: 13),
                   ],
                 ),
-              ).onClick(() {
-                if (item.requiresNote) {
-                  // Logic to show text field for notes
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Add Note'),
-                        content: TextField(
-                          onChanged: (value) =>
-                              ctrl.updateNote(index, value),
-                          decoration:
-                              InputDecoration(hintText: "Enter note here"),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Get.back(),
-                            child: Text('Save'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
+              ).paddingSymmetric(vertical: 5).onClick(() {
+                ctrl.toggleMiddleMaxillaryItemsSelection(index);
               });
             },
+          ).paddingSymmetric(horizontal: 15),
+          5.space(),
+          "Notes"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
+          AppTextField(
+            textEditingController: TextEditingController(text: ''),
+            onChanged: (value) {},
+            validator: (value) {
+              if (value.isEmpty) {
+                ctrl.emailError = true;
+                ctrl.update();
+                return 'Please enter Date of Birth';
+              }
+              ctrl.update();
+              return null;
+            },
+            textFieldPadding: EdgeInsets.zero,
+            keyboardType: TextInputType.text,
+            isError: ctrl.emailError,
+            hintText: "Saisir une remarque",
+            maxLines: 3,
+            // labelText: LocaleKeys.deliveryAddress.translateText,
+            showPrefixIcon: false,
+          ).paddingSymmetric(horizontal: 15),
+          20.space(),
+          Divider(
+            color: dividerColor,
+            height: 2,
+            thickness: 3,
           ),
-          /*Container(
+          incisorCovering(ctrl),
+          Divider(
+            color: dividerColor,
+            height: 2,
+            thickness: 3,
+          ),
+          15.space(),
+          "Autres Recommandations"
+              .appCommonText(
+                align: TextAlign.start,
+                size: 24,
+                maxLine: 2,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.w500,
+                color: Colors.black,
+              )
+              .paddingSymmetric(horizontal: 15),
+          AppTextField(
+            textEditingController: TextEditingController(text: ''),
+            onChanged: (value) {},
+            validator: (value) {
+              if (value.isEmpty) {
+                ctrl.emailError = true;
+                ctrl.update();
+                return 'Please enter Date of Birth';
+              }
+              ctrl.update();
+              return null;
+            },
+            textFieldPadding: EdgeInsets.zero,
+            keyboardType: TextInputType.text,
+            isError: ctrl.emailError,
+            hintText: "Saisir une remarque",
+            maxLines: 3,
+            // labelText: LocaleKeys.deliveryAddress.translateText,
+            showPrefixIcon: false,
+          ).paddingSymmetric(horizontal: 15),
+          100.space(),
+        ],
+      ),
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: 70,
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: AppBorderButton(
+                  btnHeight: 55,
+                  text: "Finish Latter",
+                  onTap: () {
+                    ctrl.goToStep(1);
+                  },
+                  // boxShadow: [],
+                  radius: 25,
+                  fontSize: 18,
+                  borderColor: primaryBrown,
+                  // bgColor: primaryBrown,
+                  fontColor: primaryBrown,
+                ).paddingOnly(top: 10, right: 5, left: 15),
+              ),
+              Expanded(
+                child: AppButton(
+                  btnHeight: 55,
+                  text: "Add",
+                  onTap: () {
+                    ctrl.goToStep(1);
+                  },
+                  boxShadow: [],
+                  radius: 25,
+                  fontSize: 18,
+                  bgColor: primaryBrown,
+                  fontColor: Colors.white,
+                ).paddingOnly(top: 10, right: 15, left: 5),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget techniquesPatient(AddPatientController ctrl) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      10.space(),
+      "Techniques Acceptees Pour Ce Patient"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      ListView.builder(
+        itemCount: ctrl.patientTechniquesItems.length,
+        physics: PageScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final item = ctrl.patientTechniquesItems[index];
+          return Column(
+            children: [
+              Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                  border: Border.all(color: skyColor),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      item.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ).paddingOnly(left: 15),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 20.0,
+                      height: 20.0,
+                      decoration: BoxDecoration(
+                        color:
+                        item.isSelected ? primaryBrown : Colors.transparent,
+                        border: Border.all(color: primaryBrown, width: 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: item.isSelected
+                          ? Icon(Icons.check, color: Colors.white, size: 16)
+                          : Container(),
+                    ).paddingOnly(right: 13),
+                  ],
+                ),
+              ).paddingSymmetric(vertical: 5).onClick(() {
+                ctrl.togglePatientSelection(index);
+              }),
+              Visibility(
+                visible: item.requiresNote && item.isSelected,
+                child: AppTextField(
+                  textEditingController: TextEditingController(text: ''),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      ctrl.emailError = true;
+                      ctrl.update();
+                      return 'Please enter Date of Birth';
+                    }
+                    ctrl.update();
+                    return null;
+                  },
+                  textFieldPadding: EdgeInsets.zero,
+                  keyboardType: TextInputType.text,
+                  isError: ctrl.emailError,
+                  hintText: "Saisir une remarque",
+                  maxLines: 3,
+                  // labelText: LocaleKeys.deliveryAddress.translateText,
+                  showPrefixIcon: false,
+                ).paddingOnly(bottom: 7),
+              )
+            ],
+          );
+        },
+      ).paddingSymmetric(horizontal: 15),
+      5.space(),
+      "Notes"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      AppTextField(
+        textEditingController: TextEditingController(text: ''),
+        onChanged: (value) {},
+        validator: (value) {
+          if (value.isEmpty) {
+            ctrl.emailError = true;
+            ctrl.update();
+            return 'Please enter Date of Birth';
+          }
+          ctrl.update();
+          return null;
+        },
+        textFieldPadding: EdgeInsets.zero,
+        keyboardType: TextInputType.text,
+        isError: ctrl.emailError,
+        hintText: "Saisir une remarque",
+        maxLines: 3,
+        // labelText: LocaleKeys.deliveryAddress.translateText,
+        showPrefixIcon: false,
+      ).paddingSymmetric(horizontal: 15),
+      20.space(),
+    ],
+  );
+}
+
+Widget dentalHistory(AddPatientController ctrl) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      15.space(),
+      "Historique Dentaire"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      5.space(),
+      ListView.builder(
+        itemCount: ctrl.dentalHistoryItems.length,
+        physics: PageScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final item = ctrl.dentalHistoryItems[index];
+          return Column(
+            children: [
+              Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                  border: Border.all(color: skyColor),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      item.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ).paddingOnly(left: 15),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 20.0,
+                      height: 20.0,
+                      decoration: BoxDecoration(
+                        color: item.isSelected
+                            ? primaryBrown
+                            : Colors.transparent,
+                        border: Border.all(color: primaryBrown, width: 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: item.isSelected
+                          ? Icon(Icons.check, color: Colors.white, size: 16)
+                          : Container(),
+                    ).paddingOnly(right: 13),
+                  ],
+                ),
+              ).paddingSymmetric(vertical: 5).onClick(() {
+                ctrl.toggleDentalSelection(index);
+              }),
+              Visibility(
+                visible: item.requiresNote && item.isSelected,
+                child: AppTextField(
+                  textEditingController: TextEditingController(text: ''),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      ctrl.emailError = true;
+                      ctrl.update();
+                      return 'Please enter Date of Birth';
+                    }
+                    ctrl.update();
+                    return null;
+                  },
+                  textFieldPadding: EdgeInsets.zero,
+                  keyboardType: TextInputType.text,
+                  isError: ctrl.emailError,
+                  hintText: "Saisir une remarque",
+                  maxLines: 3,
+                  // labelText: LocaleKeys.deliveryAddress.translateText,
+                  showPrefixIcon: false,
+                ).paddingOnly(bottom: 7),
+              ),
+              Visibility(
+                visible: item.dentalHistory && item.isSelected,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.white,
+                          border: Border.all(color: skyColor),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Yes",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ).paddingOnly(left: 15),
+                            Container(
+                              alignment: Alignment.center,
+                              width: 20.0,
+                              height: 20.0,
+                              decoration: BoxDecoration(
+                                color: item.dentalHistorySelected
+                                    ? primaryBrown
+                                    : Colors.transparent,
+                                border: Border.all(
+                                    color: primaryBrown, width: 1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: item.dentalHistorySelected
+                                  ? Icon(Icons.check,
+                                  color: Colors.white, size: 16)
+                                  : Container(),
+                            ).paddingOnly(right: 13),
+                          ],
+                        ),
+                      ).onClick(
+                            () {
+                          ctrl.toggleProblemSelection(index);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                        child: Container(
+                          height: 55,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white,
+                            border: Border.all(color: skyColor),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "No",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ).paddingOnly(left: 15),
+                              Container(
+                                alignment: Alignment.center,
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: !item.dentalHistorySelected
+                                      ? primaryBrown
+                                      : Colors.transparent,
+                                  border:
+                                  Border.all(color: primaryBrown, width: 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: !item.dentalHistorySelected
+                                    ? Icon(Icons.check,
+                                    color: Colors.white, size: 16)
+                                    : Container(),
+                              ).paddingOnly(right: 13),
+                            ],
+                          ),
+                        ).onClick(
+                              () {
+                            ctrl.toggleProblemSelection(index);
+                          },
+                        )),
+                  ],
+                ).paddingOnly(top: 5, bottom: 7),
+              )
+            ],
+          );
+        },
+      ).paddingSymmetric(horizontal: 15),
+      5.space(),
+      "Notes"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      AppTextField(
+        textEditingController: TextEditingController(text: ''),
+        onChanged: (value) {},
+        validator: (value) {
+          if (value.isEmpty) {
+            ctrl.emailError = true;
+            ctrl.update();
+            return 'Please enter Date of Birth';
+          }
+          ctrl.update();
+          return null;
+        },
+        textFieldPadding: EdgeInsets.zero,
+        keyboardType: TextInputType.text,
+        isError: ctrl.emailError,
+        hintText: "Saisir une remarque",
+        maxLines: 3,
+        // labelText: LocaleKeys.deliveryAddress.translateText,
+        showPrefixIcon: false,
+      ).paddingSymmetric(horizontal: 15),
+      20.space(),
+    ],
+  );
+}
+
+Widget incisorCovering(AddPatientController ctrl) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      15.space(),
+      "Recouvrement Incisives (Supraclusion)"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      10.space(),
+      ListView.builder(
+        itemCount: ctrl.incisorCoveringItems.length,
+        physics: PageScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final item = ctrl.incisorCoveringItems[index];
+          return Container(
             height: 55,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.white,
-                border: Border.all(color: skyColor)),
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+              border: Border.all(color: skyColor),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Recommandé par Lyner"
-                    .appCommonText(
+                Expanded(
+                  child: item.title
+                      .appCommonText(
                       size: 16,
+                      align: TextAlign.start,
                       weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
-                    .paddingOnly(left: 15),
+                      maxLine: 2,
+                      overflow: TextOverflow.ellipsis)
+                      .paddingOnly(left: 15),
+                ),
                 Container(
                   alignment: Alignment.center,
                   width: 20.0,
                   height: 20.0,
                   decoration: BoxDecoration(
-                    color: primaryBrown,
+                    color:
+                    item.isSelected ? primaryBrown : Colors.transparent,
                     border: Border.all(color: primaryBrown, width: 1),
                     shape: BoxShape.circle,
                   ),
-                  child: Assets.icons.icSelect.svg(),
+                  child: item.isSelected
+                      ? Icon(Icons.check, color: Colors.white, size: 16)
+                      : Container(),
                 ).paddingOnly(right: 13),
               ],
             ),
-          ).onClick(() {}),*/
-          10.space(),
-        ],
+          ).paddingSymmetric(vertical: 5).onClick(() {
+            ctrl.toggleIncisorCoveringSelection(index);
+          });
+        },
+      ).paddingSymmetric(horizontal: 15),
+      5.space(),
+      "Notes"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      AppTextField(
+        textEditingController: TextEditingController(text: ''),
+        onChanged: (value) {},
+        validator: (value) {
+          if (value.isEmpty) {
+            ctrl.emailError = true;
+            ctrl.update();
+            return 'Please enter text';
+          }
+          ctrl.update();
+          return null;
+        },
+        textFieldPadding: EdgeInsets.zero,
+        keyboardType: TextInputType.text,
+        isError: ctrl.emailError,
+        hintText: "Saisir....",
+        maxLines: 3,
+        // labelText: LocaleKeys.deliveryAddress.translateText,
+        showPrefixIcon: false,
+      ).paddingSymmetric(horizontal: 15),
+      20.space(),
+    ],
+  );
+}
+
+Widget treatmentGoals(AddPatientController ctrl) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      "Objectifs Du Traitement"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
+          .paddingSymmetric(horizontal: 15),
+      "(demande du patient)"
+          .appCommonText(
+        align: TextAlign.start,
+        size: 16,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w400,
+        color: hintStepColor,
+      )
+          .paddingSymmetric(horizontal: 15),
+      10.space(),
+      Container(
+        height: 55,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+            border: Border.all(color: skyColor)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            "Les deux"
+                .appCommonText(
+              size: 16,
+              weight: FontWeight.w400,
+              color: Colors.black,
+            )
+                .paddingOnly(left: 15),
+            CustomRadioButton(
+              value: 1,
+              groupValue: ctrl.isObjectTraitement,
+            ).paddingOnly(right: 13)
+          ],
+        ),
+      ).paddingSymmetric(horizontal: 15).onClick(() {
+        ctrl.changeObjectValue(1);
+      }),
+      10.space(),
+      Container(
+        height: 55,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+            border: Border.all(color: skyColor)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            "Maxillaire"
+                .appCommonText(
+              size: 16,
+              weight: FontWeight.w400,
+              color: Colors.black,
+            )
+                .paddingOnly(left: 15),
+            CustomRadioButton(
+              value: 2,
+              groupValue: ctrl.isObjectTraitement,
+            ).paddingOnly(right: 13),
+          ],
+        ),
+      ).paddingSymmetric(horizontal: 15).onClick(() {
+        ctrl.changeObjectValue(2);
+      }),
+      10.space(),
+      AppTextField(
+        textEditingController: TextEditingController(text: ''),
+        onChanged: (value) {},
+        validator: (value) {
+          if (value.isEmpty) {
+            ctrl.emailError = true;
+            ctrl.update();
+            return 'Please enter Date of Birth';
+          }
+          ctrl.update();
+          return null;
+        },
+        textFieldPadding: EdgeInsets.zero,
+        keyboardType: TextInputType.text,
+        isError: ctrl.emailError,
+        hintText: "Saisir une remarque",
+        maxLines: 3,
+        labelText: LocaleKeys.deliveryAddress.translateText,
+        showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),
     ],
   );

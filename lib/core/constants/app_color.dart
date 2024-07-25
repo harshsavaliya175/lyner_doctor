@@ -11,3 +11,4 @@ const Color disableTextFiledColor = Color(0xffD3DBDF);
 const Color hintColor = Color(0xff8C9DAB);
 const Color hintStepColor = Color(0xff92A3B0);
 const Color appBgColor = Color(0xffF8FAFA);
+const Color dividerColor = Color(0xffE6EBEE);

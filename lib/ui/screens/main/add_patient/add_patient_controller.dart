@@ -13,37 +13,104 @@ class AddPatientController extends GetxController {
   bool firstNameError = false;
   bool emailError = false;
   bool lastNameError = false;
+
   // bool isArcadeTraiter = false;
   var isArcadeTraiter = 0;
+  var isClassesDental = 0;
   var isObjectTraitement = 0;
   var patientTechniquesItems = <SelectionItem>[
     SelectionItem(title: 'Recommandé par Lyner'),
     SelectionItem(title: 'IPR (stripping)'),
     SelectionItem(title: 'Taquets'),
-    SelectionItem(title: 'Pas de taquets sur les dents', requiresNote: false),
+    SelectionItem(title: 'Pas de taquets sur les dents', requiresNote: true),
     SelectionItem(title: 'Elastiques'),
     SelectionItem(title: 'Boutons à coller'),
-    SelectionItem(title: 'Extractions requises : dents n°', requiresNote: false),
+    SelectionItem(title: 'Extractions requises : dents n°', requiresNote: true),
   ];
 
-  void toggleSelection(int index) {
-    patientTechniquesItems[index].requiresNote = !patientTechniquesItems[index].requiresNote;
+  var dentalHistoryItems = <SelectionItem>[
+    SelectionItem(title: 'Rien de particulier'),
+    SelectionItem(title: 'Dents mobiles', requiresNote: true),
+    SelectionItem(title: 'Traumat', requiresNote: true),
+    SelectionItem(title: 'Implant', requiresNote: true),
+    SelectionItem(title: 'Bridge', requiresNote: true),
+    SelectionItem(
+        title: 'Problème d’ATM',
+        dentalHistory: true,
+        dentalHistorySelected: true),
+    SelectionItem(title: 'Apnée du sommeil'),
+    SelectionItem(title: 'Autres informations pertinentes', requiresNote: true),
+  ];
+
+  var middleMaxillaryItems = <SelectionItem>[
+    SelectionItem(title: 'Centré'),
+    SelectionItem(title: 'Décalé vers la droite'),
+    SelectionItem(title: 'Décalé vers la gauche'),
+  ];
+  var incisorCoveringItems = <SelectionItem>[
+    SelectionItem(title: 'Recommandé par Lyner'),
+    SelectionItem(title: 'Augmentation de la dimension verticale (égression molaires et prémolaires)'),
+    SelectionItem(title: 'Ingression des incisives maxillaire'),
+    SelectionItem(title: 'Ingression des incisives mandibulaires'),
+  ];
+
+  void togglePatientSelection(int index) {
+    patientTechniquesItems[index].isSelected =
+        !patientTechniquesItems[index].isSelected;
+    update();
+  }
+  void toggleIncisorCoveringSelection(int index) {
+    incisorCoveringItems[index].isSelected =
+        !incisorCoveringItems[index].isSelected;
     update();
   }
 
-  void updateNote(int index, String note) {
-    patientTechniquesItems[index].note = note;
+  void toggleMiddleMaxillaryItemsSelection(int index) {
+    middleMaxillaryItems[index].isSelected =
+        !middleMaxillaryItems[index].isSelected;
+    update();
+  }
+
+  // void updatePatientNote(int index, String note) {
+  //   patientTechniquesItems[index].note = note;
+  //   update();
+  // }
+  void toggleDentalSelection(int index) {
+    dentalHistoryItems[index].isSelected =
+        !dentalHistoryItems[index].isSelected;
+    update();
+  }
+
+  void toggleProblemSelection(int index) {
+    dentalHistoryItems[index].dentalHistorySelected =
+        !dentalHistoryItems[index].dentalHistorySelected;
     update();
   }
 
   void changeArcadeValue(int value) {
-    isArcadeTraiter = value;
+    if (isArcadeTraiter == value) {
+      isArcadeTraiter = 0;
+    } else {
+      isArcadeTraiter = value;
+    }
     update();
   }
+
+  void changeClassesDentalValue(int value) {
+    if (isClassesDental == value) {
+      isClassesDental = 0;
+    } else {
+      isClassesDental = value;
+    }
+
+    update();
+  }
+
   void changeObjectValue(int value) {
     isObjectTraitement = value;
     update();
   }
+
   @override
   void onInit() {
     super.onInit();
@@ -59,7 +126,8 @@ class AddPatientController extends GetxController {
   void fetchProducts() async {
     try {
       // isLoading(true);
-      ProductListModel productList = await AddPatientRepo.instance.getProductsFromAssets();
+      ProductListModel productList =
+          await AddPatientRepo.instance.getProductsFromAssets();
       products = productList.data;
       update();
       print(products);
