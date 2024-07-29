@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
@@ -10,14 +12,34 @@ class AddPatientController extends GetxController {
 
   List<ProductListData> products = [];
   var selectedProduct = Rxn<ProductListData>();
+  bool isSelectedProductPlan = false;
   bool firstNameError = false;
   bool emailError = false;
   bool lastNameError = false;
+  GlobalKey<FormState> patientInformationFormKey = GlobalKey<FormState>();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
+  TextEditingController doctorController = TextEditingController();
+  TextEditingController billingAddressController = TextEditingController();
+  TextEditingController deliveryAddressController = TextEditingController();
+  File? profileImageFile;
+  File? faceImageFile;
+  File? smileImageFile;
+  File? intraMaxImageFile;
+  File? intraMandImageFile;
+  File? intraRightImageFile;
+  File? intraLeftImageFile;
+  File? intraFaceImageFile;
+  File? radiosFirstImageFile;
+  File? radiosSecondImageFile;
 
   // bool isArcadeTraiter = false;
   var isArcadeTraiter = 0;
   var isClassesDental = 0;
   var isObjectTraitement = 0;
+  bool isUploadStl = false;
   var patientTechniquesItems = <SelectionItem>[
     SelectionItem(title: 'Recommandé par Lyner'),
     SelectionItem(title: 'IPR (stripping)'),
@@ -27,6 +49,29 @@ class AddPatientController extends GetxController {
     SelectionItem(title: 'Boutons à coller'),
     SelectionItem(title: 'Extractions requises : dents n°', requiresNote: true),
   ];
+
+  bool validateUploadPhotoFiles() {
+    if (profileImageFile == null) return false;
+    if (faceImageFile == null) return false;
+    if (smileImageFile == null) return false;
+    if (intraMaxImageFile == null) return false;
+    if (intraMandImageFile == null) return false;
+    if (intraRightImageFile == null) return false;
+    if (intraLeftImageFile == null) return false;
+    if (intraFaceImageFile == null) return false;
+    if (radiosFirstImageFile == null) return false;
+    if (radiosSecondImageFile == null) return false;
+
+    return true;
+  }
+
+  bool validateArcadeFields() {
+    if (isArcadeTraiter == 0) return false;
+    if (isClassesDental == 0) return false;
+    if (isObjectTraitement == 0) return false;
+
+    return true;
+  }
 
   var dentalHistoryItems = <SelectionItem>[
     SelectionItem(title: 'Rien de particulier'),
@@ -41,7 +86,6 @@ class AddPatientController extends GetxController {
     SelectionItem(title: 'Apnée du sommeil'),
     SelectionItem(title: 'Autres informations pertinentes', requiresNote: true),
   ];
-
   var middleMaxillaryItems = <SelectionItem>[
     SelectionItem(title: 'Centré'),
     SelectionItem(title: 'Décalé vers la droite'),
@@ -49,16 +93,57 @@ class AddPatientController extends GetxController {
   ];
   var incisorCoveringItems = <SelectionItem>[
     SelectionItem(title: 'Recommandé par Lyner'),
-    SelectionItem(title: 'Augmentation de la dimension verticale (égression molaires et prémolaires)'),
+    SelectionItem(
+        title:
+            'Augmentation de la dimension verticale (égression molaires et prémolaires)'),
     SelectionItem(title: 'Ingression des incisives maxillaire'),
     SelectionItem(title: 'Ingression des incisives mandibulaires'),
   ];
+  var stepErrors = <int, bool>{};
+
+  void checkStepErrors() {
+    if (currentStep.value == 0) {
+      if (patientInformationFormKey.currentState != null) {
+        if (patientInformationFormKey.currentState!.validate()) {
+          stepErrors[1] = false;
+          stepErrors.remove(0);
+        }
+      }
+      update();
+    }
+    if (currentStep.value == 1) {
+      if (!isSelectedProductPlan) {
+        stepErrors[1] = true;
+      } else {
+        stepErrors.remove(1);
+      }
+      update();
+    }
+
+    if (currentStep.value == 2) {
+      if (!validateUploadPhotoFiles()) {
+        stepErrors.remove(2);
+      } else {
+        stepErrors.remove(2);
+      }
+      update();
+    }
+    if (currentStep.value == 3) {
+      if (!validateArcadeFields()) {
+        stepErrors.remove(3);
+      } else {
+        stepErrors.remove(3);
+      }
+      update();
+    }
+  }
 
   void togglePatientSelection(int index) {
     patientTechniquesItems[index].isSelected =
         !patientTechniquesItems[index].isSelected;
     update();
   }
+
   void toggleIncisorCoveringSelection(int index) {
     incisorCoveringItems[index].isSelected =
         !incisorCoveringItems[index].isSelected;
@@ -120,6 +205,8 @@ class AddPatientController extends GetxController {
 
   void selectProduct(ProductListData product) {
     selectedProduct.value = product;
+    isSelectedProductPlan = selectedProduct.value == product;
+    stepErrors[0] = false;
     update();
   }
 

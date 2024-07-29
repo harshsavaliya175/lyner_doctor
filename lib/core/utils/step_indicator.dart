@@ -7,9 +7,11 @@ class CommonStepIndicator extends StatelessWidget {
   final int totalSteps;
   final RxInt currentStep;
   final Function(int) onStepTapped;
+  final Map<int, bool> stepErrors;
 
   CommonStepIndicator({
     required this.totalSteps,
+    required this.stepErrors,
     required this.currentStep,
     required this.onStepTapped,
   });
@@ -22,7 +24,8 @@ class CommonStepIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(totalSteps, (index) {
           bool isActive = index == currentStep.value;
-          bool isCompleted = index < currentStep.value;
+          bool isCompleted = (index < currentStep.value||stepErrors[index]==false);
+          bool hasError = stepErrors[index] ?? false;
           return GestureDetector(
             onTap: () {
               onStepTapped(index);
@@ -36,9 +39,9 @@ class CommonStepIndicator extends StatelessWidget {
                       padding: EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: isActive || isCompleted
-                                ? primaryBrown
-                                : darkSkyColor,
+                            color: (isActive || isCompleted)
+                                ? (hasError ? Colors.red : primaryBrown)
+                                : (hasError ? Colors.red : darkSkyColor),
                             width: 1),
                         shape: BoxShape.circle,
                       ),
@@ -48,16 +51,18 @@ class CommonStepIndicator extends StatelessWidget {
                         height: 20.0,
                         decoration: BoxDecoration(
                           color: isActive
-                              ? primaryBrown
+                              ? (hasError ? Colors.red : primaryBrown)
                               : isCompleted
-                              ? primaryBrown
-                              : darkSkyColor,
+                                  ? (hasError ? Colors.red : primaryBrown)
+                                  : (hasError ? Colors.red : darkSkyColor),
                           shape: BoxShape.circle,
                         ),
                         child: Center(
                           child: isCompleted
-                              ? Assets.icons.icSelect
-                              .svg(alignment: Alignment.center,width: 12)
+                              ? (!hasError
+                                  ? Assets.icons.icSelect.svg(
+                                      alignment: Alignment.center, width: 12)
+                                  : null)
                               : null,
                         ),
                       ),
@@ -69,7 +74,9 @@ class CommonStepIndicator extends StatelessWidget {
                         fontSize: 12,
                         fontFamily: Assets.fonts.maax,
                         fontWeight: FontWeight.normal,
-                        color: isActive||isCompleted? Colors.black : hintStepColor,
+                        color: isActive || isCompleted
+                            ? Colors.black
+                            : hintStepColor,
                       ),
                     ),
                   ],
@@ -79,9 +86,8 @@ class CommonStepIndicator extends StatelessWidget {
                     width: (Get.width - 50.0 * totalSteps) / (totalSteps - 1),
                     // Adjust width to fill the screen
                     height: 2.0,
-                    color: index < currentStep.value
-                        ? primaryBrown
-                        : darkSkyColor,
+                    color:
+                        index < currentStep.value ? primaryBrown : darkSkyColor,
                   ).paddingOnly(top: 15).paddingSymmetric(horizontal: 0),
               ],
             ),

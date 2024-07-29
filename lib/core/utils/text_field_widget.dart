@@ -174,6 +174,7 @@ class AppTextField extends StatefulWidget {
   final EdgeInsets? textFieldPadding;
   final double? labelTextSize;
   bool obscureText;
+  final double? radius;
   Iterable<String>? autofillHints;
   final bool isError;
 
@@ -193,6 +194,7 @@ class AppTextField extends StatefulWidget {
       this.textStyle,
       this.showPrefixWidget,
       this.maxLines = 1,
+      this.radius,
       this.maxLength,
       required this.validator,
       this.onChanged,
@@ -322,25 +324,25 @@ class _AppTextFieldState extends State<AppTextField> {
               filled: true,
               errorStyle: const TextStyle(height: 0),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(widget.radius??30),
                   borderSide: BorderSide(
                       color:
                           textFieldValue.isNotEmpty ? primaryBrown : skyColor)),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(widget.radius??30),
                   borderSide: const BorderSide(color: primaryBrown)),
               errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(widget.radius??30),
                   borderSide: BorderSide(
                       color: widget.isError
                           ? Colors.red
                           : hintTextColor.withOpacity(0.2))),
               focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(widget.radius??30),
                   borderSide: BorderSide(
                       color: widget.isError
                           ? primaryBrown
-                          : Colors.black.withOpacity(0.5))),
+                          : primaryBrown)),
             ),
           ),
         ],

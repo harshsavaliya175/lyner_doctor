@@ -143,6 +143,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/img_tab.png
   AssetGenImage get imgTab => const AssetGenImage('assets/images/img_tab.png');
 
+  /// File path: assets/images/img_user_placeholder.png
+  AssetGenImage get imgUserPlaceholder =>
+      const AssetGenImage('assets/images/img_user_placeholder.png');
+
   /// List of all assets
   List<dynamic> get values => [
         imgFace,
@@ -154,7 +158,8 @@ class $AssetsImagesGen {
         imgProfile,
         imgSmile,
         imgSplash,
-        imgTab
+        imgTab,
+        imgUserPlaceholder
       ];
 }
 

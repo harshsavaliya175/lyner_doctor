@@ -1,5 +1,3 @@
-import 'package:codonnier_network/network/api_type.dart';
-import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class ApiUrl {
   static const bool IS_LIVE = true;
@@ -37,7 +35,7 @@ class RequestParam {
 
 const String SHOW_ERROR = "false";
 
-Map<String, String> requestHeader(APIType apiType) {
+/*Map<String, String> requestHeader(APIType apiType) {
   return {
     RequestHeaderKey.contentType: "application/json",
     RequestHeaderKey.appSecret: "chefPop#App@2024",
@@ -56,7 +54,7 @@ Map<String, String> requestHeader(APIType apiType) {
       RequestHeaderKey.authToken:
       preferences.getString(SharedPreference.AUTH_TOKEN) ?? '',
   };
-}
+}*/
 
 const int LIMIT = 10;
 

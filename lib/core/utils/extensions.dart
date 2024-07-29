@@ -215,7 +215,7 @@ showAppSnackBar(String tittle, [bool button = false]) {
   return Get.showSnackbar(
     GetSnackBar(
         message: tittle,
-        backgroundColor: Colors.black,
+        backgroundColor: primaryBrown,
         borderRadius: 10,
         margin: const EdgeInsets.all(8),
         duration: const Duration(seconds: 5),
