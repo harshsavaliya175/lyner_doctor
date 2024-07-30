@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -15,6 +16,8 @@ import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
+import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
+import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 import 'package:lynerdoctor/ui/widgets/custom_radio_button.dart';
 
 class AddPatientScreen extends StatelessWidget {
@@ -39,130 +42,146 @@ class AddPatientScreen extends StatelessWidget {
           leadingWidth: 45,
           leading: Assets.icons.icBack
               .svg(
-                height: 25,
-                width: 25,
-              )
+            height: 25,
+            width: 25,
+          )
               .paddingOnly(
-                left: 10,
-              )
+            left: 10,
+          )
               .onClick(() {
             Get.back();
           }),
         ),
         body: GetBuilder<AddPatientController>(builder: (ctrl) {
-          return Container(
-            color: appBgColor,
-            child: Column(
-              children: [
-                10.space(),
-                CommonStepIndicator(
-                  totalSteps: 4,
-                  stepErrors: ctrl.stepErrors,
-                  currentStep: ctrl.currentStep,
-                  onStepTapped: (index) {
-                    if (index < ctrl.currentStep.value) {
-                      if (ctrl.patientInformationFormKey.currentState != null) {
-                        if (!ctrl.patientInformationFormKey.currentState!
-                            .validate()) {
-                          ctrl.stepErrors[1] = true;
-                        }
-                      }
-                      if (ctrl.firstNameController.text.isNotEmpty ||
-                          ctrl.lastNameController.text.isNotEmpty) {
-                        if (!ctrl.validateUploadPhotoFiles()) {
-                          ctrl.stepErrors[2] = true;
-                        } else {
-                          ctrl.stepErrors[2] = false;
-                        }
-                        if (!ctrl.validateArcadeFields()) {
-                          ctrl.stepErrors[3] = true;
-                        } else {
-                          ctrl.stepErrors[3] = false;
-                        }
-                      }
-                      ctrl.goToStep(index);
-                      ctrl.checkStepErrors();
-                    } else {
-                      switch (index) {
-                        case 1:
-                          if (ctrl.isSelectedProductPlan) {
-                            ctrl.stepErrors[0] = false;
-                            ctrl.goToStep(index);
-                          } else {
-                            ctrl.stepErrors[0] = true;
-                            showAppSnackBar(
-                                "Please select any product plan to go next step");
-                          }
-                          break;
-                        case 2:
-                          if (ctrl.firstNameController.text.isEmpty ||
-                              ctrl.lastNameController.text.isEmpty) {
-                            if (ctrl.currentStep.value == 1) {
-                              showAppSnackBar(
-                                  "Please enter firstname and lastname");
-                            }
-                            return;
-                          }
-                          if (ctrl.patientInformationFormKey.currentState !=
-                              null) {
+          return Stack(
+            children: [
+              Container(
+                color: appBgColor,
+                child: Column(
+                  children: [
+                    10.space(),
+                    CommonStepIndicator(
+                      totalSteps: 4,
+                      stepErrors: ctrl.stepErrors,
+                      currentStep: ctrl.currentStep,
+                      onStepTapped: (index) async {
+                        if (index < ctrl.currentStep.value) {
+                          if (ctrl.patientInformationFormKey.currentState != null) {
                             if (!ctrl.patientInformationFormKey.currentState!
                                 .validate()) {
                               ctrl.stepErrors[1] = true;
-                            } else {
-                              ctrl.stepErrors[1] = false;
                             }
                           }
-                          if (!ctrl.validateUploadPhotoFiles()) {
-                            ctrl.stepErrors[2] = true;
-                          } else {
+                          if (ctrl.firstNameController.text.isNotEmpty ||
+                              ctrl.lastNameController.text.isNotEmpty) {
+                            if (!ctrl.validateUploadPhotoFiles()) {
+                              ctrl.stepErrors[2] = true;
+                            } else {
+                              ctrl.stepErrors[2] = false;
+                            }
                             if (!ctrl.validateArcadeFields()) {
                               ctrl.stepErrors[3] = true;
                             } else {
                               ctrl.stepErrors[3] = false;
                             }
-                            ctrl.stepErrors[2] = false;
                           }
+                          ctrl.goToStep(index);
+                          ctrl.checkStepErrors();
+                        } else {
+                          switch (index) {
+                            case 1:
+                              if (ctrl.isSelectedProductPlan) {
+                                ctrl.stepErrors[0] = false;
+                                ctrl.goToStep(index);
+                              } else {
+                                ctrl.stepErrors[0] = true;
+                                showAppSnackBar(
+                                    "Please select any product plan to go next step");
+                              }
+                              break;
+                            case 2:
+                              if (ctrl.firstNameController.text.isEmpty ||
+                                  ctrl.lastNameController.text.isEmpty) {
+                                if (ctrl.currentStep.value == 1) {
+                                  showAppSnackBar(
+                                      "Please enter firstname and lastname");
+                                }
+                                return;
+                              }else{
+                                if(ctrl.patientData==null){
+                                  await ctrl.addNewPatient();
+                                }
 
-                          ctrl.goToStep(index);
-                          break;
-                        case 3:
-                          if (!ctrl.validateUploadPhotoFiles()) {
-                            ctrl.stepErrors[2] = true;
-                          } else {
-                            ctrl.stepErrors[2] = false;
+                              }
+                              if (ctrl.patientInformationFormKey.currentState !=
+                                  null) {
+                                if (!ctrl.patientInformationFormKey.currentState!
+                                    .validate()) {
+                                  ctrl.stepErrors[1] = true;
+                                } else {
+                                  ctrl.stepErrors[1] = false;
+                                }
+                              }
+                              if (!ctrl.validateUploadPhotoFiles()) {
+                                ctrl.stepErrors[2] = true;
+                              } else {
+                                if (!ctrl.validateArcadeFields()) {
+                                  ctrl.stepErrors[3] = true;
+                                } else {
+                                  ctrl.stepErrors[3] = false;
+                                }
+                                ctrl.stepErrors[2] = false;
+                              }
+
+                              ctrl.goToStep(index);
+                              break;
+                            case 3:
+                              if (!ctrl.validateUploadPhotoFiles()) {
+                                ctrl.stepErrors[2] = true;
+                              } else {
+                                ctrl.stepErrors[2] = false;
+                              }
+                              if (!ctrl.validateArcadeFields()) {
+                                ctrl.stepErrors[3] = true;
+                              } else {
+                                ctrl.stepErrors[3] = false;
+                              }
+                              ctrl.goToStep(index);
+                              break;
+                            default:
+                              ctrl.goToStep(index);
                           }
-                          if (!ctrl.validateArcadeFields()) {
-                            ctrl.stepErrors[3] = true;
-                          } else {
-                            ctrl.stepErrors[3] = false;
-                          }
+                          ctrl.checkStepErrors();
+                        }
+                      },
+                    ),
+                    10.space(),
+                    Expanded(
+                      child: PageView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: ctrl.pageController,
+                        onPageChanged: (index) {
                           ctrl.goToStep(index);
-                          break;
-                        default:
-                          ctrl.goToStep(index);
-                      }
-                      ctrl.checkStepErrors();
-                    }
-                  },
+                        },
+                        children: [
+                          chooseTheProduct(ctrl),
+                          patientInformation(ctrl),
+                          uploadPhotographs(ctrl),
+                          arcadeTraiter(ctrl),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                10.space(),
-                Expanded(
-                  child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: ctrl.pageController,
-                    onPageChanged: (index) {
-                      ctrl.goToStep(index);
-                    },
-                    children: [
-                      chooseTheProduct(ctrl),
-                      patientInformation(ctrl),
-                      uploadPhotographs(ctrl),
-                      arcadeTraiter(ctrl),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              GetBuilder<AddPatientController>(
+                builder: (AddPatientController controller) {
+                  return controller.isLoading
+                      ? AppProgressView(progressColor: Colors.black)
+                      : Container();
+                },
+              ),
+            ],
           );
         }));
   }
@@ -228,12 +247,12 @@ Widget chooseTheProduct(AddPatientController ctrl) {
                                     : Colors.transparent,
                                 shape: BoxShape.circle,
                                 border:
-                                    Border.all(color: primaryBrown, width: 1),
+                                Border.all(color: primaryBrown, width: 1),
                               ),
                               child: Center(
                                 child: isSelectedProductPlan
                                     ? Assets.icons.icSelect.svg(
-                                        alignment: Alignment.center, width: 12)
+                                    alignment: Alignment.center, width: 12)
                                     : null,
                               ),
                             ),
@@ -243,19 +262,19 @@ Widget chooseTheProduct(AddPatientController ctrl) {
                       11.space(),
                       product.caseSteps
                           .appCommonText(
-                              weight: FontWeight.w500,
-                              size: 16,
-                              align: TextAlign.start)
+                          weight: FontWeight.w500,
+                          size: 16,
+                          align: TextAlign.start)
                           .paddingSymmetric(horizontal: 15),
                       10.space(),
                       product.caseDesc
                           .appCommonText(
-                              weight: FontWeight.w300,
-                              size: 16,
-                              color: hintColor,
-                              maxLine: 2,
-                              overflow: TextOverflow.ellipsis,
-                              align: TextAlign.start)
+                          weight: FontWeight.w300,
+                          size: 16,
+                          color: hintColor,
+                          maxLine: 2,
+                          overflow: TextOverflow.ellipsis,
+                          align: TextAlign.start)
                           .paddingSymmetric(horizontal: 15),
                       12.space(),
                       product.casePrice
@@ -267,20 +286,20 @@ Widget chooseTheProduct(AddPatientController ctrl) {
                         width: Get.width,
                         decoration: BoxDecoration(
                           color:
-                              isSelectedProductPlan ? primaryBrown : skyColor,
+                          isSelectedProductPlan ? primaryBrown : skyColor,
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(13),
                               bottomLeft: Radius.circular(13)),
                         ),
                         child: Center(
                           child: (isSelectedProductPlan
-                                  ? LocaleKeys.selected.translateText
-                                  : LocaleKeys.notSelected.translateText)
+                              ? LocaleKeys.selected.translateText
+                              : LocaleKeys.notSelected.translateText)
                               .appCommonText(
-                                  weight: FontWeight.w500,
-                                  size: 20,
-                                  align: TextAlign.center,
-                                  color: Colors.white),
+                              weight: FontWeight.w500,
+                              size: 20,
+                              align: TextAlign.center,
+                              color: Colors.white),
                         ),
                       ),
                     ],
@@ -400,7 +419,9 @@ Widget patientInformation(AddPatientController ctrl) {
             15.space(),
             AppTextField(
               textEditingController: ctrl.dateOfBirthController,
-              onChanged: (value) {},
+              // onChanged: (value) {},
+              readOnly: true,
+              showCursor: false,
               validator: (value) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
@@ -410,6 +431,18 @@ Widget patientInformation(AddPatientController ctrl) {
                 ctrl.update();
                 return null;
               },
+              onTap: () async {
+                ctrl.pickedDate = await datePickerDialog(
+                    Get.context!, ctrl.dateText);
+                if (ctrl.pickedDate != null) {
+                  ctrl.dateText = ctrl.pickedDate;
+                  ctrl.dateTextField =
+                      DateFormat('dd-MM-yyyy')
+                          .format(ctrl.pickedDate!);
+                  ctrl.dateOfBirthController.text = ctrl.dateTextField!;
+                }
+                ctrl.update();
+              },
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
               // isError: ctrl.emailError,
@@ -417,6 +450,7 @@ Widget patientInformation(AddPatientController ctrl) {
               labelText: LocaleKeys.dateOfBirth.translateText,
               showPrefixIcon: false,
             ),
+            // "Date of Birth".appCommonText(color: blackColor),
             15.space(),
             AppTextField(
               textEditingController: ctrl.doctorController,
@@ -430,6 +464,12 @@ Widget patientInformation(AddPatientController ctrl) {
                 ctrl.update();
                 return null;
               },
+              readOnly: true,
+              showCursor: false,
+              onTap: () {
+                ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
+                ctrl.update();
+              },
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
               // isError: ctrl.emailError,
@@ -437,11 +477,63 @@ Widget patientInformation(AddPatientController ctrl) {
               labelText: LocaleKeys.doctor.translateText,
               showPrefixWidget: Assets.icons.icDown
                   .svg(
-                    height: 10,
-                    width: 10,
-                  )
+                height: 10,
+                width: 10,
+              )
                   .paddingOnly(left: 15, right: 15),
               showPrefixIcon: true,
+            ),
+            // 15.space(),
+            Visibility(
+              visible: ctrl.showDoctorDropDown,
+              replacement: const SizedBox.shrink(),
+              child: Container(
+                // height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: primaryBrown),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const PageScrollPhysics(),
+                  itemBuilder: (builder, index) {
+                    var data = ctrl.doctorDataList[index]; // Display filtered data when search is not empty
+                    return InkWell(
+                      onTap: () {
+                        print("onTap : $index");
+                        ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
+                        ctrl.doctorController.text = '${data?.firstName} ${data?.lastName}';
+                        ctrl.selectedDoctorData = data;
+                        print(ctrl.selectedDoctorData);
+                        ctrl.update();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: '${data?.firstName} ${data?.lastName}'.appCommonText(
+                              color: Colors.black,
+                              maxLine: 1,
+                              align: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              weight: FontWeight.w400,
+                              size: 15,
+                            ),
+                          ),
+                          if (ctrl.doctorController.text
+                              .contains('${data?.firstName} ${data?.lastName}')) ...[
+                            Assets.icons.icSelectArrow.svg(color: primaryBrown),
+                          ] else ...[
+                            const SizedBox.shrink(),
+                          ]
+                        ],
+                      ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
+                    );
+                  },
+                  itemCount: ctrl.doctorDataList.length,
+                ).paddingOnly(top: 5, bottom: 5),
+              ).paddingOnly(top: 15),
             ),
             15.space(),
             AppTextField(
@@ -456,6 +548,12 @@ Widget patientInformation(AddPatientController ctrl) {
                 ctrl.update();
                 return null;
               },
+              readOnly: true,
+              showCursor: false,
+              onTap: () {
+                ctrl.showBillingDropDown = !ctrl.showBillingDropDown;
+                ctrl.update();
+              },
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
               // isError: ctrl.emailError,
@@ -463,11 +561,62 @@ Widget patientInformation(AddPatientController ctrl) {
               labelText: LocaleKeys.billingAddress.translateText,
               showPrefixWidget: Assets.icons.icDown
                   .svg(
-                    height: 10,
-                    width: 10,
-                  )
+                height: 10,
+                width: 10,
+              )
                   .paddingOnly(left: 15, right: 15),
               showPrefixIcon: true,
+            ),
+            Visibility(
+              visible: ctrl.showBillingDropDown,
+              replacement: const SizedBox.shrink(),
+              child: Container(
+                // height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: primaryBrown),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const PageScrollPhysics(),
+                  itemBuilder: (builder, index) {
+                    var data = ctrl.clinicBillingList[index]; // Display filtered data when search is not empty
+                    return InkWell(
+                      onTap: () {
+                        print("onTap : $index");
+                        ctrl.showBillingDropDown = !ctrl.showBillingDropDown;
+                        ctrl.billingAddressController.text = '${data?.billingName}';
+                        ctrl.selectedClinicBillingData = data;
+                        print(ctrl.selectedClinicBillingData);
+                        ctrl.update();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: '${data?.billingName}'.appCommonText(
+                              color: Colors.black,
+                              maxLine: 1,
+                              align: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              weight: FontWeight.w400,
+                              size: 15,
+                            ),
+                          ),
+                          if (ctrl.billingAddressController.text
+                              .contains('${data?.billingName}')) ...[
+                            Assets.icons.icSelectArrow.svg(color: primaryBrown),
+                          ] else ...[
+                            const SizedBox.shrink(),
+                          ]
+                        ],
+                      ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
+                    );
+                  },
+                  itemCount: ctrl.clinicBillingList.length,
+                ).paddingOnly(top: 5, bottom: 5),
+              ).paddingOnly(top: 15),
             ),
             15.space(),
             AppTextField(
@@ -482,6 +631,12 @@ Widget patientInformation(AddPatientController ctrl) {
                 ctrl.update();
                 return null;
               },
+              onTap: () {
+                ctrl.showDeliveryDropDown = !ctrl.showDeliveryDropDown;
+                ctrl.update();
+              },
+              readOnly: true,
+              showCursor: false,
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
               // isError: ctrl.emailError,
@@ -489,11 +644,62 @@ Widget patientInformation(AddPatientController ctrl) {
               labelText: LocaleKeys.deliveryAddress.translateText,
               showPrefixWidget: Assets.icons.icDown
                   .svg(
-                    height: 10,
-                    width: 10,
-                  )
+                height: 10,
+                width: 10,
+              )
                   .paddingOnly(left: 15, right: 15),
               showPrefixIcon: true,
+            ),
+            Visibility(
+              visible: ctrl.showDeliveryDropDown,
+              replacement: const SizedBox.shrink(),
+              child: Container(
+                // height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: primaryBrown),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const PageScrollPhysics(),
+                  itemBuilder: (builder, index) {
+                    var data = ctrl.clinicDeliveryLocationList[index]; // Display filtered data when search is not empty
+                    return InkWell(
+                      onTap: () {
+                        print("onTap : $index");
+                        ctrl.showDeliveryDropDown = !ctrl.showDeliveryDropDown;
+                        ctrl.deliveryAddressController.text = '${data?.address}';
+                        ctrl.selectedClinicDeliveryData = data;
+                        print(ctrl.selectedClinicDeliveryData);
+                        ctrl.update();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: '${data?.address}'.appCommonText(
+                              color: Colors.black,
+                              maxLine: 1,
+                              align: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              weight: FontWeight.w400,
+                              size: 15,
+                            ),
+                          ),
+                          if (ctrl.billingAddressController.text
+                              .contains('${data?.address}')) ...[
+                            Assets.icons.icSelectArrow.svg(color: primaryBrown),
+                          ] else ...[
+                            const SizedBox.shrink(),
+                          ]
+                        ],
+                      ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
+                    );
+                  },
+                  itemCount: ctrl.clinicDeliveryLocationList.length,
+                ).paddingOnly(top: 5, bottom: 5),
+              ).paddingOnly(top: 15),
             ),
             100.space(),
           ],
@@ -511,12 +717,15 @@ Widget patientInformation(AddPatientController ctrl) {
           child: AppButton(
             btnHeight: 55,
             text: LocaleKeys.next.translateText,
-            onTap: () {
+            onTap: () async {
               FocusManager.instance.primaryFocus?.unfocus();
               if (ctrl.patientInformationFormKey.currentState!.validate()) {
                 FocusScope.of(Get.context!).unfocus();
                 // Get.offAllNamed(Routes.home);
-                ctrl.goToStep(2);
+                if(ctrl.patientData==null){
+                  await ctrl.addNewPatient();
+                }
+                await ctrl.goToStep(2);
               }
             },
             boxShadow: [],
@@ -588,6 +797,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.profileImageFile = file!;
+
                         ctrl.update();
                       });
                 },
@@ -604,6 +814,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.faceImageFile = file!;
+                        ctrl.uploadPatientSingleImage(paramName: 'patient_face',file: file);
                         ctrl.update();
                       });
                 },
@@ -739,36 +950,36 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               Expanded(
                   child: Container(
-                height: 135,
-                width: 200,
-                child: ((ctrl.radiosFirstImageFile != null &&
+                    height: 135,
+                    width: 200,
+                    child: ((ctrl.radiosFirstImageFile != null &&
                         ctrl.radiosFirstImageFile?.path != "")
-                    ? HomeImage.fileImage(
-                        path: ctrl.radiosFirstImageFile!.path,
-                        height: 135,
-                        width: 200,
-                        shape: BoxShape.rectangle,
-                        fit: BoxFit.cover,
-                        radius: BorderRadius.circular(10),
-                      )
-                    : HomeImage.assetImage(
-                        path: Assets.images.imgTab.path,
-                        height: 135,
-                        shape: BoxShape.rectangle,
-                        // fit: BoxFit.cover,
-                        width: 200,
-                      )),
-              ).onClick(
-                () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.radiosFirstImageFile = file!;
-                        ctrl.update();
-                      });
-                },
-              )),
+                        ? HomeImage.fileImage(
+                      path: ctrl.radiosFirstImageFile!.path,
+                      height: 135,
+                      width: 200,
+                      shape: BoxShape.rectangle,
+                      fit: BoxFit.cover,
+                      radius: BorderRadius.circular(10),
+                    )
+                        : HomeImage.assetImage(
+                      path: Assets.images.imgTab.path,
+                      height: 135,
+                      shape: BoxShape.rectangle,
+                      // fit: BoxFit.cover,
+                      width: 200,
+                    )),
+                  ).onClick(
+                        () {
+                      imageUploadUtils.openImageChooser(
+                          context: Get.context!,
+                          onImageChose: (File? file) async {
+                            // ctrl.cuisinePhoto?[0] =(file!);
+                            ctrl.radiosFirstImageFile = file!;
+                            ctrl.update();
+                          });
+                    },
+                  )),
               15.space(),
               /*Expanded(
                 child: Image.asset(
@@ -782,24 +993,24 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   height: 135,
                   width: 200,
                   child: ((ctrl.radiosSecondImageFile != null &&
-                          ctrl.radiosSecondImageFile?.path != "")
+                      ctrl.radiosSecondImageFile?.path != "")
                       ? HomeImage.fileImage(
-                          path: ctrl.radiosSecondImageFile!.path,
-                          height: 135,
-                          width: 200,
-                          shape: BoxShape.rectangle,
-                          fit: BoxFit.cover,
-                          radius: BorderRadius.circular(10),
-                        )
+                    path: ctrl.radiosSecondImageFile!.path,
+                    height: 135,
+                    width: 200,
+                    shape: BoxShape.rectangle,
+                    fit: BoxFit.cover,
+                    radius: BorderRadius.circular(10),
+                  )
                       : HomeImage.assetImage(
-                          path: Assets.images.imgTab.path,
-                          height: 135,
-                          width: 200,
-                          shape: BoxShape.rectangle,
-                          // fit: BoxFit.cover,
-                        )),
+                    path: Assets.images.imgTab.path,
+                    height: 135,
+                    width: 200,
+                    shape: BoxShape.rectangle,
+                    // fit: BoxFit.cover,
+                  )),
                 ).onClick(
-                  () {
+                      () {
                     imageUploadUtils.openImageChooser(
                         context: Get.context!,
                         onImageChose: (File? file) async {
@@ -839,7 +1050,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       color: ctrl.isUploadStl ? Colors.white : darkSkyColor,
                       size: 16),
                 ).onClick(
-                  () {
+                      () {
                     ctrl.isUploadStl = true;
                     ctrl.update();
                   },
@@ -862,7 +1073,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       size: 16,
                       weight: FontWeight.w500),
                 ).onClick(
-                  () {
+                      () {
                     ctrl.isUploadStl = false;
                     ctrl.update();
                   },
@@ -884,10 +1095,10 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     3.space(),
                     "*"
                         .appCommonText(
-                            size: 14,
-                            weight: FontWeight.w400,
-                            color: Colors.red,
-                            align: TextAlign.start)
+                        size: 14,
+                        weight: FontWeight.w400,
+                        color: Colors.red,
+                        align: TextAlign.start)
                         .paddingOnly(bottom: 5)
                   ],
                 ),
@@ -924,10 +1135,10 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     3.space(),
                     "*"
                         .appCommonText(
-                            size: 14,
-                            weight: FontWeight.w400,
-                            color: Colors.red,
-                            align: TextAlign.start)
+                        size: 14,
+                        weight: FontWeight.w400,
+                        color: Colors.red,
+                        align: TextAlign.start)
                         .paddingOnly(bottom: 5)
                   ],
                 ),
@@ -1026,7 +1237,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   onTap: () {
                     if (ctrl.validateUploadPhotoFiles()) {
                       ctrl.goToStep(3);
-                    }else{
+                    } else {
                       showAppSnackBar("Please select all required photos");
                     }
                   },
@@ -1045,31 +1256,30 @@ Widget uploadPhotographs(AddPatientController ctrl) {
   );
 }
 
-Widget photoCardWidget(
-    {required String title,
-    required String image,
-    required File? fileImage,
-    required GestureTapCallback onTap,
-    required AddPatientController ctrl}) {
+Widget photoCardWidget({required String title,
+  required String image,
+  required File? fileImage,
+  required GestureTapCallback onTap,
+  required AddPatientController ctrl}) {
   return Expanded(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ((fileImage != null && fileImage.path != "")
-                ? HomeImage.fileImage(
-                    path: fileImage.path,
-                    size: 123,
-                    shape: BoxShape.rectangle,
-                    fit: BoxFit.cover,
-                    radius: BorderRadius.circular(15),
-                  )
-                : HomeImage.assetImage(
-                    path: image,
-                    height: 123,
-                    shape: BoxShape.rectangle,
-                    width: 123,
-                  ))
+            ? HomeImage.fileImage(
+          path: fileImage.path,
+          size: 123,
+          shape: BoxShape.rectangle,
+          fit: BoxFit.cover,
+          radius: BorderRadius.circular(15),
+        )
+            : HomeImage.assetImage(
+          path: image,
+          height: 123,
+          shape: BoxShape.rectangle,
+          width: 123,
+        ))
             .onClick(onTap),
         5.space(),
         Row(
@@ -1080,7 +1290,7 @@ Widget photoCardWidget(
                 size: 16, weight: FontWeight.w300, color: hintStepColor),
             " *"
                 .appCommonText(
-                    size: 16, weight: FontWeight.w500, color: Colors.red)
+                size: 16, weight: FontWeight.w500, color: Colors.red)
                 .paddingOnly(bottom: 5),
           ],
         )
@@ -1097,23 +1307,23 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           5.space(),
           LocaleKeys.arcadeTraiter.translateText
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           "((ou la simulation sera réalisée)"
               .appCommonText(
-                align: TextAlign.start,
-                size: 16,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w400,
-                color: hintStepColor,
-              )
+            align: TextAlign.start,
+            size: 16,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w400,
+            color: hintStepColor,
+          )
               .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
@@ -1127,10 +1337,10 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 "Les deux"
                     .appCommonText(
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
+                  size: 16,
+                  weight: FontWeight.w400,
+                  color: Colors.black,
+                )
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 1,
@@ -1153,10 +1363,10 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 "Maxillaire"
                     .appCommonText(
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
+                  size: 16,
+                  weight: FontWeight.w400,
+                  color: Colors.black,
+                )
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 2,
@@ -1179,10 +1389,10 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 "Mandibulaire"
                     .appCommonText(
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
+                  size: 16,
+                  weight: FontWeight.w400,
+                  color: Colors.black,
+                )
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 3,
@@ -1196,12 +1406,12 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           10.space(),
           "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade."
               .appCommonText(
-                weight: FontWeight.w400,
-                align: TextAlign.start,
-                color: Colors.black,
-                fontStyle: FontStyle.italic,
-                size: 16,
-              )
+            weight: FontWeight.w400,
+            align: TextAlign.start,
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+            size: 16,
+          )
               .paddingSymmetric(horizontal: 15),
           10.space(),
           treatmentGoals(ctrl),
@@ -1220,13 +1430,13 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           12.space(),
           "Classe Dentaire"
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
@@ -1240,10 +1450,10 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 "Maintenir"
                     .appCommonText(
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
+                  size: 16,
+                  weight: FontWeight.w400,
+                  color: Colors.black,
+                )
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 1,
@@ -1266,10 +1476,10 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 "Améliorer vers classe 1"
                     .appCommonText(
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    )
+                  size: 16,
+                  weight: FontWeight.w400,
+                  color: Colors.black,
+                )
                     .paddingOnly(left: 15),
                 CustomRadioButton(
                   value: 2,
@@ -1283,13 +1493,13 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           7.space(),
           "Notes"
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
             textEditingController: TextEditingController(text: ''),
@@ -1321,13 +1531,13 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           12.space(),
           "Milieu Incisif Maxillaire"
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           10.space(),
           ListView.builder(
@@ -1360,7 +1570,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                       height: 20.0,
                       decoration: BoxDecoration(
                         color:
-                            item.isSelected ? primaryBrown : Colors.transparent,
+                        item.isSelected ? primaryBrown : Colors.transparent,
                         border: Border.all(color: primaryBrown, width: 1),
                         shape: BoxShape.circle,
                       ),
@@ -1378,13 +1588,13 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           5.space(),
           "Notes"
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
             textEditingController: TextEditingController(text: ''),
@@ -1422,13 +1632,13 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           15.space(),
           "Autres Recommandations"
               .appCommonText(
-                align: TextAlign.start,
-                size: 24,
-                maxLine: 2,
-                overflow: TextOverflow.ellipsis,
-                weight: FontWeight.w500,
-                color: Colors.black,
-              )
+            align: TextAlign.start,
+            size: 24,
+            maxLine: 2,
+            overflow: TextOverflow.ellipsis,
+            weight: FontWeight.w500,
+            color: Colors.black,
+          )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
             textEditingController: TextEditingController(text: ''),
@@ -1487,7 +1697,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                   onTap: () {
                     if (ctrl.validateArcadeFields()) {
                       // ctrl.goToStep(3);
-                    }else{
+                    } else {
                       showAppSnackBar("Please select all required fields");
                     }
                   },
@@ -1514,13 +1724,13 @@ Widget techniquesPatient(AddPatientController ctrl) {
       10.space(),
       "Techniques Acceptees Pour Ce Patient"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       ListView.builder(
         itemCount: ctrl.patientTechniquesItems.length,
@@ -1554,7 +1764,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
                       height: 20.0,
                       decoration: BoxDecoration(
                         color:
-                            item.isSelected ? primaryBrown : Colors.transparent,
+                        item.isSelected ? primaryBrown : Colors.transparent,
                         border: Border.all(color: primaryBrown, width: 1),
                         shape: BoxShape.circle,
                       ),
@@ -1598,13 +1808,13 @@ Widget techniquesPatient(AddPatientController ctrl) {
       5.space(),
       "Notes"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
         textEditingController: TextEditingController(text: ''),
@@ -1640,13 +1850,13 @@ Widget dentalHistory(AddPatientController ctrl) {
       15.space(),
       "Historique Dentaire"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       5.space(),
       ListView.builder(
@@ -1681,7 +1891,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                       height: 20.0,
                       decoration: BoxDecoration(
                         color:
-                            item.isSelected ? primaryBrown : Colors.transparent,
+                        item.isSelected ? primaryBrown : Colors.transparent,
                         border: Border.all(color: primaryBrown, width: 1),
                         shape: BoxShape.circle,
                       ),
@@ -1750,64 +1960,65 @@ Widget dentalHistory(AddPatientController ctrl) {
                                     ? primaryBrown
                                     : Colors.transparent,
                                 border:
-                                    Border.all(color: primaryBrown, width: 1),
+                                Border.all(color: primaryBrown, width: 1),
                                 shape: BoxShape.circle,
                               ),
                               child: item.dentalHistorySelected
                                   ? Icon(Icons.check,
-                                      color: Colors.white, size: 16)
+                                  color: Colors.white, size: 16)
                                   : Container(),
                             ).paddingOnly(right: 13),
                           ],
                         ),
                       ).onClick(
-                        () {
+                            () {
                           ctrl.toggleProblemSelection(index);
                         },
                       ),
                     ),
                     Expanded(
                         child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.white,
-                        border: Border.all(color: skyColor),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "No",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                            ),
-                          ).paddingOnly(left: 15),
-                          Container(
-                            alignment: Alignment.center,
-                            width: 20.0,
-                            height: 20.0,
-                            decoration: BoxDecoration(
-                              color: !item.dentalHistorySelected
-                                  ? primaryBrown
-                                  : Colors.transparent,
-                              border: Border.all(color: primaryBrown, width: 1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: !item.dentalHistorySelected
-                                ? Icon(Icons.check,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white,
+                            border: Border.all(color: skyColor),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "No",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ).paddingOnly(left: 15),
+                              Container(
+                                alignment: Alignment.center,
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: !item.dentalHistorySelected
+                                      ? primaryBrown
+                                      : Colors.transparent,
+                                  border: Border.all(
+                                      color: primaryBrown, width: 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: !item.dentalHistorySelected
+                                    ? Icon(Icons.check,
                                     color: Colors.white, size: 16)
-                                : Container(),
-                          ).paddingOnly(right: 13),
-                        ],
-                      ),
-                    ).onClick(
-                      () {
-                        ctrl.toggleProblemSelection(index);
-                      },
-                    )),
+                                    : Container(),
+                              ).paddingOnly(right: 13),
+                            ],
+                          ),
+                        ).onClick(
+                              () {
+                            ctrl.toggleProblemSelection(index);
+                          },
+                        )),
                   ],
                 ).paddingOnly(top: 5, bottom: 7),
               )
@@ -1818,13 +2029,13 @@ Widget dentalHistory(AddPatientController ctrl) {
       5.space(),
       "Notes"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
         textEditingController: TextEditingController(text: ''),
@@ -1860,13 +2071,13 @@ Widget incisorCovering(AddPatientController ctrl) {
       15.space(),
       "Recouvrement Incisives (Supraclusion)"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       10.space(),
       ListView.builder(
@@ -1888,11 +2099,11 @@ Widget incisorCovering(AddPatientController ctrl) {
                 Expanded(
                   child: item.title
                       .appCommonText(
-                          size: 16,
-                          align: TextAlign.start,
-                          weight: FontWeight.w400,
-                          maxLine: 2,
-                          overflow: TextOverflow.ellipsis)
+                      size: 16,
+                      align: TextAlign.start,
+                      weight: FontWeight.w400,
+                      maxLine: 2,
+                      overflow: TextOverflow.ellipsis)
                       .paddingOnly(left: 15),
                 ),
                 Container(
@@ -1918,13 +2129,13 @@ Widget incisorCovering(AddPatientController ctrl) {
       5.space(),
       "Notes"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
         textEditingController: TextEditingController(text: ''),
@@ -1959,23 +2170,23 @@ Widget treatmentGoals(AddPatientController ctrl) {
     children: [
       "Objectifs Du Traitement"
           .appCommonText(
-            align: TextAlign.start,
-            size: 24,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w500,
-            color: Colors.black,
-          )
+        align: TextAlign.start,
+        size: 24,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w500,
+        color: Colors.black,
+      )
           .paddingSymmetric(horizontal: 15),
       "(demande du patient)"
           .appCommonText(
-            align: TextAlign.start,
-            size: 16,
-            maxLine: 2,
-            overflow: TextOverflow.ellipsis,
-            weight: FontWeight.w400,
-            color: hintStepColor,
-          )
+        align: TextAlign.start,
+        size: 16,
+        maxLine: 2,
+        overflow: TextOverflow.ellipsis,
+        weight: FontWeight.w400,
+        color: hintStepColor,
+      )
           .paddingSymmetric(horizontal: 15),
       10.space(),
       Container(
@@ -1989,10 +2200,10 @@ Widget treatmentGoals(AddPatientController ctrl) {
           children: [
             "Les deux"
                 .appCommonText(
-                  size: 16,
-                  weight: FontWeight.w400,
-                  color: Colors.black,
-                )
+              size: 16,
+              weight: FontWeight.w400,
+              color: Colors.black,
+            )
                 .paddingOnly(left: 15),
             CustomRadioButton(
               value: 1,
@@ -2015,10 +2226,10 @@ Widget treatmentGoals(AddPatientController ctrl) {
           children: [
             "Maxillaire"
                 .appCommonText(
-                  size: 16,
-                  weight: FontWeight.w400,
-                  color: Colors.black,
-                )
+              size: 16,
+              weight: FontWeight.w400,
+              color: Colors.black,
+            )
                 .paddingOnly(left: 15),
             CustomRadioButton(
               value: 2,

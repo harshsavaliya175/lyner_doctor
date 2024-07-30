@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final productListModel = productListModelFromJson(jsonString);
-
 import 'dart:convert';
 
 ProductListModel productListModelFromJson(String str) => ProductListModel.fromJson(json.decode(str));
@@ -9,7 +5,7 @@ ProductListModel productListModelFromJson(String str) => ProductListModel.fromJs
 String productListModelToJson(ProductListModel data) => json.encode(data.toJson());
 
 class ProductListModel {
-  int status;
+  bool status;
   String msg;
   List<ProductListData> data;
 
@@ -20,7 +16,7 @@ class ProductListModel {
   });
 
   factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
-    status: json["status"],
+    status: json["status"]==1,
     msg: json["msg"],
     data: List<ProductListData>.from(json["data"].map((x) => ProductListData.fromJson(x))),
   );
@@ -56,15 +52,15 @@ class ProductListData {
   });
 
   factory ProductListData.fromJson(Map<String, dynamic> json) => ProductListData(
-    toothCaseId: json["tooth_case_id"],
-    caseName: json["case_name"],
-    casePrice: json["case_price"],
-    caseDesc: json["case_desc"],
-    caseSteps: json["case_steps"],
-    isActive: json["is_active"],
-    isDeleted: json["is_deleted"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    toothCaseId: json["tooth_case_id"] ?? 0,
+    caseName: json["case_name"] ?? "",
+    casePrice: json["case_price"] ?? "",
+    caseDesc: json["case_desc"] ?? "",
+    caseSteps: json["case_steps"] ?? "",
+    isActive: json["is_active"] ?? 0,
+    isDeleted: json["is_deleted"] ?? 0,
+    createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : DateTime.now(),
+    updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : DateTime.now(),
   );
 
   Map<String, dynamic> toJson() => {

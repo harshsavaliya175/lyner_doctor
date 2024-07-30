@@ -184,9 +184,11 @@ class AppTextField extends StatefulWidget {
   final bool isError;
 
   final TextInputType? keyboardType;
-
+  final GestureTapCallback? onTap;
   final Function(String value)? onChanged;
   final Function(String value) validator;
+  final bool? readOnly;
+  final bool showCursor;
 
   AppTextField(
       {Key? key,
@@ -195,7 +197,10 @@ class AppTextField extends StatefulWidget {
       this.autofillHints,
       this.prefixIcon,
       this.suffixIcon = '',
+      this.readOnly,
+      this.showCursor = true,
       this.hintTextStyle,
+      this.onTap,
       this.textStyle,
       this.showPrefixWidget,
       this.maxLines = 1,
@@ -269,6 +274,9 @@ class _AppTextFieldState extends State<AppTextField> {
             smartQuotesType: SmartQuotesType.disabled,
             smartDashesType: SmartDashesType.disabled,
             enableSuggestions: false,
+            onTap: widget.onTap,
+            readOnly: widget.readOnly ?? false,
+            showCursor: widget.showCursor,
             enableIMEPersonalizedLearning: false,
             autocorrect: false,
             maxLength: widget.maxLength,
@@ -287,10 +295,12 @@ class _AppTextFieldState extends State<AppTextField> {
             },
             cursorColor: primaryBrown,
             style: widget.textStyle ??
-                GoogleFonts.montserrat(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
+                TextStyle(
+                  fontSize: 15,
+                  color: blackColor,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'maax-medium-medium',
+                ),
             obscureText: widget.obscureText,
             decoration: InputDecoration(
               contentPadding:
@@ -303,11 +313,15 @@ class _AppTextFieldState extends State<AppTextField> {
                               onTap: _toggleObscured,
                               child: widget.obscureText
                                   ? Assets.icons.closeEye
-                                      .svg(colorFilter: ColorFilter.mode(hintTextColor,BlendMode.srcIn))
+                                      .svg(
+                                          colorFilter: ColorFilter.mode(
+                                              hintTextColor, BlendMode.srcIn))
                                       .paddingAll(3)
                                       .paddingOnly(bottom: 4)
                                   : Assets.icons.openEye
-                                      .svg(colorFilter: ColorFilter.mode(hintTextColor,BlendMode.srcIn))
+                                      .svg(
+                                          colorFilter: ColorFilter.mode(
+                                              hintTextColor, BlendMode.srcIn))
                                       .paddingAll(3)),
                         ).paddingOnly(right: 20)
                       : widget.showPrefixWidget
@@ -317,7 +331,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: hintTextColor),
+                      color: hintStepColor),
               /* fillColor: textFieldValue.isNotEmpty
                   ? Colors.transparent
                   : widget.isError
@@ -329,25 +343,23 @@ class _AppTextFieldState extends State<AppTextField> {
               filled: true,
               errorStyle: const TextStyle(height: 0),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
                       color:
                           textFieldValue.isNotEmpty ? primaryBrown : skyColor)),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: const BorderSide(color: primaryBrown)),
               errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
                       color: widget.isError
                           ? Colors.red
                           : hintTextColor.withOpacity(0.2))),
               focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
-                      color: widget.isError
-                          ? primaryBrown
-                          : primaryBrown)),
+                      color: widget.isError ? primaryBrown : primaryBrown)),
             ),
           ),
         ],

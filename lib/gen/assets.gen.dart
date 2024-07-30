@@ -96,6 +96,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_select.svg
   SvgGenImage get icSelect => const SvgGenImage('assets/icons/ic_select.svg');
 
+  /// File path: assets/icons/ic_select_arrow.svg
+  SvgGenImage get icSelectArrow =>
+      const SvgGenImage('assets/icons/ic_select_arrow.svg');
+
   /// File path: assets/icons/ic_user.svg
   SvgGenImage get icUser => const SvgGenImage('assets/icons/ic_user.svg');
 
@@ -124,6 +128,7 @@ class $AssetsIconsGen {
         icProfile,
         icSearch,
         icSelect,
+        icSelectArrow,
         icUser,
         lock,
         openEye,
