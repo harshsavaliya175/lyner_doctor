@@ -6,30 +6,33 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
-
 import 'extension.dart';
 
 class CommonTextField extends StatefulWidget {
-  CommonTextField(
-      {Key? key,
-      this.controller,
-      this.hintText = '',
-      this.validation,
-      this.prefixPadding,
-      this.onChange,
-      this.inputFormatters,
-      this.keyboardType,
-      this.suffixIcon,
-      this.prefixIcon,
-      this.prefixIconSize,
-      this.height,
-      this.hintTextSize,
-      this.obscureText,
-      this.readOnly,
-      this.fillColor = whiteColor,
-      this.isPasswordField})
-      : super(key: key);
+  CommonTextField({
+    Key? key,
+    this.controller,
+    this.hintText = '',
+    this.validation,
+    this.prefixPadding,
+    this.onChange,
+    this.inputFormatters,
+    this.keyboardType,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.prefixIconSize,
+    this.height,
+    this.hintTextSize,
+    this.obscureText,
+    this.readOnly,
+    this.fillColor = whiteColor,
+    this.isPasswordField,
+    this.action,
+    this.textCapitalization = TextCapitalization.none,
+  }) : super(key: key);
   final TextEditingController? controller;
+  final TextCapitalization textCapitalization;
+  final TextInputAction? action;
   final String hintText;
   final bool? isPasswordField;
   final bool? obscureText;
@@ -85,17 +88,19 @@ class _CommonTextFieldState extends State<CommonTextField> {
         validator: widget.validation,
         controller: widget.controller ?? TextEditingController(),
         maxLines: maxLine,
+        textCapitalization: widget.textCapitalization,
         autofocus: false,
         style: hintTextStyle(
             size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
         inputFormatters: widget.inputFormatters,
         obscureText: widget.obscureText ?? false,
-        textInputAction: TextInputAction.done,
+        textInputAction: widget.action ?? TextInputAction.done,
         keyboardType: widget.keyboardType,
+        cursorColor: primaryBrown,
         decoration: InputDecoration(
           hintText: widget.hintText,
           enabled: true,
-          contentPadding: EdgeInsets.zero,
+          // contentPadding: EdgeInsets.zero,
           hintStyle: hintTextStyle(
               size: widget.hintTextSize ?? 16.sp,
               weight: FontWeight.w500,
@@ -103,8 +108,8 @@ class _CommonTextFieldState extends State<CommonTextField> {
           prefixIcon: widget.prefixIcon != null
               ? (widget.prefixIcon!
                       .svg(
-                          height:widget.prefixIconSize?? 20.w,
-                          width: widget.prefixIconSize??20.w,
+                          height: widget.prefixIconSize ?? 20.w,
+                          width: widget.prefixIconSize ?? 20.w,
                           colorFilter: ColorFilter.mode(
                               _focus.hasFocus ? primaryBrown : hintColor,
                               BlendMode.srcIn),

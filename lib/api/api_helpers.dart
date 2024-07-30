@@ -1,11 +1,13 @@
-/*import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:lynerdoctor/api/response_item_model.dart';
-import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 import 'api_exceptions.dart';
 
@@ -21,8 +23,8 @@ class BaseApiHelper {
         .post(Uri.parse(requestUrl),
             body: json.encode(requestData),
             headers: requestHeaders(passAuthToken))
-        .then((http.Response response) => onValue(response))
-        .onError((error, StackTrace stackTrace) => onError(error, requestUrl));
+        .then((response) => onValue(response))
+        .onError((error, stackTrace) => onError(error, requestUrl));
   }
 
   static Future<ResponseItem> getRequest(
@@ -35,8 +37,8 @@ class BaseApiHelper {
           Uri.parse(requestUrl),
           headers: requestHeaders(isPassAuthToken),
         )
-        .then((http.Response response) => onValue(response))
-        .onError((error, StackTrace stackTrace) => onError(error, requestUrl));
+        .then((response) => onValue(response))
+        .onError((error, stackTrace) => onError(error, requestUrl));
   }
 
   static Future baseOnValue(http.Response response) async {
@@ -64,7 +66,7 @@ class BaseApiHelper {
     return result;
   }
 
-  static onError(dynamic error, dynamic url) {
+  static onError(error, url) {
     log(url);
     printData(tittle: "Error caused: ", val: error.toString());
     bool status = false;
@@ -120,7 +122,6 @@ class BaseApiHelper {
     bool status = false;
     String message;
     String? refreshToken;
-    int? currentAlignerStage;
 
     dynamic data = responseData;
 
@@ -132,12 +133,10 @@ class BaseApiHelper {
       if (responseData.status) {
         status = true;
         data = responseData.data;
-        currentAlignerStage = responseData.currentAlignerStage;
       } else {
         printData(tittle: "logout", val: responseData.forceLogout);
         if (responseData.forceLogout) {
-          /// Todo : when shared pref is set this line make sure uncommented
-          // preferences.clearUserItem();
+          preferences.clearUserItem();
         }
       }
     } else {
@@ -145,11 +144,11 @@ class BaseApiHelper {
       message = "Something went wrong.";
     }
     result = ResponseItem(
-        data: data,
-        msg: message,
-        status: status,
-        refreshToken: refreshToken,
-        currentAlignerStage: currentAlignerStage);
+      data: data,
+      msg: message,
+      status: status,
+      refreshToken: refreshToken,
+    );
     printData(
         tittle: "response",
         val:
@@ -161,4 +160,4 @@ class BaseApiHelper {
 
     return result;
   }
-}*/
+}

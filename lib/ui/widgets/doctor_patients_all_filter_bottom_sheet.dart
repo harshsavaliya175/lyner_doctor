@@ -1,0 +1,321 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/clinic_location_model.dart';
+import 'package:lynerdoctor/model/doctor_model.dart';
+import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
+import 'package:lynerdoctor/ui/widgets/app_button.dart';
+import 'package:lynerdoctor/ui/widgets/common_bottom_sheet_top_widget.dart';
+
+class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
+  const DoctorPatientsAllFilterBottomSheet({
+    super.key,
+    required this.controller,
+  });
+
+  final ScrollController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PatientsController>(
+      builder: (PatientsController ctrl) {
+        return ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+          child: Container(
+            color: appBgColor,
+            child: ListView(
+              controller: controller,
+              shrinkWrap: true,
+              children: [
+                CommonBottomSheetTopWidget(
+                  title: LocaleKeys.filter.translateText,
+                  onTap: () {
+                    Get.back();
+                  },
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    20.space(),
+                    Text(
+                      LocaleKeys.treatmentStatus.translateText,
+                      style: hintTextStyle(
+                        size: 16,
+                        weight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    12.space(),
+                    Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.white,
+                        border: Border.all(color: skyColor),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LocaleKeys.all.translateText
+                              .appCommonText(
+                                size: 16,
+                                weight: FontWeight.w400,
+                                color: Colors.black,
+                              )
+                              .paddingOnly(left: 15),
+                          Container(
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: primaryBrown, width: 1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 14.0,
+                              height: 14.0,
+                              decoration: BoxDecoration(
+                                color: ctrl.filterRadioGroupValue == 'All'
+                                    ? primaryBrown
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ).paddingOnly(right: 13)
+                        ],
+                      ),
+                    ).onClick(() {
+                      ctrl.changeData(filterGroupValue: 'All');
+                    }),
+                    12.space(),
+                    doctorData(ctrl),
+                    12.space(),
+                    clinicAddressData(ctrl),
+                    40.space(),
+                    AppButton(
+                      bgColor: primaryBrown,
+                      text: LocaleKeys.apply.translateText,
+                      fontColor: whiteColor,
+                      radius: 100,
+                      onTap: () {},
+                    ),
+                    28.space(),
+                  ],
+                ).paddingSymmetric(horizontal: 20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget doctorData(PatientsController ctrl) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: skyColor, width: 1),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: Get.width,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: LocaleKeys.doctor.translateText
+                  .appCommonText(
+                    size: 16,
+                    weight: FontWeight.w400,
+                    color: Colors.black,
+                  )
+                  .paddingOnly(top: 16, left: 16, bottom: 16),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(color: skyColor, thickness: 1, height: 0),
+                ctrl.doctorDataList.isEmpty
+                    ? "Doctor Not Found"
+                        .appCommonText(
+                          size: 15,
+                          weight: FontWeight.w300,
+                          color: Colors.black,
+                        )
+                        .paddingOnly(top: 16, left: 16, bottom: 16)
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: ctrl.doctorDataList.length,
+                        padding: EdgeInsets.all(15),
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            20.space(),
+                        itemBuilder: (BuildContext context, int index) {
+                          DoctorData? doctor = ctrl.doctorDataList[index];
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child:
+                                    "Dr. ${doctor?.firstName ?? ''} ${doctor?.lastName ?? ''}"
+                                        .appCommonText(
+                                  size: 16,
+                                  weight: FontWeight.w300,
+                                  color: Colors.black,
+                                  align: TextAlign.start,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: primaryBrown, width: 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 14.0,
+                                  height: 14.0,
+                                  decoration: BoxDecoration(
+                                    color: ctrl.filterRadioGroupValue ==
+                                            ctrl.doctorDataList[index]
+                                        ? primaryBrown
+                                        : Colors.transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ).onClick(
+                            () {
+                              ctrl.changeData(
+                                  filterGroupValue: ctrl.doctorDataList[index]);
+                            },
+                          );
+                        },
+                      ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget clinicAddressData(PatientsController ctrl) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: skyColor, width: 1),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: Get.width,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: LocaleKeys.clinic.translateText
+                  .appCommonText(
+                    size: 16,
+                    weight: FontWeight.w400,
+                    color: Colors.black,
+                  )
+                  .paddingOnly(top: 16, left: 16, bottom: 16),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(color: skyColor, thickness: 1, height: 0),
+                ctrl.clinicLocationList.isEmpty
+                    ? "Clinic Location Not Found"
+                        .appCommonText(
+                          size: 15,
+                          weight: FontWeight.w300,
+                          color: Colors.black,
+                        )
+                        .paddingOnly(top: 16, left: 16, bottom: 16)
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: ctrl.clinicLocationList.length,
+                        padding: EdgeInsets.all(15),
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            20.space(),
+                        itemBuilder: (BuildContext context, int index) {
+                          ClinicLocation? location =
+                              ctrl.clinicLocationList[index];
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child:
+                                    "${location?.address ?? ''}".appCommonText(
+                                  size: 16,
+                                  weight: FontWeight.w300,
+                                  color: Colors.black,
+                                  align: TextAlign.start,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: primaryBrown, width: 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 14.0,
+                                  height: 14.0,
+                                  decoration: BoxDecoration(
+                                    color: ctrl.filterRadioGroupValue ==
+                                            ctrl.clinicLocationList[index]
+                                        ? primaryBrown
+                                        : Colors.transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ).onClick(
+                            () {
+                              ctrl.changeData(
+                                  filterGroupValue:
+                                      ctrl.clinicLocationList[index]);
+                            },
+                          );
+                        },
+                      ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

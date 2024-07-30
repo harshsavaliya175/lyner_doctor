@@ -12,13 +12,11 @@ class ResponseItem {
     required this.status,
     this.forceLogout = false,
     this.refreshToken,
-    this.currentAlignerStage,
   });
 
   dynamic data;
   String msg;
   String? refreshToken;
-  int? currentAlignerStage;
   bool status;
 
   final bool forceLogout;
@@ -29,7 +27,6 @@ class ResponseItem {
         status: json["status"] == 1,
         forceLogout: json["force_logout"] == 1,
         refreshToken: json["new_token"] ?? '',
-        currentAlignerStage: json["current_aligner_stage"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

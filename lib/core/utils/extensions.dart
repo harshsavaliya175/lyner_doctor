@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
-
 extension DateTimeExtension on DateTime {
   DateTime toLocalDateTime({String format = "yyyy-MM-dd HH:mm:ss"}) {
     var dateTime = DateFormat(format).parse(toString(), true);

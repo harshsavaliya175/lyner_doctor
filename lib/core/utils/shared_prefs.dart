@@ -1,6 +1,12 @@
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
+import 'package:lynerdoctor/model/clinic_model.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final SharedPreference preferences = SharedPreference();
@@ -31,42 +37,52 @@ class SharedPreference {
   static const String REFERENCE_CODE = "REFERENCE_CODE";
   static const String CURRENT_ALIGNER_STAGE = "CURRENT_ALIGNER_STAGE";
   static const String TOTAL_ALIGNER_STAGE = "TOTAL_ALIGNER_STAGE";
+  static const String CLINIC_ID = "CLINIC_ID";
+  static const String CLINIC_NAME = "CLINIC_NAME";
+  static const String EMAIL = "EMAIL";
+  static const String CLINIC_MOBILE_NUMBER = "CLINIC_MOBILE_NUMBER";
+  static const String CLINIC_PHOTO = "CLINIC_PHOTO";
+  static const String EMAIL_VERIFICATION_AT = "EMAIL_VERIFICATION_AT";
+  static const String REMEMBER_TOKEN = "REMEMBER_TOKEN";
+  static const String VERIFY_FORGOT_CODE = "VERIFY_FORGOT_CODE";
+  static const String IS_EMAIL_NOTIFICATION = "IS_EMAIL_NOTIFICATION";
+  static const String IS_PHONE_NOTIFICATION = "IS_PHONE_NOTIFICATION";
+  static const String CREATE_AT = "CREATE_AT";
 
-  // saveUserItem(UserData data) {
-  //   preferences.putBool(SharedPreference.IS_LOGGED_IN, true);
-  //   _preferences?.setString(USER_ID, data.userId.toString());
-  //   _preferences?.setString(AUTH_TOKEN, data.authToken);
-  //   _preferences?.setString(FIRST_NAME, data.firstName);
-  //
-  //   _preferences?.setString(USER_TOKEN, data.userToken);
-  //   _preferences?.setString(USER_EMAIL, data.email);
-  //   _preferences?.setString(USER_IMG, data.userProfilePhoto);
-  //   // _preferences?.setString(USER_TYPE, data.userType);
-  //   // _preferences?.setString(REFERENCE_CODE, data.referenceCode);
-  //
-  //   _preferences?.setInt(CURRENT_ALIGNER_STAGE, data.currentAlignerStage);
-  //   _preferences?.setInt(TOTAL_ALIGNER_STAGE, data.totalAlignerStage);
-  // }
+  saveClinicItem(ClinicData data) {
+    preferences.putBool(SharedPreference.IS_LOGGED_IN, true);
+    _preferences?.setInt(CLINIC_ID, data.clinicId);
+    _preferences?.setString(CLINIC_NAME, data.clinicName);
+    _preferences?.setString(EMAIL, data.email);
+    _preferences?.setString(CLINIC_MOBILE_NUMBER, data.clinicMobileNumber);
+    _preferences?.setString(USER_EMAIL, data.email);
+    _preferences?.setString(CLINIC_PHOTO, data.clinicPhoto);
+    _preferences?.setString(REMEMBER_TOKEN, data.rememberToken);
+    _preferences?.setString(AUTH_TOKEN, data.authToken);
+    _preferences?.setString(VERIFY_FORGOT_CODE, data.verifyForgotCode);
+    _preferences?.setInt(IS_EMAIL_NOTIFICATION, data.isEmailNotification);
+    _preferences?.setInt(IS_PHONE_NOTIFICATION, data.isPhoneNotification);
+  }
 
-  // putAppDeviceInfo() async {
-  //   bool isiOS = Platform.isIOS;
-  //   putString(APP_DEVICE_TYPE, isiOS ? "iOS" : "android");
-  //   final deviceInfo = await appDeviceInfo();
-  //   final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-  //   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  //   putString(TIME_ZONE, currentTimeZone);
-  //   if (isiOS) {
-  //     IosDeviceInfo iosDeviceInfo = (deviceInfo as IosDeviceInfo);
-  //     putString(APP_DEVICE_MODEL, "Test");
-  //     putString(APP_OS_VERSION, "iOS ${iosDeviceInfo.systemVersion}");
-  //   } else {
-  //     AndroidDeviceInfo androidDeviceInfo = (deviceInfo as AndroidDeviceInfo);
-  //     putString(APP_DEVICE_MODEL, androidDeviceInfo.model);
-  //     putString(APP_OS_VERSION, androidDeviceInfo.version.release);
-  //   }
-  //   putString(APP_STORE_VERSION, packageInfo.version);
-  //   putString(APP_STORE_BUILD_NUMBER, packageInfo.buildNumber);
-  // }
+  putAppDeviceInfo() async {
+    bool isiOS = Platform.isIOS;
+    putString(APP_DEVICE_TYPE, isiOS ? "iOS" : "android");
+    final deviceInfo = await appDeviceInfo();
+    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    putString(TIME_ZONE, currentTimeZone);
+    if (isiOS) {
+      IosDeviceInfo iosDeviceInfo = (deviceInfo as IosDeviceInfo);
+      putString(APP_DEVICE_MODEL, "Test");
+      putString(APP_OS_VERSION, "iOS ${iosDeviceInfo.systemVersion}");
+    } else {
+      AndroidDeviceInfo androidDeviceInfo = (deviceInfo as AndroidDeviceInfo);
+      putString(APP_DEVICE_MODEL, androidDeviceInfo.model);
+      putString(APP_OS_VERSION, androidDeviceInfo.version.release);
+    }
+    putString(APP_STORE_VERSION, packageInfo.version);
+    putString(APP_STORE_BUILD_NUMBER, packageInfo.buildNumber);
+  }
 
   Future<dynamic> appDeviceInfo() async {
     return Platform.isIOS
@@ -74,13 +90,13 @@ class SharedPreference {
         : await DeviceInfoPlugin().androidInfo;
   }
 
-  // void clearUserItem() async {
-  //   _preferences?.clear();
-  //   _preferences = null;
-  //   await init();
-  //   await putAppDeviceInfo();
-  //   Get.offAllNamed(Routes.auth);
-  // }
+  void clearUserItem() async {
+    _preferences?.clear();
+    _preferences = null;
+    await init();
+    await putAppDeviceInfo();
+    Get.offAllNamed(Routes.signUpSignInScreen);
+  }
 
   Future<bool?> putString(String key, String value) async {
     return _preferences == null ? null : _preferences?.setString(key, value);

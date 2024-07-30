@@ -54,9 +54,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/Mail.svg');
 
-  /// File path: assets/icons/User.svg
-  SvgGenImage get user => const SvgGenImage('assets/icons/User.svg');
-
   /// File path: assets/icons/clinic.svg
   SvgGenImage get clinic => const SvgGenImage('assets/icons/clinic.svg');
 
@@ -66,6 +63,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
 
+  /// File path: assets/icons/ic_cancel.svg
+  SvgGenImage get icCancel => const SvgGenImage('assets/icons/ic_cancel.svg');
+
   /// File path: assets/icons/ic_document.svg
   SvgGenImage get icDocument =>
       const SvgGenImage('assets/icons/ic_document.svg');
@@ -73,8 +73,31 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_down.svg
   SvgGenImage get icDown => const SvgGenImage('assets/icons/ic_down.svg');
 
+  /// File path: assets/icons/ic_filter.svg
+  SvgGenImage get icFilter => const SvgGenImage('assets/icons/ic_filter.svg');
+
+  /// File path: assets/icons/ic_library.svg
+  SvgGenImage get icLibrary => const SvgGenImage('assets/icons/ic_library.svg');
+
+  /// File path: assets/icons/ic_lyner_connect.svg
+  SvgGenImage get icLynerConnect =>
+      const SvgGenImage('assets/icons/ic_lyner_connect.svg');
+
+  /// File path: assets/icons/ic_patients.svg
+  SvgGenImage get icPatients =>
+      const SvgGenImage('assets/icons/ic_patients.svg');
+
+  /// File path: assets/icons/ic_profile.svg
+  SvgGenImage get icProfile => const SvgGenImage('assets/icons/ic_profile.svg');
+
+  /// File path: assets/icons/ic_search.svg
+  SvgGenImage get icSearch => const SvgGenImage('assets/icons/ic_search.svg');
+
   /// File path: assets/icons/ic_select.svg
   SvgGenImage get icSelect => const SvgGenImage('assets/icons/ic_select.svg');
+
+  /// File path: assets/icons/ic_user.svg
+  SvgGenImage get icUser => const SvgGenImage('assets/icons/ic_user.svg');
 
   /// File path: assets/icons/lock.svg
   SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
@@ -88,13 +111,20 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
         mail,
-        user,
         clinic,
         closeEye,
         icBack,
+        icCancel,
         icDocument,
         icDown,
+        icFilter,
+        icLibrary,
+        icLynerConnect,
+        icPatients,
+        icProfile,
+        icSearch,
         icSelect,
+        icUser,
         lock,
         openEye,
         phone
