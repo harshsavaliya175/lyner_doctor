@@ -38,8 +38,8 @@ class CommonTextField extends StatefulWidget {
   final bool? obscureText;
   final num? hintTextSize;
   final double? height;
-  final String? Function(String?)? validation;
-  final void Function(String)? onChange;
+  final String? Function(String? value)? validation;
+  final void Function(String value)? onChange;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final bool? readOnly;
@@ -303,11 +303,15 @@ class _AppTextFieldState extends State<AppTextField> {
                               onTap: _toggleObscured,
                               child: widget.obscureText
                                   ? Assets.icons.closeEye
-                                      .svg(colorFilter: ColorFilter.mode(hintTextColor,BlendMode.srcIn))
+                                      .svg(
+                                          colorFilter: ColorFilter.mode(
+                                              hintTextColor, BlendMode.srcIn))
                                       .paddingAll(3)
                                       .paddingOnly(bottom: 4)
                                   : Assets.icons.openEye
-                                      .svg(colorFilter: ColorFilter.mode(hintTextColor,BlendMode.srcIn))
+                                      .svg(
+                                          colorFilter: ColorFilter.mode(
+                                              hintTextColor, BlendMode.srcIn))
                                       .paddingAll(3)),
                         ).paddingOnly(right: 20)
                       : widget.showPrefixWidget
@@ -329,25 +333,23 @@ class _AppTextFieldState extends State<AppTextField> {
               filled: true,
               errorStyle: const TextStyle(height: 0),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
                       color:
                           textFieldValue.isNotEmpty ? primaryBrown : skyColor)),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: const BorderSide(color: primaryBrown)),
               errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
                       color: widget.isError
                           ? Colors.red
                           : hintTextColor.withOpacity(0.2))),
               focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius??30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(
-                      color: widget.isError
-                          ? primaryBrown
-                          : primaryBrown)),
+                      color: widget.isError ? primaryBrown : primaryBrown)),
             ),
           ),
         ],

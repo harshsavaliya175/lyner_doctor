@@ -78,5 +78,12 @@ abstract class  LocaleKeys {
   static const apply = 'apply';
   static const all = 'all';
   static const clinic = 'clinic';
+  static const draft = 'draft';
+  static const patientsNotFound = 'patientsNotFound';
+  static const myProfile = 'myProfile';
+  static const financial = 'financial';
+  static const editProfile = 'editProfile';
+  static const changePassword = 'changePassword';
+  static const logOut = 'logOut';
 
 }

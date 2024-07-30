@@ -91,7 +91,14 @@ class CodegenLoader extends AssetLoader{
   "archived": "Archived",
   "apply": "Apply",
   "all": "All",
-  "clinic": "Clinic"
+  "clinic": "Clinic",
+  "draft": "Draft",
+  "patientsNotFound": "Patients Not Found",
+  "myProfile": "My Profile",
+  "financial": "Financial",
+  "editProfile": "Edit Profile",
+  "changePassword": "Change Password",
+  "logOut": "Log Out"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

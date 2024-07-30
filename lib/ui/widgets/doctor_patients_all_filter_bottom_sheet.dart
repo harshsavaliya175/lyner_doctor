@@ -10,109 +10,147 @@ import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/common_bottom_sheet_top_widget.dart';
 
-class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
+class DoctorPatientsAllFilterBottomSheet extends StatefulWidget {
   const DoctorPatientsAllFilterBottomSheet({
     super.key,
     required this.controller,
+    required this.onTap,
   });
 
   final ScrollController controller;
+  final VoidCallback onTap;
+
+  @override
+  State<DoctorPatientsAllFilterBottomSheet> createState() =>
+      _DoctorPatientsAllFilterBottomSheetState();
+}
+
+class _DoctorPatientsAllFilterBottomSheetState
+    extends State<DoctorPatientsAllFilterBottomSheet> {
+  dynamic allDoctorAndClinicAddressGroupValue = 'All';
+  String appbarSubTitle = 'All';
+  String filterType = '';
+  String clinicLocationId = '';
+  String sessionDoctorId = '';
+  PatientsController patientsController = Get.put(PatientsController());
+
+  @override
+  void initState() {
+    allDoctorAndClinicAddressGroupValue =
+        patientsController.allDoctorAndClinicAddressGroupValue;
+    appbarSubTitle = patientsController.appbarSubTitle;
+    filterType = patientsController.filterType;
+    clinicLocationId = patientsController.clinicLocationId;
+    sessionDoctorId = patientsController.sessionDoctorId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PatientsController>(
-      builder: (PatientsController ctrl) {
-        return ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          child: Container(
-            color: appBgColor,
-            child: ListView(
-              controller: controller,
-              shrinkWrap: true,
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+      child: Container(
+        color: appBgColor,
+        child: ListView(
+          controller: widget.controller,
+          shrinkWrap: true,
+          children: [
+            CommonBottomSheetTopWidget(
+              title: LocaleKeys.filter.translateText,
+              onTap: () {
+                Get.back();
+              },
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CommonBottomSheetTopWidget(
-                  title: LocaleKeys.filter.translateText,
+                20.space(),
+                // Text(
+                //   LocaleKeys.treatmentStatus.translateText,
+                //   style: hintTextStyle(
+                //     size: 16,
+                //     weight: FontWeight.w600,
+                //     color: Colors.black,
+                //   ),
+                // ),
+                // 12.space(),
+                Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                    border: Border.all(color: skyColor),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      LocaleKeys.all.translateText
+                          .appCommonText(
+                            size: 16,
+                            weight: FontWeight.w400,
+                            color: Colors.black,
+                          )
+                          .paddingOnly(left: 15),
+                      Container(
+                        padding: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: primaryBrown, width: 1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 14.0,
+                          height: 14.0,
+                          decoration: BoxDecoration(
+                            color: allDoctorAndClinicAddressGroupValue == 'All'
+                                ? primaryBrown
+                                : Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ).paddingOnly(right: 13)
+                    ],
+                  ),
+                ).onClick(() {
+                  setState(() {
+                    allDoctorAndClinicAddressGroupValue = 'All';
+                    appbarSubTitle = 'All';
+                    filterType = '';
+                  });
+                }),
+                12.space(),
+                doctorData(patientsController),
+                12.space(),
+                clinicAddressData(patientsController),
+                40.space(),
+                AppButton(
+                  bgColor: primaryBrown,
+                  text: LocaleKeys.apply.translateText,
+                  fontColor: whiteColor,
+                  radius: 100,
                   onTap: () {
                     Get.back();
+                    patientsController.changeData(
+                      allDoctorAndClinicAddressValue:
+                          allDoctorAndClinicAddressGroupValue,
+                      appbarSubTitleValue: appbarSubTitle,
+                      clinicLocationIdValue: clinicLocationId,
+                      sessionDoctorIdValue: sessionDoctorId,
+                      filterTypeValue: filterType,
+                    );
+                    widget.onTap();
                   },
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    20.space(),
-                    Text(
-                      LocaleKeys.treatmentStatus.translateText,
-                      style: hintTextStyle(
-                        size: 16,
-                        weight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    12.space(),
-                    Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.white,
-                        border: Border.all(color: skyColor),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          LocaleKeys.all.translateText
-                              .appCommonText(
-                                size: 16,
-                                weight: FontWeight.w400,
-                                color: Colors.black,
-                              )
-                              .paddingOnly(left: 15),
-                          Container(
-                            padding: EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: primaryBrown, width: 1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: 14.0,
-                              height: 14.0,
-                              decoration: BoxDecoration(
-                                color: ctrl.filterRadioGroupValue == 'All'
-                                    ? primaryBrown
-                                    : Colors.transparent,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ).paddingOnly(right: 13)
-                        ],
-                      ),
-                    ).onClick(() {
-                      ctrl.changeData(filterGroupValue: 'All');
-                    }),
-                    12.space(),
-                    doctorData(ctrl),
-                    12.space(),
-                    clinicAddressData(ctrl),
-                    40.space(),
-                    AppButton(
-                      bgColor: primaryBrown,
-                      text: LocaleKeys.apply.translateText,
-                      fontColor: whiteColor,
-                      radius: 100,
-                      onTap: () {},
-                    ),
-                    28.space(),
-                  ],
-                ).paddingSymmetric(horizontal: 20),
+                28.space(),
               ],
-            ),
-          ),
-        );
-      },
+            ).paddingSymmetric(horizontal: 20),
+          ],
+        ),
+      ),
     );
   }
 
@@ -192,10 +230,11 @@ class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
                                   width: 14.0,
                                   height: 14.0,
                                   decoration: BoxDecoration(
-                                    color: ctrl.filterRadioGroupValue ==
-                                            ctrl.doctorDataList[index]
-                                        ? primaryBrown
-                                        : Colors.transparent,
+                                    color:
+                                        allDoctorAndClinicAddressGroupValue ==
+                                                ctrl.doctorDataList[index]
+                                            ? primaryBrown
+                                            : Colors.transparent,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -203,8 +242,15 @@ class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
                             ],
                           ).onClick(
                             () {
-                              ctrl.changeData(
-                                  filterGroupValue: ctrl.doctorDataList[index]);
+                              setState(() {
+                                allDoctorAndClinicAddressGroupValue =
+                                    ctrl.doctorDataList[index];
+                                appbarSubTitle =
+                                    "Dr. ${doctor?.firstName ?? ''} ${doctor?.lastName ?? ''}";
+                                filterType = 'doctor';
+                                sessionDoctorId =
+                                    '${ctrl.doctorDataList[index]?.doctorId}';
+                              });
                             },
                           );
                         },
@@ -293,10 +339,11 @@ class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
                                   width: 14.0,
                                   height: 14.0,
                                   decoration: BoxDecoration(
-                                    color: ctrl.filterRadioGroupValue ==
-                                            ctrl.clinicLocationList[index]
-                                        ? primaryBrown
-                                        : Colors.transparent,
+                                    color:
+                                        allDoctorAndClinicAddressGroupValue ==
+                                                ctrl.clinicLocationList[index]
+                                            ? primaryBrown
+                                            : Colors.transparent,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -304,9 +351,14 @@ class DoctorPatientsAllFilterBottomSheet extends StatelessWidget {
                             ],
                           ).onClick(
                             () {
-                              ctrl.changeData(
-                                  filterGroupValue:
-                                      ctrl.clinicLocationList[index]);
+                              setState(() {
+                                allDoctorAndClinicAddressGroupValue =
+                                    ctrl.clinicLocationList[index];
+                                appbarSubTitle = '${location?.address ?? ''}';
+                                filterType = 'location';
+                                clinicLocationId =
+                                    '${ctrl.clinicLocationList[index]?.clinicLocationId}';
+                              });
                             },
                           );
                         },
