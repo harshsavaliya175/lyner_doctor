@@ -67,7 +67,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   #
   package_info: ^2.0.2
-
+  flutter_timezone: ^2.1.0
   # for get device information
   device_info: ^2.0.3
 

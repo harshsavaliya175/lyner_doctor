@@ -320,6 +320,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "flutter_timezone",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_timezone-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
@@ -890,7 +896,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-07-26T04:35:35.719440Z",
+  "generated": "2024-07-30T05:02:32.862154Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",
