@@ -7,7 +7,7 @@ import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
-import 'package:lynerdoctor/model/patient_model.dart';
+import 'package:lynerdoctor/model/patient_resposne_model.dart';
 
 class PatientsController extends GetxController {
   bool isDataNotFound = true; //for testing
@@ -24,7 +24,7 @@ class PatientsController extends GetxController {
 
   List<DoctorData?> doctorDataList = [];
   List<ClinicLocation?> clinicLocationList = [];
-  List<PatientData?> patientList = [];
+  List<PatientResponseData?> patientList = [];
 
   @override
   void onInit() {
@@ -115,7 +115,7 @@ class PatientsController extends GetxController {
         if (result.data != null) {
           result.data.forEach(
             (dynamic e) {
-              PatientData patientData = PatientData.fromJson(e);
+              PatientResponseData patientData = PatientResponseData.fromJson(e);
               patientList.add(patientData);
             },
           );

@@ -8,7 +8,8 @@ import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-import 'package:lynerdoctor/model/patient_model.dart';
+import 'package:lynerdoctor/model/patient_resposne_model.dart';
+
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_card.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
@@ -171,7 +172,7 @@ class PatientsScreen extends StatelessWidget {
                             itemCount: ctrl.patientList.length,
                             padding: EdgeInsets.only(bottom: 150, top: 6),
                             itemBuilder: (BuildContext context, int index) {
-                              PatientData? patientData =
+                              PatientResponseData? patientData =
                                   ctrl.patientList[index];
                               return AppPatientCard(
                                 isEditCard: false,

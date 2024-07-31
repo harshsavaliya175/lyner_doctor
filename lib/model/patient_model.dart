@@ -183,6 +183,7 @@ class PatientData {
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
+/*
 import 'dart:convert';
 
 class PatientResponseModel {
@@ -480,4 +481,6 @@ class PatientData {
         "updated_at": updatedAt?.toIso8601String(),
         "case_name": caseName,
       };
+
+*/
 }

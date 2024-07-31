@@ -113,8 +113,7 @@ class CodegenLoader extends AssetLoader{
   "ingressionDesIncisivesMaxillaire": "Ingression des incisives maxillaire",
   "ingressionDesIncisivesMandibulaires": "Ingression des incisives mandibulaires",
   "addPatientRecordSuccessfully": "Add patient record successfully",
-  "bridge": "Bridge"
-  "clinic": "Clinic",
+  "bridge": "Bridge",
   "draft": "Draft",
   "patientsNotFound": "Patients Not Found",
   "myProfile": "My Profile",

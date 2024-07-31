@@ -261,7 +261,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -291,7 +291,7 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_localizations",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -315,7 +315,7 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -327,7 +327,7 @@
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -723,7 +723,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/imac/Documents/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -896,10 +896,10 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-07-30T05:28:53.245120Z",
+  "generated": "2024-07-31T04:47:15.059996Z",
   "generator": "pub",
-  "generatorVersion": "3.4.3",
-  "flutterRoot": "file:///Users/imac/Documents/flutter",
-  "flutterVersion": "3.22.2",
+  "generatorVersion": "3.4.4",
+  "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",
+  "flutterVersion": "3.22.3",
   "pubCache": "file:///Users/imac/.pub-cache"
 }
