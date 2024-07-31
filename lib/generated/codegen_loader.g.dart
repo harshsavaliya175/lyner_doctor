@@ -97,8 +97,12 @@ class CodegenLoader extends AssetLoader{
   "myProfile": "My Profile",
   "financial": "Financial",
   "editProfile": "Edit Profile",
+  "logOut": "Log Out",
   "changePassword": "Change Password",
-  "logOut": "Log Out"
+  "oldPassword": "Old Password",
+  "newPassword": "New Password",
+  "confirmNewPassword": "Confirm New Password",
+  "change": "Change"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

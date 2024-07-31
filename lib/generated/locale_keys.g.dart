@@ -83,7 +83,11 @@ abstract class  LocaleKeys {
   static const myProfile = 'myProfile';
   static const financial = 'financial';
   static const editProfile = 'editProfile';
-  static const changePassword = 'changePassword';
   static const logOut = 'logOut';
+  static const changePassword = 'changePassword';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const confirmNewPassword = 'confirmNewPassword';
+  static const change = 'change';
 
 }

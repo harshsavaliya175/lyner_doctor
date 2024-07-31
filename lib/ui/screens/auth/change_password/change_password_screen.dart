@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/ui/screens/auth/change_password/change_password_controller.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
@@ -37,6 +39,19 @@ class ChangePasswordScreen extends StatelessWidget {
         elevation: 0.5,
         scrolledUnderElevation: 0,
       ),
+      body: GetBuilder<ChangePasswordController>(
+          builder: (ChangePasswordController ctrl) {
+        return ListView(
+          children: [
+            CommonTextField(
+              hintText: LocaleKeys.oldPassword.translateText,
+              controller: ctrl.oldPasswordController,
+              action: TextInputAction.next,
+              onChange: (String value) {},
+            ),
+          ],
+        );
+      }),
     );
   }
 }
