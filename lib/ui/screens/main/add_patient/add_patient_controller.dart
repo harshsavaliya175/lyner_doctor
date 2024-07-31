@@ -17,7 +17,7 @@ import 'package:lynerdoctor/model/productListModel.dart';
 import 'package:lynerdoctor/model/selection_item.dart';
 
 class AddPatientController extends GetxController {
-  var currentStep = 0.obs;
+  int currentStep = 0;
   late PageController pageController;
 
   List<ProductListData> products = [];
@@ -128,7 +128,7 @@ class AddPatientController extends GetxController {
   var stepErrors = <int, bool>{};
 
   void checkStepErrors() {
-    if (currentStep.value == 0) {
+    if (currentStep == 0) {
       if (patientInformationFormKey.currentState != null) {
         if (patientInformationFormKey.currentState!.validate()) {
           stepErrors[1] = false;
@@ -137,7 +137,7 @@ class AddPatientController extends GetxController {
       }
       update();
     }
-    if (currentStep.value == 1) {
+    if (currentStep == 1) {
       if (!isSelectedProductPlan) {
         stepErrors[1] = true;
       } else {
@@ -146,7 +146,7 @@ class AddPatientController extends GetxController {
       update();
     }
 
-    if (currentStep.value == 2) {
+    if (currentStep == 2) {
       if (!validateUploadPhotoFiles()) {
         stepErrors.remove(2);
       } else {
@@ -154,7 +154,7 @@ class AddPatientController extends GetxController {
       }
       update();
     }
-    if (currentStep.value == 3) {
+    if (currentStep == 3) {
       if (!validateArcadeFields()) {
         stepErrors.remove(3);
       } else {
@@ -225,7 +225,7 @@ class AddPatientController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    pageController = PageController(initialPage: currentStep.value);
+    pageController = PageController(initialPage: currentStep);
     fetchProducts();
     getDoctorList();
     getClinicLocationList();
@@ -389,7 +389,7 @@ class AddPatientController extends GetxController {
   }
 
   Future<void> goToStep(int step) async {
-    currentStep.value = step;
+    currentStep = step;
     pageController.jumpToPage(step);
     update();
   }

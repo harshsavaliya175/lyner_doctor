@@ -2,7 +2,6 @@
 //
 //     final clinicBillingListModel = clinicBillingListModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ClinicBillingListModel clinicBillingListModelFromJson(String str) => ClinicBillingListModel.fromJson(json.decode(str));

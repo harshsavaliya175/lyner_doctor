@@ -5,7 +5,7 @@ import 'package:lynerdoctor/gen/assets.gen.dart';
 
 class CommonStepIndicator extends StatelessWidget {
   final int totalSteps;
-  final RxInt currentStep;
+  final int currentStep;
   final Function(int) onStepTapped;
   final Map<int, bool> stepErrors;
 
@@ -23,8 +23,8 @@ class CommonStepIndicator extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(totalSteps, (index) {
-          bool isActive = index == currentStep.value;
-          bool isCompleted = (index < currentStep.value||stepErrors[index]==false);
+          bool isActive = index == currentStep;
+          bool isCompleted = (index < currentStep||stepErrors[index]==false);
           bool hasError = stepErrors[index] ?? false;
           return GestureDetector(
             onTap: () {
@@ -87,7 +87,7 @@ class CommonStepIndicator extends StatelessWidget {
                     // Adjust width to fill the screen
                     height: 2.0,
                     color:
-                        index < currentStep.value ? primaryBrown : darkSkyColor,
+                        index < currentStep ? primaryBrown : darkSkyColor,
                   ).paddingOnly(top: 15).paddingSymmetric(horizontal: 0),
               ],
             ),

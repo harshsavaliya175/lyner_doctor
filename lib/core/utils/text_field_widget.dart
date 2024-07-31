@@ -307,24 +307,21 @@ class _AppTextFieldState extends State<AppTextField> {
                   EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.showSuffixIcon
-                  ? widget.obscureText
-                      ? Container(
-                          child: GestureDetector(
-                              onTap: _toggleObscured,
-                              child: widget.obscureText
-                                  ? Assets.icons.closeEye
-                                      .svg(
-                                          colorFilter: ColorFilter.mode(
-                                              hintTextColor, BlendMode.srcIn))
-                                      .paddingAll(3)
-                                      .paddingOnly(bottom: 4)
-                                  : Assets.icons.openEye
-                                      .svg(
-                                          colorFilter: ColorFilter.mode(
-                                              hintTextColor, BlendMode.srcIn))
-                                      .paddingAll(3)),
-                        ).paddingOnly(right: 20)
-                      : widget.showPrefixWidget
+                  ? Container(
+                      child: GestureDetector(
+                          onTap: _toggleObscured,
+                          child: widget.obscureText
+                              ? Assets.icons.openEye
+                                  .svg(
+                                      colorFilter: ColorFilter.mode(
+                                          primaryBrown, BlendMode.srcIn))
+                                  .paddingAll(4)
+                              : Assets.icons.closeEye
+                                  .svg(
+                                      colorFilter: ColorFilter.mode(
+                                          primaryBrown, BlendMode.srcIn))
+                                  .paddingAll(4)),
+                    ).paddingOnly(right: 20)
                   : widget.showPrefixWidget,
               hintText: widget.hintText,
               hintStyle: widget.hintTextStyle ??

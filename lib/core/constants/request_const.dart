@@ -10,6 +10,8 @@ class ApiUrl {
       "${IS_LIVE ? API_LIVE_URL : API_DEV_URL}Service.php?";
   static const String imagePath =
       "http://codonnier.tech/ghanshyam/lyner/app_images/profile_images/";
+  static const String clinicProfileImagePath =
+      "https://lynertech.com/app_images/clinic_photo/";
   static const String galleryImage =
       "https://lynertech.com/mobile/app_images/gallery_images/";
   static const String patientProfileImage =
@@ -20,8 +22,10 @@ class MethodNames {
   static const String clinicLogin = "clinicLogin";
   static const String clinicRegistrationRequest = "clinicRegistrationRequest";
   static const String forgotPassword = "forgotPassword";
+  static const String updateClinicDetails = "updateClinicDetails";
   static const String changePasswordWithVerifyCode =
       "changePasswordWithVerifyCode";
+  static const String changePassword = "changePassword";
   static const String updateDeviceToken = "updateDeviceToken";
   static const String getDoctorListByClinicId = "getDoctorListByClinicId";
   static const String getProductList = "getProductList";
@@ -29,6 +33,7 @@ class MethodNames {
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String getClinicLocationList = "getClinicLocationList";
+
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
 }

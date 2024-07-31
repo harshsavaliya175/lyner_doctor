@@ -19,6 +19,7 @@ AppBar appbarWithIcons(
       shadowColor: Colors.grey[300],
       elevation: elevation,
       leadingWidth: leadingWidth,
+      titleSpacing: 15,
       scrolledUnderElevation: 0,
       actions: <Widget>[rightIcon ?? Container().paddingOnly(right: 10)]);
 }

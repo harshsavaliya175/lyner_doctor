@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
@@ -48,7 +49,7 @@ class SharedPreference {
   static const String IS_EMAIL_NOTIFICATION = "IS_EMAIL_NOTIFICATION";
   static const String IS_PHONE_NOTIFICATION = "IS_PHONE_NOTIFICATION";
   static const String CREATE_AT = "CREATE_AT";
-
+  static const clinicData = "clinicData";
   saveClinicItem(ClinicData data) {
     preferences.putBool(SharedPreference.IS_LOGGED_IN, true);
     _preferences?.setInt(CLINIC_ID, data.clinicId);
@@ -62,8 +63,16 @@ class SharedPreference {
     _preferences?.setString(VERIFY_FORGOT_CODE, data.verifyForgotCode);
     _preferences?.setInt(IS_EMAIL_NOTIFICATION, data.isEmailNotification);
     _preferences?.setInt(IS_PHONE_NOTIFICATION, data.isPhoneNotification);
+    _preferences!.setString(clinicData, jsonEncode(data.toJson()));
   }
 
+  ClinicData? getClinicData() {
+    final String? clinicDataJson = _preferences?.getString(clinicData);
+    if (clinicDataJson != null) {
+      return ClinicData.fromJson(jsonDecode(clinicDataJson));
+    }
+    return null;
+  }
   putAppDeviceInfo() async {
     bool isiOS = Platform.isIOS;
     putString(APP_DEVICE_TYPE, isiOS ? "iOS" : "android");

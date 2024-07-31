@@ -21,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
         builder: (DashboardController controller) {
           return controller.screen[controller.currentIndex];
         },
-      ),
+      ).paddingOnly(bottom: 35),
       bottomNavigationBar: GetBuilder<DashboardController>(
         builder: (DashboardController ctrl) {
           return BottomAppBar(

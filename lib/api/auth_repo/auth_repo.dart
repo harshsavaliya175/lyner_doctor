@@ -148,7 +148,7 @@ class AuthRepo {
     };
 
     final Map<String, String> queryParameters = {
-      // RequestParam.service: MethodNames.changePassword,
+      RequestParam.service: MethodNames.changePassword,
       RequestParam.showError: SHOW_ERROR
     };
     String queryString = Uri(queryParameters: queryParameters).query;
@@ -168,6 +168,9 @@ class AuthRepo {
   static Future<ResponseItem> editProfile({
     required String fullName,
     required String email,
+    required String phoneNumber,
+    required int isEmailNotification,
+    required int isMobileNotification,
     File? profileImage,
   }) async {
     ResponseItem result;
@@ -175,9 +178,12 @@ class AuthRepo {
     dynamic data;
     String msg = "";
 
-    final Map<String, String> params = {
+    final Map<String, dynamic> params = {
       "first_name": fullName,
       "email": email,
+      "phone_number": phoneNumber,
+      "is_email_notification": isEmailNotification,
+      "is_mobile_notification": isMobileNotification,
     };
 
     http.MultipartFile? profileImageFile;
@@ -186,7 +192,7 @@ class AuthRepo {
       final List<String> mimeType =
           lookupMimeType(compressedFile.path)!.split("/");
       final profileImages = http.MultipartFile.fromBytes(
-        "profile_images",
+        "clinic_photo",
         compressedFile.readAsBytesSync(),
         filename: compressedFile.path.split("/").last,
         contentType: MediaType(mimeType[0], mimeType[1]),
@@ -195,7 +201,7 @@ class AuthRepo {
     }
 
     final Map<String, String> queryParameters = {
-      // RequestParam.service: MethodNames.updateUserDetails,
+      RequestParam.service: MethodNames.updateClinicDetails,
       RequestParam.showError: SHOW_ERROR
     };
     String queryString = Uri(queryParameters: queryParameters).query;

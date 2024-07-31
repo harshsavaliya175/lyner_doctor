@@ -14,12 +14,13 @@ class AppButton extends StatelessWidget {
   final double? btnWidth;
   final double? radius;
   final List<BoxShadow>? boxShadow;
-
+  final FontWeight weight;
   AppButton({
     super.key,
     required this.text,
     required this.onTap,
     this.bgColor,
+    this.weight = FontWeight.w600,
     this.btnHeight,
     this.btnWidth,
     this.radius,
@@ -52,7 +53,7 @@ class AppButton extends StatelessWidget {
             .appCommonText(
               size: fontSize ?? 20,
               color: fontColor ?? primaryBrown,
-              weight: FontWeight.w600,
+              weight: weight,
             )
             .center,
       ),

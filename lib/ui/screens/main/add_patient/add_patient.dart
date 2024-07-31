@@ -39,11 +39,12 @@ class AddPatientScreen extends StatelessWidget {
                 fontSize: 20),
           ),
           backgroundColor: Colors.white,
-          leadingWidth: 45,
+          leadingWidth: 40,
           leading: Assets.icons.icBack
               .svg(
                 height: 25,
                 width: 25,
+                fit: BoxFit.scaleDown,
               )
               .paddingOnly(
                 left: 10,
@@ -65,7 +66,7 @@ class AddPatientScreen extends StatelessWidget {
                       stepErrors: ctrl.stepErrors,
                       currentStep: ctrl.currentStep,
                       onStepTapped: (index) async {
-                        if (index < ctrl.currentStep.value) {
+                        if (index < ctrl.currentStep) {
                           if (ctrl.patientInformationFormKey.currentState !=
                               null) {
                             if (!ctrl.patientInformationFormKey.currentState!
@@ -103,7 +104,7 @@ class AddPatientScreen extends StatelessWidget {
                             case 2:
                               if (ctrl.firstNameController.text.isEmpty ||
                                   ctrl.lastNameController.text.isEmpty) {
-                                if (ctrl.currentStep.value == 1) {
+                                if (ctrl.currentStep == 1) {
                                   showAppSnackBar(
                                       "Please enter firstname and lastname");
                                 }
@@ -137,6 +138,18 @@ class AddPatientScreen extends StatelessWidget {
                               ctrl.goToStep(index);
                               break;
                             case 3:
+                              if (ctrl.firstNameController.text.isEmpty ||
+                                  ctrl.lastNameController.text.isEmpty) {
+                                if (ctrl.currentStep == 1) {
+                                  showAppSnackBar(
+                                      "Please enter firstname and lastname");
+                                }
+                                return;
+                              } else {
+                                if (ctrl.patientData == null) {
+                                  await ctrl.addNewPatient();
+                                }
+                              }
                               if (!ctrl.validateUploadPhotoFiles()) {
                                 ctrl.stepErrors[2] = true;
                               } else {

@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:lynerdoctor/ui/screens/auth/change_password/change_password_screen.dart';
+import 'package:lynerdoctor/ui/screens/auth/edit_profile/edit_profile.dart';
 import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String dashboardScreen = "/dashboardScreen";
   static const String addPatientScreen = "/addPatientScreen";
   static const String changePasswordScreen = "/changePasswordScreen";
+  static const String editProfile = "/editProfile";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -29,5 +31,6 @@ class Routes {
         name: Routes.changePasswordScreen, page: () => ChangePasswordScreen()),
     GetPage(name: Routes.dashboardScreen, page: () => DashboardScreen()),
     GetPage(name: Routes.addPatientScreen, page: () => AddPatientScreen()),
+    GetPage(name: Routes.editProfile, page: () => EditProfile()),
   ];
 }
