@@ -78,5 +78,27 @@ abstract class  LocaleKeys {
   static const apply = 'apply';
   static const all = 'all';
   static const clinic = 'clinic';
+  static const recommandeLyner = 'recommandeLyner';
+  static const iprStripping = 'iprStripping';
+  static const taquets = 'taquets';
+  static const pasDeTaquetSurLesDents = 'pasDeTaquetSurLesDents';
+  static const elastiques = 'elastiques';
+  static const boutonsaColler = 'boutonsaColler';
+  static const extractionsRequisesDents = 'extractionsRequisesDents';
+  static const rienDeParticulier = 'rienDeParticulier';
+  static const dentsMobiles = 'dentsMobiles';
+  static const traumat = 'traumat';
+  static const implant = 'implant';
+  static const problemAtm = 'problemAtm';
+  static const apneduSomeil = 'apneduSomeil';
+  static const autresInformationsPertinentes = 'autresInformationsPertinentes';
+  static const centre = 'centre';
+  static const decaleVersLaDroite = 'decaleVersLaDroite';
+  static const decaleVersLaGauche = 'decaleVersLaGauche';
+  static const augmentationDimension = 'augmentationDimension';
+  static const ingressionDesIncisivesMaxillaire = 'ingressionDesIncisivesMaxillaire';
+  static const ingressionDesIncisivesMandibulaires = 'ingressionDesIncisivesMandibulaires';
+  static const addPatientRecordSuccessfully = 'addPatientRecordSuccessfully';
+  static const bridge = 'bridge';
 
 }

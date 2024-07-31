@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_billing_model.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
@@ -65,13 +67,13 @@ class AddPatientController extends GetxController {
   bool showDeliveryDropDown = false;
   PatientData? patientData;
   var patientTechniquesItems = <SelectionItem>[
-    SelectionItem(title: 'Recommandé par Lyner'),
-    SelectionItem(title: 'IPR (stripping)'),
-    SelectionItem(title: 'Taquets'),
-    SelectionItem(title: 'Pas de taquets sur les dents', requiresNote: true),
-    SelectionItem(title: 'Elastiques'),
-    SelectionItem(title: 'Boutons à coller'),
-    SelectionItem(title: 'Extractions requises : dents n°', requiresNote: true),
+    SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
+    SelectionItem(title: LocaleKeys.iprStripping.translateText),
+    SelectionItem(title: LocaleKeys.taquets.translateText),
+    SelectionItem(title: LocaleKeys.pasDeTaquetSurLesDents.translateText, requiresNote: true),
+    SelectionItem(title: LocaleKeys.elastiques.translateText),
+    SelectionItem(title: LocaleKeys.boutonsaColler.translateText),
+    SelectionItem(title: LocaleKeys.extractionsRequisesDents.translateText, requiresNote: true),
   ];
 
   bool validateUploadPhotoFiles() {
@@ -98,30 +100,30 @@ class AddPatientController extends GetxController {
   }
 
   var dentalHistoryItems = <SelectionItem>[
-    SelectionItem(title: 'Rien de particulier'),
-    SelectionItem(title: 'Dents mobiles', requiresNote: true),
-    SelectionItem(title: 'Traumat', requiresNote: true),
-    SelectionItem(title: 'Implant', requiresNote: true),
-    SelectionItem(title: 'Bridge', requiresNote: true),
+    SelectionItem(title: LocaleKeys.rienDeParticulier.translateText),
+    SelectionItem(title: LocaleKeys.dentsMobiles.translateText, requiresNote: true),
+    SelectionItem(title: LocaleKeys.traumat.translateText, requiresNote: true),
+    SelectionItem(title: LocaleKeys.implant.translateText, requiresNote: true),
+    SelectionItem(title: LocaleKeys.bridge.translateText, requiresNote: true),
     SelectionItem(
-        title: 'Problème d’ATM',
+        title: LocaleKeys.problemAtm.translateText,
         dentalHistory: true,
         dentalHistorySelected: true),
-    SelectionItem(title: 'Apnée du sommeil'),
-    SelectionItem(title: 'Autres informations pertinentes', requiresNote: true),
+    SelectionItem(title: LocaleKeys.apneduSomeil.translateText),
+    SelectionItem(title:LocaleKeys.autresInformationsPertinentes.translateText, requiresNote: true),
   ];
   var middleMaxillaryItems = <SelectionItem>[
-    SelectionItem(title: 'Centré'),
-    SelectionItem(title: 'Décalé vers la droite'),
-    SelectionItem(title: 'Décalé vers la gauche'),
+    SelectionItem(title: LocaleKeys.centre.translateText),
+    SelectionItem(title: LocaleKeys.decaleVersLaDroite.translateText),
+    SelectionItem(title: LocaleKeys.decaleVersLaGauche.translateText),
   ];
   var incisorCoveringItems = <SelectionItem>[
-    SelectionItem(title: 'Recommandé par Lyner'),
+    SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
     SelectionItem(
         title:
-            'Augmentation de la dimension verticale (égression molaires et prémolaires)'),
-    SelectionItem(title: 'Ingression des incisives maxillaire'),
-    SelectionItem(title: 'Ingression des incisives mandibulaires'),
+        LocaleKeys.augmentationDimension.translateText),
+    SelectionItem(title: LocaleKeys.ingressionDesIncisivesMaxillaire.translateText),
+    SelectionItem(title: LocaleKeys.ingressionDesIncisivesMandibulaires.translateText),
   ];
   var stepErrors = <int, bool>{};
 
@@ -356,7 +358,7 @@ class AddPatientController extends GetxController {
           PatientModel patientModel = PatientModel.fromJson(result.toJson());
           patientData = patientModel.data;
           print(patientData);
-          showAppSnackBar("Add patient record successfully");
+          showAppSnackBar(LocaleKeys.addPatientRecordSuccessfully.translateText);
           isLoading = false;
         }
       } else {
