@@ -38,8 +38,8 @@ class CommonTextField extends StatefulWidget {
   final bool? obscureText;
   final num? hintTextSize;
   final double? height;
-  final String? Function(String?)? validation;
-  final void Function(String)? onChange;
+  final String? Function(String? value)? validation;
+  final void Function(String value)? onChange;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final bool? readOnly;

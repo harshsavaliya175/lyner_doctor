@@ -100,5 +100,16 @@ abstract class  LocaleKeys {
   static const ingressionDesIncisivesMandibulaires = 'ingressionDesIncisivesMandibulaires';
   static const addPatientRecordSuccessfully = 'addPatientRecordSuccessfully';
   static const bridge = 'bridge';
+  static const draft = 'draft';
+  static const patientsNotFound = 'patientsNotFound';
+  static const myProfile = 'myProfile';
+  static const financial = 'financial';
+  static const editProfile = 'editProfile';
+  static const logOut = 'logOut';
+  static const changePassword = 'changePassword';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const confirmNewPassword = 'confirmNewPassword';
+  static const change = 'change';
 
 }

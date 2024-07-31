@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/home_image.dart';
+import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 
@@ -21,6 +24,7 @@ class AppPatientCard extends StatelessWidget {
     required this.patientName,
     required this.deleteOnTap,
     required this.editOrSubmitOnTap,
+    required this.patientImagePath,
   }) : super(key: key);
 
   final bool isEditCard;
@@ -32,6 +36,7 @@ class AppPatientCard extends StatelessWidget {
   final String data2;
   final String data3;
   final String patientName;
+  final String patientImagePath;
   final VoidCallback deleteOnTap;
   final VoidCallback editOrSubmitOnTap;
 
@@ -56,6 +61,14 @@ class AppPatientCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.black,
                 ),
+                child: patientImagePath.isEmpty
+                    ? HomeImage.assetImage(
+                        path: Assets.images.imgUserPlaceholder.path,
+                      )
+                    : HomeImage.networkImage(
+                        path: ApiUrl.patientProfileImage + patientImagePath,
+                        size: 44.w,
+                      ),
               ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -151,6 +164,7 @@ class AppPatientCard extends StatelessWidget {
     return Row(
       children: [
         title.appCommonText(weight: FontWeight.w400, size: 16),
+        5.space(),
         data.appCommonText(weight: FontWeight.w500, size: 16),
       ],
     );

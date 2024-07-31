@@ -12,6 +12,8 @@ class ApiUrl {
       "http://codonnier.tech/ghanshyam/lyner/app_images/profile_images/";
   static const String galleryImage =
       "https://lynertech.com/mobile/app_images/gallery_images/";
+  static const String patientProfileImage =
+      "https://lynertech.com/app_images/patient/patient_profile/";
 }
 
 class MethodNames {
@@ -27,6 +29,8 @@ class MethodNames {
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String getClinicLocationList = "getClinicLocationList";
+  static const String getClinicListBySearchOrFilter =
+      "getClinicListBySearchOrFilter";
 }
 
 class RequestHeaderKey {

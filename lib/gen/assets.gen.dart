@@ -73,11 +73,22 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_down.svg
   SvgGenImage get icDown => const SvgGenImage('assets/icons/ic_down.svg');
 
+  /// File path: assets/icons/ic_edit_profile.svg
+  SvgGenImage get icEditProfile =>
+      const SvgGenImage('assets/icons/ic_edit_profile.svg');
+
   /// File path: assets/icons/ic_filter.svg
   SvgGenImage get icFilter => const SvgGenImage('assets/icons/ic_filter.svg');
 
+  /// File path: assets/icons/ic_financial.svg
+  SvgGenImage get icFinancial =>
+      const SvgGenImage('assets/icons/ic_financial.svg');
+
   /// File path: assets/icons/ic_library.svg
   SvgGenImage get icLibrary => const SvgGenImage('assets/icons/ic_library.svg');
+
+  /// File path: assets/icons/ic_logout.svg
+  SvgGenImage get icLogout => const SvgGenImage('assets/icons/ic_logout.svg');
 
   /// File path: assets/icons/ic_lyner_connect.svg
   SvgGenImage get icLynerConnect =>
@@ -121,8 +132,11 @@ class $AssetsIconsGen {
         icCancel,
         icDocument,
         icDown,
+        icEditProfile,
         icFilter,
+        icFinancial,
         icLibrary,
+        icLogout,
         icLynerConnect,
         icPatients,
         icProfile,

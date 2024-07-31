@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lynerdoctor/ui/screens/auth/change_password/change_password_controller.dart';
 import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_controller.dart';
 import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_controller.dart';
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_controller.dart';
@@ -21,5 +22,6 @@ class BaseBindings extends Bindings {
     Get.lazyPut(() => LynerConnectController(), fenix: true);
     Get.lazyPut(() => LibraryController(), fenix: true);
     Get.lazyPut(() => ProfileController(), fenix: true);
+    Get.lazyPut(() => ChangePasswordController(), fenix: true);
   }
 }

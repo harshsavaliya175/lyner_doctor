@@ -8,22 +8,29 @@ import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/patient_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_card.dart';
+import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 import 'package:lynerdoctor/ui/widgets/doctor_patients_all_filter_bottom_sheet.dart';
 import 'package:lynerdoctor/ui/widgets/patients_screen_filter_bottom_sheet.dart';
 
 class PatientsScreen extends StatelessWidget {
   PatientsScreen({super.key});
 
+  final PatientsController patientsController = Get.put(PatientsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBgColor,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        toolbarHeight: 70.w,
+        toolbarHeight: 70,
+        shadowColor: Colors.grey[300],
+        elevation: 0.5,
         centerTitle: false,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,9 +50,6 @@ class PatientsScreen extends StatelessWidget {
               ],
             ).onClick(
               () {
-                // PatientsRepo.getDoctorListByClinicId(
-                //     clinicId:
-                //         preferences.getInt(SharedPreference.CLINIC_ID) ?? 0);
                 context.showAppBottomSheet(
                   contentWidget: DraggableScrollableSheet(
                     initialChildSize: 0.50,
@@ -56,6 +60,9 @@ class PatientsScreen extends StatelessWidget {
                         ScrollController scrollController) {
                       return DoctorPatientsAllFilterBottomSheet(
                         controller: scrollController,
+                        onTap: () {
+                          patientsController.getClinicListBySearchOrFilter();
+                        },
                       );
                     },
                   ),
@@ -80,80 +87,124 @@ class PatientsScreen extends StatelessWidget {
       ),
       body: GetBuilder<PatientsController>(
         builder: (PatientsController ctrl) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          return Stack(
             children: [
-              24.space(),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: CommonTextField(
-                      prefixIcon: Assets.icons.icSearch,
-                      hintText: LocaleKeys.search.translateText,
-                      controller: ctrl.searchController,
-                      action: TextInputAction.done,
-                    ),
-                  ),
-                  12.space(),
-                  SizedBox(
-                    width: 60.w,
-                    height: 60.w,
-                    child: FloatingActionButton(
-                      elevation: 0,
-                      onPressed: () {
-                        context.showAppBottomSheet(
-                          contentWidget:
-                              const PatientsScreenFilterBottomSheet(),
-                        );
-                      },
-                      child: Assets.icons.icFilter.svg(
-                        height: 28,
-                        width: 28,
-                        fit: BoxFit.none,
-                        colorFilter: ColorFilter.mode(
-                          whiteColor,
-                          BlendMode.srcIn,
+                  24.space(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CommonTextField(
+                          prefixIcon: Assets.icons.icSearch,
+                          hintText: LocaleKeys.search.translateText,
+                          controller: ctrl.searchController,
+                          action: TextInputAction.done,
+                          onChange: (String value) {
+                            patientsController.getClinicListBySearchOrFilter(
+                              isFromSearch: true,
+                            );
+                          },
                         ),
                       ),
-                      heroTag: Object(),
-                      shape: CircleBorder(),
-                      backgroundColor: primaryBrown,
-                    ),
-                  )
-                ],
-              ),
-              24.space(),
-              'Tasks (9)'.appCommonText(
-                weight: FontWeight.w500,
-                size: 20,
-                color: Colors.black,
-              ),
-              6.space(),
-              Expanded(
-                child: ListView.separated(
-                  padding: REdgeInsets.only(bottom: 150, top: 6),
-                  itemBuilder: (BuildContext context, int index) {
-                    return AppPatientCard(
-                      isEditCard: false,
-                      title1: LocaleKeys.statusCom,
-                      title2: LocaleKeys.patientIdCom,
-                      title3: LocaleKeys.productCom,
-                      data1: ' Draft',
-                      data2: ' EROK',
-                      data3: ' LYNER 20',
-                      treatmentStartDate: '12/07/2024',
-                      patientName: 'Leslie Alexander',
-                      deleteOnTap: () {},
-                      editOrSubmitOnTap: () {},
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
                       12.space(),
-                  itemCount: 10,
-                ),
-              ),
+                      SizedBox(
+                        width: 60.w,
+                        height: 60.w,
+                        child: FloatingActionButton(
+                          elevation: 0,
+                          onPressed: () {
+                            context.showAppBottomSheet(
+                              contentWidget: PatientsScreenFilterBottomSheet(
+                                onTap: () {
+                                  patientsController
+                                      .getClinicListBySearchOrFilter();
+                                },
+                              ),
+                            );
+                          },
+                          child: Assets.icons.icFilter.svg(
+                            height: 28,
+                            width: 28,
+                            fit: BoxFit.none,
+                            colorFilter: ColorFilter.mode(
+                              whiteColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          heroTag: Object(),
+                          shape: CircleBorder(),
+                          backgroundColor: primaryBrown,
+                        ),
+                      )
+                    ],
+                  ),
+                  24.space(),
+                  "${ctrl.treatmentStatusFilterValue == 1 ? LocaleKeys.tasks.translateText : ctrl.treatmentStatusFilterValue == 2 ? LocaleKeys.patients.translateText : LocaleKeys.archived.translateText} (${ctrl.patientList.length})"
+                      .appCommonText(
+                    weight: FontWeight.w500,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                  6.space(),
+                  ctrl.patientList.isEmpty
+                      ? Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                child: LocaleKeys.patientsNotFound.translateText
+                                    .normalText(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              75.h.space(),
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.separated(
+                            itemCount: ctrl.patientList.length,
+                            padding: EdgeInsets.only(bottom: 150, top: 6),
+                            itemBuilder: (BuildContext context, int index) {
+                              PatientData? patientData =
+                                  ctrl.patientList[index];
+                              return AppPatientCard(
+                                isEditCard: false,
+                                title1: LocaleKeys.statusCom,
+                                title2: LocaleKeys.patientIdCom,
+                                title3: LocaleKeys.productCom,
+                                data1: patientData?.isDraft != null &&
+                                        patientData?.isDraft == 1
+                                    ? ' ${LocaleKeys.draft.translateText}'
+                                    : 'Not draft',
+                                data2: patientData?.patientUniqueId ?? '',
+                                data3: patientData?.caseName ?? '',
+                                patientName:
+                                    '${patientData?.firstName ?? ''} ${patientData?.lastName ?? ''}',
+                                deleteOnTap: () {},
+                                editOrSubmitOnTap: () {},
+                                patientImagePath:
+                                    patientData?.patientProfile ?? '',
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) => 12.space(),
+                          ),
+                        ),
+                ],
+              ).paddingOnly(left: 20, right: 20),
+              ctrl.isLoading
+                  ? AppProgressView(
+                      progressColor: Colors.black,
+                    )
+                  : Container()
             ],
-          ).paddingOnly(left: 20, right: 20);
+          );
         },
       ),
     );

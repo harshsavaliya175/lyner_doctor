@@ -114,6 +114,18 @@ class CodegenLoader extends AssetLoader{
   "ingressionDesIncisivesMandibulaires": "Ingression des incisives mandibulaires",
   "addPatientRecordSuccessfully": "Add patient record successfully",
   "bridge": "Bridge"
+  "clinic": "Clinic",
+  "draft": "Draft",
+  "patientsNotFound": "Patients Not Found",
+  "myProfile": "My Profile",
+  "financial": "Financial",
+  "editProfile": "Edit Profile",
+  "logOut": "Log Out",
+  "changePassword": "Change Password",
+  "oldPassword": "Old Password",
+  "newPassword": "New Password",
+  "confirmNewPassword": "Confirm New Password",
+  "change": "Change"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }
