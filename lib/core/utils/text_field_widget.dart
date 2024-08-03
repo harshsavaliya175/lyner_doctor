@@ -29,6 +29,8 @@ class CommonTextField extends StatefulWidget {
     this.isPasswordField,
     this.action,
     this.textCapitalization = TextCapitalization.none,
+    this.maxLine = 1,
+    this.borderRadius = 100,
   }) : super(key: key);
   final TextEditingController? controller;
   final TextCapitalization textCapitalization;
@@ -48,13 +50,14 @@ class CommonTextField extends StatefulWidget {
   final double? prefixIconSize;
   final double? prefixPadding;
   Color fillColor;
+  final int maxLine;
+  final double borderRadius;
 
   @override
   State<CommonTextField> createState() => _CommonTextFieldState();
 }
 
 class _CommonTextFieldState extends State<CommonTextField> {
-  final int maxLine = 1;
   FocusNode _focus = FocusNode();
 
   // final Color fillColor = whiteColor;
@@ -79,78 +82,75 @@ class _CommonTextFieldState extends State<CommonTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.height ?? 55.w,
-      child: TextFormField(
-        focusNode: _focus,
-        readOnly: widget.readOnly ?? false,
-        onChanged: widget.onChange,
-        validator: widget.validation,
-        controller: widget.controller ?? TextEditingController(),
-        maxLines: maxLine,
-        textCapitalization: widget.textCapitalization,
-        autofocus: false,
-        style: hintTextStyle(
-            size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
-        inputFormatters: widget.inputFormatters,
-        obscureText: widget.obscureText ?? false,
-        textInputAction: widget.action ?? TextInputAction.done,
-        keyboardType: widget.keyboardType,
-        cursorColor: primaryBrown,
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          enabled: true,
-          // contentPadding: EdgeInsets.zero,
-          hintStyle: hintTextStyle(
-              size: widget.hintTextSize ?? 16.sp,
-              weight: FontWeight.w500,
-              color: hintColor),
-          prefixIcon: widget.prefixIcon != null
-              ? (widget.prefixIcon!
-                      .svg(
-                          height: widget.prefixIconSize ?? 20.w,
-                          width: widget.prefixIconSize ?? 20.w,
-                          colorFilter: ColorFilter.mode(
-                              _focus.hasFocus ? primaryBrown : hintColor,
-                              BlendMode.srcIn),
-                          fit: BoxFit.contain)
-                      .paddingAll(widget.prefixPadding ?? 12.w))
-                  .paddingOnly(left: 5.w)
-              : SizedBox(),
-          suffixIcon: widget.isPasswordField ?? false
-              ? widget.suffixIcon ?? const SizedBox()
-              : const SizedBox(),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: disableTextFiledColor,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(100),
+    return TextFormField(
+      focusNode: _focus,
+      readOnly: widget.readOnly ?? false,
+      onChanged: widget.onChange,
+      validator: widget.validation,
+      controller: widget.controller ?? TextEditingController(),
+      maxLines: widget.maxLine,
+      textCapitalization: widget.textCapitalization,
+      autofocus: false,
+      style: hintTextStyle(
+          size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
+      inputFormatters: widget.inputFormatters,
+      obscureText: widget.obscureText ?? false,
+      textInputAction: widget.action ?? TextInputAction.done,
+      keyboardType: widget.keyboardType,
+      cursorColor: primaryBrown,
+      decoration: InputDecoration(
+        hintText: widget.hintText,
+        enabled: true,
+        // contentPadding: EdgeInsets.zero,
+        hintStyle: hintTextStyle(
+            size: widget.hintTextSize ?? 16.sp,
+            weight: FontWeight.w500,
+            color: hintColor),
+        prefixIcon: widget.prefixIcon != null
+            ? (widget.prefixIcon!
+                    .svg(
+                        height: widget.prefixIconSize ?? 20.w,
+                        width: widget.prefixIconSize ?? 20.w,
+                        colorFilter: ColorFilter.mode(
+                            _focus.hasFocus ? primaryBrown : hintColor,
+                            BlendMode.srcIn),
+                        fit: BoxFit.contain)
+                    .paddingAll(widget.prefixPadding ?? 12.w))
+                .paddingOnly(left: 5.w)
+            : null,
+        suffixIcon: widget.isPasswordField ?? false
+            ? widget.suffixIcon ?? const SizedBox()
+            : const SizedBox(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: disableTextFiledColor,
+            width: 1,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: primaryBrown,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(100),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 0,
-            ),
-            borderRadius: BorderRadius.circular(100),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: whiteColor,
-              width: 0,
-            ),
-            borderRadius: BorderRadius.circular(100),
-          ),
-          filled: true,
-          fillColor: widget.fillColor,
+          borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: primaryBrown,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 0,
+          ),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: whiteColor,
+            width: 0,
+          ),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+        ),
+        filled: true,
+        fillColor: widget.fillColor,
       ),
     );
   }

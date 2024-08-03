@@ -84,6 +84,9 @@ class $AssetsIconsGen {
   SvgGenImage get icEditProfile =>
       const SvgGenImage('assets/icons/ic_edit_profile.svg');
 
+  /// File path: assets/icons/ic_file.svg
+  SvgGenImage get icFile => const SvgGenImage('assets/icons/ic_file.svg');
+
   /// File path: assets/icons/ic_filter.svg
   SvgGenImage get icFilter => const SvgGenImage('assets/icons/ic_filter.svg');
 
@@ -105,6 +108,10 @@ class $AssetsIconsGen {
   SvgGenImage get icLynerConnect =>
       const SvgGenImage('assets/icons/ic_lyner_connect.svg');
 
+  /// File path: assets/icons/ic_patient_treatments.svg
+  SvgGenImage get icPatientTreatments =>
+      const SvgGenImage('assets/icons/ic_patient_treatments.svg');
+
   /// File path: assets/icons/ic_patients.svg
   SvgGenImage get icPatients =>
       const SvgGenImage('assets/icons/ic_patients.svg');
@@ -112,6 +119,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_pdfFile.png
   AssetGenImage get icPdfFile =>
       const AssetGenImage('assets/icons/ic_pdfFile.png');
+
+  /// File path: assets/icons/ic_person.svg
+  SvgGenImage get icPerson => const SvgGenImage('assets/icons/ic_person.svg');
+
+  /// File path: assets/icons/ic_person_with_comment.svg
+  SvgGenImage get icPersonWithComment =>
+      const SvgGenImage('assets/icons/ic_person_with_comment.svg');
 
   /// File path: assets/icons/ic_profile.svg
   SvgGenImage get icProfile => const SvgGenImage('assets/icons/ic_profile.svg');
@@ -128,6 +142,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_select_arrow.svg
   SvgGenImage get icSelectArrow =>
       const SvgGenImage('assets/icons/ic_select_arrow.svg');
+
+  /// File path: assets/icons/ic_teeth_with_screen.svg
+  SvgGenImage get icTeethWithScreen =>
+      const SvgGenImage('assets/icons/ic_teeth_with_screen.svg');
 
   /// File path: assets/icons/ic_user.svg
   SvgGenImage get icUser => const SvgGenImage('assets/icons/ic_user.svg');
@@ -157,19 +175,24 @@ class $AssetsIconsGen {
         icDocument,
         icDown,
         icEditProfile,
+        icFile,
         icFilter,
         icFinancial,
         icLibrary,
         icLogout,
         icLynerAddPatient,
         icLynerConnect,
+        icPatientTreatments,
         icPatients,
         icPdfFile,
+        icPerson,
+        icPersonWithComment,
         icProfile,
         icRight,
         icSearch,
         icSelect,
         icSelectArrow,
+        icTeethWithScreen,
         icUser,
         icVideoFile,
         lock,
