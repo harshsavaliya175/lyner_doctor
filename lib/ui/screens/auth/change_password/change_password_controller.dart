@@ -4,6 +4,7 @@ import 'package:lynerdoctor/api/auth_repo/auth_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class ChangePasswordController extends GetxController {
   TextEditingController oldPasswordController = TextEditingController();
@@ -25,6 +26,7 @@ class ChangePasswordController extends GetxController {
     try {
       if (result.status) {
         showAppSnackBar(result.msg);
+        preferences.clearUserItem();
         Get.offAllNamed(Routes.signUpSignInScreen);
       } else {
         isLoading = false;

@@ -5,8 +5,11 @@ import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_scre
 import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/splash/splash_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient.dart';
+import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart';
 
 class Routes {
   Routes._();
@@ -19,6 +22,9 @@ class Routes {
   static const String addPatientScreen = "/addPatientScreen";
   static const String changePasswordScreen = "/changePasswordScreen";
   static const String editProfile = "/editProfile";
+  static const String addLynerConnect = "/addLynerConnect";
+  static const String lynerConnectDetails = "/lynerConnectDetails";
+  static const String addEditLynerConnect = "/addEditLynerConnect";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -32,5 +38,8 @@ class Routes {
     GetPage(name: Routes.dashboardScreen, page: () => DashboardScreen()),
     GetPage(name: Routes.addPatientScreen, page: () => AddPatientScreen()),
     GetPage(name: Routes.editProfile, page: () => EditProfile()),
+    GetPage(name: Routes.addLynerConnect, page: () => AddNewPatient()),
+    GetPage(name: Routes.lynerConnectDetails, page: () => LynerConnectDetails()),
+    GetPage(name: Routes.addEditLynerConnect, page: () => AddEditLynerConnect()),
   ];
 }

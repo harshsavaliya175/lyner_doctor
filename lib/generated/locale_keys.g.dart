@@ -111,5 +111,17 @@ abstract class  LocaleKeys {
   static const newPassword = 'newPassword';
   static const confirmNewPassword = 'confirmNewPassword';
   static const change = 'change';
+  static const addLynerConnect = 'addLynerConnect';
+  static const patient = 'patient';
+  static const add = 'add';
+  static const details = 'details';
+  static const maxillaire = 'maxillaire';
+  static const mandibulaire = 'mandibulaire';
+  static const lesDeux = 'lesDeux';
+  static const maintenir = 'maintenir';
+  static const ameliorerClasses = 'ameliorerClasses';
+  static const alignementEsthetique = 'alignementEsthetique';
+  static const alignementEsthetiqueCorrection = 'alignementEsthetiqueCorrection';
+  static const pleaseSelectAnyPatient = 'pleaseSelectAnyPatient';
 
 }

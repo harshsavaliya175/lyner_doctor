@@ -58,7 +58,6 @@ class SharedPreference {
     _preferences?.setString(CLINIC_MOBILE_NUMBER, data.clinicMobileNumber);
     _preferences?.setString(USER_EMAIL, data.email);
     _preferences?.setString(CLINIC_PHOTO, data.clinicPhoto);
-    _preferences?.setString(REMEMBER_TOKEN, data.rememberToken);
     _preferences?.setString(AUTH_TOKEN, data.authToken);
     _preferences?.setString(VERIFY_FORGOT_CODE, data.verifyForgotCode);
     _preferences?.setInt(IS_EMAIL_NOTIFICATION, data.isEmailNotification);

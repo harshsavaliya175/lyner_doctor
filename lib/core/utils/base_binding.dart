@@ -6,7 +6,7 @@ import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_controller.dart
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/library/library_controller.dart';
-import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
 

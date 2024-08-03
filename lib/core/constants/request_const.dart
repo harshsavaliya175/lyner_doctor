@@ -31,6 +31,7 @@ class MethodNames {
   static const String getProductList = "getProductList";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
+  static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String getClinicLocationList = "getClinicLocationList";
 

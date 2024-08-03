@@ -124,7 +124,19 @@ class CodegenLoader extends AssetLoader{
   "oldPassword": "Old Password",
   "newPassword": "New Password",
   "confirmNewPassword": "Confirm New Password",
-  "change": "Change"
+  "change": "Change",
+  "addLynerConnect": "Add Lyner Connect",
+  "patient": "Patient",
+  "add": "Add",
+  "details": "Details",
+  "maxillaire": "Maxillaire",
+  "mandibulaire": "Mandibulaire",
+  "lesDeux": "Les deux",
+  "maintenir": "Maintenir",
+  "ameliorerClasses": "Améliorer vers classe 1",
+  "alignementEsthetique": "Alignement esthétique",
+  "alignementEsthetiqueCorrection": "Alignement esthétique et correction del’occlusion",
+  "pleaseSelectAnyPatient": "Please select any patient"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

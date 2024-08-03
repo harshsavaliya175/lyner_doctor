@@ -93,6 +93,81 @@ class AddPatientRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+  static Future<ResponseItem> addUpdatePatientDetails({
+    required int toothCaseId,
+    required int patientId,
+    required String firstName,
+    required String lastName,
+    required int saveAsDraft,
+    required int is3shape,
+    String? doctorId,
+    String? dateOfBirth,
+    String? clinicBillingId,
+    String? clinicLocationId,
+    String? email,
+    String? arcadeToBeTreated,
+    String? treatmentObjectives,
+    String? acceptedTechniques,
+    String? dentalHistory,
+    String? dentalClass,
+    String? maxillaryIncisalMiddle,
+    String? incisiveCovering,
+    String? treatmentNotes,
+    String? dentalNote,
+    String? acceptedTechniqueNote,
+    String? dentalHistoryNote,
+    String? maxillaryIncisalNote,
+    String? incisiveCoveringNote,
+    String? otherRecommendations,
+    String? draftViewPage,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "tooth_case_id": toothCaseId,
+      "patient_id": patientId,
+      "save_as_draft": saveAsDraft,
+      "is_3shape": is3shape,
+      "first_name": firstName,
+      "last_name": lastName,
+      "doctor_id": doctorId,
+      "date_of_birth": dateOfBirth,
+      "clinic_billing_id": clinicBillingId,
+      "clinic_location_id": clinicLocationId,
+      "email": email,
+      "arcade_to_be_treated": arcadeToBeTreated,
+      "treatment_objectives": treatmentObjectives,
+      "accepted_techniques": acceptedTechniques,
+      "dental_history": dentalHistory,
+      "dental_class": dentalClass,
+      "maxillary_incisal_middle": maxillaryIncisalMiddle,
+      "incisive_covering": incisiveCovering,
+      "treatment_notes": treatmentNotes,
+      "dental_note": dentalNote,
+      "maxillary_incisal_note":maxillaryIncisalNote,
+      "accepted_technique_note": acceptedTechniqueNote,
+      "dental_history_note": dentalHistoryNote,
+      "incisive_covering_note": incisiveCoveringNote,
+      "other_recommendations": otherRecommendations,
+      "draft_view_page": draftViewPage,
+
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.updatePatientDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
 
   static Future<ResponseItem> uploadPatientSingleImage({
     required File? file,

@@ -817,7 +817,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.profileImageFile = file!;
-
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_gauche', file: file);
                         ctrl.update();
                       });
                 },
@@ -852,6 +853,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.smileImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_sourire', file: file);
                         ctrl.update();
                       });
                 },
@@ -873,6 +876,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraMaxImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_intra_max', file: file);
                         ctrl.update();
                       });
                 },
@@ -889,6 +894,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraMandImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'inter_mandi', file: file);
                         ctrl.update();
                       });
                 },
@@ -910,6 +917,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraRightImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_intra_droite', file: file);
                         ctrl.update();
                       });
                 },
@@ -926,6 +935,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraFaceImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_inter_face', file: file);
                         ctrl.update();
                       });
                 },
@@ -942,6 +953,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraLeftImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_inter_gauche', file: file);
                         ctrl.update();
                       });
                 },
@@ -997,6 +1010,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.radiosFirstImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_panoramique', file: file);
                         ctrl.update();
                       });
                 },
@@ -1037,6 +1052,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         onImageChose: (File? file) async {
                           // ctrl.cuisinePhoto?[0] =(file!);
                           ctrl.radiosSecondImageFile = file!;
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'patient_cephalometrique', file: file);
                           ctrl.update();
                         });
                   },
@@ -1124,11 +1141,17 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
                 AppTextField(
-                  textEditingController: TextEditingController(text: ''),
+                  textEditingController: TextEditingController(
+                      text: ctrl.upperJawImageFile != null
+                          ? ctrl.upperJawImageFile!.path.substring(
+                              ctrl.upperJawImageFile!.path.length - 20)
+                          : ''),
                   onChanged: (value) {},
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
+                  readOnly: true,
+                  showCursor: false,
                   isError: ctrl.lastNameError,
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -1140,6 +1163,20 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     child: "Choose File".appCommonText(
                         size: 14, color: Colors.white, align: TextAlign.center),
                   )
+                      .onClick(
+                        () {
+                          imageUploadUtils.openImageChooser(
+                              context: Get.context!,
+                              onImageChose: (File? file) async {
+                                // ctrl.cuisinePhoto?[0] =(file!);
+                                ctrl.upperJawImageFile = file!;
+                                ctrl.uploadPatientSingleImage(
+                                    paramName: 'upper_jaw_stl_file',
+                                    file: file);
+                                ctrl.update();
+                              });
+                        },
+                      )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
                   hintText: "No file chosen",
@@ -1164,7 +1201,11 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
                 AppTextField(
-                  textEditingController: TextEditingController(text: ''),
+                  textEditingController: TextEditingController(
+                      text: ctrl.lowerJawImageFile != null
+                          ? ctrl.lowerJawImageFile!.path.substring(
+                              ctrl.lowerJawImageFile!.path.length - 20)
+                          : ''),
                   onChanged: (value) {},
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
@@ -1180,6 +1221,20 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     child: "Choose File".appCommonText(
                         size: 14, color: Colors.white, align: TextAlign.center),
                   )
+                      .onClick(
+                        () {
+                          imageUploadUtils.openImageChooser(
+                              context: Get.context!,
+                              onImageChose: (File? file) async {
+                                // ctrl.cuisinePhoto?[0] =(file!);
+                                ctrl.lowerJawImageFile = file!;
+                                ctrl.uploadPatientSingleImage(
+                                    paramName: 'lower_jaw_stl_file',
+                                    file: file);
+                                ctrl.update();
+                              });
+                        },
+                      )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
                   hintText: "No file chosen",
@@ -1241,7 +1296,9 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   btnHeight: 55,
                   text: "Finish Latter",
                   onTap: () {
-                    // ctrl.goToStep(1);
+                    ctrl.addUpdatePatientDetails(
+                        isFromFinishStep: true,
+                        draftViewPage: "upload_photo_page");
                   },
                   // boxShadow: [],
                   radius: 25,
@@ -1357,7 +1414,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Les deux"
+                LocaleKeys.lesDeux.translateText
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -1383,7 +1440,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Maxillaire"
+                LocaleKeys.maxillaire.translateText
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -1409,7 +1466,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Mandibulaire"
+                LocaleKeys.mandibulaire.translateText
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -1470,7 +1527,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Maintenir"
+                LocaleKeys.maintenir.translateText
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -1496,7 +1553,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                "Améliorer vers classe 1"
+                LocaleKeys.ameliorerClasses.translateText
                     .appCommonText(
                       size: 16,
                       weight: FontWeight.w400,
@@ -1524,7 +1581,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
-            textEditingController: TextEditingController(text: ''),
+            textEditingController: ctrl.classesDentalNoteCtrl,
             onChanged: (value) {},
             validator: (value) {
               if (value.isEmpty) {
@@ -1581,11 +1638,11 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     Expanded(
                       child: item.title
                           .appCommonText(
-                          size: 16,
-                          align: TextAlign.start,
-                          weight: FontWeight.w400,
-                          maxLine: 2,
-                          overflow: TextOverflow.ellipsis)
+                              size: 16,
+                              align: TextAlign.start,
+                              weight: FontWeight.w400,
+                              maxLine: 2,
+                              overflow: TextOverflow.ellipsis)
                           .paddingOnly(left: 15),
                     ),
                     Container(
@@ -1621,7 +1678,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
-            textEditingController: TextEditingController(text: ''),
+            textEditingController: ctrl.maxillaireNoteCtrl,
             onChanged: (value) {},
             validator: (value) {
               if (value.isEmpty) {
@@ -1665,7 +1722,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               )
               .paddingSymmetric(horizontal: 15),
           AppTextField(
-            textEditingController: TextEditingController(text: ''),
+            textEditingController: ctrl.autresRecommandationNoteCtrl,
             onChanged: (value) {},
             validator: (value) {
               if (value.isEmpty) {
@@ -1705,6 +1762,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                   text: "Finish Latter",
                   onTap: () {
                     // ctrl.goToStep(1);
+                    ctrl.addUpdatePatientDetails(
+                        isFromFinishStep: true,
+                        draftViewPage: "patient_prescription_page");
                   },
                   // boxShadow: [],
                   radius: 25,
@@ -1720,7 +1780,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                   text: "Add",
                   onTap: () {
                     if (ctrl.validateArcadeFields()) {
-                      // ctrl.goToStep(3);
+                      ctrl.addUpdatePatientDetails();
                     } else {
                       showAppSnackBar("Please select all required fields");
                     }
@@ -1808,8 +1868,13 @@ Widget techniquesPatient(AddPatientController ctrl) {
               Visibility(
                 visible: item.requiresNote && item.isSelected,
                 child: AppTextField(
-                  textEditingController: TextEditingController(text: ''),
-                  onChanged: (value) {},
+                  textEditingController: TextEditingController(text: item.note),
+
+                  onChanged: (value) {
+                    // item.note = value;
+                    ctrl.changePatientNoteText(index, value);
+                    print(item.note);
+                  },
                   validator: (value) {
                     if (value.isEmpty) {
                       ctrl.emailError = true;
@@ -1845,7 +1910,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
           )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
-        textEditingController: TextEditingController(text: ''),
+        textEditingController: ctrl.techniquesPatientsNoteCtrl,
         onChanged: (value) {},
         validator: (value) {
           if (value.isEmpty) {
@@ -1906,14 +1971,16 @@ Widget dentalHistory(AddPatientController ctrl) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                        child: item.title.appCommonText(
-                      maxLine: 2,
-                      overflow: TextOverflow.ellipsis,
-                      align: TextAlign.start,
-                      size: 16,
-                      weight: FontWeight.w400,
-                      color: Colors.black,
-                    ).paddingOnly(left: 15)),
+                        child: item.title
+                            .appCommonText(
+                              maxLine: 2,
+                              overflow: TextOverflow.ellipsis,
+                              align: TextAlign.start,
+                              size: 16,
+                              weight: FontWeight.w400,
+                              color: Colors.black,
+                            )
+                            .paddingOnly(left: 15)),
                     Container(
                       alignment: Alignment.center,
                       width: 20.0,
@@ -1936,9 +2003,11 @@ Widget dentalHistory(AddPatientController ctrl) {
               Visibility(
                 visible: item.requiresNote && item.isSelected,
                 child: AppTextField(
-                  textEditingController: TextEditingController(text: ''),
+                  textEditingController: TextEditingController(text: item.note),
                   radius: 20,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    ctrl.changeDentalHistoryNoteText(index, value);
+                  },
                   validator: (value) {
                     if (value.isEmpty) {
                       ctrl.emailError = true;
@@ -2066,7 +2135,7 @@ Widget dentalHistory(AddPatientController ctrl) {
           )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
-        textEditingController: TextEditingController(text: ''),
+        textEditingController: ctrl.dentalHistoryNoteCtrl,
         onChanged: (value) {},
         radius: 20,
         validator: (value) {
@@ -2166,7 +2235,7 @@ Widget incisorCovering(AddPatientController ctrl) {
           )
           .paddingSymmetric(horizontal: 15),
       AppTextField(
-        textEditingController: TextEditingController(text: ''),
+        textEditingController: ctrl.incisorCoveringNoteCtrl,
         onChanged: (value) {},
         validator: (value) {
           if (value.isEmpty) {
@@ -2227,7 +2296,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: "Alignement esthétique"
+              child: LocaleKeys.alignementEsthetique.translateText
                   .appCommonText(
                     size: 16,
                     maxLine: 2,
@@ -2258,7 +2327,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: "Alignement esthétique et correction del’occlusion"
+              child: LocaleKeys.alignementEsthetiqueCorrection.translateText
                   .appCommonText(
                     size: 16,
                     align: TextAlign.start,
@@ -2280,14 +2349,14 @@ Widget treatmentGoals(AddPatientController ctrl) {
       }),
       10.space(),
       AppTextField(
-        textEditingController: TextEditingController(text: ''),
+        textEditingController: ctrl.objectifsTraitementDeliveryAddressCtrl,
         onChanged: (value) {},
         radius: 20,
         validator: (value) {
           if (value.isEmpty) {
             ctrl.emailError = true;
             ctrl.update();
-            return 'Please enter Date of Birth';
+            return 'Please enter address';
           }
           ctrl.update();
           return null;

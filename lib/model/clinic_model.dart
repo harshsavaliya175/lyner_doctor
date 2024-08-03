@@ -47,8 +47,6 @@ class ClinicData {
   final String email;
   final String clinicMobileNumber;
   final String clinicPhoto;
-  final dynamic emailVerifiedAt;
-  final String rememberToken;
   final String authToken;
   final String verifyForgotCode;
   final int isEmailNotification;
@@ -62,8 +60,6 @@ class ClinicData {
     required this.email,
     required this.clinicMobileNumber,
     required this.clinicPhoto,
-    required this.emailVerifiedAt,
-    required this.rememberToken,
     required this.authToken,
     required this.verifyForgotCode,
     required this.isEmailNotification,
@@ -93,8 +89,6 @@ class ClinicData {
         email: email ?? this.email,
         clinicMobileNumber: clinicMobileNumber ?? this.clinicMobileNumber,
         clinicPhoto: clinicPhoto ?? this.clinicPhoto,
-        emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
-        rememberToken: rememberToken ?? this.rememberToken,
         authToken: authToken ?? this.authToken,
         verifyForgotCode: verifyForgotCode ?? this.verifyForgotCode,
         isEmailNotification: isEmailNotification ?? this.isEmailNotification,
@@ -109,17 +103,15 @@ class ClinicData {
   String toRawJson() => json.encode(toJson());
 
   factory ClinicData.fromJson(Map<String, dynamic> json) => ClinicData(
-        clinicId: json["clinic_id"],
-        clinicName: json["clinic_name"],
-        email: json["email"],
-        clinicMobileNumber: json["clinic_mobile_number"],
-        clinicPhoto: json["clinic_photo"],
-        emailVerifiedAt: json["email_verified_at"],
-        rememberToken: json["remember_token"],
-        authToken: json["auth_token"],
-        verifyForgotCode: json["verify_forgot_code"],
-        isEmailNotification: json["is_email_notification"],
-        isPhoneNotification: json["is_phone_notification"],
+        clinicId: json["clinic_id"]??0,
+        clinicName: json["clinic_name"]??'',
+        email: json["email"]??'',
+        clinicMobileNumber: json["clinic_mobile_number"]??'',
+        clinicPhoto: json["clinic_photo"]??'',
+        authToken: json["auth_token"]??'',
+        verifyForgotCode: json["verify_forgot_code"]??'',
+        isEmailNotification: json["is_email_notification"]??0,
+        isPhoneNotification: json["is_phone_notification"]??0,
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -130,8 +122,6 @@ class ClinicData {
         "email": email,
         "clinic_mobile_number": clinicMobileNumber,
         "clinic_photo": clinicPhoto,
-        "email_verified_at": emailVerifiedAt,
-        "remember_token": rememberToken,
         "auth_token": authToken,
         "verify_forgot_code": verifyForgotCode,
         "is_email_notification": isEmailNotification,

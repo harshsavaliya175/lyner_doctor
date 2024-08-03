@@ -63,6 +63,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
 
+  /// File path: assets/icons/ic_calendar.svg
+  SvgGenImage get icCalendar =>
+      const SvgGenImage('assets/icons/ic_calendar.svg');
+
   /// File path: assets/icons/ic_camera.svg
   SvgGenImage get icCamera => const SvgGenImage('assets/icons/ic_camera.svg');
 
@@ -93,6 +97,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_logout.svg
   SvgGenImage get icLogout => const SvgGenImage('assets/icons/ic_logout.svg');
 
+  /// File path: assets/icons/ic_lyner_add_patient.svg
+  SvgGenImage get icLynerAddPatient =>
+      const SvgGenImage('assets/icons/ic_lyner_add_patient.svg');
+
   /// File path: assets/icons/ic_lyner_connect.svg
   SvgGenImage get icLynerConnect =>
       const SvgGenImage('assets/icons/ic_lyner_connect.svg');
@@ -101,8 +109,15 @@ class $AssetsIconsGen {
   SvgGenImage get icPatients =>
       const SvgGenImage('assets/icons/ic_patients.svg');
 
+  /// File path: assets/icons/ic_pdfFile.png
+  AssetGenImage get icPdfFile =>
+      const AssetGenImage('assets/icons/ic_pdfFile.png');
+
   /// File path: assets/icons/ic_profile.svg
   SvgGenImage get icProfile => const SvgGenImage('assets/icons/ic_profile.svg');
+
+  /// File path: assets/icons/ic_right.svg
+  SvgGenImage get icRight => const SvgGenImage('assets/icons/ic_right.svg');
 
   /// File path: assets/icons/ic_search.svg
   SvgGenImage get icSearch => const SvgGenImage('assets/icons/ic_search.svg');
@@ -117,6 +132,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_user.svg
   SvgGenImage get icUser => const SvgGenImage('assets/icons/ic_user.svg');
 
+  /// File path: assets/icons/ic_videoFile.png
+  AssetGenImage get icVideoFile =>
+      const AssetGenImage('assets/icons/ic_videoFile.png');
+
   /// File path: assets/icons/lock.svg
   SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
 
@@ -127,11 +146,12 @@ class $AssetsIconsGen {
   SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
         mail,
         clinic,
         closeEye,
         icBack,
+        icCalendar,
         icCamera,
         icCancel,
         icDocument,
@@ -141,13 +161,17 @@ class $AssetsIconsGen {
         icFinancial,
         icLibrary,
         icLogout,
+        icLynerAddPatient,
         icLynerConnect,
         icPatients,
+        icPdfFile,
         icProfile,
+        icRight,
         icSearch,
         icSelect,
         icSelectArrow,
         icUser,
+        icVideoFile,
         lock,
         openEye,
         phone
@@ -156,6 +180,14 @@ class $AssetsIconsGen {
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/img_centre_aligner.png
+  AssetGenImage get imgCentreAligner =>
+      const AssetGenImage('assets/images/img_centre_aligner.png');
+
+  /// File path: assets/images/img_centre_without.png
+  AssetGenImage get imgCentreWithout =>
+      const AssetGenImage('assets/images/img_centre_without.png');
 
   /// File path: assets/images/img_face.png
   AssetGenImage get imgFace =>
@@ -181,9 +213,25 @@ class $AssetsImagesGen {
   AssetGenImage get imgIntraMax =>
       const AssetGenImage('assets/images/img_intra_max.png');
 
+  /// File path: assets/images/img_left_aligner.png
+  AssetGenImage get imgLeftAligner =>
+      const AssetGenImage('assets/images/img_left_aligner.png');
+
+  /// File path: assets/images/img_left_without.png
+  AssetGenImage get imgLeftWithout =>
+      const AssetGenImage('assets/images/img_left_without.png');
+
   /// File path: assets/images/img_profile.png
   AssetGenImage get imgProfile =>
       const AssetGenImage('assets/images/img_profile.png');
+
+  /// File path: assets/images/img_right_aligner.png
+  AssetGenImage get imgRightAligner =>
+      const AssetGenImage('assets/images/img_right_aligner.png');
+
+  /// File path: assets/images/img_right_without.png
+  AssetGenImage get imgRightWithout =>
+      const AssetGenImage('assets/images/img_right_without.png');
 
   /// File path: assets/images/img_smile.png
   AssetGenImage get imgSmile =>
@@ -202,13 +250,19 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+        imgCentreAligner,
+        imgCentreWithout,
         imgFace,
         imgInterFace,
         imgInterLeft,
         imgInterRight,
         imgIntraMand,
         imgIntraMax,
+        imgLeftAligner,
+        imgLeftWithout,
         imgProfile,
+        imgRightAligner,
+        imgRightWithout,
         imgSmile,
         imgSplash,
         imgTab,
