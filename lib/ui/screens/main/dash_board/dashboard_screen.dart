@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -25,9 +24,9 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: GetBuilder<DashboardController>(
         builder: (DashboardController ctrl) {
           return BottomAppBar(
-            height: 75.h,
+            height: 75,
             padding: EdgeInsets.zero,
-            notchMargin: 12.w,
+            notchMargin: 12,
             color: Colors.white,
             shape: CircularNotchedRectangle(),
             elevation: 20,

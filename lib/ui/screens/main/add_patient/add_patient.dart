@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
@@ -775,7 +776,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   children: [
                     LocaleKeys.uploadPhotographs.translateText.appCommonText(
                       align: TextAlign.start,
-                      size: 24,
+                      size: !isTablet ? 24 : 27,
                       maxLine: 2,
                       overflow: TextOverflow.ellipsis,
                       weight: FontWeight.w500,
@@ -783,7 +784,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     ),
                     (".jpg & .heif format").appCommonText(
                       align: TextAlign.start,
-                      size: 16,
+                      size: !isTablet ? 16 : 19,
                       maxLine: 2,
                       overflow: TextOverflow.ellipsis,
                       weight: FontWeight.w400,
@@ -794,7 +795,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               "+Add all Photos".appCommonText(
                 align: TextAlign.start,
-                size: 16,
+                size: !isTablet ? 16 : 19,
                 decoration: TextDecoration.underline,
                 decorationColor: primaryBrown,
                 weight: FontWeight.w500,
@@ -802,7 +803,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               )
             ],
           ),
-          10.space(),
+          !isTablet ? 10.space() : 15.space(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -882,7 +883,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       });
                 },
               ),
-              143.space(),
+              Spacer(),
+              // !isTablet ? 143.space() : 260.space(),
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
                 title: "Intra Mand",
@@ -895,7 +897,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.intraMandImageFile = file!;
                         ctrl.uploadPatientSingleImage(
-                            paramName: 'inter_mandi', file: file);
+                            paramName: 'patient_intra_gauche', file: file);
                         ctrl.update();
                       });
                 },
@@ -964,7 +966,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           5.space(),
           "Radios".appCommonText(
             align: TextAlign.start,
-            size: 24,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -972,7 +974,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           ),
           "(.jpg & .heif format)".appCommonText(
             align: TextAlign.start,
-            size: 16,
+            size: !isTablet ? 16 : 19,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w400,
@@ -984,24 +986,24 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               Expanded(
                   child: Container(
-                height: 135,
-                width: 200,
+                height: !isTablet ? 135 : 230,
+                width: !isTablet ? 200 : 230,
                 child: ((ctrl.radiosFirstImageFile != null &&
                         ctrl.radiosFirstImageFile?.path != "")
                     ? HomeImage.fileImage(
                         path: ctrl.radiosFirstImageFile!.path,
-                        height: 135,
-                        width: 200,
+                        height: !isTablet ? 135 : 230,
+                        width: !isTablet ? 200 : 230,
                         shape: BoxShape.rectangle,
                         fit: BoxFit.cover,
                         radius: BorderRadius.circular(10),
                       )
                     : HomeImage.assetImage(
                         path: Assets.images.imgTab.path,
-                        height: 135,
+                        height: !isTablet ? 135 : 230,
+                        width: !isTablet ? 200 : 230,
                         shape: BoxShape.rectangle,
                         // fit: BoxFit.cover,
-                        width: 200,
                       )),
               ).onClick(
                 () {
@@ -1026,22 +1028,22 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),*/
               Expanded(
                 child: Container(
-                  height: 135,
-                  width: 200,
+                  height: !isTablet ? 135 : 230,
+                  width: !isTablet ? 200 : 230,
                   child: ((ctrl.radiosSecondImageFile != null &&
                           ctrl.radiosSecondImageFile?.path != "")
                       ? HomeImage.fileImage(
                           path: ctrl.radiosSecondImageFile!.path,
-                          height: 135,
-                          width: 200,
+                          height: !isTablet ? 135 : 230,
+                          width: !isTablet ? 200 : 230,
                           shape: BoxShape.rectangle,
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(10),
                         )
                       : HomeImage.assetImage(
                           path: Assets.images.imgTab.path,
-                          height: 135,
-                          width: 200,
+                          height: !isTablet ? 135 : 230,
+                          width: !isTablet ? 200 : 230,
                           shape: BoxShape.rectangle,
                           // fit: BoxFit.cover,
                         )),
@@ -1064,7 +1066,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           10.space(),
           "STL Files".appCommonText(
             align: TextAlign.start,
-            size: 24,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -1075,18 +1077,18 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               Expanded(
                 child: Container(
-                  height: 50,
+                  height: !isTablet ? 50 : 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: ctrl.isUploadStl ? primaryBrown : Colors.white,
                       border: Border.all(
                           color: ctrl.isUploadStl ? Colors.white : skyColor,
                           width: 1),
-                      borderRadius: BorderRadius.circular(25)),
+                      borderRadius: BorderRadius.circular(!isTablet ? 25 : 40)),
                   child: 'Upload STL'.appCommonText(
                       align: TextAlign.center,
                       color: ctrl.isUploadStl ? Colors.white : darkSkyColor,
-                      size: 16),
+                      size: !isTablet ? 16 : 20),
                 ).onClick(
                   () {
                     ctrl.isUploadStl = true;
@@ -1097,18 +1099,18 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               25.space(),
               Expanded(
                 child: Container(
-                  height: 50,
+                  height: !isTablet ? 50 : 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: !ctrl.isUploadStl ? primaryBrown : Colors.white,
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                       border: Border.all(
                           color: !ctrl.isUploadStl ? Colors.white : skyColor,
                           width: 1)),
                   child: 'Posted by 3shape'.appCommonText(
                       align: TextAlign.center,
                       color: !ctrl.isUploadStl ? Colors.white : darkSkyColor,
-                      size: 16,
+                      size: !isTablet ? 16 : 20,
                       weight: FontWeight.w500),
                 ).onClick(
                   () {
@@ -1127,13 +1129,13 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 Row(
                   children: [
                     "Upper Jaw STL File".appCommonText(
-                        size: 14,
+                        size: !isTablet ? 14 : 18,
                         weight: FontWeight.w400,
                         align: TextAlign.start),
                     3.space(),
                     "*"
                         .appCommonText(
-                            size: 14,
+                            size: !isTablet ? 14 : 16,
                             weight: FontWeight.w400,
                             color: Colors.red,
                             align: TextAlign.start)
@@ -1156,12 +1158,14 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     alignment: Alignment.center,
-                    width: 100,
+                    width: !isTablet ? 100 : 135,
                     decoration: BoxDecoration(
                         color: primaryBrown,
                         borderRadius: BorderRadius.circular(25)),
                     child: "Choose File".appCommonText(
-                        size: 14, color: Colors.white, align: TextAlign.center),
+                        size: !isTablet ? 14 : 18,
+                        color: Colors.white,
+                        align: TextAlign.center),
                   )
                       .onClick(
                         () {
@@ -1187,13 +1191,13 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 Row(
                   children: [
                     "Lower Jaw STL File".appCommonText(
-                        size: 14,
+                        size: !isTablet ? 14 : 18,
                         weight: FontWeight.w400,
                         align: TextAlign.start),
                     3.space(),
                     "*"
                         .appCommonText(
-                            size: 14,
+                            size: !isTablet ? 14 : 16,
                             weight: FontWeight.w400,
                             color: Colors.red,
                             align: TextAlign.start)
@@ -1214,12 +1218,14 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     alignment: Alignment.center,
-                    width: 100,
+                    width: !isTablet ? 100 : 135,
                     decoration: BoxDecoration(
                         color: primaryBrown,
                         borderRadius: BorderRadius.circular(25)),
                     child: "Choose File".appCommonText(
-                        size: 14, color: Colors.white, align: TextAlign.center),
+                        size: !isTablet ? 14 : 18,
+                        color: Colors.white,
+                        align: TextAlign.center),
                   )
                       .onClick(
                         () {
@@ -1247,7 +1253,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           10.space(),
           "CBCT / DICOM".appCommonText(
             align: TextAlign.start,
-            size: 24,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -1263,16 +1269,18 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
+                  borderRadius: BorderRadius.circular(!isTablet ? 35 : 40),
                   color: primaryBrown.withOpacity(0.08)),
-              height: 55,
+              height: !isTablet ? 55 : 65,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Assets.icons.icDocument.svg(),
+                  Assets.icons.icDocument.svg(height: !isTablet ? 23 : 30),
                   10.space(),
                   "Upload DICOM File".appCommonText(
-                      size: 16, weight: FontWeight.w400, color: primaryBrown),
+                      size: !isTablet ? 16 : 20,
+                      weight: FontWeight.w400,
+                      color: primaryBrown),
                 ],
               ),
             ),
@@ -1283,7 +1291,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: 70,
+          height: !isTablet ? 70 : 90,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1293,7 +1301,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               Expanded(
                 child: AppBorderButton(
-                  btnHeight: 55,
+                  btnHeight: !isTablet ? 55 : 65,
                   text: "Finish Latter",
                   onTap: () {
                     ctrl.addUpdatePatientDetails(
@@ -1301,8 +1309,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         draftViewPage: "upload_photo_page");
                   },
                   // boxShadow: [],
-                  radius: 25,
-                  fontSize: 18,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   borderColor: primaryBrown,
                   // bgColor: primaryBrown,
                   fontColor: primaryBrown,
@@ -1310,7 +1318,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               Expanded(
                 child: AppButton(
-                  btnHeight: 55,
+                  btnHeight: !isTablet ? 55 : 65,
                   text: LocaleKeys.next.translateText,
                   onTap: () {
                     if (ctrl.validateUploadPhotoFiles()) {
@@ -1320,8 +1328,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     }
                   },
                   boxShadow: [],
-                  radius: 25,
-                  fontSize: 18,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
                 ).paddingOnly(top: 10, right: 15, left: 5),

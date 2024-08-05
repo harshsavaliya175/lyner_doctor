@@ -148,5 +148,8 @@ abstract class  LocaleKeys {
   static const dateCom = 'dateCom';
   static const procedureCom = 'procedureCom';
   static const nextVisitCom = 'nextVisitCom';
+  static const prescription = 'prescription';
+  static const link = 'link';
+  static const stlFile = 'stlFile';
 
 }

@@ -145,5 +145,8 @@
   "patientTreatments": "Patient Treatments",
   "dateCom": "Date:",
   "procedureCom": "Procedure:",
-  "nextVisitCom": "Next Visit:"
+  "nextVisitCom": "Next Visit:",
+  "prescription": "Prescription",
+  "link": "Link",
+  "stlFile": "STL File"
 }

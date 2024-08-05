@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -13,6 +12,7 @@ import 'package:lynerdoctor/ui/screens/main/patients_details/widget/information_
 import 'package:lynerdoctor/ui/screens/main/patients_details/widget/patient_treatments_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/widget/prescription_screen.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
+import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
 class PatientsDetailsScreen extends StatelessWidget {
   PatientsDetailsScreen({super.key});
@@ -29,10 +29,11 @@ class PatientsDetailsScreen extends StatelessWidget {
         title: Text(
           LocaleKeys.patientDetails.translateText,
           style: TextStyle(
-              fontFamily: Assets.fonts.maax,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              fontSize: 20),
+            fontFamily: Assets.fonts.maax,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontSize: 20,
+          ),
         ),
         backgroundColor: Colors.white,
         leading: Assets.icons.icBack
@@ -41,143 +42,157 @@ class PatientsDetailsScreen extends StatelessWidget {
               width: 25,
               fit: BoxFit.scaleDown,
             )
-            .paddingOnly(
-              left: 10,
-            )
+            .paddingOnly(left: 10)
             .onClick(() {
           Get.back();
         }),
         elevation: 0.5,
         rightIcon: Assets.icons.icTeethWithScreen.svg().onClick(
           () {
-            Get.toNamed(Routes.addLynerConnect);
+            // Get.toNamed(Routes.addLynerConnect);
           },
         ).paddingOnly(right: 15),
       ),
       body: GetBuilder<PatientsDetailsController>(
         builder: (PatientsDetailsController controller) {
-          return Column(
+          return Stack(
             children: [
-              24.space(),
-              Row(
+              Column(
                 children: [
-                  Expanded(
-                    child: Container(
-                      height: 50.w,
-                      alignment: Alignment.center,
-                      child: Assets.icons.icPersonWithComment.svg(
-                        colorFilter: ColorFilter.mode(
-                          controller.selectedScreen == 0
-                              ? Colors.white
-                              : coolFourColor,
-                          BlendMode.srcIn,
-                        ),
+                  24.space(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: isTablet ? 70 : 50,
+                          alignment: Alignment.center,
+                          child: Assets.icons.icPersonWithComment.svg(
+                            height: isTablet ? 30 : 24,
+                            width: isTablet ? 30 : 24,
+                            colorFilter: ColorFilter.mode(
+                              controller.selectedScreen == 0
+                                  ? Colors.white
+                                  : coolFourColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: controller.selectedScreen == 0
+                                ? primaryBrown
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            border: controller.selectedScreen == 0
+                                ? null
+                                : Border.all(color: skyColor, width: 1),
+                          ),
+                        ).onClick(() {
+                          controller.changeData(selectedIndex: 0);
+                        }),
                       ),
-                      decoration: BoxDecoration(
-                        color: controller.selectedScreen == 0
-                            ? primaryBrown
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        border: controller.selectedScreen == 0
-                            ? null
-                            : Border.all(color: skyColor, width: 1),
+                      11.space(),
+                      Expanded(
+                        child: Container(
+                          height: isTablet ? 70 : 50,
+                          alignment: Alignment.center,
+                          child: Assets.icons.icPerson.svg(
+                            height: isTablet ? 30 : 24,
+                            width: isTablet ? 30 : 24,
+                            colorFilter: ColorFilter.mode(
+                              controller.selectedScreen == 1
+                                  ? Colors.white
+                                  : coolFourColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: controller.selectedScreen == 1
+                                ? primaryBrown
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            border: controller.selectedScreen == 1
+                                ? null
+                                : Border.all(color: skyColor, width: 1),
+                          ),
+                        ).onClick(() {
+                          controller.getPatientInformationDetails();
+                          controller.changeData(selectedIndex: 1);
+                        }),
                       ),
-                    ).onClick(() {
-                      controller.changeData(selectedIndex: 0);
-                    }),
+                      11.space(),
+                      Expanded(
+                        child: Container(
+                          height: isTablet ? 70 : 50,
+                          alignment: Alignment.center,
+                          child: Assets.icons.icFile.svg(
+                            height: isTablet ? 30 : 24,
+                            width: isTablet ? 30 : 24,
+                            colorFilter: ColorFilter.mode(
+                              controller.selectedScreen == 2
+                                  ? Colors.white
+                                  : coolFourColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: controller.selectedScreen == 2
+                                ? primaryBrown
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            border: controller.selectedScreen == 2
+                                ? null
+                                : Border.all(color: skyColor, width: 1),
+                          ),
+                        ).onClick(() {
+                          controller.changeData(selectedIndex: 2);
+                        }),
+                      ),
+                      11.space(),
+                      Expanded(
+                        child: Container(
+                          height: isTablet ? 70 : 50,
+                          alignment: Alignment.center,
+                          child: Assets.icons.icPatientTreatments.svg(
+                            height: isTablet ? 30 : 24,
+                            width: isTablet ? 30 : 24,
+                            colorFilter: ColorFilter.mode(
+                              controller.selectedScreen == 3
+                                  ? Colors.white
+                                  : coolFourColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: controller.selectedScreen == 3
+                                ? primaryBrown
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            border: controller.selectedScreen == 3
+                                ? null
+                                : Border.all(color: skyColor, width: 1),
+                          ),
+                        ).onClick(() {
+                          controller.changeData(selectedIndex: 3);
+                        }),
+                      ),
+                    ],
                   ),
-                  11.space(),
+                  10.space(),
                   Expanded(
-                    child: Container(
-                      height: 50.w,
-                      alignment: Alignment.center,
-                      child: Assets.icons.icPerson.svg(
-                        colorFilter: ColorFilter.mode(
-                          controller.selectedScreen == 1
-                              ? Colors.white
-                              : coolFourColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: controller.selectedScreen == 1
-                            ? primaryBrown
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        border: controller.selectedScreen == 1
-                            ? null
-                            : Border.all(color: skyColor, width: 1),
-                      ),
-                    ).onClick(() {
-                      controller.changeData(selectedIndex: 1);
-                    }),
-                  ),
-                  11.space(),
-                  Expanded(
-                    child: Container(
-                      height: 50.w,
-                      alignment: Alignment.center,
-                      child: Assets.icons.icFile.svg(
-                        colorFilter: ColorFilter.mode(
-                          controller.selectedScreen == 2
-                              ? Colors.white
-                              : coolFourColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: controller.selectedScreen == 2
-                            ? primaryBrown
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        border: controller.selectedScreen == 2
-                            ? null
-                            : Border.all(color: skyColor, width: 1),
-                      ),
-                    ).onClick(() {
-                      controller.changeData(selectedIndex: 2);
-                    }),
-                  ),
-                  11.space(),
-                  Expanded(
-                    child: Container(
-                      height: 50.w,
-                      alignment: Alignment.center,
-                      child: Assets.icons.icPatientTreatments.svg(
-                        colorFilter: ColorFilter.mode(
-                          controller.selectedScreen == 3
-                              ? Colors.white
-                              : coolFourColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: controller.selectedScreen == 3
-                            ? primaryBrown
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        border: controller.selectedScreen == 3
-                            ? null
-                            : Border.all(color: skyColor, width: 1),
-                      ),
-                    ).onClick(() {
-                      controller.changeData(selectedIndex: 3);
-                    }),
+                    child: controller.selectedScreen == 0
+                        ? CommentScreen()
+                        : controller.selectedScreen == 1
+                            ? InformationScreen()
+                            : controller.selectedScreen == 2
+                                ? PrescriptionScreen()
+                                : PatientTreatmentsScreen(),
                   ),
                 ],
-              ),
-              10.space(),
-              Expanded(
-                child: controller.selectedScreen == 0
-                    ? CommentScreen()
-                    : controller.selectedScreen == 1
-                        ? InformationScreen()
-                        : controller.selectedScreen == 2
-                            ? PrescriptionScreen()
-                            : PatientTreatmentsScreen(),
-              ),
+              ).paddingSymmetric(horizontal: 20),
+              controller.isLoading
+                  ? AppProgressView(progressColor: Colors.black)
+                  : Container()
             ],
-          ).paddingSymmetric(horizontal: 20);
+          );
         },
       ),
     );

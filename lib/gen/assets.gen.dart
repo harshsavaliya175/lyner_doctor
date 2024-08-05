@@ -73,6 +73,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_cancel.svg
   SvgGenImage get icCancel => const SvgGenImage('assets/icons/ic_cancel.svg');
 
+  /// File path: assets/icons/ic_clip.svg
+  SvgGenImage get icClip => const SvgGenImage('assets/icons/ic_clip.svg');
+
   /// File path: assets/icons/ic_document.svg
   SvgGenImage get icDocument =>
       const SvgGenImage('assets/icons/ic_document.svg');
@@ -143,6 +146,9 @@ class $AssetsIconsGen {
   SvgGenImage get icSelectArrow =>
       const SvgGenImage('assets/icons/ic_select_arrow.svg');
 
+  /// File path: assets/icons/ic_send.svg
+  SvgGenImage get icSend => const SvgGenImage('assets/icons/ic_send.svg');
+
   /// File path: assets/icons/ic_teeth_with_screen.svg
   SvgGenImage get icTeethWithScreen =>
       const SvgGenImage('assets/icons/ic_teeth_with_screen.svg');
@@ -172,6 +178,7 @@ class $AssetsIconsGen {
         icCalendar,
         icCamera,
         icCancel,
+        icClip,
         icDocument,
         icDown,
         icEditProfile,
@@ -192,6 +199,7 @@ class $AssetsIconsGen {
         icSearch,
         icSelect,
         icSelectArrow,
+        icSend,
         icTeethWithScreen,
         icUser,
         icVideoFile,

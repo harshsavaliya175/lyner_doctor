@@ -161,7 +161,10 @@ class CodegenLoader extends AssetLoader{
   "patientTreatments": "Patient Treatments",
   "dateCom": "Date:",
   "procedureCom": "Procedure:",
-  "nextVisitCom": "Next Visit:"
+  "nextVisitCom": "Next Visit:",
+  "prescription": "Prescription",
+  "link": "Link",
+  "stlFile": "STL File"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

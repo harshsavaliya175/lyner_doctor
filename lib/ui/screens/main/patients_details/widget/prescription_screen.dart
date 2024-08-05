@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_detail_card.dart';
 
 class PrescriptionScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class PrescriptionScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           10.space(),
-          "Prescription".normalText(fontWeight: FontWeight.w600),
+          LocaleKeys.prescription.translateText
+              .normalText(fontWeight: FontWeight.w600),
           6.space(),
           Expanded(
             child: ListView(
@@ -29,6 +31,58 @@ class PrescriptionScreen extends StatelessWidget {
                   isShowBottomWidget: true,
                   bottomText:
                       "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Objectifs Du Traitement",
+                  subTitle: "(demande du patient)",
+                  isShowSubTitle: true,
+                  description: "Alignement esthétique",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Techniques Acceptees Pour Ce Patient",
+                  subTitle: "(demande du patient)",
+                  isShowSubTitle: true,
+                  description: "Recommandé par Lyner",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Historique Dentaire",
+                  isShowSubTitle: false,
+                  description: "Rien de particulier",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Classe Dentaire",
+                  isShowSubTitle: false,
+                  description: "Maintenir",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Milieu Incisif Maxillaire",
+                  isShowSubTitle: false,
+                  description: "Centré",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Recouvrement Incisives (Supraclusion)",
+                  isShowSubTitle: false,
+                  description: "Centré",
+                  isShowBottomWidget: false,
+                ),
+                12.space(),
+                AppPatientDetailCard(
+                  title: "Autres Recommandations",
+                  isShowSubTitle: false,
+                  description:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  isShowBottomWidget: false,
                 ),
               ],
             ),

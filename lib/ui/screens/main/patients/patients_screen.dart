@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
@@ -9,7 +10,6 @@ import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/patient_resposne_model.dart';
-
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_card.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
@@ -191,6 +191,10 @@ class PatientsScreen extends StatelessWidget {
                                 editOrSubmitOnTap: () {},
                                 patientImagePath:
                                     patientData?.patientProfile ?? '',
+                              ).onClick(
+                                () {
+                                  Get.toNamed(Routes.patientsDetailsScreen);
+                                },
                               );
                             },
                             separatorBuilder:

@@ -36,7 +36,9 @@ class AppPatientDetailCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           20.space(),
-          title.normalText(fontWeight: FontWeight.w600).paddingOnly(left: 16),
+          title
+              .normalText(fontWeight: FontWeight.w600)
+              .paddingSymmetric(horizontal: 16),
           6.space(),
           if (isShowSubTitle)
             subTitle
@@ -45,11 +47,11 @@ class AppPatientDetailCard extends StatelessWidget {
                   color: hintStepColor,
                   fontSize: 16,
                 )
-                .paddingOnly(left: 16),
+                .paddingSymmetric(horizontal: 16),
           16.space(),
           description
               .normalText(fontWeight: FontWeight.w500, fontSize: 16)
-              .paddingOnly(left: 16),
+              .paddingSymmetric(horizontal: 16),
           16.space(),
           if (isShowBottomWidget)
             Column(
@@ -65,7 +67,12 @@ class AppPatientDetailCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                         fontStyle: FontStyle.italic)
-                    .paddingOnly(left: 16, right: 16),
+                    .paddingOnly(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: 20,
+                    ),
               ],
             )
         ],

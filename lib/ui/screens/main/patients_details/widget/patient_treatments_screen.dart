@@ -32,8 +32,11 @@ class PatientTreatmentsScreen extends StatelessWidget {
                 18.space(),
                 Align(
                   alignment: Alignment.center,
-                  child: LocaleKeys.addPatientTreatments.translateText
-                      .normalText(fontWeight: FontWeight.w600),
+                  child:
+                      LocaleKeys.addPatientTreatments.translateText.normalText(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20.sp,
+                  ),
                 ),
                 12.space(),
                 const Divider(height: 0, color: dividerColor, thickness: 1),
@@ -76,7 +79,7 @@ class PatientTreatmentsScreen extends StatelessWidget {
                         Expanded(
                           child: AppButton(
                             text: LocaleKeys.cancel.translateText,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontColor: pinkColor,
                             bgColor: deleteButtonColor,
                             radius: 100,
@@ -90,7 +93,7 @@ class PatientTreatmentsScreen extends StatelessWidget {
                           child: AppButton(
                             text: LocaleKeys.add.translateText,
                             bgColor: primaryBrown,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontColor: whiteColor,
                             radius: 100,
                             onTap: () {},
