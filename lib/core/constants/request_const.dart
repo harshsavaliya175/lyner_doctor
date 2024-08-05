@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class ApiUrl {
@@ -83,3 +85,5 @@ Map<String, String> requestHeaders(bool passAuthToken) {
 const int LIMIT = 10;
 
 const USER_TYPE = "user";
+
+bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true:false;

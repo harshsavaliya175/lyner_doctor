@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
 class CommonStepIndicator extends StatelessWidget {
@@ -24,7 +25,8 @@ class CommonStepIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(totalSteps, (index) {
           bool isActive = index == currentStep;
-          bool isCompleted = (index < currentStep||stepErrors[index]==false);
+          bool isCompleted =
+              (index < currentStep || stepErrors[index] == false);
           bool hasError = stepErrors[index] ?? false;
           return GestureDetector(
             onTap: () {
@@ -47,8 +49,8 @@ class CommonStepIndicator extends StatelessWidget {
                       ),
                       child: Container(
                         alignment: Alignment.center,
-                        width: 20.0,
-                        height: 20.0,
+                        width: !isTablet ? 20 : 25,
+                        height: !isTablet ? 20 : 25,
                         decoration: BoxDecoration(
                           color: isActive
                               ? (hasError ? Colors.red : primaryBrown)
@@ -71,7 +73,7 @@ class CommonStepIndicator extends StatelessWidget {
                     Text(
                       'Steps ${index + 1}', // Step number
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: !isTablet ?12:16,
                         fontFamily: Assets.fonts.maax,
                         fontWeight: FontWeight.normal,
                         color: isActive || isCompleted
@@ -83,11 +85,11 @@ class CommonStepIndicator extends StatelessWidget {
                 ),
                 if (index != totalSteps - 1)
                   Container(
-                    width: (Get.width - 50.0 * totalSteps) / (totalSteps - 1),
+                    width: (Get.width - (!isTablet ? 50 : 65) * totalSteps) /
+                        (totalSteps - 1),
                     // Adjust width to fill the screen
                     height: 2.0,
-                    color:
-                        index < currentStep ? primaryBrown : darkSkyColor,
+                    color: index < currentStep ? primaryBrown : darkSkyColor,
                   ).paddingOnly(top: 15).paddingSymmetric(horizontal: 0),
               ],
             ),

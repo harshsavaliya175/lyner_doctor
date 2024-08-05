@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
@@ -79,9 +80,9 @@ class _DoctorPatientsAllFilterBottomSheetState
                 // ),
                 // 12.space(),
                 Container(
-                  height: 55,
+                  height: !isTablet ?55:60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(!isTablet ?25:35),
                     color: Colors.white,
                     border: Border.all(color: skyColor),
                   ),
@@ -90,7 +91,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                     children: [
                       LocaleKeys.all.translateText
                           .appCommonText(
-                            size: 16,
+                            size: !isTablet ?16:18,
                             weight: FontWeight.w400,
                             color: Colors.black,
                           )
@@ -156,12 +157,12 @@ class _DoctorPatientsAllFilterBottomSheetState
 
   Widget doctorData(PatientsController ctrl) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(!isTablet ?12:15),
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(!isTablet ?12:15),
           border: Border.all(color: skyColor, width: 1),
         ),
         child: Column(
@@ -173,11 +174,11 @@ class _DoctorPatientsAllFilterBottomSheetState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(!isTablet ?12:15),
               ),
               child: LocaleKeys.doctor.translateText
                   .appCommonText(
-                    size: 16,
+                    size: !isTablet ?16:18,
                     weight: FontWeight.w400,
                     color: Colors.black,
                   )
@@ -191,7 +192,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                 ctrl.doctorDataList.isEmpty
                     ? "Doctor Not Found"
                         .appCommonText(
-                          size: 15,
+                          size: !isTablet ?15:17,
                           weight: FontWeight.w300,
                           color: Colors.black,
                         )
@@ -212,7 +213,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                                 child:
                                     "Dr. ${doctor?.firstName ?? ''} ${doctor?.lastName ?? ''}"
                                         .appCommonText(
-                                  size: 16,
+                                  size: !isTablet ?16:18,
                                   weight: FontWeight.w300,
                                   color: Colors.black,
                                   align: TextAlign.start,
@@ -265,12 +266,12 @@ class _DoctorPatientsAllFilterBottomSheetState
 
   Widget clinicAddressData(PatientsController ctrl) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(!isTablet ?12:15),
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(!isTablet ?12:15),
           border: Border.all(color: skyColor, width: 1),
         ),
         child: Column(
@@ -282,11 +283,11 @@ class _DoctorPatientsAllFilterBottomSheetState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(!isTablet ?12:15),
               ),
               child: LocaleKeys.clinic.translateText
                   .appCommonText(
-                    size: 16,
+                    size: !isTablet ?16:18,
                     weight: FontWeight.w400,
                     color: Colors.black,
                   )
@@ -300,7 +301,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                 ctrl.clinicLocationList.isEmpty
                     ? "Clinic Location Not Found"
                         .appCommonText(
-                          size: 15,
+                          size: !isTablet ?15:17,
                           weight: FontWeight.w300,
                           color: Colors.black,
                         )
@@ -321,7 +322,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                               Expanded(
                                 child:
                                     "${location?.address ?? ''}".appCommonText(
-                                  size: 16,
+                                  size: !isTablet ?16:18,
                                   weight: FontWeight.w300,
                                   color: Colors.black,
                                   align: TextAlign.start,

@@ -11,6 +11,7 @@ Future datePickerDialog(BuildContext context, DateTime? initialDate) {
 
   return showDatePicker(
     context: context,
+
     initialDate: initialDate ?? currentDate,
     firstDate: currentDate,
     // Start from the current date

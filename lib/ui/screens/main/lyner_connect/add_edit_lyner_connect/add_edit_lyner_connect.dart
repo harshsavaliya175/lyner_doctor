@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
@@ -187,7 +188,10 @@ class AddEditLynerConnect extends StatelessWidget {
                     labelText: "Total Aligner",
                     showPrefixWidget: Assets.icons.icDown
                         .svg(
-                          color: primaryBrown,
+                      colorFilter: ColorFilter.mode(
+                        primaryBrown,
+                        BlendMode.srcIn,
+                      ),
                           height: 10,
                           width: 10,
                         )
@@ -262,14 +266,14 @@ class AddEditLynerConnect extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: 70,
+                height: !isTablet ?70:80,
                 width: Get.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: AppButton(
-                  btnHeight: 55,
+                  btnHeight: !isTablet ?55:65,
                   text: controller.isFromNewPatient
                       ? LocaleKeys.add.translateText
                       : "Update",
@@ -281,8 +285,8 @@ class AddEditLynerConnect extends StatelessWidget {
                     }
                   },
                   boxShadow: [],
-                  radius: 25,
-                  fontSize: 20,
+                  radius: !isTablet ?25:40,
+                  fontSize: !isTablet ?20:24,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
                 ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),

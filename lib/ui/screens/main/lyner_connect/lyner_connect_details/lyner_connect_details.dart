@@ -31,7 +31,7 @@ class LynerConnectDetails extends StatelessWidget {
               fontFamily: Assets.fonts.maax,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              fontSize: 20),
+              fontSize: !isTablet ? 20 : 22),
         ),
         backgroundColor: Colors.white,
         leadingWidth: 40,
@@ -53,32 +53,37 @@ class LynerConnectDetails extends StatelessWidget {
           children: [
             15.space(),
             Container(
-              height: 115,
+              height: !isTablet ? 115 : 185,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(!isTablet ? 20 : 30)),
                 border: Border.all(color: skyColor),
               ),
               child: Row(
                 children: [
                   Container(
-                    height: 70,
-                    width: 70,
+                    height: !isTablet ? 70 : 140,
+                    width: !isTablet ? 70 : 140,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.black,
                     ),
                     child: ctrl.patientImagePath.isEmpty
                         ? HomeImage.assetImage(
-                            size: 70,
+                            size: !isTablet ? 70 : 100,
                             path: Assets.images.imgUserPlaceholder.path,
                           )
                         : HomeImage.networkImage(
                             path: ApiUrl.patientProfileImage +
                                 ctrl.patientImagePath,
-                            size: 70,
+                            size: !isTablet ? 70 : 100,
                           ),
-                  ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+                  ).paddingOnly(
+                      top: 16,
+                      left: !isTablet ? 16 : 25,
+                      right: !isTablet ? 12 : 25,
+                      bottom: 12),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -90,7 +95,7 @@ class LynerConnectDetails extends StatelessWidget {
                               align: TextAlign.start,
                               maxLine: 2,
                               overflow: TextOverflow.ellipsis,
-                              size: 20,
+                              size: !isTablet ? 20 : 25,
                               color: Colors.black,
                             )
                             .paddingOnly(right: 5),
@@ -101,7 +106,7 @@ class LynerConnectDetails extends StatelessWidget {
                           align: TextAlign.start,
                           maxLine: 2,
                           overflow: TextOverflow.ellipsis,
-                          size: 14,
+                          size: !isTablet ? 14 : 18,
                           color: hintStepColor,
                         ),
                       ],
@@ -115,10 +120,11 @@ class LynerConnectDetails extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    height: 90,
+                    height: !isTablet ? 90 : 140,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(!isTablet ? 20 : 30)),
                       border: Border.all(color: skyColor),
                     ),
                     child: Column(
@@ -128,14 +134,14 @@ class LynerConnectDetails extends StatelessWidget {
                         "Current Aligner"
                             .appCommonText(
                                 weight: FontWeight.w400,
-                                size: 16,
+                                size: !isTablet ? 16 : 22,
                                 color: blackColor,
                                 align: TextAlign.start)
                             .paddingOnly(left: 15),
                         "01/10"
                             .appCommonText(
                                 weight: FontWeight.w500,
-                                size: 20,
+                                size: !isTablet ? 20 : 25,
                                 color: primaryBrown,
                                 align: TextAlign.start)
                             .paddingOnly(left: 15),
@@ -146,10 +152,11 @@ class LynerConnectDetails extends StatelessWidget {
                 15.space(),
                 Expanded(
                   child: Container(
-                    height: 90,
+                    height: !isTablet ? 90 : 140,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(!isTablet ? 20 : 30)),
                       border: Border.all(color: skyColor),
                     ),
                     child: Column(
@@ -159,14 +166,14 @@ class LynerConnectDetails extends StatelessWidget {
                         "Aligner Days"
                             .appCommonText(
                                 weight: FontWeight.w400,
-                                size: 16,
+                                size: !isTablet ? 16 : 22,
                                 color: blackColor,
                                 align: TextAlign.start)
                             .paddingOnly(left: 15),
                         "5"
                             .appCommonText(
                                 weight: FontWeight.w500,
-                                size: 20,
+                                size: !isTablet ? 20 : 25,
                                 color: primaryBrown,
                                 align: TextAlign.start)
                             .paddingOnly(left: 15),
@@ -196,12 +203,15 @@ class LynerConnectDetails extends StatelessWidget {
               },
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
-              // isError: ctrl.emailError,
               hintText: "Select current stage",
               labelText: "Current Stage",
+              labelTextSize: (!isTablet ? 14 : 19),
               showPrefixWidget: Assets.icons.icDown
                   .svg(
-                    color: primaryBrown,
+                    colorFilter: ColorFilter.mode(
+                      primaryBrown,
+                      BlendMode.srcIn,
+                    ),
                     height: 10,
                     width: 10,
                   )
@@ -210,13 +220,13 @@ class LynerConnectDetails extends StatelessWidget {
             ),
             15.space(),
             "Gallery".appCommonText(
-              size: 20,
+              size: !isTablet ? 20 : 24,
               align: TextAlign.start,
               weight: FontWeight.w500,
             ),
             5.space(),
             "Aligners in Place".appCommonText(
-                size: 14,
+                size: !isTablet ? 14 : 18,
                 align: TextAlign.start,
                 weight: FontWeight.w400,
                 color: blackColor),
@@ -272,7 +282,7 @@ class LynerConnectDetails extends StatelessWidget {
             ),
             10.space(),
             "Without Aligners".appCommonText(
-                size: 14,
+                size: !isTablet ? 14 : 18,
                 align: TextAlign.start,
                 weight: FontWeight.w400,
                 color: blackColor),
@@ -349,18 +359,21 @@ Widget photoCardWidget(
         ((fileImage != null && fileImage.path != "")
                 ? HomeImage.fileImage(
                     path: fileImage.path,
-                    size: 123,
+                    // size: !isTablet ?123:220,
+                    height: !isTablet ? 123 : 215,
+                    width: !isTablet ? 123 : 240,
                     shape: BoxShape.rectangle,
                     fit: BoxFit.cover,
                     radius: BorderRadius.circular(10),
                   )
                 : HomeImage.assetImage(
                     path: image,
-                    height: 123,
+                    height: !isTablet ? 123 : 215,
+                    width: !isTablet ? 123 : 240,
                     shape: BoxShape.rectangle,
                     fit: BoxFit.cover,
                     radius: BorderRadius.circular(10),
-                    width: 123,
+                    // width: 123,
                   ))
             .onClick(onTap),
       ],

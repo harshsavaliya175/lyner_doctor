@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
@@ -26,7 +27,7 @@ class ChangePasswordScreen extends StatelessWidget {
             fontFamily: Assets.fonts.maax,
             fontWeight: FontWeight.w700,
             color: Colors.black,
-            fontSize: 20,
+            fontSize: !isTablet ?20:22,
           ),
         ),
         leading: Assets.icons.icBack
@@ -125,7 +126,7 @@ class ChangePasswordScreen extends StatelessWidget {
               45.space(),
               AppButton(
                 text: "Change",
-                btnHeight: 53,
+                btnHeight: !isTablet ?53:60,
                 onTap: () async{
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (ctrl.changePasswordFormKey.currentState!.validate()) {
@@ -134,8 +135,8 @@ class ChangePasswordScreen extends StatelessWidget {
                   }
                 },
                 boxShadow: [],
-                radius: 25,
-                fontSize: 20,
+                radius: !isTablet ?25:40,
+                fontSize: !isTablet ?20:23,
                 bgColor: primaryBrown,
                 weight: FontWeight.w700,
                 fontColor: Colors.white,

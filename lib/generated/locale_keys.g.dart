@@ -123,5 +123,7 @@ abstract class  LocaleKeys {
   static const alignementEsthetique = 'alignementEsthetique';
   static const alignementEsthetiqueCorrection = 'alignementEsthetiqueCorrection';
   static const pleaseSelectAnyPatient = 'pleaseSelectAnyPatient';
+  static const yes = 'yes';
+  static const no = 'no';
 
 }

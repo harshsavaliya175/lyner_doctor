@@ -136,7 +136,9 @@ class CodegenLoader extends AssetLoader{
   "ameliorerClasses": "Améliorer vers classe 1",
   "alignementEsthetique": "Alignement esthétique",
   "alignementEsthetiqueCorrection": "Alignement esthétique et correction del’occlusion",
-  "pleaseSelectAnyPatient": "Please select any patient"
+  "pleaseSelectAnyPatient": "Please select any patient",
+  "yes": "Yes",
+  "no": "No"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -43,7 +44,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         .translateText
                         .appCommonText(
                             color: whiteColor,
-                            size: 16.sp,
+                            size: !isTablet ? 16.sp : 20.sp,
                             weight: FontWeight.w400)
                         .paddingSymmetric(horizontal: 20.w),
                     48.space(),
@@ -63,9 +64,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                           30.space(),
                           LocaleKeys.enterEmail.translateText
                               .appCommonText(
-                                  weight: FontWeight.w400,
-                                  color: hintTextColor,
-                                  size: 14.sp)
+                                weight: FontWeight.w400,
+                                color: hintTextColor,
+                                size: !isTablet ? 14.sp : 18.sp,
+                              )
                               .paddingOnly(bottom: 8.w),
                           CommonTextField(
                             prefixIcon: Assets.icons.mail,
@@ -75,14 +77,14 @@ class ForgotPasswordScreen extends StatelessWidget {
                           ),
                           48.space(),
                           AppButton(
-                            btnHeight: 55,
+                            btnHeight: !isTablet ? 55.h : 63.h,
                             text: LocaleKeys.sendRequest.translateText,
                             onTap: () {
                               ctrl.forgotPassword(context);
                             },
                             boxShadow: [],
-                            radius: 25,
-                            fontSize: 20,
+                            radius: !isTablet ? 25.r : 40.r,
+                            fontSize: !isTablet ? 20.sp : 21.sp,
                             bgColor: primaryBrown,
                             fontColor: Colors.white,
                           ),
@@ -93,7 +95,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                   .appCommonText(
                                 weight: FontWeight.w400,
                                 color: darkSkyColor,
-                                size: 16.sp,
+                                size: !isTablet ? 16.sp : 20.sp,
                               ),
                               TextButton(
                                 onPressed: () {
@@ -103,7 +105,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     .appCommonText(
                                   weight: FontWeight.w500,
                                   color: primaryBrown,
-                                  size: 16.sp,
+                                  size: !isTablet ? 16.sp : 20.sp,
                                   decoration: TextDecoration.underline,
                                   decorationColor: primaryBrown,
                                 ),

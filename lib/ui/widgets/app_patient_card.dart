@@ -55,8 +55,8 @@ class AppPatientCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                height: 44.w,
-                width: 44.w,
+                height: !isTablet ? 44.w : 54.w,
+                width: !isTablet ? 44.w : 54.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.black,
@@ -67,7 +67,7 @@ class AppPatientCard extends StatelessWidget {
                       )
                     : HomeImage.networkImage(
                         path: ApiUrl.patientProfileImage + patientImagePath,
-                        size: 44.w,
+                        size: !isTablet ? 44.w : 54.w,
                       ),
               ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
               Column(
@@ -76,14 +76,14 @@ class AppPatientCard extends StatelessWidget {
                 children: [
                   patientName.appCommonText(
                     weight: FontWeight.w500,
-                    size: 16,
+                    size: !isTablet ? 16 : 20,
                     color: Colors.black,
                   ),
                   if (isEditCard)
                     ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
                         .appCommonText(
                       weight: FontWeight.w400,
-                      size: 12,
+                      size:!isTablet ? 12 : 15,
                       color: hintStepColor,
                     ),
                 ],
@@ -122,8 +122,9 @@ class AppPatientCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: AppButton(
+                      btnHeight: !isTablet ? 50 : 60,
                       text: LocaleKeys.delete.translateText,
-                      fontSize: 16,
+                      fontSize: !isTablet ? 16 : 20,
                       fontColor: pinkColor,
                       bgColor: deleteButtonColor,
                       radius: 100,
@@ -139,7 +140,8 @@ class AppPatientCard extends StatelessWidget {
                           ? LocaleKeys.edit.translateText
                           : LocaleKeys.submitTheCase.translateText,
                       bgColor: primaryBrown,
-                      fontSize: 16,
+                      fontSize: !isTablet ? 16 : 20,
+                      btnHeight: !isTablet ? 50 : 60,
                       fontColor: whiteColor,
                       radius: 100,
                       onTap: () {
@@ -163,9 +165,9 @@ class AppPatientCard extends StatelessWidget {
   }) {
     return Row(
       children: [
-        title.appCommonText(weight: FontWeight.w400, size: 16),
+        title.appCommonText(weight: FontWeight.w400, size: !isTablet ? 16 : 18),
         5.space(),
-        data.appCommonText(weight: FontWeight.w500, size: 16),
+        data.appCommonText(weight: FontWeight.w500, size: !isTablet ? 16 : 18),
       ],
     );
   }
