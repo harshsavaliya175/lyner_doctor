@@ -87,78 +87,78 @@ class _CommonTextFieldState extends State<CommonTextField> {
     return Container(
       height: widget.height ?? (!isTablet ? 55.h : 60.h),
       child: TextFormField(
-      focusNode: _focus,
-      readOnly: widget.readOnly ?? false,
-      onChanged: widget.onChange,
-      validator: widget.validation,
-      controller: widget.controller ?? TextEditingController(),
-      maxLines: widget.maxLine,
-      textCapitalization: widget.textCapitalization,
-      autofocus: false,
-      style: hintTextStyle(
-          size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
-      inputFormatters: widget.inputFormatters,
-      obscureText: widget.obscureText ?? false,
-      textInputAction: widget.action ?? TextInputAction.done,
-      keyboardType: widget.keyboardType,
-      cursorColor: primaryBrown,
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        enabled: true,
-        // contentPadding: EdgeInsets.zero,
-        hintStyle: hintTextStyle(
+        focusNode: _focus,
+        readOnly: widget.readOnly ?? false,
+        onChanged: widget.onChange,
+        validator: widget.validation,
+        controller: widget.controller ?? TextEditingController(),
+        maxLines: widget.maxLine,
+        textCapitalization: widget.textCapitalization,
+        autofocus: false,
+        style: hintTextStyle(
+            size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
+        inputFormatters: widget.inputFormatters,
+        obscureText: widget.obscureText ?? false,
+        textInputAction: widget.action ?? TextInputAction.done,
+        keyboardType: widget.keyboardType,
+        cursorColor: primaryBrown,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+          enabled: true,
+          // contentPadding: EdgeInsets.zero,
+          hintStyle: hintTextStyle(
               size: widget.hintTextSize ?? (!isTablet ? 16.sp : 20.sp),
-            weight: FontWeight.w500,
-            color: hintColor),
-        prefixIcon: widget.prefixIcon != null
-            ? (widget.prefixIcon!
-                    .svg(
+              weight: FontWeight.w500,
+              color: hintColor),
+          prefixIcon: widget.prefixIcon != null
+              ? (widget.prefixIcon!
+                      .svg(
                           height: widget.prefixIconSize ??
                               (!isTablet ? 20.h : 25.h),
                           width: widget.prefixIconSize ??
                               (!isTablet ? 20.h : 25.h),
-                        colorFilter: ColorFilter.mode(
-                            _focus.hasFocus ? primaryBrown : hintColor,
-                            BlendMode.srcIn),
-                        fit: BoxFit.contain)
-                    .paddingAll(widget.prefixPadding ?? 12.w))
-                .paddingOnly(left: 5.w)
-            : null,
-        suffixIcon: widget.isPasswordField ?? false
-            ? widget.suffixIcon ?? const SizedBox()
-            : const SizedBox(),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: disableTextFiledColor,
-            width: 1,
+                          colorFilter: ColorFilter.mode(
+                              _focus.hasFocus ? primaryBrown : hintColor,
+                              BlendMode.srcIn),
+                          fit: BoxFit.contain)
+                      .paddingAll(widget.prefixPadding ?? 12.w))
+                  .paddingOnly(left: 5.w)
+              : null,
+          suffixIcon: widget.isPasswordField ?? false
+              ? widget.suffixIcon ?? const SizedBox()
+              : const SizedBox(),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: disableTextFiledColor,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: primaryBrown,
-            width: 1,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: primaryBrown,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 0,
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+              width: 0,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: whiteColor,
-            width: 0,
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: whiteColor,
+              width: 0,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
-          borderRadius: BorderRadius.circular(widget.borderRadius),
+          filled: true,
+          fillColor: widget.fillColor,
         ),
-        filled: true,
-        fillColor: widget.fillColor,
       ),
-        ),
     );
   }
 }

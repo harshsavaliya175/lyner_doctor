@@ -61,8 +61,8 @@ class AppPatientCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                height: !isTablet ? 44.w : 54.w,
-                width: !isTablet ? 44.w : 54.w,
+                      height: !isTablet ? 44.w : 54.w,
+                      width: !isTablet ? 44.w : 54.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.black,
@@ -72,8 +72,9 @@ class AppPatientCard extends StatelessWidget {
                               path: Assets.images.imgUserPlaceholder.path,
                             )
                           : HomeImage.networkImage(
-                        path: ApiUrl.patientProfileImage + patientImagePath,
-                        size: !isTablet ? 44.w : 54.w,
+                              path:
+                                  ApiUrl.patientProfileImage + patientImagePath,
+                              size: !isTablet ? 44.w : 54.w,
                             ),
                     ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
                     Column(
@@ -82,14 +83,14 @@ class AppPatientCard extends StatelessWidget {
                       children: [
                         patientName.appCommonText(
                           weight: FontWeight.w500,
-                    size: !isTablet ? 16 : 20,
+                          size: !isTablet ? 16 : 20,
                           color: Colors.black,
                         ),
                         if (isEditCard)
                           ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
                               .appCommonText(
                             weight: FontWeight.w400,
-                      size:!isTablet ? 12 : 15,
+                            size: !isTablet ? 12 : 15,
                             color: hintStepColor,
                           ),
                       ],

@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const appName = 'appName';
   static const register = 'register';
   static const logIn = 'logIn';
@@ -26,6 +26,7 @@ abstract class LocaleKeys {
   static const select = 'select';
   static const doctor = 'doctor';
   static const billingAddress = 'billingAddress';
+  static const billing = 'billing';
   static const deliveryAddress = 'deliveryAddress';
   static const uploadPhotographs = 'uploadPhotographs';
   static const arcadeTraiter = 'arcadeTraiter';
@@ -96,10 +97,8 @@ abstract class LocaleKeys {
   static const decaleVersLaDroite = 'decaleVersLaDroite';
   static const decaleVersLaGauche = 'decaleVersLaGauche';
   static const augmentationDimension = 'augmentationDimension';
-  static const ingressionDesIncisivesMaxillaire =
-      'ingressionDesIncisivesMaxillaire';
-  static const ingressionDesIncisivesMandibulaires =
-      'ingressionDesIncisivesMandibulaires';
+  static const ingressionDesIncisivesMaxillaire = 'ingressionDesIncisivesMaxillaire';
+  static const ingressionDesIncisivesMandibulaires = 'ingressionDesIncisivesMandibulaires';
   static const addPatientRecordSuccessfully = 'addPatientRecordSuccessfully';
   static const bridge = 'bridge';
   static const draft = 'draft';
@@ -123,10 +122,8 @@ abstract class LocaleKeys {
   static const maintenir = 'maintenir';
   static const ameliorerClasses = 'ameliorerClasses';
   static const alignementEsthetique = 'alignementEsthetique';
-  static const alignementEsthetiqueCorrection =
-      'alignementEsthetiqueCorrection';
+  static const alignementEsthetiqueCorrection = 'alignementEsthetiqueCorrection';
   static const pleaseSelectAnyPatient = 'pleaseSelectAnyPatient';
-  static const billing = 'billing';
   static const patientDetails = 'patientDetails';
   static const comments = 'comments';
   static const pleaseNoteYourComments = 'pleaseNoteYourComments';
@@ -156,4 +153,5 @@ abstract class LocaleKeys {
   static const stlFile = 'stlFile';
   static const yes = 'yes';
   static const no = 'no';
+
 }
