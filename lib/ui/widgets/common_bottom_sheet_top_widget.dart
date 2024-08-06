@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/export.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
@@ -27,7 +28,7 @@ class CommonBottomSheetTopWidget extends StatelessWidget {
               child: Text(
                 title,
                 style: hintTextStyle(
-                  size: 20,
+                  size: !isTablet ?20:22,
                   weight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -45,8 +46,8 @@ class CommonBottomSheetTopWidget extends StatelessWidget {
                   onTap();
                 },
                 child: Container(
-                  height: 40,
-                  width: 40,
+                  height: !isTablet ?40:45,
+                  width: !isTablet ?40:45,
                   decoration: BoxDecoration(
                     color: lightGrayColor.withOpacity(0.6),
                     shape: BoxShape.circle,

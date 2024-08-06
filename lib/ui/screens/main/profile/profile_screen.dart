@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
             fontFamily: Assets.fonts.maax,
             fontWeight: FontWeight.w700,
             color: Colors.black,
-            fontSize: 20,
+            fontSize: !isTablet ? 20 : 25,
           ),
         ),
         backgroundColor: Colors.white,
@@ -53,8 +53,8 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   24.w.space(),
                   Container(
-                    height: 120.w,
-                    width: 120.w,
+                    height: !isTablet ? 120.w : 140.w,
+                    width: !isTablet ? 120.w : 140.w,
                     child: HomeImage.networkImage(
                       path: ApiUrl.clinicProfileImagePath +
                           '${preferences.getString(SharedPreference.CLINIC_PHOTO)}',
@@ -65,14 +65,14 @@ class ProfileScreen extends StatelessWidget {
                   (ctrl.clinicData?.clinicName ?? "Jane Cooper").normalText(
                     color: blackColor,
                     fontWeight: FontWeight.w500,
-                    fontSize: 20,
+                    fontSize: !isTablet ? 20 : 26,
                   ),
                   8.w.space(),
                   (ctrl.clinicData?.email ?? "Janecooperlyner@gmail.com")
                       .normalText(
                     color: hintStepColor,
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: !isTablet ? 14 : 20,
                   ),
                   24.w.space(),
                 ],
@@ -109,9 +109,10 @@ class ProfileScreen extends StatelessWidget {
                 ctrl.logout();
               },
             ),
-            16.space(),
+            !isTablet ? 20.space() : 100.space(),
           ],
         );
+      }),
       }),
     );
   }
@@ -132,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         child: Container(
           width: Get.width,
-          height: 60,
+          height: !isTablet ? 60.w : 70.w,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
@@ -143,8 +144,8 @@ class ProfileScreen extends StatelessWidget {
             children: [
               20.space(),
               leadingIcon.svg(
-                height: 24,
-                width: 24,
+                height: !isTablet ? 24 : 30,
+                width: !isTablet ? 24 : 30,
                 colorFilter:
                     ColorFilter.mode(leadingIconColor, BlendMode.srcIn),
               ),
@@ -152,14 +153,14 @@ class ProfileScreen extends StatelessWidget {
               Expanded(
                 child: title.translateText.normalText(
                   color: leadingIconColor,
-                  fontSize: 16,
+                  fontSize: !isTablet ? 16 : 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               Icon(
                 Icons.arrow_forward_ios,
                 color: primaryBrown,
-                size: 20,
+                size: !isTablet ? 20 : 24,
               ),
               20.space(),
             ],

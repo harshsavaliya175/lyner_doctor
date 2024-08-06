@@ -148,5 +148,7 @@
   "nextVisitCom": "Next Visit:",
   "prescription": "Prescription",
   "link": "Link",
-  "stlFile": "STL File"
+  "stlFile": "STL File",
+  "yes": "Yes",
+  "no": "No"
 }

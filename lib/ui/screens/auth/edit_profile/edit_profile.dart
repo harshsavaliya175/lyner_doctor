@@ -35,7 +35,7 @@ class EditProfile extends StatelessWidget {
               fontFamily: Assets.fonts.maax,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              fontSize: 20),
+              fontSize: !isTablet ? 20 : 22),
         ),
         backgroundColor: Colors.white,
         leadingWidth: 40,
@@ -72,14 +72,14 @@ class EditProfile extends StatelessWidget {
                             child: ctrl.profileImage != null
                                 ? HomeImage.fileImage(
                                     path: ctrl.profileImage!.path,
-                                    size: 150,
+                                    size: !isTablet ? 150 : 200,
                                     fit: BoxFit.cover,
                                     shape: BoxShape.circle,
                                   )
                                 : HomeImage.networkImage(
                                     path: ApiUrl.clinicProfileImagePath +
                                         '${ctrl.clinicData?.clinicPhoto}',
-                                    size: 150,
+                                    size: !isTablet ? 150 : 200,
                                     shape: BoxShape.circle,
                                     fit: BoxFit.cover,
                                   ),
@@ -89,9 +89,9 @@ class EditProfile extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: Container(
-                          margin: EdgeInsets.only(top: 125),
-                          height: 40,
-                          width: 40,
+                          margin: EdgeInsets.only(top: !isTablet ? 125 : 175),
+                          height: !isTablet ? 40 : 45,
+                          width: !isTablet ? 40 : 45,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                           ),
@@ -200,10 +200,11 @@ class EditProfile extends StatelessWidget {
                             Expanded(
                               child: "Email Notification"
                                   .appCommonText(
-                                      weight: FontWeight.w400,
-                                      align: TextAlign.start,
-                                      color: blackColor,
-                                      size: 16.sp)
+                                    weight: FontWeight.w400,
+                                    align: TextAlign.start,
+                                    color: blackColor,
+                                    size: !isTablet ? 16.sp : 18.sp,
+                                  )
                                   .paddingOnly(left: 10, right: 10),
                             ),
                           ],
@@ -243,7 +244,7 @@ class EditProfile extends StatelessWidget {
                                       weight: FontWeight.w400,
                                       align: TextAlign.start,
                                       color: blackColor,
-                                      size: 16.sp)
+                                      size: !isTablet ? 16.sp : 18.sp)
                                   .paddingOnly(left: 10, right: 10),
                             ),
                           ],
@@ -261,7 +262,7 @@ class EditProfile extends StatelessWidget {
                   35.space(),
                   AppButton(
                     text: "Update",
-                    btnHeight: 53,
+                    btnHeight: !isTablet ?53:60,
                     onTap: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (ctrl.editProfileFormKey.currentState!.validate()) {
@@ -270,8 +271,8 @@ class EditProfile extends StatelessWidget {
                       }
                     },
                     boxShadow: [],
-                    radius: 25,
-                    fontSize: 20,
+                    radius: !isTablet ?25:40,
+                    fontSize: !isTablet ?20:23,
                     bgColor: primaryBrown,
                     weight: FontWeight.w700,
                     fontColor: Colors.white,

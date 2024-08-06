@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
@@ -20,13 +22,13 @@ class DashboardScreen extends StatelessWidget {
         builder: (DashboardController controller) {
           return controller.screen[controller.currentIndex];
         },
-      ).paddingOnly(bottom: 35),
+      ).paddingOnly(bottom: !isTablet ?35:45),
       bottomNavigationBar: GetBuilder<DashboardController>(
         builder: (DashboardController ctrl) {
           return BottomAppBar(
-            height: 75,
+            height: !isTablet ?75.h:85.h,
             padding: EdgeInsets.zero,
-            notchMargin: 12,
+            notchMargin: 12.w,
             color: Colors.white,
             shape: CircularNotchedRectangle(),
             elevation: 20,

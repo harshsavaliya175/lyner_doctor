@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
@@ -28,7 +29,7 @@ class AddNewPatient extends StatelessWidget {
               fontFamily: Assets.fonts.maax,
               fontWeight: FontWeight.w700,
               color: Colors.black,
-              fontSize: 20),
+              fontSize: !isTablet ? 20 : 22),
         ),
         backgroundColor: Colors.white,
         leadingWidth: 40,
@@ -69,91 +70,88 @@ class AddNewPatient extends StatelessWidget {
                 LocaleKeys.patients.translateText
                     .appCommonText(
                         align: TextAlign.start,
-                        size: 20,
+                        size: !isTablet ? 20 : 24,
                         weight: FontWeight.w500)
                     .paddingSymmetric(horizontal: 15),
                 10.space(),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      ListView.builder(
-                        itemCount: ctrl.patientList.length,
-                        physics: PageScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final item = ctrl.patientList[index];
-                          bool isSelected = ctrl.selectedIndex == index;
-                          return Column(
-                            children: [
-                              Container(
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  color: Colors.white,
-                                  border: Border.all(color: skyColor),
+                  child: ListView.builder(
+                    itemCount: ctrl.patientList.length,
+                    physics: PageScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final item = ctrl.patientList[index];
+                      bool isSelected = ctrl.selectedIndex == index;
+                      return Column(
+                        children: [
+                          Container(
+                            height: !isTablet ? 55 : 65,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  !isTablet ? 25 : 40),
+                              color: Colors.white,
+                              border: Border.all(color: skyColor),
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: item.title
+                                      .appCommonText(
+                                        maxLine: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        size: !isTablet ?16:19,
+                                        align: TextAlign.start,
+                                        weight: FontWeight.w400,
+                                        color: Colors.black,
+                                      )
+                                      .paddingOnly(left: 15),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: item.title
-                                          .appCommonText(
-                                            maxLine: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            size: 16,
-                                            align: TextAlign.start,
-                                            weight: FontWeight.w400,
-                                            color: Colors.black,
-                                          )
-                                          .paddingOnly(left: 15),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 20.0,
-                                      height: 20.0,
-                                      decoration: BoxDecoration(
-                                        color: isSelected
-                                            ? primaryBrown
-                                            : Colors.transparent,
-                                        border: Border.all(
-                                            color: primaryBrown, width: 1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: isSelected
-                                          ? Icon(Icons.check,
-                                              color: Colors.white, size: 16)
-                                          : Container(),
-                                    ).paddingOnly(right: 13),
-                                  ],
-                                ),
-                              ).paddingSymmetric(vertical: 5).onClick(() {
-                                ctrl.togglePatientSelection(index);
-                              }),
-                            ],
-                          );
-                        },
-                      ).paddingSymmetric(horizontal: 15),
-                    ],
-                  ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 20.0,
+                                  height: 20.0,
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? primaryBrown
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                        color: primaryBrown, width: 1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: isSelected
+                                      ? Icon(Icons.check,
+                                          color: Colors.white, size: 16)
+                                      : Container(),
+                                ).paddingOnly(right: 13),
+                              ],
+                            ),
+                          ).paddingSymmetric(vertical: 5).onClick(() {
+                            ctrl.togglePatientSelection(index);
+                          }),
+                        ],
+                      );
+                    },
+                  ).paddingSymmetric(horizontal: 15),
                 ),
-                70.space(),
+                !isTablet ?70.space():80.space(),
               ],
             ),
             AppButton(
-              btnHeight: 50,
+              btnHeight: !isTablet ?50:60,
               text: LocaleKeys.add.translateText,
               onTap: () {
-                if(ctrl.selectedIndex!=-1){
-                  Get.toNamed(Routes.addEditLynerConnect,arguments: true);
-                }else{
-                  showAppSnackBar(LocaleKeys.pleaseSelectAnyPatient.translateText);
+                if (ctrl.selectedIndex != -1) {
+                  Get.toNamed(Routes.addEditLynerConnect, arguments: true);
+                } else {
+                  showAppSnackBar(
+                      LocaleKeys.pleaseSelectAnyPatient.translateText);
                 }
-
               },
               boxShadow: [],
-              radius: 25,
-              fontSize: 20,
+              radius: !isTablet ?25:40,
+              fontSize: !isTablet ?20:24,
               bgColor: primaryBrown,
               fontColor: Colors.white,
             ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),

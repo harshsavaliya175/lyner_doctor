@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
@@ -43,7 +44,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         .translateText
                         .appCommonText(
                             color: whiteColor,
-                            size: 16.sp,
+                            size: !isTablet ? 16.sp : 20.sp,
                             weight: FontWeight.w400)
                         .paddingSymmetric(horizontal: 20.w),
                     48.space(),
@@ -65,7 +66,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               .appCommonText(
                                 weight: FontWeight.w400,
                                 color: hintTextColor,
-                                size: 14.sp,
+                                size: !isTablet ? 14.sp : 18.sp,
                               )
                               .paddingOnly(bottom: 8.w),
                           CommonTextField(
@@ -76,12 +77,12 @@ class ResetPasswordScreen extends StatelessWidget {
                             action: TextInputAction.next,
                             keyboardType: TextInputType.text,
                           ),
-                          28.space(),
+                          20.space(),
                           LocaleKeys.password.translateText
                               .appCommonText(
                                 weight: FontWeight.w400,
                                 color: hintTextColor,
-                                size: 14.sp,
+                                size: !isTablet ? 14.sp : 18.sp,
                               )
                               .paddingOnly(bottom: 8.w),
                           CommonTextField(
@@ -96,8 +97,8 @@ class ResetPasswordScreen extends StatelessWidget {
                                     ? Assets.icons.openEye
                                     : Assets.icons.closeEye)
                                 .svg(
-                                    height: 18.w,
-                                    width: 18.w,
+                                    height: !isTablet ? 18.w : 22.w,
+                                    width: !isTablet ? 18.w : 22.w,
                                     fit: BoxFit.contain)
                                 .paddingAll(15.w)
                                 .onTap(
@@ -112,10 +113,9 @@ class ResetPasswordScreen extends StatelessWidget {
                           28.space(),
                           LocaleKeys.confirmPassword.translateText
                               .appCommonText(
-                                weight: FontWeight.w400,
-                                color: hintTextColor,
-                                size: 14.sp,
-                              )
+                                  weight: FontWeight.w400,
+                                  color: hintTextColor,
+                                  size: !isTablet ? 14.sp : 18.sp)
                               .paddingOnly(bottom: 8.w),
                           CommonTextField(
                             hintText: LocaleKeys.reEnterPassword.translateText,
@@ -128,8 +128,8 @@ class ResetPasswordScreen extends StatelessWidget {
                                     ? Assets.icons.openEye
                                     : Assets.icons.closeEye)
                                 .svg(
-                                    height: 18.w,
-                                    width: 18.w,
+                                    height: !isTablet ? 18.w : 22.w,
+                                    width: !isTablet ? 18.w : 22.w,
                                     fit: BoxFit.contain)
                                 .paddingAll(15.w)
                                 .onTap(
@@ -143,14 +143,14 @@ class ResetPasswordScreen extends StatelessWidget {
                           ),
                           48.space(),
                           AppButton(
-                            btnHeight: 55,
+                            btnHeight: !isTablet ? 55.h : 63.h,
                             text: LocaleKeys.request.translateText,
                             onTap: () {
                               ctrl.resetPassword(context);
                             },
                             boxShadow: [],
-                            radius: 25,
-                            fontSize: 20,
+                            radius: !isTablet ? 25.r : 40.r,
+                            fontSize: !isTablet ? 20.sp : 22.sp,
                             bgColor: primaryBrown,
                             fontColor: Colors.white,
                           ),

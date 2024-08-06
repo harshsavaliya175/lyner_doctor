@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
@@ -42,7 +43,7 @@ class PatientsScreen extends StatelessWidget {
                 Text(
                   preferences.getString(SharedPreference.CLINIC_NAME) ?? '',
                   style: hintTextStyle(
-                    size: 20,
+                    size: !isTablet ? 20 : 23,
                     color: Colors.black,
                     weight: FontWeight.w700,
                   ),
@@ -75,7 +76,7 @@ class PatientsScreen extends StatelessWidget {
                 return Text(
                   ctrl.appbarSubTitle,
                   style: hintTextStyle(
-                    size: 14,
+                    size: !isTablet ? 14 : 17,
                     color: hintColor,
                     weight: FontWeight.w400,
                   ),
@@ -145,7 +146,7 @@ class PatientsScreen extends StatelessWidget {
                   "${ctrl.treatmentStatusFilterValue == 1 ? LocaleKeys.tasks.translateText : ctrl.treatmentStatusFilterValue == 2 ? LocaleKeys.patients.translateText : LocaleKeys.archived.translateText} (${ctrl.patientList.length})"
                       .appCommonText(
                     weight: FontWeight.w500,
-                    size: 20,
+                    size: !isTablet ? 20 : 22,
                     color: Colors.black,
                   ),
                   6.space(),
@@ -159,7 +160,7 @@ class PatientsScreen extends StatelessWidget {
                                 child: LocaleKeys.patientsNotFound.translateText
                                     .normalText(
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: !isTablet ?20:24,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

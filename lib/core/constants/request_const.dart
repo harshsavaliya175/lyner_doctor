@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class ApiUrl {
@@ -36,8 +34,6 @@ class MethodNames {
   static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String getClinicLocationList = "getClinicLocationList";
-  static const String getPatientInformationDetails =
-      "getPatientInformationDetails";
 
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
@@ -88,4 +84,4 @@ const int LIMIT = 10;
 
 const USER_TYPE = "user";
 
-bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true : false;
+bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true:false;

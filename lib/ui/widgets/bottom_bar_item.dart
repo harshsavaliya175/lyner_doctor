@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
@@ -36,8 +37,8 @@ class BottomBarItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             (itemIcon).svg(
-              height: 28,
-              width: 28,
+              height: !isTablet ? 28 : 35,
+              width: !isTablet ? 28 : 35,
               fit: BoxFit.none,
               colorFilter: ColorFilter.mode(
                 currentIndex == itemIndex ? primaryBrown : darkSkyColor,
@@ -47,7 +48,7 @@ class BottomBarItem extends StatelessWidget {
             (itemText).translateText.appCommonText(
                   weight: FontWeight.w400,
                   color: currentIndex == itemIndex ? blackColor : darkSkyColor,
-                  size: 10.sp,
+                  size: !isTablet ? 10.sp : 17.sp,
                 )
           ],
         ),

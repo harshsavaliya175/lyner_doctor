@@ -5,7 +5,6 @@ class CustomRadioButton extends StatelessWidget {
   final int value;
   final int groupValue;
 
-
   CustomRadioButton({
     required this.value,
     required this.groupValue,

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 
 import 'extension.dart';
@@ -58,6 +59,7 @@ class CommonTextField extends StatefulWidget {
 }
 
 class _CommonTextFieldState extends State<CommonTextField> {
+  final int maxLine = 1;
   FocusNode _focus = FocusNode();
 
   // final Color fillColor = whiteColor;
@@ -82,7 +84,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return Container(
+      height: widget.height ?? (!isTablet ? 55.h : 60.h),
+      child: TextFormField(
       focusNode: _focus,
       readOnly: widget.readOnly ?? false,
       onChanged: widget.onChange,
@@ -103,14 +107,16 @@ class _CommonTextFieldState extends State<CommonTextField> {
         enabled: true,
         // contentPadding: EdgeInsets.zero,
         hintStyle: hintTextStyle(
-            size: widget.hintTextSize ?? 16.sp,
+              size: widget.hintTextSize ?? (!isTablet ? 16.sp : 20.sp),
             weight: FontWeight.w500,
             color: hintColor),
         prefixIcon: widget.prefixIcon != null
             ? (widget.prefixIcon!
                     .svg(
-                        height: widget.prefixIconSize ?? 20.w,
-                        width: widget.prefixIconSize ?? 20.w,
+                          height: widget.prefixIconSize ??
+                              (!isTablet ? 20.h : 25.h),
+                          width: widget.prefixIconSize ??
+                              (!isTablet ? 20.h : 25.h),
                         colorFilter: ColorFilter.mode(
                             _focus.hasFocus ? primaryBrown : hintColor,
                             BlendMode.srcIn),
@@ -152,6 +158,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         filled: true,
         fillColor: widget.fillColor,
       ),
+        ),
     );
   }
 }
@@ -266,7 +273,7 @@ class _AppTextFieldState extends State<AppTextField> {
               alignment: Alignment.centerLeft,
               child: widget.labelText.appCommonText(
                   weight: FontWeight.w400,
-                  size: widget.labelTextSize ?? 14,
+                  size: widget.labelTextSize ?? (!isTablet ? 14 : 17),
                   color: Colors.black),
             ).paddingOnly(left: 3),
           (8).space(),
@@ -296,15 +303,15 @@ class _AppTextFieldState extends State<AppTextField> {
             cursorColor: primaryBrown,
             style: widget.textStyle ??
                 TextStyle(
-                  fontSize: 15,
+                  fontSize: !isTablet ? 15 : 18,
                   color: blackColor,
                   fontWeight: FontWeight.w400,
                   fontFamily: 'maax-medium-medium',
                 ),
             obscureText: widget.obscureText,
             decoration: InputDecoration(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: !isTablet ? 15 : 18, horizontal: 20),
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.showSuffixIcon
                   ? Container(
@@ -326,7 +333,7 @@ class _AppTextFieldState extends State<AppTextField> {
               hintText: widget.hintText,
               hintStyle: widget.hintTextStyle ??
                   GoogleFonts.montserrat(
-                      fontSize: 14,
+                      fontSize: !isTablet ? 14 : 18,
                       fontWeight: FontWeight.w400,
                       color: hintStepColor),
               /* fillColor: textFieldValue.isNotEmpty
@@ -338,7 +345,7 @@ class _AppTextFieldState extends State<AppTextField> {
                           : hintTextColor.withOpacity(0.2),*/
               fillColor: Colors.white,
               filled: true,
-              errorStyle: const TextStyle(height: 0),
+              errorStyle: TextStyle(height: 0, fontSize: !isTablet ? 12 : 15),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.radius ?? 30),
                   borderSide: BorderSide(

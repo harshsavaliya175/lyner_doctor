@@ -79,6 +79,7 @@ class AddPatientController extends GetxController {
   bool showBillingDropDown = false;
   bool showDeliveryDropDown = false;
   PatientData? patientData;
+  TextEditingController patientTechniquesDetailsNote = TextEditingController();
   var patientTechniquesItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
     SelectionItem(title: LocaleKeys.iprStripping.translateText),
@@ -239,7 +240,8 @@ class AddPatientController extends GetxController {
   }
 
   void changeDentalHistoryNoteText(int index, String value) {
-    patientTechniquesItems[index].note = value;
+
+    dentalHistoryItems[index].note = value;
     update();
   }
 
@@ -264,6 +266,11 @@ class AddPatientController extends GetxController {
   void toggleProblemSelection(int index) {
     dentalHistoryItems[index].dentalHistorySelected =
         !dentalHistoryItems[index].dentalHistorySelected;
+    if(dentalHistoryItems[index].dentalHistorySelected){
+      dentalHistoryItems[index].note =LocaleKeys.yes.translateText;
+    }else{
+      dentalHistoryItems[index].note =LocaleKeys.no.translateText;
+    }
     update();
   }
 
@@ -468,21 +475,21 @@ class AddPatientController extends GetxController {
   Future<void> addUpdatePatientDetails(
       {bool isFromFinishStep = false, String? draftViewPage}) async {
     if (!isFromFinishStep) {
-      FocusManager.instance.primaryFocus?.unfocus();
-      /*if (!patientInformationFormKey.currentState!.validate()) {
-        showAppSnackBar("Please enter required field");
+      if (dateOfBirthController.text.isEmpty ||
+          doctorController.text.isEmpty ||
+          deliveryAddressController.text.isEmpty ||
+          billingAddressController.text.isEmpty) {
         goToStep(1);
-      } else*/
-      if (!validateUploadPhotoFiles()) {
+      } else if (!validateUploadPhotoFiles()) {
         showAppSnackBar("Please upload required photograph");
         goToStep(2);
       } else if (!validateArcadeFields()) {
         showAppSnackBar("Please select all required fields");
       } else {
-        callAddUpdatePatienDetails(isFromFinishStep: false, draftViewPage: '');
+        callAddUpdatePatientDetails(isFromFinishStep: false, draftViewPage: '');
       }
     } else {
-      callAddUpdatePatienDetails(
+      callAddUpdatePatientDetails(
           isFromFinishStep: isFromFinishStep, draftViewPage: draftViewPage);
     }
   }
@@ -513,7 +520,7 @@ class AddPatientController extends GetxController {
     update();
   }
 
-  Future<void> callAddUpdatePatienDetails(
+  Future<void> callAddUpdatePatientDetails(
       {bool isFromFinishStep = false, String? draftViewPage}) async {
     isLoading = true;
     List<String> acceptedTechniquesList;
