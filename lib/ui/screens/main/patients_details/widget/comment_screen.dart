@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
@@ -22,11 +23,13 @@ class CommentScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              LocaleKeys.comments.translateText
-                  .normalText(fontWeight: FontWeight.w600),
+              LocaleKeys.comments.translateText.normalText(
+                fontWeight: FontWeight.w600,
+                fontSize: !isTablet ? 20 : 24,
+              ),
               "19v8L5".normalText(
                 fontWeight: FontWeight.w500,
-                fontSize: 16,
+                fontSize: !isTablet ? 16 : 19,
               ),
             ],
           ),
@@ -54,20 +57,20 @@ class CommentScreen extends StatelessWidget {
                         children: [
                           LocaleKeys.clinic.translateText.normalText(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontSize: !isTablet ? 16 : 19,
                             color: blackColor,
                           ),
                           "05, Jul 24 06:23 AM".normalText(
                             fontWeight: FontWeight.w500,
                             color: hintStepColor,
-                            fontSize: 12,
+                            fontSize: !isTablet ? 12 : 15,
                           ),
                         ],
                       ),
                       6.space(),
                       "Sending to Clinic Task".normalText(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: !isTablet ? 16 : 19,
                         color: blackColor,
                       ),
                     ],

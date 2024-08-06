@@ -10,6 +10,12 @@ class PatientsDetailsController extends GetxController {
   TextEditingController commentController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
 
+  @override
+  void onInit() {
+    getPatientCommentsDetails();
+    super.onInit();
+  }
+
   void changeData({int? selectedIndex}) {
     selectedScreen = selectedIndex ?? selectedScreen;
     update();
@@ -18,14 +24,32 @@ class PatientsDetailsController extends GetxController {
   getPatientInformationDetails() async {
     isLoading = true;
     ResponseItem result =
-        await PatientsRepo.getPatientInformationDetails(patientId: 167);
+        await PatientsRepo.getPatientInformationDetails(patientId: 191);
     isLoading = false;
     try {
       if (result.status) {
         if (result.data != null) {
-          PatientDetailsResponseModel? patientDetailsResponseModel =
-              PatientDetailsResponseModel.fromJson(result.data);
-          patientDetailsModel = patientDetailsResponseModel.patientDetailsModel;
+          patientDetailsModel = PatientDetailsModel.fromJson(result.data);
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  getPatientCommentsDetails() async {
+    isLoading = true;
+    ResponseItem result =
+        await PatientsRepo.getPatientCommentsDetails(patientId: 191);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          patientDetailsModel = PatientDetailsModel.fromJson(result.data);
           isLoading = false;
         }
       } else {

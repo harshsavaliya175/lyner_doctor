@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 
@@ -37,7 +38,8 @@ class AppPatientDetailCard extends StatelessWidget {
         children: [
           20.space(),
           title
-              .normalText(fontWeight: FontWeight.w600)
+              .normalText(
+                  fontWeight: FontWeight.w600, fontSize: !isTablet ? 20 : 24)
               .paddingSymmetric(horizontal: 16),
           6.space(),
           if (isShowSubTitle)
@@ -45,12 +47,15 @@ class AppPatientDetailCard extends StatelessWidget {
                 .normalText(
                   fontWeight: FontWeight.w500,
                   color: hintStepColor,
-                  fontSize: 16,
+                  fontSize: !isTablet ? 16 : 19,
                 )
                 .paddingSymmetric(horizontal: 16),
           16.space(),
           description
-              .normalText(fontWeight: FontWeight.w500, fontSize: 16)
+              .normalText(
+                fontWeight: FontWeight.w500,
+                fontSize: !isTablet ? 16 : 19,
+              )
               .paddingSymmetric(horizontal: 16),
           16.space(),
           if (isShowBottomWidget)
@@ -65,7 +70,7 @@ class AppPatientDetailCard extends StatelessWidget {
                 bottomText
                     .normalText(
                         fontWeight: FontWeight.w500,
-                        fontSize: 14,
+                        fontSize: !isTablet ? 14 : 17,
                         fontStyle: FontStyle.italic)
                     .paddingOnly(
                       left: 16,

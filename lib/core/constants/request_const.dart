@@ -10,14 +10,28 @@ class ApiUrl {
       "https://lynertech.com/lyner-doctor-api/production/";
   static const String baseUrl =
       "${IS_LIVE ? API_LIVE_URL : API_DEV_URL}Service.php?";
-  static const String imagePath =
-      "http://codonnier.tech/ghanshyam/lyner/app_images/profile_images/";
-  static const String clinicProfileImagePath =
-      "https://lynertech.com/app_images/clinic_photo/";
-  static const String galleryImage =
-      "https://lynertech.com/mobile/app_images/gallery_images/";
-  static const String patientProfileImage =
-      "https://lynertech.com/app_images/patient/patient_profile/";
+  static const String imageBasePath = "https://lynertech.com/app_images/";
+  static const String clinicProfileImagePath = "${imageBasePath}clinic_photo/";
+  static const String galleryImage = "${imageBasePath}gallery_images/";
+  static const String patientImage = "${imageBasePath}patient/";
+  static const String patientProfileImage = "${patientImage}patient_profile/";
+  static const String patientGauche = "${patientImage}patient_gauche/";
+  static const String patientFace = "${patientImage}patient_face/";
+  static const String patientSourire = "${patientImage}patient_sourire/";
+  static const String patientInterGauche =
+      "${patientImage}patient_inter_gauche/";
+  static const String patientInterFace = "${patientImage}patient_inter_face/";
+  static const String patientIntraDroite =
+      "${patientImage}patient_intra_droite/";
+  static const String patientIntraMax = "${patientImage}patient_intra_max/";
+  static const String patientInterMandi =
+      "${patientImage}patient_intra_gauche/";
+  static const String patientPanoramique =
+      "${patientImage}patient_panoramique/";
+  static const String patientCephalometrique =
+      "${patientImage}patient_cephalometrique/";
+  static const String lowerJawStlFile = "${patientImage}lower_jaw_stl_file/";
+  static const String upperJawStlFile = "${patientImage}upper_jaw_stl_file/";
 }
 
 class MethodNames {
@@ -38,6 +52,7 @@ class MethodNames {
   static const String getClinicLocationList = "getClinicLocationList";
   static const String getPatientInformationDetails =
       "getPatientInformationDetails";
+  static const String getPatientCommentsDetails = "getPatientCommentsDetails";
 
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";

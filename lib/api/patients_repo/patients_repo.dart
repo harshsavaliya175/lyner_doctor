@@ -133,4 +133,30 @@ class PatientsRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+
+  static Future<ResponseItem> getPatientCommentsDetails({
+    required int patientId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, int> params = {"patient_id": patientId};
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getPatientCommentsDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
 }

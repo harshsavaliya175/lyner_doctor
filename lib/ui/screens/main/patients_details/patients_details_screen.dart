@@ -86,6 +86,7 @@ class PatientsDetailsScreen extends StatelessWidget {
                                 : Border.all(color: skyColor, width: 1),
                           ),
                         ).onClick(() {
+                          controller.getPatientCommentsDetails();
                           controller.changeData(selectedIndex: 0);
                         }),
                       ),

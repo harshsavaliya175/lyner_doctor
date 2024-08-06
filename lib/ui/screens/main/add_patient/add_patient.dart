@@ -1547,7 +1547,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Classe Dentaire"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1556,9 +1556,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
-            height: !isTablet ?55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
                 border: Border.all(color: skyColor)),
             child: Row(
@@ -1566,7 +1566,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 LocaleKeys.maintenir.translateText
                     .appCommonText(
-                      size: !isTablet ?16:19,
+                      size: !isTablet ? 16 : 19,
                       weight: FontWeight.w400,
                       color: Colors.black,
                     )
@@ -1582,9 +1582,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           }),
           10.space(),
           Container(
-            height:!isTablet ? 55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
                 border: Border.all(color: skyColor)),
             child: Row(
@@ -1592,7 +1592,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 LocaleKeys.ameliorerClasses.translateText
                     .appCommonText(
-                      size: !isTablet ?16:19,
+                      size: !isTablet ? 16 : 19,
                       weight: FontWeight.w400,
                       color: Colors.black,
                     )
@@ -1610,7 +1610,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Notes"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1648,7 +1648,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Milieu Incisif Maxillaire"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1663,9 +1663,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             itemBuilder: (context, index) {
               final item = ctrl.middleMaxillaryItems[index];
               return Container(
-                height: !isTablet ?55:65,
+                height: !isTablet ? 55 : 65,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                  borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                   color: Colors.white,
                   border: Border.all(color: skyColor),
                 ),
@@ -1675,7 +1675,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     Expanded(
                       child: item.title
                           .appCommonText(
-                              size: !isTablet ?16:19,
+                              size: !isTablet ? 16 : 19,
                               align: TextAlign.start,
                               weight: FontWeight.w400,
                               maxLine: 2,
@@ -1707,7 +1707,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Notes"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1751,7 +1751,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Autres Recommandations"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1785,7 +1785,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ?70:80,
+          height: !isTablet ? 70 : 80,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1795,7 +1795,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             children: [
               Expanded(
                 child: AppBorderButton(
-                  btnHeight: !isTablet ?55:65,
+                  btnHeight: !isTablet ? 55 : 65,
                   text: "Finish Latter",
                   onTap: () {
                     // ctrl.goToStep(1);
@@ -1804,8 +1804,8 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                         draftViewPage: "patient_prescription_page");
                   },
                   // boxShadow: [],
-                  radius:!isTablet ? 25:40,
-                  fontSize: !isTablet ?18:22,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   borderColor: primaryBrown,
                   // bgColor: primaryBrown,
                   fontColor: primaryBrown,
@@ -1813,7 +1813,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               ),
               Expanded(
                 child: AppButton(
-                  btnHeight: !isTablet ?55:65,
+                  btnHeight: !isTablet ? 55 : 65,
                   text: "Add",
                   onTap: () {
                     if (ctrl.validateArcadeFields()) {
@@ -1823,8 +1823,8 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     }
                   },
                   boxShadow: [],
-                  radius: !isTablet ?25:40,
-                  fontSize: !isTablet ?18:22,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
                 ).paddingOnly(top: 10, right: 15, left: 5),
@@ -2069,7 +2069,8 @@ Widget dentalHistory(AddPatientController ctrl) {
                       child: Container(
                         height: !isTablet ? 55 : 65,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                          borderRadius:
+                              BorderRadius.circular(!isTablet ? 25 : 40),
                           color: Colors.white,
                           border: Border.all(color: skyColor),
                         ),
@@ -2112,9 +2113,10 @@ Widget dentalHistory(AddPatientController ctrl) {
                     10.space(),
                     Expanded(
                         child: Container(
-                      height: !isTablet ?55:65,
+                      height: !isTablet ? 55 : 65,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                        borderRadius:
+                            BorderRadius.circular(!isTablet ? 25 : 40),
                         color: Colors.white,
                         border: Border.all(color: skyColor),
                       ),
@@ -2124,7 +2126,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                           Text(
                             LocaleKeys.no.translateText,
                             style: TextStyle(
-                              fontSize: !isTablet ?16:19,
+                              fontSize: !isTablet ? 16 : 19,
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
@@ -2163,7 +2165,7 @@ Widget dentalHistory(AddPatientController ctrl) {
       "Notes"
           .appCommonText(
             align: TextAlign.start,
-            size:!isTablet ? 24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -2205,7 +2207,7 @@ Widget incisorCovering(AddPatientController ctrl) {
       "Recouvrement Incisives (Supraclusion)"
           .appCommonText(
             align: TextAlign.start,
-            size: !isTablet ?24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -2220,9 +2222,9 @@ Widget incisorCovering(AddPatientController ctrl) {
         itemBuilder: (context, index) {
           final item = ctrl.incisorCoveringItems[index];
           return Container(
-            height: !isTablet ?55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(!isTablet ?25:40),
+              borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
               color: Colors.white,
               border: Border.all(color: skyColor),
             ),
@@ -2232,7 +2234,7 @@ Widget incisorCovering(AddPatientController ctrl) {
                 Expanded(
                   child: item.title
                       .appCommonText(
-                          size: !isTablet ?16:19,
+                          size: !isTablet ? 16 : 19,
                           align: TextAlign.start,
                           weight: FontWeight.w400,
                           maxLine: 2,
@@ -2263,7 +2265,7 @@ Widget incisorCovering(AddPatientController ctrl) {
       "Notes"
           .appCommonText(
             align: TextAlign.start,
-            size: !isTablet ?24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
