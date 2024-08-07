@@ -50,8 +50,7 @@ class ClinicLocation {
   final String address;
   final String latitude;
   final String longitude;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+
 
   ClinicLocation({
     required this.clinicLocationId,
@@ -61,8 +60,7 @@ class ClinicLocation {
     required this.address,
     required this.latitude,
     required this.longitude,
-    required this.createdAt,
-    required this.updatedAt,
+
   });
 
   ClinicLocation copyWith({
@@ -84,8 +82,7 @@ class ClinicLocation {
         address: address ?? this.address,
         latitude: latitude ?? this.latitude,
         longitude: longitude ?? this.longitude,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+
       );
 
   factory ClinicLocation.fromRawJson(String str) =>
@@ -101,8 +98,7 @@ class ClinicLocation {
         address: json["address"],
         latitude: json["latitude"],
         longitude: json["longitude"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,7 +109,6 @@ class ClinicLocation {
         "address": address,
         "latitude": latitude,
         "longitude": longitude,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+
       };
 }

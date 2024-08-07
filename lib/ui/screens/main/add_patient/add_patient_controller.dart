@@ -13,6 +13,7 @@ import 'package:lynerdoctor/model/clinic_billing_model.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
 import 'package:lynerdoctor/model/patient_model.dart';
+import 'package:lynerdoctor/model/prescription_model.dart';
 import 'package:lynerdoctor/model/productListModel.dart';
 import 'package:lynerdoctor/model/selection_item.dart';
 
@@ -21,7 +22,7 @@ class AddPatientController extends GetxController {
   late PageController pageController;
 
   List<ProductListData> products = [];
-  var selectedProduct = Rxn<ProductListData>();
+  ProductListData? selectedProduct;
   bool isSelectedProductPlan = false;
   bool firstNameError = false;
   bool emailError = false;
@@ -80,6 +81,33 @@ class AddPatientController extends GetxController {
   bool showDeliveryDropDown = false;
   PatientData? patientData;
   TextEditingController patientTechniquesDetailsNote = TextEditingController();
+
+  var patientId;
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    pageController = PageController(initialPage: currentStep);
+    patientId = Get.arguments;
+    if (patientId != null) {
+      isLoading = true;
+      await getPatientInformationDetails();
+      if (patientData?.draftViewPage == "patient_prescription_page") {
+        isLoading = true;
+        goToStep(3);
+      }else if(patientData?.draftViewPage == "upload_photo_page"){
+        goToStep(2);
+      }
+      await getPatientPrescriptionDetails();
+
+    }
+
+    await fetchProducts();
+    getDoctorList();
+    getClinicLocationList();
+    getClinicBillingList();
+  }
+
   var patientTechniquesItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
     SelectionItem(title: LocaleKeys.iprStripping.translateText),
@@ -95,16 +123,36 @@ class AddPatientController extends GetxController {
   ];
 
   bool validateUploadPhotoFiles() {
-    if (profileImageFile == null) return false;
-    if (faceImageFile == null) return false;
-    if (smileImageFile == null) return false;
-    if (intraMaxImageFile == null) return false;
-    if (intraMandImageFile == null) return false;
-    if (intraRightImageFile == null) return false;
-    if (intraLeftImageFile == null) return false;
-    if (intraFaceImageFile == null) return false;
-    if (radiosFirstImageFile == null) return false;
-    if (radiosSecondImageFile == null) return false;
+    if (profileImageFile == null &&
+        (patientData?.patientPhoto?.gauche == null ||
+            patientData?.patientPhoto?.gauche == '')) return false;
+    if (faceImageFile == null &&
+        (patientData?.patientPhoto?.face == null ||
+            patientData?.patientPhoto?.face == '')) return false;
+    if (smileImageFile == null &&
+        (patientData?.patientPhoto?.sourire == null ||
+            patientData?.patientPhoto?.sourire == '')) return false;
+    if (intraMaxImageFile == null &&
+        (patientData?.patientPhoto?.interMax == null ||
+            patientData?.patientPhoto?.interMax == '')) return false;
+    if (intraMandImageFile == null &&
+        (patientData?.patientPhoto?.interMandi == null ||
+            patientData?.patientPhoto?.interMandi == '')) return false;
+    if (intraRightImageFile == null &&
+        (patientData?.patientPhoto?.interDroite == null ||
+            patientData?.patientPhoto?.interDroite == '')) return false;
+    if (intraLeftImageFile == null &&
+        (patientData?.patientPhoto?.interGauche == null ||
+            patientData?.patientPhoto?.interGauche == '')) return false;
+    if (intraFaceImageFile == null &&
+        (patientData?.patientPhoto?.interFace == null ||
+            patientData?.patientPhoto?.interFace == '')) return false;
+    if (radiosFirstImageFile == null &&
+        (patientData?.patientPhoto?.paramiqueRadio == null ||
+            patientData?.patientPhoto?.paramiqueRadio == '')) return false;
+    if (radiosSecondImageFile == null &&
+        (patientData?.patientPhoto?.cephalRadio == null ||
+            patientData?.patientPhoto?.cephalRadio == '')) return false;
     if (isUploadStl) {
       if (upperJawImageFile == null) return false;
       if (upperJawImageFile == null) return false;
@@ -240,7 +288,6 @@ class AddPatientController extends GetxController {
   }
 
   void changeDentalHistoryNoteText(int index, String value) {
-
     dentalHistoryItems[index].note = value;
     update();
   }
@@ -266,10 +313,10 @@ class AddPatientController extends GetxController {
   void toggleProblemSelection(int index) {
     dentalHistoryItems[index].dentalHistorySelected =
         !dentalHistoryItems[index].dentalHistorySelected;
-    if(dentalHistoryItems[index].dentalHistorySelected){
-      dentalHistoryItems[index].note =LocaleKeys.yes.translateText;
-    }else{
-      dentalHistoryItems[index].note =LocaleKeys.no.translateText;
+    if (dentalHistoryItems[index].dentalHistorySelected) {
+      dentalHistoryItems[index].note = LocaleKeys.yes.translateText;
+    } else {
+      dentalHistoryItems[index].note = LocaleKeys.no.translateText;
     }
     update();
   }
@@ -323,24 +370,14 @@ class AddPatientController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    pageController = PageController(initialPage: currentStep);
-    fetchProducts();
-    getDoctorList();
-    getClinicLocationList();
-    getClinicBillingList();
-  }
-
   void selectProduct(ProductListData product) {
-    selectedProduct.value = product;
-    isSelectedProductPlan = selectedProduct.value == product;
+    selectedProduct = product;
+    isSelectedProductPlan = selectedProduct == product;
     stepErrors[0] = false;
     update();
   }
 
-  void fetchProducts() async {
+  Future<void> fetchProducts() async {
     products.clear();
     isLoading = true;
     try {
@@ -451,7 +488,7 @@ class AddPatientController extends GetxController {
         dateOfBirth: dateOfBirthController.text,
         doctorId: selectedDoctorData?.doctorId.toString(),
         email: emailController.text,
-        toothCaseId: selectedProduct.value?.toothCaseId ?? 0);
+        toothCaseId: selectedProduct?.toothCaseId ?? 0);
     isLoading = false;
     try {
       if (result.status) {
@@ -561,7 +598,7 @@ class AddPatientController extends GetxController {
       dateOfBirth: dateOfBirthController.text,
       doctorId: selectedDoctorData?.doctorId.toString(),
       email: emailController.text,
-      toothCaseId: selectedProduct.value?.toothCaseId ?? 0,
+      toothCaseId: selectedProduct?.toothCaseId ?? 0,
       patientId: patientData?.patientId ?? 0,
       is3shape: !isUploadStl ? 1 : 0,
       arcadeToBeTreated: arcadeTratierText,
@@ -588,6 +625,7 @@ class AddPatientController extends GetxController {
           PatientModel patientModel = PatientModel.fromJson(result.toJson());
           patientData = patientModel.data;
           print(patientData);
+          Get.back();
           showAppSnackBar(
               LocaleKeys.addPatientRecordSuccessfully.translateText);
           isLoading = false;
@@ -599,5 +637,238 @@ class AddPatientController extends GetxController {
       isLoading = false;
     }
     update();
+  }
+
+  Future<void> getPatientInformationDetails() async {
+    ResponseItem result =
+        await AddPatientRepo.getPatientInformationDetails(patientId);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          PatientModel patientModel = PatientModel.fromJson(result.toJson());
+          patientData = patientModel.data;
+          selectedProduct = ProductListData(
+            toothCaseId: patientData?.toothCase?.toothCaseId?.toInt() ?? 0,
+            caseDesc: patientData?.toothCase?.caseDesc?.toString() ?? "",
+            caseName: patientData?.toothCase?.caseName?.toString() ?? "",
+            casePrice: patientData?.toothCase?.casePrice?.toString() ?? '',
+            caseSteps: patientData?.toothCase?.caseSteps?.toString() ?? '',
+          );
+          if (selectedProduct != null) {
+            isSelectedProductPlan = true;
+          }
+          firstNameController.text = patientData?.firstName ?? '';
+          lastNameController.text = patientData?.lastName ?? '';
+          emailController.text = patientData?.email ?? '';
+          dateOfBirthController.text =
+              patientData?.dateOfBirth.toString() ?? '';
+
+          selectedClinicDeliveryData = ClinicLocation(
+              clinicLocationId: patientData?.clinicLoc?.clinicLocationId ?? 0,
+              clinicId: patientData?.clinicLoc?.clinicId ?? 0,
+              contactName: patientData?.clinicLoc?.contactName ?? "",
+              contactNumber: patientData?.clinicLoc?.contactNumber ?? "",
+              address: patientData?.clinicLoc?.address ?? "",
+              latitude: patientData?.clinicLoc?.latitude ?? "",
+              longitude: patientData?.clinicLoc?.longitude ?? "");
+          deliveryAddressController.text =
+              selectedClinicDeliveryData?.address ?? '';
+          selectedClinicBillingData = ClinicBillingData(
+            clinicBillingId: patientData?.clinicBill?.clinicBillingId ?? 0,
+            clinicId: patientData?.clinicBill?.clinicId ?? 0,
+            billingName: patientData?.clinicBill?.billingName ?? "",
+            billingAddress: patientData?.clinicBill?.billingAddress ?? "",
+            billingLatitude: patientData?.clinicBill?.billingLatitude ?? "",
+            billingLongitude: patientData?.clinicBill?.billingLongitude ?? "",
+            billingMail: patientData?.clinicBill?.billingMail ?? "",
+            billingVat: patientData?.clinicBill?.billingVat ?? "",
+          );
+          billingAddressController.text =
+              selectedClinicBillingData?.billingAddress ?? '';
+          selectedDoctorData = DoctorData(
+            doctorId: patientData?.doctor?.doctorId ?? 0,
+            doctorUniqueId: patientData?.doctor?.doctorUniqueId ?? "",
+            firstName: patientData?.doctor?.firstName ?? "",
+            lastName: patientData?.doctor?.lastName ?? "",
+            email: patientData?.doctor?.email ?? "",
+            mobileNumber: patientData?.doctor?.mobileNumber ?? "",
+            doctorProfile: patientData?.doctor?.doctorProfile ?? "",
+            country: patientData?.doctor?.country ?? "",
+            language: patientData?.doctor?.language ?? "",
+            clinicId: patientData?.doctor?.clinicId ?? 0,
+          );
+          doctorController.text =
+              "${selectedDoctorData?.firstName} ${selectedDoctorData?.lastName}";
+          isUploadStl = patientData?.patientPhoto?.is3Shape == 0 ? true : false;
+          // if(patientData?.draftViewPage=="patient_prescription_page"){
+          //   goToStep(3);
+          // }
+          // if (patientData?.draftViewPage == "upload_photo_page") {
+          //   goToStep(2);
+          // }
+          print(isUploadStl);
+
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> getPatientPrescriptionDetails() async {
+    ResponseItem result =
+        await AddPatientRepo.getPatientPrescriptionDetails(patientId);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          PrescriptionModel prescriptionModel =
+              PrescriptionModel.fromJson(result.toJson());
+          print(prescriptionModel.data);
+
+          /// ARCADE
+          getArcadeTraiter(prescriptionModel.data);
+          /// OBJECT TREATMENT
+          getObjectTreatement(prescriptionModel.data);
+          /// PATIENT TECHNIQUES
+          getUpdateMultipleSelectionItems(
+              prescriptionModel.data?.acceptedTechniques ?? '',
+              patientTechniquesItems,
+              false);
+          techniquesPatientsNoteCtrl.text =
+              prescriptionModel.data?.acceptedTechniqueNote ?? '';
+          /// DENTAL HISTORY
+          getUpdateMultipleSelectionItems(
+              prescriptionModel.data?.dentalHistory ?? '',
+              dentalHistoryItems,
+              true);
+          dentalHistoryNoteCtrl.text =
+              prescriptionModel.data?.dentalHistoryNote ?? '';
+          /// DENTAL CLASS
+          getDentalClass(prescriptionModel.data);
+          classesDentalNoteCtrl.text = prescriptionModel.data?.dentalNote ?? '';
+          /// MIDDLE MAXILLARY
+          getUpdateMultipleSelectionItems(
+              prescriptionModel.data?.maxillaryIncisalMiddle ?? '',
+              middleMaxillaryItems,
+              false);
+          maxillaireNoteCtrl.text =
+              prescriptionModel.data?.maxillaryIncisalNote ?? '';
+          ///INCISOR COVERING
+          getUpdateMultipleSelectionItems(
+              prescriptionModel.data?.incisiveCovering ?? '',
+              incisorCoveringItems,
+              false);
+          incisorCoveringNoteCtrl.text =
+              prescriptionModel.data?.incisiveCoveringNote ?? '';
+          ///Other Notes
+          autresRecommandationNoteCtrl.text =
+              prescriptionModel.data?.otherRecommendations ?? '';
+
+          isLoading = false;
+        }
+        update();
+      } else {
+        isLoading = false;
+        update();
+      }
+
+    } catch (e) {
+      isLoading = false;
+      update();
+    }
+
+  }
+
+  void getArcadeTraiter(PrescriptionData? data) {
+    if (data?.arcadeToBeTreated == LocaleKeys.lesDeux.translateText) {
+      isArcadeTraiter = 1;
+      arcadeTratierText = LocaleKeys.lesDeux.translateText;
+    } else if (data?.arcadeToBeTreated == LocaleKeys.maxillaire.translateText) {
+      isArcadeTraiter = 2;
+      arcadeTratierText = LocaleKeys.maxillaire.translateText;
+    } else if (data?.arcadeToBeTreated ==
+        LocaleKeys.mandibulaire.translateText) {
+      isArcadeTraiter = 3;
+      arcadeTratierText = LocaleKeys.mandibulaire.translateText;
+    } else {
+      isArcadeTraiter = 0;
+      arcadeTratierText = "";
+    }
+  }
+
+  void getObjectTreatement(PrescriptionData? data) {
+    if (data?.treatmentObjectives ==
+        LocaleKeys.alignementEsthetique.translateText) {
+      isObjectTraitement = 1;
+      isObjectTraitementText = LocaleKeys.alignementEsthetique.translateText;
+    } else if (data?.treatmentObjectives ==
+        LocaleKeys.alignementEsthetiqueCorrection.translateText) {
+      isObjectTraitement = 2;
+      isObjectTraitementText =
+          LocaleKeys.alignementEsthetiqueCorrection.translateText;
+    } else {
+      isObjectTraitement = 0;
+      isObjectTraitementText = "";
+    }
+    objectifsTraitementDeliveryAddressCtrl.text = data?.treatmentNotes ?? '';
+  }
+
+  void getDentalClass(PrescriptionData? data) {
+    if (data?.treatmentObjectives == LocaleKeys.maintenir.translateText) {
+      isClassesDental = 1;
+      classesDentalText = LocaleKeys.maintenir.translateText;
+    } else if (data?.treatmentObjectives ==
+        LocaleKeys.ameliorerClasses.translateText) {
+      isClassesDental = 2;
+      classesDentalText = LocaleKeys.ameliorerClasses.translateText;
+    } else {
+      isClassesDental = 0;
+      classesDentalText = "";
+    }
+    objectifsTraitementDeliveryAddressCtrl.text = data?.treatmentNotes ?? '';
+  }
+
+  void getUpdateMultipleSelectionItems(String receivedData,
+      List<SelectionItem> techniquesItems, bool isOptionalValue) {
+    List<String> dataItems = receivedData.split(", ");
+
+    for (var dataItem in dataItems) {
+      String itemTitle = dataItem;
+      String? note = null;
+
+      if (dataItem.contains(":")) {
+        var parts = dataItem.split(":");
+        itemTitle = parts[0].trim();
+        note = parts[1].trim();
+      }
+
+      for (var item in techniquesItems) {
+        if (item.title == itemTitle) {
+          item.isSelected = true;
+          if (note != null) {
+            item.requiresNote = true;
+            item.note = note;
+            item.noteController?.text = note;
+          }
+
+          // Handle optional Yes/No values for dentalHistory
+          if (isOptionalValue && item.dentalHistory) {
+            if (note?.toLowerCase() == 'yes') {
+              item.dentalHistorySelected = true;
+              item.requiresNote = false;
+            } else if (note?.toLowerCase() == 'no') {
+              item.dentalHistorySelected = false;
+              item.requiresNote = false;
+            }
+          }
+        }
+      }
+    }
   }
 }

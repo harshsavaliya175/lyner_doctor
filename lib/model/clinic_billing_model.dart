@@ -41,8 +41,7 @@ class ClinicBillingData {
   String billingLongitude;
   String billingMail;
   String billingVat;
-  DateTime createdAt;
-  DateTime updatedAt;
+
 
   ClinicBillingData({
     required this.clinicBillingId,
@@ -53,8 +52,7 @@ class ClinicBillingData {
     required this.billingLongitude,
     required this.billingMail,
     required this.billingVat,
-    required this.createdAt,
-    required this.updatedAt,
+
   });
 
   factory ClinicBillingData.fromJson(Map<String, dynamic> json) => ClinicBillingData(
@@ -66,8 +64,7 @@ class ClinicBillingData {
     billingLongitude: json["billing_longitude"]??'',
     billingMail: json["billing_mail"]??'',
     billingVat: json["billing_vat"]??'',
-    createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : DateTime.now(),
-    updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : DateTime.now(),
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -79,7 +76,6 @@ class ClinicBillingData {
     "billing_longitude": billingLongitude,
     "billing_mail": billingMail,
     "billing_vat": billingVat,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+
   };
 }

@@ -19,7 +19,6 @@ class ChangePasswordScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 70,
         centerTitle: false,
-
         title: Text(
           LocaleKeys.changePassword.translateText,
           textAlign: TextAlign.start,
@@ -34,8 +33,8 @@ class ChangePasswordScreen extends StatelessWidget {
             .svg(
           height: 35,
           width: 35,
-          fit: BoxFit.scaleDown,
-        ).paddingOnly(top: 2)
+          fit: !isTablet ?BoxFit.scaleDown: BoxFit.fill,
+        ).paddingOnly(left: 10, top: isTablet ?22:2, bottom: isTablet ?22:0,right: 10)
             .onClick(() {
           Get.back();
         }),
@@ -126,7 +125,7 @@ class ChangePasswordScreen extends StatelessWidget {
               45.space(),
               AppButton(
                 text: "Change",
-                btnHeight: !isTablet ?53:60,
+                btnHeight: !isTablet ?53:68,
                 onTap: () async{
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (ctrl.changePasswordFormKey.currentState!.validate()) {

@@ -88,7 +88,7 @@ class DashboardScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed(Routes.addPatientScreen);
+          Get.toNamed(Routes.addPatientScreen,arguments: null);
         },
         child: Icon(Icons.add, size: 40, color: whiteColor),
         heroTag: Object(),

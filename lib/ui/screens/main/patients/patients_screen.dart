@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -159,7 +160,7 @@ class PatientsScreen extends StatelessWidget {
                                 child: LocaleKeys.patientsNotFound.translateText
                                     .normalText(
                                   color: Colors.black,
-                                  fontSize: !isTablet ?20:24,
+                                  fontSize: !isTablet ? 20 : 24,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -188,7 +189,10 @@ class PatientsScreen extends StatelessWidget {
                                 patientName:
                                     '${patientData?.firstName ?? ''} ${patientData?.lastName ?? ''}',
                                 deleteOnTap: () {},
-                                editOrSubmitOnTap: () {},
+                                editOrSubmitOnTap: () {
+                                  Get.toNamed(Routes.addPatientScreen,
+                                      arguments: patientData?.patientId);
+                                },
                                 patientImagePath:
                                     patientData?.patientProfile ?? '',
                               );

@@ -307,7 +307,7 @@ class _AppTextFieldState extends State<AppTextField> {
             obscureText: widget.obscureText,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
-                  vertical: !isTablet ? 15 : 18, horizontal: 20),
+                  vertical: !isTablet ? 15 : 20, horizontal: 20),
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.showSuffixIcon
                   ? Container(
@@ -357,7 +357,7 @@ class _AppTextFieldState extends State<AppTextField> {
                           ? Colors.red
                           : hintTextColor.withOpacity(0.2))),
               focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius ?? 30),
+                  borderRadius: BorderRadius.circular(widget.radius ?? (!isTablet?30:40)),
                   borderSide: BorderSide(
                       color: widget.isError ? primaryBrown : primaryBrown)),
             ),

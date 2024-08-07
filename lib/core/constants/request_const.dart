@@ -10,8 +10,8 @@ class ApiUrl {
       "https://lynertech.com/lyner-doctor-api/production/";
   static const String baseUrl =
       "${IS_LIVE ? API_LIVE_URL : API_DEV_URL}Service.php?";
-  static const String imagePath =
-      "http://codonnier.tech/ghanshyam/lyner/app_images/profile_images/";
+  static const String baseImagePath = "https://lynertech.com/app_images/";
+  static const String baseImagePatientPath = "${baseImagePath}patient/";
   static const String clinicProfileImagePath =
       "https://lynertech.com/app_images/clinic_photo/";
   static const String galleryImage =
@@ -31,6 +31,9 @@ class MethodNames {
   static const String updateDeviceToken = "updateDeviceToken";
   static const String getDoctorListByClinicId = "getDoctorListByClinicId";
   static const String getProductList = "getProductList";
+  static const String getPatientInformationDetails =
+      "getPatientInformationDetails";
+  static const String getPatientPrescriptionDetails = "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String updatePatientDetails = "updatePatientDetails";
@@ -86,4 +89,4 @@ const int LIMIT = 10;
 
 const USER_TYPE = "user";
 
-bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true:false;
+bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true : false;

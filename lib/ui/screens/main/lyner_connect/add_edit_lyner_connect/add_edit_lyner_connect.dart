@@ -36,16 +36,14 @@ class AddEditLynerConnect extends StatelessWidget {
               fontSize: 20),
         ),
         backgroundColor: Colors.white,
-        leadingWidth: 40,
+        leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-              height: 25,
-              width: 25,
-              fit: BoxFit.scaleDown,
+              height: !isTablet ? 25 : 30,
+              width: !isTablet ? 25 : 30,
+              fit:!isTablet ?BoxFit.scaleDown: BoxFit.fill,
             )
-            .paddingOnly(
-              left: 10,
-            )
+            .paddingOnly(left: 10, top: isTablet ?22:0, bottom: isTablet ?22:0)
             .onClick(() {
           Get.back();
         }),
@@ -188,10 +186,10 @@ class AddEditLynerConnect extends StatelessWidget {
                     labelText: "Total Aligner",
                     showPrefixWidget: Assets.icons.icDown
                         .svg(
-                      colorFilter: ColorFilter.mode(
-                        primaryBrown,
-                        BlendMode.srcIn,
-                      ),
+                          colorFilter: ColorFilter.mode(
+                            primaryBrown,
+                            BlendMode.srcIn,
+                          ),
                           height: 10,
                           width: 10,
                         )
@@ -266,14 +264,14 @@ class AddEditLynerConnect extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: !isTablet ?70:80,
+                height: !isTablet ? 70 : 80,
                 width: Get.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: AppButton(
-                  btnHeight: !isTablet ?55:65,
+                  btnHeight: !isTablet ? 55 : 65,
                   text: controller.isFromNewPatient
                       ? LocaleKeys.add.translateText
                       : "Update",
@@ -285,8 +283,8 @@ class AddEditLynerConnect extends StatelessWidget {
                     }
                   },
                   boxShadow: [],
-                  radius: !isTablet ?25:40,
-                  fontSize: !isTablet ?20:24,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 20 : 24,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
                 ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),

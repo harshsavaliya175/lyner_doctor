@@ -34,16 +34,14 @@ class LynerConnectDetails extends StatelessWidget {
               fontSize: !isTablet ? 20 : 22),
         ),
         backgroundColor: Colors.white,
-        leadingWidth: 40,
+        leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-              height: 25,
-              width: 25,
-              fit: BoxFit.scaleDown,
-            )
-            .paddingOnly(
-              left: 10,
-            )
+          height: !isTablet ? 25 : 30,
+          width: !isTablet ? 25 : 30,
+          fit:!isTablet ?BoxFit.scaleDown: BoxFit.fill,
+        )
+            .paddingOnly(left: 10, top: isTablet ?22:0, bottom: isTablet ?22:0)
             .onClick(() {
           Get.back();
         }),

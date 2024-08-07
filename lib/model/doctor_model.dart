@@ -53,8 +53,7 @@ class DoctorData {
   final dynamic country;
   final String language;
   final int clinicId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+
 
   DoctorData({
     required this.doctorId,
@@ -67,8 +66,7 @@ class DoctorData {
     required this.country,
     required this.language,
     required this.clinicId,
-    required this.createdAt,
-    required this.updatedAt,
+
   });
 
   DoctorData copyWith({
@@ -96,8 +94,7 @@ class DoctorData {
         country: country ?? this.country,
         language: language ?? this.language,
         clinicId: clinicId ?? this.clinicId,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+
       );
 
   factory DoctorData.fromRawJson(String str) =>
@@ -116,8 +113,7 @@ class DoctorData {
         country: json["country"],
         language: json["language"],
         clinicId: json["clinic_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -131,7 +127,5 @@ class DoctorData {
         "country": country,
         "language": language,
         "clinic_id": clinicId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }

@@ -40,16 +40,15 @@ class AddPatientScreen extends StatelessWidget {
                 fontSize: !isTablet ? 20 : 25),
           ),
           backgroundColor: Colors.white,
-          leadingWidth: 40,
+          leadingWidth: !isTablet ? 40 : 50,
           leading: Assets.icons.icBack
               .svg(
-                height: 25,
-                width: 25,
-                fit: BoxFit.scaleDown,
+                height: !isTablet ? 25 : 30,
+                width: !isTablet ? 25 : 30,
+                fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
               )
               .paddingOnly(
-                left: 10,
-              )
+                  left: 10, top: isTablet ? 22 : 0, bottom: isTablet ? 22 : 0)
               .onClick(() {
             Get.back();
           }),
@@ -192,7 +191,7 @@ class AddPatientScreen extends StatelessWidget {
                           chooseTheProduct(ctrl),
                           patientInformation(ctrl),
                           uploadPhotographs(ctrl),
-                          arcadeTraiter(ctrl),
+                          prescriptionScreen(ctrl),
                         ],
                       ),
                     ),
@@ -233,7 +232,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
             itemBuilder: (context, index) {
               final product = ctrl.products[index];
               final isSelectedProductPlan =
-                  ctrl.selectedProduct.value == product;
+                  ctrl.selectedProduct?.toothCaseId == product.toothCaseId;
               return GestureDetector(
                 onTap: () {
                   ctrl.selectProduct(product);
@@ -250,7 +249,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: !isTablet ? 55 : 65,
+                        height: !isTablet ? 55 : 70,
                         decoration: BoxDecoration(
                           color: lightBrown,
                           borderRadius: BorderRadius.only(
@@ -311,7 +310,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
                           .paddingSymmetric(horizontal: 15),
                       13.space(),
                       Container(
-                        height: !isTablet ? 55 : 65,
+                        height: !isTablet ? 55 : 70,
                         width: Get.width,
                         decoration: BoxDecoration(
                           color:
@@ -343,14 +342,14 @@ Widget chooseTheProduct(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 80,
+          height: !isTablet ? 70 : 90,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: AppButton(
-            btnHeight: !isTablet ? 55 : 65,
+            btnHeight: !isTablet ? 55 : 70,
             text: LocaleKeys.next.translateText,
             onTap: () {
               if (ctrl.isSelectedProductPlan) {
@@ -360,7 +359,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
               }
             },
             boxShadow: [],
-            radius: 25,
+            radius: !isTablet ? 25 : 40,
             fontSize: !isTablet ? 20 : 23,
             bgColor: primaryBrown,
             fontColor: Colors.white,
@@ -756,14 +755,14 @@ Widget patientInformation(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 80,
+          height: !isTablet ? 70 : 90,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
             // borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: AppButton(
-            btnHeight: 55,
+            btnHeight: !isTablet ? 55 : 70,
             text: LocaleKeys.next.translateText,
             onTap: () async {
               FocusManager.instance.primaryFocus?.unfocus();
@@ -837,7 +836,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               photoCardWidget(
                 image: Assets.images.imgProfile.path,
                 title: "Profile",
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.gauche ?? '',
+                urlPath: "patient_gauche",
                 fileImage: ctrl.profileImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
@@ -855,7 +855,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               photoCardWidget(
                 image: Assets.images.imgFace.path,
                 title: "Face",
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.face ?? '',
+                urlPath: "patient_face",
                 fileImage: ctrl.faceImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
@@ -873,7 +874,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               photoCardWidget(
                 image: Assets.images.imgSmile.path,
                 title: "Smile",
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.sourire ?? '',
+                urlPath: "patient_sourire",
                 fileImage: ctrl.smileImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
@@ -896,7 +898,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
                 title: "Intra Max",
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.interMax ?? '',
+                urlPath: "patient_intra_max",
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
@@ -915,7 +918,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
                 title: "Intra Mand",
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.interMandi ?? '',
+                urlPath: "patient_intra_gauche",
                 fileImage: ctrl.intraMandImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
@@ -937,7 +941,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               photoCardWidget(
                 image: Assets.images.imgInterRight.path,
-                ctrl: ctrl,
+                urlPath: "patient_intra_droite",
+                urlImage: ctrl.patientData?.patientPhoto?.interDroite ?? '',
                 fileImage: ctrl.intraRightImageFile ?? File(''),
                 title: "Inter Right",
                 onTap: () {
@@ -954,8 +959,9 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               10.space(),
               photoCardWidget(
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.interFace ?? '',
                 fileImage: ctrl.intraFaceImageFile ?? File(''),
+                urlPath: "patient_inter_face",
                 image: Assets.images.imgInterFace.path,
                 title: "Inter Face",
                 onTap: () {
@@ -972,8 +978,9 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               10.space(),
               photoCardWidget(
-                ctrl: ctrl,
+                urlImage: ctrl.patientData?.patientPhoto?.interGauche ?? '',
                 fileImage: ctrl.intraLeftImageFile ?? File(''),
+                urlPath: "patient_inter_gauche",
                 image: Assets.images.imgInterLeft.path,
                 title: "Inter Left",
                 onTap: () {
@@ -1015,23 +1022,34 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   child: Container(
                 height: !isTablet ? 135 : 230,
                 width: !isTablet ? 200 : 230,
-                child: ((ctrl.radiosFirstImageFile != null &&
-                        ctrl.radiosFirstImageFile?.path != "")
-                    ? HomeImage.fileImage(
-                        path: ctrl.radiosFirstImageFile!.path,
-                        height: !isTablet ? 135 : 230,
-                        width: !isTablet ? 200 : 230,
+                child: (ctrl.patientData?.patientPhoto?.paramiqueRadio == "" ||
+                        ctrl.patientData?.patientPhoto?.paramiqueRadio == null)
+                    ? ((ctrl.radiosFirstImageFile != null &&
+                            ctrl.radiosFirstImageFile?.path != "")
+                        ? HomeImage.fileImage(
+                            path: ctrl.radiosFirstImageFile!.path,
+                            height: !isTablet ? 135 : 230,
+                            width: !isTablet ? 200 : 230,
+                            shape: BoxShape.rectangle,
+                            fit: BoxFit.cover,
+                            radius: BorderRadius.circular(10),
+                          )
+                        : HomeImage.assetImage(
+                            path: Assets.images.imgTab.path,
+                            height: !isTablet ? 135 : 230,
+                            width: !isTablet ? 200 : 230,
+                            shape: BoxShape.rectangle,
+                            // fit: BoxFit.cover,
+                          ))
+                    : HomeImage.networkImage(
+                        path:
+                            "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
+                        height: !isTablet ? 123 : 200,
                         shape: BoxShape.rectangle,
                         fit: BoxFit.cover,
-                        radius: BorderRadius.circular(10),
-                      )
-                    : HomeImage.assetImage(
-                        path: Assets.images.imgTab.path,
-                        height: !isTablet ? 135 : 230,
-                        width: !isTablet ? 200 : 230,
-                        shape: BoxShape.rectangle,
-                        // fit: BoxFit.cover,
-                      )),
+                        radius: BorderRadius.circular(15),
+                        width: !isTablet ? 123 : 200,
+                      ),
               ).onClick(
                 () {
                   imageUploadUtils.openImageChooser(
@@ -1057,23 +1075,35 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 child: Container(
                   height: !isTablet ? 135 : 230,
                   width: !isTablet ? 200 : 230,
-                  child: ((ctrl.radiosSecondImageFile != null &&
-                          ctrl.radiosSecondImageFile?.path != "")
-                      ? HomeImage.fileImage(
-                          path: ctrl.radiosSecondImageFile!.path,
-                          height: !isTablet ? 135 : 230,
-                          width: !isTablet ? 200 : 230,
+                  child: (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
+                          ctrl.patientData?.patientPhoto?.cephalRadio ==
+                              null)
+                      ? ((ctrl.radiosSecondImageFile != null &&
+                              ctrl.radiosSecondImageFile?.path != "")
+                          ? HomeImage.fileImage(
+                              path: ctrl.radiosSecondImageFile!.path,
+                              height: !isTablet ? 135 : 230,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              fit: BoxFit.cover,
+                              radius: BorderRadius.circular(10),
+                            )
+                          : HomeImage.assetImage(
+                              path: Assets.images.imgTab.path,
+                              height: !isTablet ? 135 : 230,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              // fit: BoxFit.cover,
+                            ))
+                      : HomeImage.networkImage(
+                          path:
+                              "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
+                          height: !isTablet ? 123 : 200,
                           shape: BoxShape.rectangle,
                           fit: BoxFit.cover,
-                          radius: BorderRadius.circular(10),
-                        )
-                      : HomeImage.assetImage(
-                          path: Assets.images.imgTab.path,
-                          height: !isTablet ? 135 : 230,
-                          width: !isTablet ? 200 : 230,
-                          shape: BoxShape.rectangle,
-                          // fit: BoxFit.cover,
-                        )),
+                          radius: BorderRadius.circular(15),
+                          width: !isTablet ? 123 : 200,
+                        ),
                 ).onClick(
                   () {
                     imageUploadUtils.openImageChooser(
@@ -1298,7 +1328,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(!isTablet ? 35 : 40),
                   color: primaryBrown.withOpacity(0.08)),
-              height: !isTablet ? 55 : 65,
+              height: !isTablet ? 55 : 70,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -1328,7 +1358,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               Expanded(
                 child: AppBorderButton(
-                  btnHeight: !isTablet ? 55 : 65,
+                  btnHeight: !isTablet ? 55 : 70,
                   text: "Finish Latter",
                   onTap: () {
                     ctrl.addUpdatePatientDetails(
@@ -1345,7 +1375,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               Expanded(
                 child: AppButton(
-                  btnHeight: !isTablet ? 55 : 65,
+                  btnHeight: !isTablet ? 55 : 70,
                   text: LocaleKeys.next.translateText,
                   onTap: () {
                     if (ctrl.validateUploadPhotoFiles()) {
@@ -1369,32 +1399,43 @@ Widget uploadPhotographs(AddPatientController ctrl) {
   );
 }
 
-Widget photoCardWidget(
-    {required String title,
-    required String image,
-    required File? fileImage,
-    required GestureTapCallback onTap,
-    required AddPatientController ctrl}) {
+Widget photoCardWidget({
+  required String title,
+  required String image,
+  required String urlImage,
+  required String urlPath,
+  required File? fileImage,
+  required GestureTapCallback onTap,
+}) {
   return Expanded(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ((fileImage != null && fileImage.path != "")
-                ? HomeImage.fileImage(
-                    path: fileImage.path,
-                    size: !isTablet ? 123 : 200,
-                    shape: BoxShape.rectangle,
-                    fit: BoxFit.cover,
-                    radius: BorderRadius.circular(15),
-                  )
-                : HomeImage.assetImage(
-                    path: image,
-                    height: !isTablet ? 123 : 200,
-                    shape: BoxShape.rectangle,
-                    width: !isTablet ? 123 : 200,
-                  ))
-            .onClick(onTap),
+        (urlImage.isEmpty || urlImage == "")
+            ? ((fileImage != null && fileImage.path != "")
+                    ? HomeImage.fileImage(
+                        path: fileImage.path,
+                        size: !isTablet ? 123 : 200,
+                        shape: BoxShape.rectangle,
+                        fit: BoxFit.cover,
+                        radius: BorderRadius.circular(15),
+                      )
+                    : HomeImage.assetImage(
+                        path: image,
+                        height: !isTablet ? 123 : 200,
+                        shape: BoxShape.rectangle,
+                        width: !isTablet ? 123 : 200,
+                      ))
+                .onClick(onTap)
+            : HomeImage.networkImage(
+                path: "${ApiUrl.baseImagePatientPath}$urlPath/$urlImage",
+                height: !isTablet ? 123 : 200,
+                shape: BoxShape.rectangle,
+                fit: BoxFit.cover,
+                radius: BorderRadius.circular(15),
+                width: !isTablet ? 123 : 200,
+              ).onClick(onTap),
         5.space(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1415,7 +1456,7 @@ Widget photoCardWidget(
   );
 }
 
-Widget arcadeTraiter(AddPatientController ctrl) {
+Widget prescriptionScreen(AddPatientController ctrl) {
   return Stack(
     children: [
       ListView(
@@ -1443,7 +1484,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
-            height: !isTablet ? 55 : 65,
+            height: !isTablet ? 55 : 70,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
@@ -1469,7 +1510,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           }),
           10.space(),
           Container(
-            height: !isTablet ? 55 : 65,
+            height: !isTablet ? 55 : 70,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
@@ -1495,7 +1536,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           }),
           10.space(),
           Container(
-            height: !isTablet ? 55 : 65,
+            height: !isTablet ? 55 : 70,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
@@ -1547,7 +1588,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Classe Dentaire"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1556,9 +1597,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               .paddingSymmetric(horizontal: 15),
           10.space(),
           Container(
-            height: !isTablet ?55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
                 border: Border.all(color: skyColor)),
             child: Row(
@@ -1566,7 +1607,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 LocaleKeys.maintenir.translateText
                     .appCommonText(
-                      size: !isTablet ?16:19,
+                      size: !isTablet ? 16 : 19,
                       weight: FontWeight.w400,
                       color: Colors.black,
                     )
@@ -1582,9 +1623,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           }),
           10.space(),
           Container(
-            height:!isTablet ? 55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                 color: Colors.white,
                 border: Border.all(color: skyColor)),
             child: Row(
@@ -1592,7 +1633,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               children: [
                 LocaleKeys.ameliorerClasses.translateText
                     .appCommonText(
-                      size: !isTablet ?16:19,
+                      size: !isTablet ? 16 : 19,
                       weight: FontWeight.w400,
                       color: Colors.black,
                     )
@@ -1610,7 +1651,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Notes"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1634,7 +1675,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             radius: 20,
             isError: ctrl.emailError,
             hintText: "Saisir une remarque",
-            maxLines: 3,
+            maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
           ).paddingSymmetric(horizontal: 15),
@@ -1648,7 +1689,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Milieu Incisif Maxillaire"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1663,9 +1704,9 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             itemBuilder: (context, index) {
               final item = ctrl.middleMaxillaryItems[index];
               return Container(
-                height: !isTablet ?55:65,
+                height: !isTablet ? 55 : 65,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                  borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                   color: Colors.white,
                   border: Border.all(color: skyColor),
                 ),
@@ -1675,7 +1716,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     Expanded(
                       child: item.title
                           .appCommonText(
-                              size: !isTablet ?16:19,
+                              size: !isTablet ? 16 : 19,
                               align: TextAlign.start,
                               weight: FontWeight.w400,
                               maxLine: 2,
@@ -1707,7 +1748,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Notes"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1731,7 +1772,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             isError: ctrl.emailError,
             radius: 20,
             hintText: "Saisir une remarque",
-            maxLines: 3,
+            maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
           ).paddingSymmetric(horizontal: 15),
@@ -1751,7 +1792,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
           "Autres Recommandations"
               .appCommonText(
                 align: TextAlign.start,
-                size: !isTablet ?24:27,
+                size: !isTablet ? 24 : 27,
                 maxLine: 2,
                 overflow: TextOverflow.ellipsis,
                 weight: FontWeight.w500,
@@ -1775,7 +1816,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             keyboardType: TextInputType.text,
             isError: ctrl.emailError,
             hintText: "Saisir une remarque",
-            maxLines: 3,
+            maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
           ).paddingSymmetric(horizontal: 15),
@@ -1785,7 +1826,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ?70:80,
+          height: !isTablet ? 70 : 90,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1795,7 +1836,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
             children: [
               Expanded(
                 child: AppBorderButton(
-                  btnHeight: !isTablet ?55:65,
+                  btnHeight: !isTablet ? 55 : 70,
                   text: "Finish Latter",
                   onTap: () {
                     // ctrl.goToStep(1);
@@ -1804,8 +1845,8 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                         draftViewPage: "patient_prescription_page");
                   },
                   // boxShadow: [],
-                  radius:!isTablet ? 25:40,
-                  fontSize: !isTablet ?18:22,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   borderColor: primaryBrown,
                   // bgColor: primaryBrown,
                   fontColor: primaryBrown,
@@ -1813,7 +1854,7 @@ Widget arcadeTraiter(AddPatientController ctrl) {
               ),
               Expanded(
                 child: AppButton(
-                  btnHeight: !isTablet ?55:65,
+                  btnHeight: !isTablet ? 55 : 70,
                   text: "Add",
                   onTap: () {
                     if (ctrl.validateArcadeFields()) {
@@ -1823,8 +1864,8 @@ Widget arcadeTraiter(AddPatientController ctrl) {
                     }
                   },
                   boxShadow: [],
-                  radius: !isTablet ?25:40,
-                  fontSize: !isTablet ?18:22,
+                  radius: !isTablet ? 25 : 40,
+                  fontSize: !isTablet ? 18 : 22,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
                 ).paddingOnly(top: 10, right: 15, left: 5),
@@ -1862,7 +1903,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
           return Column(
             children: [
               Container(
-                height: !isTablet ? 55 : 65,
+                height: !isTablet ? 55 : 70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                   color: Colors.white,
@@ -1923,7 +1964,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
                   keyboardType: TextInputType.text,
                   isError: ctrl.emailError,
                   hintText: "Saisir une remarque",
-                  maxLines: 3,
+                  maxLines: !isTablet ? 3 : 5,
                   radius: 20,
                   // labelText: LocaleKeys.deliveryAddress.translateText,
                   showPrefixIcon: false,
@@ -1961,7 +2002,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
         isError: ctrl.emailError,
         radius: 20,
         hintText: "Saisir une remarque",
-        maxLines: 3,
+        maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),
@@ -1996,7 +2037,7 @@ Widget dentalHistory(AddPatientController ctrl) {
           return Column(
             children: [
               Container(
-                height: !isTablet ? 55 : 65,
+                height: !isTablet ? 55 : 70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
                   color: Colors.white,
@@ -2056,7 +2097,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                   keyboardType: TextInputType.text,
                   isError: ctrl.emailError,
                   hintText: "Saisir une remarque",
-                  maxLines: 3,
+                  maxLines: !isTablet ? 3 : 5,
                   // labelText: LocaleKeys.deliveryAddress.translateText,
                   showPrefixIcon: false,
                 ).paddingOnly(bottom: 7),
@@ -2067,9 +2108,10 @@ Widget dentalHistory(AddPatientController ctrl) {
                   children: [
                     Expanded(
                       child: Container(
-                        height: !isTablet ? 55 : 65,
+                        height: !isTablet ? 55 : 70,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                          borderRadius:
+                              BorderRadius.circular(!isTablet ? 25 : 40),
                           color: Colors.white,
                           border: Border.all(color: skyColor),
                         ),
@@ -2112,9 +2154,10 @@ Widget dentalHistory(AddPatientController ctrl) {
                     10.space(),
                     Expanded(
                         child: Container(
-                      height: !isTablet ?55:65,
+                      height: !isTablet ? 55 : 65,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(!isTablet ?25:40),
+                        borderRadius:
+                            BorderRadius.circular(!isTablet ? 25 : 40),
                         color: Colors.white,
                         border: Border.all(color: skyColor),
                       ),
@@ -2124,7 +2167,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                           Text(
                             LocaleKeys.no.translateText,
                             style: TextStyle(
-                              fontSize: !isTablet ?16:19,
+                              fontSize: !isTablet ? 16 : 19,
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
@@ -2163,7 +2206,7 @@ Widget dentalHistory(AddPatientController ctrl) {
       "Notes"
           .appCommonText(
             align: TextAlign.start,
-            size:!isTablet ? 24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -2187,7 +2230,7 @@ Widget dentalHistory(AddPatientController ctrl) {
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
         hintText: "Saisir une remarque",
-        maxLines: 3,
+        maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),
@@ -2205,7 +2248,7 @@ Widget incisorCovering(AddPatientController ctrl) {
       "Recouvrement Incisives (Supraclusion)"
           .appCommonText(
             align: TextAlign.start,
-            size: !isTablet ?24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -2220,9 +2263,9 @@ Widget incisorCovering(AddPatientController ctrl) {
         itemBuilder: (context, index) {
           final item = ctrl.incisorCoveringItems[index];
           return Container(
-            height: !isTablet ?55:65,
+            height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(!isTablet ?25:40),
+              borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
               color: Colors.white,
               border: Border.all(color: skyColor),
             ),
@@ -2232,7 +2275,7 @@ Widget incisorCovering(AddPatientController ctrl) {
                 Expanded(
                   child: item.title
                       .appCommonText(
-                          size: !isTablet ?16:19,
+                          size: !isTablet ? 16 : 19,
                           align: TextAlign.start,
                           weight: FontWeight.w400,
                           maxLine: 2,
@@ -2263,7 +2306,7 @@ Widget incisorCovering(AddPatientController ctrl) {
       "Notes"
           .appCommonText(
             align: TextAlign.start,
-            size: !isTablet ?24:27,
+            size: !isTablet ? 24 : 27,
             maxLine: 2,
             overflow: TextOverflow.ellipsis,
             weight: FontWeight.w500,
@@ -2287,7 +2330,7 @@ Widget incisorCovering(AddPatientController ctrl) {
         isError: ctrl.emailError,
         radius: 20,
         hintText: "Saisir....",
-        maxLines: 3,
+        maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),
@@ -2323,7 +2366,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
           .paddingSymmetric(horizontal: 15),
       10.space(),
       Container(
-        height: !isTablet ? 55 : 65,
+        height: !isTablet ? 55 : 70,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
             color: Colors.white,
@@ -2354,7 +2397,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
       }),
       10.space(),
       Container(
-        height: !isTablet ? 55 : 65,
+        height: !isTablet ? 55 : 70,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
             color: Colors.white,
@@ -2401,7 +2444,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
         hintText: "Saisir une remarque",
-        maxLines: 3,
+        maxLines: !isTablet ? 3 : 5,
         labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),

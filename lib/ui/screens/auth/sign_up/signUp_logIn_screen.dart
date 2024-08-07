@@ -160,46 +160,46 @@ class SignUpSignInScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Checkbox(
-                    hoverColor: primaryBrown,
-                    activeColor: primaryBrown,
-                    checkColor: Colors.white,
-                    side: BorderSide(color: primaryBrown, width: 1.5),
-                    value: ctrl.isRememberPassword,
-                    onChanged: (bool? value) {
-                      ctrl.isRememberPassword = !ctrl.isRememberPassword;
-                      ctrl.update();
-                    },
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Checkbox(
+                      hoverColor: primaryBrown,
+                      activeColor: primaryBrown,
+                      checkColor: Colors.white,
+                      side: BorderSide(color: primaryBrown, width: 1.5),
+                      value: ctrl.isRememberPassword,
+                      onChanged: (bool? value) {
+                        ctrl.isRememberPassword = !ctrl.isRememberPassword;
+                        ctrl.update();
+                      },
+                    ),
                   ),
-                ),
-                10.space(),
-                LocaleKeys.rememberPassword.translateText.appCommonText(
-                    weight: FontWeight.w400,
-                    maxLine: 2,
-                    color: hintTextColor,
-                    size: !isTablet ? 16.sp : 18.sp),
-
-              ],
+                  10.space(),
+                  LocaleKeys.rememberPassword.translateText.appCommonText(
+                      weight: FontWeight.w400,
+                      maxLine: 2,
+                      color: hintTextColor,
+                      size: !isTablet ? 16.sp : 18.sp),
+              
+                ],
+              ),
             ),
             // Spacer(),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  Get.toNamed(Routes.forgotPasswordScreen);
-                },
-                child: LocaleKeys.forgotPassword2.translateText.appCommonText(
-                    weight: FontWeight.w500,
-                    color: blackColor,
-                    size: !isTablet ? 16.sp : 18.sp),
-              ).paddingOnly(left: 35),
-            ),
+            TextButton(
+              onPressed: () {
+                Get.toNamed(Routes.forgotPasswordScreen);
+              },
+              child: LocaleKeys.forgotPassword2.translateText.appCommonText(
+                  weight: FontWeight.w500,
+                  color: blackColor,
+                  size: !isTablet ? 16.sp : 18.sp),
+            ).paddingOnly(left: 35),
           ],
         ),
         48.space(),
