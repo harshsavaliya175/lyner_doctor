@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class PatientResponseModel {
   final List<PatientResponseData>? patientData;
-  final int? status;
+  final bool? status;
   final String? msg;
 
   PatientResponseModel({
@@ -13,7 +13,7 @@ class PatientResponseModel {
 
   PatientResponseModel copyWith({
     List<PatientResponseData>? patientData,
-    int? status,
+    bool? status,
     String? msg,
   }) =>
       PatientResponseModel(
@@ -33,7 +33,7 @@ class PatientResponseModel {
             ? []
             : List<PatientResponseData>.from(
             json["data"]!.map((x) => PatientResponseData.fromJson(x))),
-        status: json["status"],
+        status: json["status"]==1,
         msg: json["msg"],
       );
 

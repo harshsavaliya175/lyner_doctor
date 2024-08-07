@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
@@ -16,6 +18,7 @@ import 'package:lynerdoctor/model/patient_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
 import 'package:lynerdoctor/model/productListModel.dart';
 import 'package:lynerdoctor/model/selection_item.dart';
+import 'package:uuid/uuid.dart';
 
 class AddPatientController extends GetxController {
   int currentStep = 0;
@@ -54,7 +57,10 @@ class AddPatientController extends GetxController {
   File? radiosFirstImageFile;
   File? radiosSecondImageFile;
   File? upperJawImageFile;
+  TextEditingController upperJawImageFileTextCtrl = TextEditingController();
+  TextEditingController lowerJawImageFileTextCtrl = TextEditingController();
   File? lowerJawImageFile;
+  File? dicomFile;
 
   // bool isArcadeTraiter = false;
   var isArcadeTraiter = 0;
@@ -65,6 +71,9 @@ class AddPatientController extends GetxController {
   String isObjectTraitementText = '';
   bool isUploadStl = false;
   bool isLoading = false;
+  bool isDcomFileLoading = false;
+  double uploadProgress = 0.0;
+  String? uploadId;
   DateTime? pickedDate;
   DateTime? dateText;
   String? dateTextField;
@@ -84,6 +93,8 @@ class AddPatientController extends GetxController {
 
   var patientId;
 
+  String dicomFileName = "Upload DICOM File";
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -92,20 +103,31 @@ class AddPatientController extends GetxController {
     if (patientId != null) {
       isLoading = true;
       await getPatientInformationDetails();
+      if (patientData?.patientPhoto?.dcomFileName != null &&
+          patientData!.patientPhoto!.dcomFileName!.isNotEmpty) {
+        dicomFileName =
+            getFileName(patientData!.patientPhoto!.dcomFileName, 20);
+      }
       if (patientData?.draftViewPage == "patient_prescription_page") {
         isLoading = true;
         goToStep(3);
-      }else if(patientData?.draftViewPage == "upload_photo_page"){
+      } else if (patientData?.draftViewPage == "upload_photo_page") {
         goToStep(2);
       }
       await getPatientPrescriptionDetails();
-
     }
 
     await fetchProducts();
     getDoctorList();
     getClinicLocationList();
     getClinicBillingList();
+  }
+
+  String getFileName(String? filePath, int length) {
+    if (filePath == null || filePath.isEmpty) return "Upload DICOM File";
+    return filePath.length > length
+        ? filePath.substring(filePath.length - length)
+        : filePath;
   }
 
   var patientTechniquesItems = <SelectionItem>[
@@ -342,6 +364,7 @@ class AddPatientController extends GetxController {
   void changeClassesDentalValue(int value) {
     if (isClassesDental == value) {
       isClassesDental = 0;
+      classesDentalText = '';
     } else {
       isClassesDental = value;
       if (isClassesDental == 1) {
@@ -589,13 +612,22 @@ class AddPatientController extends GetxController {
         .map((item) => item.title)
         .toList();
     print(incisorCoveringList.join(', '));
-
+    if (patientData?.dateOfBirth != null) {
+      dateTextField =
+          DateFormat('yyyy-MM-dd').format(patientData!.dateOfBirth!);
+      // dateOfBirthController.text = dateTextField!;
+    } else if(pickedDate != null){
+      dateTextField =
+          DateFormat('yyyy-MM-dd').format(pickedDate!);
+    }else{
+      dateTextField = "";
+    }
     ResponseItem result = await AddPatientRepo.addUpdatePatientDetails(
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       clinicBillingId: selectedClinicBillingData?.clinicBillingId.toString(),
       clinicLocationId: selectedClinicDeliveryData?.clinicLocationId.toString(),
-      dateOfBirth: dateOfBirthController.text,
+      dateOfBirth: dateTextField,
       doctorId: selectedDoctorData?.doctorId.toString(),
       email: emailController.text,
       toothCaseId: selectedProduct?.toothCaseId ?? 0,
@@ -661,8 +693,14 @@ class AddPatientController extends GetxController {
           firstNameController.text = patientData?.firstName ?? '';
           lastNameController.text = patientData?.lastName ?? '';
           emailController.text = patientData?.email ?? '';
-          dateOfBirthController.text =
-              patientData?.dateOfBirth.toString() ?? '';
+
+          if (patientData?.dateOfBirth != null) {
+            dateTextField =
+                DateFormat('dd-MM-yyyy').format(patientData!.dateOfBirth!);
+            dateOfBirthController.text = dateTextField!;
+          } else {
+            dateOfBirthController.text = '';
+          }
 
           selectedClinicDeliveryData = ClinicLocation(
               clinicLocationId: patientData?.clinicLoc?.clinicLocationId ?? 0,
@@ -700,15 +738,12 @@ class AddPatientController extends GetxController {
           );
           doctorController.text =
               "${selectedDoctorData?.firstName} ${selectedDoctorData?.lastName}";
+          upperJawImageFileTextCtrl.text =
+              patientData?.patientPhoto?.upperJawStlFile ?? '';
+          lowerJawImageFileTextCtrl.text =
+              patientData?.patientPhoto?.lowerJawStlFile ?? '';
           isUploadStl = patientData?.patientPhoto?.is3Shape == 0 ? true : false;
-          // if(patientData?.draftViewPage=="patient_prescription_page"){
-          //   goToStep(3);
-          // }
-          // if (patientData?.draftViewPage == "upload_photo_page") {
-          //   goToStep(2);
-          // }
           print(isUploadStl);
-
           isLoading = false;
         }
       } else {
@@ -733,8 +768,10 @@ class AddPatientController extends GetxController {
 
           /// ARCADE
           getArcadeTraiter(prescriptionModel.data);
+
           /// OBJECT TREATMENT
           getObjectTreatement(prescriptionModel.data);
+
           /// PATIENT TECHNIQUES
           getUpdateMultipleSelectionItems(
               prescriptionModel.data?.acceptedTechniques ?? '',
@@ -742,6 +779,7 @@ class AddPatientController extends GetxController {
               false);
           techniquesPatientsNoteCtrl.text =
               prescriptionModel.data?.acceptedTechniqueNote ?? '';
+
           /// DENTAL HISTORY
           getUpdateMultipleSelectionItems(
               prescriptionModel.data?.dentalHistory ?? '',
@@ -749,9 +787,11 @@ class AddPatientController extends GetxController {
               true);
           dentalHistoryNoteCtrl.text =
               prescriptionModel.data?.dentalHistoryNote ?? '';
+
           /// DENTAL CLASS
           getDentalClass(prescriptionModel.data);
           classesDentalNoteCtrl.text = prescriptionModel.data?.dentalNote ?? '';
+
           /// MIDDLE MAXILLARY
           getUpdateMultipleSelectionItems(
               prescriptionModel.data?.maxillaryIncisalMiddle ?? '',
@@ -759,6 +799,7 @@ class AddPatientController extends GetxController {
               false);
           maxillaireNoteCtrl.text =
               prescriptionModel.data?.maxillaryIncisalNote ?? '';
+
           ///INCISOR COVERING
           getUpdateMultipleSelectionItems(
               prescriptionModel.data?.incisiveCovering ?? '',
@@ -766,6 +807,7 @@ class AddPatientController extends GetxController {
               false);
           incisorCoveringNoteCtrl.text =
               prescriptionModel.data?.incisiveCoveringNote ?? '';
+
           ///Other Notes
           autresRecommandationNoteCtrl.text =
               prescriptionModel.data?.otherRecommendations ?? '';
@@ -777,12 +819,10 @@ class AddPatientController extends GetxController {
         isLoading = false;
         update();
       }
-
     } catch (e) {
       isLoading = false;
       update();
     }
-
   }
 
   void getArcadeTraiter(PrescriptionData? data) {
@@ -820,10 +860,10 @@ class AddPatientController extends GetxController {
   }
 
   void getDentalClass(PrescriptionData? data) {
-    if (data?.treatmentObjectives == LocaleKeys.maintenir.translateText) {
+    if (data?.dentalClass == LocaleKeys.maintenir.translateText) {
       isClassesDental = 1;
       classesDentalText = LocaleKeys.maintenir.translateText;
-    } else if (data?.treatmentObjectives ==
+    } else if (data?.dentalClass ==
         LocaleKeys.ameliorerClasses.translateText) {
       isClassesDental = 2;
       classesDentalText = LocaleKeys.ameliorerClasses.translateText;
@@ -831,7 +871,6 @@ class AddPatientController extends GetxController {
       isClassesDental = 0;
       classesDentalText = "";
     }
-    objectifsTraitementDeliveryAddressCtrl.text = data?.treatmentNotes ?? '';
   }
 
   void getUpdateMultipleSelectionItems(String receivedData,
@@ -870,5 +909,159 @@ class AddPatientController extends GetxController {
         }
       }
     }
+  }
+
+  /*Future<void> uploadDicomFile(File file, var patientId) async {
+    isLoading = true;
+    update();
+
+    // Generate unique upload ID if not already set
+    if(uploadId==null){
+      uploadId = generateUploadId();
+    }
+
+
+    // Determine file extension
+    String fileExtension = getFileExtension(file);
+
+    // Split file into chunks
+    int chunkSize = 1 * 1024 * 1024; // 1 MB chunks
+    int totalChunks = (file.lengthSync() / chunkSize).ceil();
+
+    RandomAccessFile raf = await file.open();
+
+    try {
+      for (int i = 0; i < totalChunks; i++) {
+        int start = i * chunkSize;
+        int end = start + chunkSize;
+        if (end > file.lengthSync()) {
+          end = file.lengthSync();
+        }
+
+        raf.setPositionSync(start);
+        List<int> chunkBytes = raf.readSync(end - start);
+
+        // Write chunk to temporary file
+        File chunkFile = File('${file.path}_chunk_$i');
+        await chunkFile.writeAsBytes(chunkBytes);
+
+        ResponseItem result = await AddPatientRepo.uploadPatientDcomFile(
+          file: chunkFile,
+          chunkIndex: '$i',
+          extension: fileExtension,
+          totalChunks: '$totalChunks',
+          uploadId: uploadId,
+          patientId: patientData?.patientId.toString(),
+        );
+
+        if (!result.status) {
+          // Handle failure
+          showAppSnackBar('Chunk $i upload failed: ${result.msg}');
+          isLoading = false;
+          update();
+          return;
+        }
+
+        // Delete temporary chunk file
+        await chunkFile.delete();
+      }
+    } catch (e) {
+      // Handle exceptions
+      showAppSnackBar('File upload failed: $e');
+      isLoading = false;
+    } finally {
+      await raf.close();
+    }
+    // All chunks uploaded successfully
+    showAppSnackBar('File uploaded successfully');
+    isLoading = false;
+    uploadId = null; // Reset uploadId for next upload
+    update();
+  }*/
+  Future<void> uploadDicomFile(File file, var patientId) async {
+    isDcomFileLoading = true;
+    uploadProgress = 0.0 ;
+    update();
+    // Generate unique upload ID if not already set
+    if (uploadId == null) {
+      uploadId = generateUploadId();
+    }
+    // Determine file extension
+    String fileExtension = getFileExtension(file);
+    // Split file into chunks
+    int chunkSize = 10 * 1024 * 1024; // 1 MB chunks
+    int totalChunks = (file.lengthSync() / chunkSize).ceil();
+
+    RandomAccessFile raf = await file.open();
+    bool allChunksUploaded = true; // Track overall success
+
+    try {
+      for (int i = 0; i < totalChunks; i++) {
+        int start = i * chunkSize;
+        int end = start + chunkSize;
+        if (end > file.lengthSync()) {
+          end = file.lengthSync();
+        }
+
+        raf.setPositionSync(start);
+        List<int> chunkBytes = raf.readSync(end - start);
+
+        // Write chunk to temporary file
+        File chunkFile = File('${file.path}_chunk_$i');
+        await chunkFile.writeAsBytes(chunkBytes);
+        for (int j = 0; j < 100; j++) {
+          await Future.delayed(Duration(milliseconds: 10));
+          uploadProgress = (i + j / 100) / totalChunks;
+          update();
+        }
+        ResponseItem result = await AddPatientRepo.uploadPatientDcomFile(
+          file: chunkFile,
+          chunkIndex: '$i',
+          extension: fileExtension,
+          totalChunks: '$totalChunks',
+          uploadId: uploadId,
+          patientId: patientId.toString(),
+        );
+        if (!result.status) {
+          // Handle failure
+          showAppSnackBar('Chunk $i upload failed: ${result.msg}');
+          allChunksUploaded = false; // Set overall success to false
+          break; // Exit loop on failure
+        }
+        uploadProgress = (i + 1) / totalChunks;
+        update();
+        // Delete temporary chunk file
+        await chunkFile.delete();
+      }
+      uploadProgress = 1.0;
+      update();
+    } catch (e) {
+      // Handle exceptions
+      showAppSnackBar('File upload failed: $e');
+      allChunksUploaded = false; // Set overall success to false
+    } finally {
+      await raf.close();
+      // Reset uploadId for next upload
+      uploadId = null;
+      isDcomFileLoading = false;
+      update();
+      // Show final success or failure message
+      if (allChunksUploaded) {
+        showAppSnackBar('File uploaded successfully');
+      } else {
+        showAppSnackBar('File upload failed');
+      }
+    }
+  }
+
+  String getFileExtension(File file) {
+    String fileName = file.path;
+    int dotIndex = fileName.lastIndexOf('.');
+    return (dotIndex != -1) ? fileName.substring(dotIndex + 1) : '';
+  }
+
+  String generateUploadId() {
+    var uuid = Uuid();
+    return uuid.v4();
   }
 }

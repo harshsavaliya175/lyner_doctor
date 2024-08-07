@@ -241,7 +241,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     },
                     onTap: () async {
                       ctrl.pickedDate =
-                          await datePickerDialog(Get.context!, ctrl.dateText);
+                          await datePickerDialog(Get.context!);
                       if (ctrl.pickedDate != null) {
                         ctrl.dateText = ctrl.pickedDate;
                         ctrl.dateTextField =

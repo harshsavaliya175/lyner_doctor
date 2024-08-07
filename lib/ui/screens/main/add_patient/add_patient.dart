@@ -460,13 +460,13 @@ Widget patientInformation(AddPatientController ctrl) {
                 return null;
               },
               onTap: () async {
-                ctrl.pickedDate =
-                    await datePickerDialog(Get.context!, ctrl.dateText);
+                ctrl.pickedDate = await datePickerDialog(Get.context!);
                 if (ctrl.pickedDate != null) {
                   ctrl.dateText = ctrl.pickedDate;
                   ctrl.dateTextField =
                       DateFormat('dd-MM-yyyy').format(ctrl.pickedDate!);
                   ctrl.dateOfBirthController.text = ctrl.dateTextField!;
+                  print(ctrl.dateOfBirthController.text);
                 }
                 ctrl.update();
               },
@@ -1019,16 +1019,25 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                  child: Container(
-                height: !isTablet ? 135 : 230,
-                width: !isTablet ? 200 : 230,
+                  child: GestureDetector(
+                onTap: () {
+                  imageUploadUtils.openImageChooser(
+                      context: Get.context!,
+                      onImageChose: (File? file) async {
+                        // ctrl.cuisinePhoto?[0] =(file!);
+                        ctrl.radiosFirstImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_panoramique', file: file);
+                        ctrl.update();
+                      });
+                },
                 child: (ctrl.patientData?.patientPhoto?.paramiqueRadio == "" ||
                         ctrl.patientData?.patientPhoto?.paramiqueRadio == null)
                     ? ((ctrl.radiosFirstImageFile != null &&
                             ctrl.radiosFirstImageFile?.path != "")
                         ? HomeImage.fileImage(
                             path: ctrl.radiosFirstImageFile!.path,
-                            height: !isTablet ? 135 : 230,
+                            height: !isTablet ? 121 : 215,
                             width: !isTablet ? 200 : 230,
                             shape: BoxShape.rectangle,
                             fit: BoxFit.cover,
@@ -1044,24 +1053,12 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     : HomeImage.networkImage(
                         path:
                             "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
-                        height: !isTablet ? 123 : 200,
+                        height: !isTablet ? 121 : 215,
+                        width: !isTablet ? 200 : 230,
                         shape: BoxShape.rectangle,
                         fit: BoxFit.cover,
-                        radius: BorderRadius.circular(15),
-                        width: !isTablet ? 123 : 200,
+                        radius: BorderRadius.circular(12),
                       ),
-              ).onClick(
-                () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.radiosFirstImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_panoramique', file: file);
-                        ctrl.update();
-                      });
-                },
               )),
               15.space(),
               /*Expanded(
@@ -1072,52 +1069,47 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 ),
               ),*/
               Expanded(
-                child: Container(
-                  height: !isTablet ? 135 : 230,
-                  width: !isTablet ? 200 : 230,
-                  child: (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
-                          ctrl.patientData?.patientPhoto?.cephalRadio ==
-                              null)
-                      ? ((ctrl.radiosSecondImageFile != null &&
-                              ctrl.radiosSecondImageFile?.path != "")
-                          ? HomeImage.fileImage(
-                              path: ctrl.radiosSecondImageFile!.path,
-                              height: !isTablet ? 135 : 230,
-                              width: !isTablet ? 200 : 230,
-                              shape: BoxShape.rectangle,
-                              fit: BoxFit.cover,
-                              radius: BorderRadius.circular(10),
-                            )
-                          : HomeImage.assetImage(
-                              path: Assets.images.imgTab.path,
-                              height: !isTablet ? 135 : 230,
-                              width: !isTablet ? 200 : 230,
-                              shape: BoxShape.rectangle,
-                              // fit: BoxFit.cover,
-                            ))
-                      : HomeImage.networkImage(
-                          path:
-                              "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
-                          height: !isTablet ? 123 : 200,
-                          shape: BoxShape.rectangle,
-                          fit: BoxFit.cover,
-                          radius: BorderRadius.circular(15),
-                          width: !isTablet ? 123 : 200,
-                        ),
-                ).onClick(
-                  () {
-                    imageUploadUtils.openImageChooser(
-                        context: Get.context!,
-                        onImageChose: (File? file) async {
-                          // ctrl.cuisinePhoto?[0] =(file!);
-                          ctrl.radiosSecondImageFile = file!;
-                          ctrl.uploadPatientSingleImage(
-                              paramName: 'patient_cephalometrique', file: file);
-                          ctrl.update();
-                        });
-                  },
-                ),
-              ),
+                  child: GestureDetector(
+                onTap: () {
+                  imageUploadUtils.openImageChooser(
+                      context: Get.context!,
+                      onImageChose: (File? file) async {
+                        // ctrl.cuisinePhoto?[0] =(file!);
+                        ctrl.radiosSecondImageFile = file!;
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_cephalometrique', file: file);
+                        ctrl.update();
+                      });
+                },
+                child: (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
+                        ctrl.patientData?.patientPhoto?.cephalRadio == null)
+                    ? ((ctrl.radiosSecondImageFile != null &&
+                            ctrl.radiosSecondImageFile?.path != "")
+                        ? HomeImage.fileImage(
+                            path: ctrl.radiosSecondImageFile!.path,
+                            height: !isTablet ? 121 : 215,
+                            width: !isTablet ? 200 : 230,
+                            shape: BoxShape.rectangle,
+                            fit: BoxFit.cover,
+                            radius: BorderRadius.circular(10),
+                          )
+                        : HomeImage.assetImage(
+                            path: Assets.images.imgTab.path,
+                            height: !isTablet ? 135 : 230,
+                            width: !isTablet ? 200 : 230,
+                            shape: BoxShape.rectangle,
+                            // fit: BoxFit.cover,
+                          ))
+                    : HomeImage.networkImage(
+                        path:
+                            "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
+                        height: !isTablet ? 121 : 215,
+                        width: !isTablet ? 200 : 230,
+                        shape: BoxShape.rectangle,
+                        fit: BoxFit.cover,
+                        radius: BorderRadius.circular(15),
+                      ),
+              )),
             ],
           ),
           10.space(),
@@ -1200,11 +1192,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
                 AppTextField(
-                  textEditingController: TextEditingController(
-                      text: ctrl.upperJawImageFile != null
-                          ? ctrl.upperJawImageFile!.path.substring(
-                              ctrl.upperJawImageFile!.path.length - 20)
-                          : ''),
+                  textEditingController: ctrl.upperJawImageFileTextCtrl,
                   onChanged: (value) {},
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
@@ -1231,6 +1219,13 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                               onImageChose: (File? file) async {
                                 // ctrl.cuisinePhoto?[0] =(file!);
                                 ctrl.upperJawImageFile = file!;
+                                ctrl.upperJawImageFileTextCtrl.text =
+                                    ctrl.upperJawImageFile != null
+                                        ? ctrl.upperJawImageFile!.path
+                                            .substring(ctrl.upperJawImageFile!
+                                                    .path.length -
+                                                20)
+                                        : '';
                                 ctrl.uploadPatientSingleImage(
                                     paramName: 'upper_jaw_stl_file',
                                     file: file);
@@ -1262,11 +1257,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
                 AppTextField(
-                  textEditingController: TextEditingController(
-                      text: ctrl.lowerJawImageFile != null
-                          ? ctrl.lowerJawImageFile!.path.substring(
-                              ctrl.lowerJawImageFile!.path.length - 20)
-                          : ''),
+                  textEditingController: ctrl.lowerJawImageFileTextCtrl,
                   onChanged: (value) {},
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
@@ -1291,6 +1282,13 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                               onImageChose: (File? file) async {
                                 // ctrl.cuisinePhoto?[0] =(file!);
                                 ctrl.lowerJawImageFile = file!;
+                                ctrl.lowerJawImageFileTextCtrl.text =
+                                    ctrl.lowerJawImageFile != null
+                                        ? ctrl.lowerJawImageFile!.path
+                                            .substring(ctrl.lowerJawImageFile!
+                                                    .path.length -
+                                                20)
+                                        : '';
                                 ctrl.uploadPatientSingleImage(
                                     paramName: 'lower_jaw_stl_file',
                                     file: file);
@@ -1317,30 +1315,81 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             color: Colors.black,
           ),
           10.space(),
-          DottedBorder(
-            borderType: BorderType.RRect,
-            color: primaryBrown,
-            padding: EdgeInsets.zero,
-            radius: Radius.circular(35),
-            dashPattern: [5, 5, 5, 5],
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(!isTablet ? 35 : 40),
-                  color: primaryBrown.withOpacity(0.08)),
-              height: !isTablet ? 55 : 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Assets.icons.icDocument.svg(height: !isTablet ? 23 : 30),
-                  10.space(),
-                  "Upload DICOM File".appCommonText(
-                      size: !isTablet ? 16 : 20,
-                      weight: FontWeight.w400,
-                      color: primaryBrown),
-                ],
+          Stack(
+            children: [
+              DottedBorder(
+                borderType: BorderType.RRect,
+                color: primaryBrown,
+                padding: EdgeInsets.zero,
+                radius: Radius.circular(35),
+                dashPattern: [5, 5, 5, 5],
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(!isTablet ? 35 : 40),
+                      color: primaryBrown.withOpacity(0.08)),
+                  height: !isTablet ? 55 : 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Assets.icons.icDocument.svg(height: !isTablet ? 23 : 30),
+                      10.space(),
+                      ctrl.dicomFileName.appCommonText(
+                          size: !isTablet ? 16 : 20,
+                          weight: FontWeight.w400,
+                          color: primaryBrown),
+                    ],
+                  ),
+                ),
+              ).onClick(
+                () {
+                  imageUploadUtils.pickFileFormStorage(
+                    context: Get.context!,
+                    onFileChose: (File file) {
+                      // Handle the chosen file
+                      ctrl.dicomFile = file;
+                      if (ctrl.dicomFile != null) {
+                        ctrl.dicomFileName =
+                            ctrl.getFileName(ctrl.dicomFile?.path, 15);
+                      }
+                      ctrl.update();
+                      ctrl.uploadDicomFile(file, ctrl.patientData?.patientId);
+
+                      print('Chosen file path: ${file.path}');
+                    },
+                  );
+                },
               ),
-            ),
+              Visibility(
+                visible: ctrl.isDcomFileLoading,
+                child: Container(
+                  width: double.infinity,
+                  height: !isTablet ? 55 : 70,
+                  decoration: BoxDecoration(
+                      color: lightBrown.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(!isTablet ? 25 : 40)),
+                  child: Center(
+                    child: Text(
+                      '${(ctrl.uploadProgress * 100).toStringAsFixed(0)}%',
+                      style: TextStyle(
+                        color: primaryBrown,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ).paddingSymmetric(horizontal: 3),
+              )
+            ],
+          ),
+          5.space(),
+          Visibility(
+            visible: ctrl.isDcomFileLoading,
+            child: LinearProgressIndicator(
+              value: ctrl.uploadProgress,
+              backgroundColor: Colors.white.withOpacity(0.5),
+              color: primaryBrown,
+            ).paddingSymmetric(horizontal: 10),
           ),
           100.space(),
         ],

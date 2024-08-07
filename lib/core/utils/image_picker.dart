@@ -245,8 +245,8 @@ class ImageUploadUtils {
     PermissionStatus status = await Permission.storage.request();
     if (status.isGranted) {
       final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['doc', 'pdf'],
+        type: FileType.any,
+        // allowedExtensions: ['doc', 'pdf','zip',],
       );
       if (pickedFile != null) {
         // controller.addImage(File(pickedFile.files.single.path!));

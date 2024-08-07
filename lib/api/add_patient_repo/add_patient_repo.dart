@@ -252,4 +252,103 @@ class AddPatientRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+
+  /*static Future<ResponseItem> uploadPatientDcomFile({
+    required File? file,
+    required String? patientId,
+    required String? uploadId,
+    required String? chunkIndex,
+    required String? totalChunks,
+    required String? extension,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+
+    http.MultipartFile? dicomFileType;
+    if (file != null) {
+      File compressedFile = file;
+      final List<String> mimeType =
+      lookupMimeType(compressedFile.path)!.split("/");
+      final dicomFile = http.MultipartFile.fromBytes(
+        "dcom_file",
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      dicomFileType = dicomFile;
+    }
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "upload_id": uploadId,
+      "chunkIndex": chunkIndex,
+      "totalChunks":totalChunks,
+      "extension":  extension,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.uploadPatientDcomFile,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.uploadFile(requestUrl,dicomFileType,null, params, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }*/
+  static Future<ResponseItem> uploadPatientDcomFile({
+    required File? file,
+    required String? patientId,
+    required String? uploadId,
+    required String? chunkIndex,
+    required String? totalChunks,
+    required String? extension,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    http.MultipartFile? dicomFileType;
+    if (file != null) {
+      File compressedFile = file;
+      final String? mimeTypeString = lookupMimeType(compressedFile.path);
+      final mimeType = mimeTypeString?.split("/") ?? ["application", "octet-stream"]; // Default MIME type
+
+      dicomFileType = http.MultipartFile.fromBytes(
+        "dcom_file",
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+    } else {
+      return ResponseItem(
+        data: null,
+        msg: 'File is null',
+        status: false,
+      );
+    }
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "upload_id": uploadId,
+      "chunkIndex": chunkIndex,
+      "totalChunks": totalChunks,
+      "extension": extension,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.uploadPatientDcomFile,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.uploadFile(requestUrl, dicomFileType, null, params, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
 }

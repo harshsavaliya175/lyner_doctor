@@ -267,7 +267,7 @@
     },
     {
       "name": "flutter_cache_manager",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.2",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -734,12 +734,6 @@
       "languageVersion": "2.18"
     },
     {
-      "name": "sprintf",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/sprintf-7.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "sqflite",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/sqflite-2.3.3+1",
       "packageUri": "lib/",
@@ -813,9 +807,9 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/uuid-4.4.2",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/uuid-3.0.7",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "vector_graphics",
@@ -896,7 +890,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-07-31T04:47:15.059996Z",
+  "generated": "2024-08-07T05:48:42.099039Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",

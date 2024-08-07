@@ -36,7 +36,8 @@ dependencies:
 
   # for state management
   get: ^4.6.6
-
+  # uniq id genrater
+  uuid: ^3.0.6
   # store local data
   shared_preferences: ^2.2.3
 

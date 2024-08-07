@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
@@ -101,7 +102,6 @@ class PatientsController extends GetxController {
     if (!isFromSearch) {
       isLoading = true;
     }
-    patientList.clear();
     ResponseItem result = await PatientsRepo.getClinicListBySearchOrFilter(
       clinicLocationId: clinicLocationId,
       filterType: filterType,
@@ -113,14 +113,31 @@ class PatientsController extends GetxController {
     try {
       if (result.status) {
         if (result.data != null) {
-          result.data.forEach(
-            (dynamic e) {
-              PatientResponseData patientData = PatientResponseData.fromJson(e);
-              patientList.add(patientData);
-            },
-          );
+          patientList.clear();
+          PatientResponseModel patientResponseModel =
+              PatientResponseModel.fromJson(result.toJson());
+          patientList.addAll(patientResponseModel.patientData!);
           isLoading = false;
         }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  void callDeletePatientApi(String patientId) async {
+    ResponseItem result = await PatientsRepo.deletePatient(
+      patientId: patientId,
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        showAppSnackBar(result.msg);
+        patientList.clear();
+        getClinicListBySearchOrFilter();
       } else {
         isLoading = false;
       }

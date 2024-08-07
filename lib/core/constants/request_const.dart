@@ -35,9 +35,12 @@ class MethodNames {
       "getPatientInformationDetails";
   static const String getPatientPrescriptionDetails = "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
+  static const String deletePatient = "deletePatient";
+  static const String getLynerConnectList = "getLynerConnectList";
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
+  static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
 
   static const String getClinicListBySearchOrFilter =
