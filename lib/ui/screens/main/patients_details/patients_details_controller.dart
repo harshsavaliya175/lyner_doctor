@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/model/patient_details_model.dart';
 
 class PatientsDetailsController extends GetxController {
@@ -9,6 +12,7 @@ class PatientsDetailsController extends GetxController {
   bool isLoading = false;
   TextEditingController commentController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
+  List<CommentModel?> commentModelList = [];
 
   @override
   void onInit() {
@@ -43,13 +47,19 @@ class PatientsDetailsController extends GetxController {
 
   getPatientCommentsDetails() async {
     isLoading = true;
+    commentModelList.clear();
     ResponseItem result =
-        await PatientsRepo.getPatientCommentsDetails(patientId: 191);
+        await PatientsRepo.getPatientCommentsDetails(patientId: 134);
     isLoading = false;
     try {
       if (result.status) {
         if (result.data != null) {
-          patientDetailsModel = PatientDetailsModel.fromJson(result.data);
+          List commentDataList = result.data as List;
+          for (int i = 0; i < commentDataList.length; i++) {
+            CommentModel? commentModel =
+                CommentModel.fromJson(commentDataList[i]);
+            commentModelList.add(commentModel);
+          }
           isLoading = false;
         }
       } else {
@@ -57,6 +67,7 @@ class PatientsDetailsController extends GetxController {
       }
     } catch (e) {
       isLoading = false;
+      log("error ------> $e");
     }
     update();
   }

@@ -102,6 +102,9 @@ class PatientsController extends GetxController {
       isLoading = true;
     }
     patientList.clear();
+    if (searchController.text.isEmpty) {
+      patientList.clear();
+    }
     ResponseItem result = await PatientsRepo.getClinicListBySearchOrFilter(
       clinicLocationId: clinicLocationId,
       filterType: filterType,
@@ -113,18 +116,22 @@ class PatientsController extends GetxController {
     try {
       if (result.status) {
         if (result.data != null) {
-          result.data.forEach(
-            (dynamic e) {
-              PatientResponseData patientData = PatientResponseData.fromJson(e);
-              patientList.add(patientData);
-            },
-          );
+          PatientResponseModel patientResponseModel =
+              PatientResponseModel.fromJson(result.toJson());
+          patientList.addAll(patientResponseModel.patientData!);
+          // result.data.forEach(
+          //   (dynamic e) {
+          //     PatientResponseData patientData = PatientResponseData.fromJson(e);
+          //     patientList.add(patientData);
+          //   },
+          // );
           isLoading = false;
         }
       } else {
         isLoading = false;
       }
     } catch (e) {
+      log("--> error $e");
       isLoading = false;
     }
     update();

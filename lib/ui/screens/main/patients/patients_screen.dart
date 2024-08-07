@@ -104,8 +104,15 @@ class PatientsScreen extends StatelessWidget {
                           controller: ctrl.searchController,
                           action: TextInputAction.done,
                           onChange: (String value) {
-                            patientsController.getClinicListBySearchOrFilter(
-                              isFromSearch: true,
+                            ctrl.patientList.clear();
+                            Future.delayed(
+                              Duration(seconds: 2),
+                              () {
+                                patientsController
+                                    .getClinicListBySearchOrFilter(
+                                  isFromSearch: true,
+                                );
+                              },
                             );
                           },
                         ),
@@ -160,7 +167,7 @@ class PatientsScreen extends StatelessWidget {
                                 child: LocaleKeys.patientsNotFound.translateText
                                     .normalText(
                                   color: Colors.black,
-                                  fontSize: !isTablet ?20:24,
+                                  fontSize: !isTablet ? 20 : 24,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

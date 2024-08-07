@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class PatientResponseModel {
   final List<PatientResponseData>? patientData;
-  final int? status;
+  final bool? status;
   final String? msg;
 
   PatientResponseModel({
@@ -13,7 +13,7 @@ class PatientResponseModel {
 
   PatientResponseModel copyWith({
     List<PatientResponseData>? patientData,
-    int? status,
+    bool? status,
     String? msg,
   }) =>
       PatientResponseModel(
@@ -32,18 +32,18 @@ class PatientResponseModel {
         patientData: json["data"] == null
             ? []
             : List<PatientResponseData>.from(
-            json["data"]!.map((x) => PatientResponseData.fromJson(x))),
-        status: json["status"],
+                json["data"]!.map((x) => PatientResponseData.fromJson(x))),
+        status: json["status"] == 1,
         msg: json["msg"],
       );
 
   Map<String, dynamic> toJson() => {
-    "data": patientData == null
-        ? []
-        : List<dynamic>.from(patientData!.map((x) => x.toJson())),
-    "status": status,
-    "msg": msg,
-  };
+        "data": patientData == null
+            ? []
+            : List<dynamic>.from(patientData!.map((x) => x.toJson())),
+        "status": status,
+        "msg": msg,
+      };
 }
 
 class PatientResponseData {
@@ -205,94 +205,95 @@ class PatientResponseData {
 
   String toRawJson() => json.encode(toJson());
 
-  factory PatientResponseData.fromJson(Map<String, dynamic> json) => PatientResponseData(
-    patientId: json["patient_id"],
-    patientUniqueId: json["patient_unique_id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    email: json["email"],
-    dateOfBirth: json["date_of_birth"] == null
-        ? null
-        : DateTime.parse(json["date_of_birth"]),
-    patientProfile: json["patient_profile"],
-    bondDate: json["bond_date"] == null
-        ? null
-        : DateTime.parse(json["bond_date"]),
-    patient3DModalLink: json["patient_3d_modal_link"],
-    linkPassword: json["link_password"],
-    addPlanCount: json["add_plan_count"],
-    clinicItem: json["clinic_item"],
-    adminItem: json["admin_item"],
-    toothCaseId: json["tooth_case_id"],
-    doctorId: json["doctor_id"],
-    clinicId: json["clinic_id"],
-    clinicLocationId: json["clinic_location_id"],
-    clinicBillingId: json["clinic_billing_id"],
-    technicianId: json["technician_id"],
-    technicianStartDate: json["technician_start_date"] == null
-        ? null
-        : DateTime.parse(json["technician_start_date"]),
-    adminNewCase: json["admin_new_case"],
-    technicianNewCase: json["technician_new_case"],
-    adminTask: json["admin_task"],
-    adminPatient: json["admin_patient"],
-    clinicTask: json["clinic_task"],
-    clinicPatient: json["clinic_patient"],
-    isApproved: json["is_approved"],
-    isProduction: json["is_production"],
-    isDelivered: json["is_delivered"],
-    isVirtual: json["is_virtual"],
-    trackingId: json["tracking_id"],
-    isDraft: json["is_draft"],
-    draftViewPage: json["draft_view_page"],
-    createdAt: json["created_at"] == null
-        ? null
-        : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null
-        ? null
-        : DateTime.parse(json["updated_at"]),
-    caseName: json["case_name"],
-  );
+  factory PatientResponseData.fromJson(Map<String, dynamic> json) =>
+      PatientResponseData(
+        patientId: json["patient_id"],
+        patientUniqueId: json["patient_unique_id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        dateOfBirth: json["date_of_birth"] == null
+            ? null
+            : DateTime.parse(json["date_of_birth"]),
+        patientProfile: json["patient_profile"],
+        bondDate: json["bond_date"] == null
+            ? null
+            : DateTime.parse(json["bond_date"]),
+        patient3DModalLink: json["patient_3d_modal_link"],
+        linkPassword: json["link_password"],
+        addPlanCount: json["add_plan_count"],
+        clinicItem: json["clinic_item"],
+        adminItem: json["admin_item"],
+        toothCaseId: json["tooth_case_id"],
+        doctorId: json["doctor_id"],
+        clinicId: json["clinic_id"],
+        clinicLocationId: json["clinic_location_id"],
+        clinicBillingId: json["clinic_billing_id"],
+        technicianId: json["technician_id"],
+        technicianStartDate: json["technician_start_date"] == null
+            ? null
+            : DateTime.parse(json["technician_start_date"]),
+        adminNewCase: json["admin_new_case"],
+        technicianNewCase: json["technician_new_case"],
+        adminTask: json["admin_task"],
+        adminPatient: json["admin_patient"],
+        clinicTask: json["clinic_task"],
+        clinicPatient: json["clinic_patient"],
+        isApproved: json["is_approved"],
+        isProduction: json["is_production"],
+        isDelivered: json["is_delivered"],
+        isVirtual: json["is_virtual"],
+        trackingId: json["tracking_id"],
+        isDraft: json["is_draft"],
+        draftViewPage: json["draft_view_page"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        caseName: json["case_name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "patient_id": patientId,
-    "patient_unique_id": patientUniqueId,
-    "first_name": firstName,
-    "last_name": lastName,
-    "email": email,
-    "date_of_birth":
-    "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
-    "patient_profile": patientProfile,
-    "bond_date":
-    "${bondDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
-    "patient_3d_modal_link": patient3DModalLink,
-    "link_password": linkPassword,
-    "add_plan_count": addPlanCount,
-    "clinic_item": clinicItem,
-    "admin_item": adminItem,
-    "tooth_case_id": toothCaseId,
-    "doctor_id": doctorId,
-    "clinic_id": clinicId,
-    "clinic_location_id": clinicLocationId,
-    "clinic_billing_id": clinicBillingId,
-    "technician_id": technicianId,
-    "technician_start_date":
-    "${technicianStartDate!.year.toString().padLeft(4, '0')}-${technicianStartDate!.month.toString().padLeft(2, '0')}-${technicianStartDate!.day.toString().padLeft(2, '0')}",
-    "admin_new_case": adminNewCase,
-    "technician_new_case": technicianNewCase,
-    "admin_task": adminTask,
-    "admin_patient": adminPatient,
-    "clinic_task": clinicTask,
-    "clinic_patient": clinicPatient,
-    "is_approved": isApproved,
-    "is_production": isProduction,
-    "is_delivered": isDelivered,
-    "is_virtual": isVirtual,
-    "tracking_id": trackingId,
-    "is_draft": isDraft,
-    "draft_view_page": draftViewPage,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "case_name": caseName,
-  };
+        "patient_id": patientId,
+        "patient_unique_id": patientUniqueId,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "date_of_birth":
+            "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
+        "patient_profile": patientProfile,
+        "bond_date":
+            "${bondDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
+        "patient_3d_modal_link": patient3DModalLink,
+        "link_password": linkPassword,
+        "add_plan_count": addPlanCount,
+        "clinic_item": clinicItem,
+        "admin_item": adminItem,
+        "tooth_case_id": toothCaseId,
+        "doctor_id": doctorId,
+        "clinic_id": clinicId,
+        "clinic_location_id": clinicLocationId,
+        "clinic_billing_id": clinicBillingId,
+        "technician_id": technicianId,
+        "technician_start_date":
+            "${technicianStartDate!.year.toString().padLeft(4, '0')}-${technicianStartDate!.month.toString().padLeft(2, '0')}-${technicianStartDate!.day.toString().padLeft(2, '0')}",
+        "admin_new_case": adminNewCase,
+        "technician_new_case": technicianNewCase,
+        "admin_task": adminTask,
+        "admin_patient": adminPatient,
+        "clinic_task": clinicTask,
+        "clinic_patient": clinicPatient,
+        "is_approved": isApproved,
+        "is_production": isProduction,
+        "is_delivered": isDelivered,
+        "is_virtual": isVirtual,
+        "tracking_id": trackingId,
+        "is_draft": isDraft,
+        "draft_view_page": draftViewPage,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "case_name": caseName,
+      };
 }

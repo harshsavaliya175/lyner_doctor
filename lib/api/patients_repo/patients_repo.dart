@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:lynerdoctor/api/api_helpers.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
@@ -154,6 +156,7 @@ class PatientsRepo {
       params,
       passAuthToken: true,
     );
+    log("==> $result");
     status = result.status;
     data = result.data;
     msg = result.msg;
