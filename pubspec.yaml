@@ -81,9 +81,11 @@ dependencies:
   # for get path
   path_provider: ^2.1.3
   #localization
-  easy_localization: ^3.0.6
+  easy_localization: ^3.0.7
   easy_logger: ^0.0.2
   dotted_border: ^2.1.0
+  # file downloading from url
+  flutter_downloader: ^1.11.8
 
 dev_dependencies:
   flutter_test:

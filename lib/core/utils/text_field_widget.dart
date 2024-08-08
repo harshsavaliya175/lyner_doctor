@@ -46,7 +46,7 @@ class CommonTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final bool? readOnly;
-  final Widget? suffixIcon;
+  final dynamic suffixIcon;
   final SvgGenImage? prefixIcon;
   final double? prefixIconSize;
   final double? prefixPadding;
@@ -124,9 +124,8 @@ class _CommonTextFieldState extends State<CommonTextField> {
                       .paddingAll(widget.prefixPadding ?? 12.w))
                   .paddingOnly(left: 5.w)
               : null,
-          suffixIcon: widget.isPasswordField ?? false
-              ? widget.suffixIcon ?? const SizedBox()
-              : const SizedBox(),
+          suffixIcon: widget.suffixIcon ?? const SizedBox(),
+          // : const SizedBox(),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: disableTextFiledColor,
@@ -361,7 +360,8 @@ class _AppTextFieldState extends State<AppTextField> {
                           ? Colors.red
                           : hintTextColor.withOpacity(0.2))),
               focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.radius ?? (!isTablet?30:40)),
+                  borderRadius: BorderRadius.circular(
+                      widget.radius ?? (!isTablet ? 30 : 40)),
                   borderSide: BorderSide(
                       color: widget.isError ? primaryBrown : primaryBrown)),
             ),

@@ -1,3 +1,6 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
@@ -49,7 +52,8 @@ class MethodNames {
   static const String getProductList = "getProductList";
   static const String getPatientInformationDetails =
       "getPatientInformationDetails";
-  static const String getPatientPrescriptionDetails = "getPatientPrescriptionDetails";
+  static const String getPatientPrescriptionDetails =
+      "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
   static const String deletePatient = "deletePatient";
   static const String getLynerConnectList = "getLynerConnectList";
@@ -59,6 +63,10 @@ class MethodNames {
   static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
   static const String getPatientCommentsDetails = "getPatientCommentsDetails";
+  static const String deletePatientTreatments = "deletePatientTreatments";
+  static const String addEditPatientTreatments = "addEditPatientTreatments";
+  static const String getPatientTreatmentsDetails =
+      "getPatientTreatmentsDetails";
 
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
@@ -110,3 +118,16 @@ const int LIMIT = 10;
 const USER_TYPE = "user";
 
 bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true : false;
+
+Map<String, dynamic> downloadTaskId = {};
+ReceivePort receivePort = ReceivePort();
+double downloadProgress = 0.0;
+bool isDownloadRunning = false;
+int isUploadRunning = 0;
+
+@pragma('vm:entry-point')
+void downloadCallback(String id, int status, int progress) {
+  final SendPort? send =
+      IsolateNameServer.lookupPortByName('downloader_send_port');
+  send?.send([id, status, progress]);
+}

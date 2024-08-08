@@ -82,7 +82,7 @@ class InformationScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    isTablet ? 16.space() : 12.space(),
+                    isTablet ? 20.space() : 12.space(),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -131,7 +131,7 @@ class InformationScreen extends StatelessWidget {
                                       color: blackColor,
                                       fontSize: !isTablet ? 16 : 19,
                                     )
-                                  : "${controller.patientDetailsModel!.bondDate!.ddMMYYYYFormat()}"
+                                  : "${controller.patientDetailsModel!.dateOfBirth!.ddMMYYYYFormat()}"
                                       .normalText(
                                       fontWeight: FontWeight.w500,
                                       color: blackColor,
@@ -145,7 +145,7 @@ class InformationScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              isTablet ? 16.space() : 12.space(),
+              isTablet ? 20.space() : 12.space(),
               Container(
                 width: Get.width,
                 decoration: BoxDecoration(
@@ -172,7 +172,7 @@ class InformationScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              isTablet ? 16.space() : 12.space(),
+              isTablet ? 20.space() : 12.space(),
               Container(
                 width: Get.width,
                 decoration: BoxDecoration(
@@ -199,7 +199,7 @@ class InformationScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              isTablet ? 16.space() : 12.space(),
+              isTablet ? 20.space() : 12.space(),
               LocaleKeys.plan.translateText.normalText(
                 fontWeight: FontWeight.w600,
                 fontSize: !isTablet ? 20 : 24,
@@ -233,9 +233,11 @@ class InformationScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                   fontSize: !isTablet ? 20 : 24,
                                 )
-                                .paddingAll(15),
+                                .paddingAll(
+                                  !isTablet ? 15 : 20,
+                                ),
                       ),
-                      11.space(),
+                      isTablet ? 20.space() : 12.space(),
                       "${controller.patientDetailsModel?.toothCase?.caseSteps ?? "-"}"
                           .appCommonText(
                             weight: FontWeight.w500,
@@ -243,7 +245,7 @@ class InformationScreen extends StatelessWidget {
                             size: !isTablet ? 16 : 19,
                           )
                           .paddingSymmetric(horizontal: 15),
-                      10.space(),
+                      isTablet ? 20.space() : 12.space(),
                       "${controller.patientDetailsModel?.toothCase?.caseDesc ?? "-"}"
                           .appCommonText(
                             weight: FontWeight.w300,
@@ -254,88 +256,106 @@ class InformationScreen extends StatelessWidget {
                             align: TextAlign.start,
                           )
                           .paddingSymmetric(horizontal: 15),
-                      12.space(),
+                      isTablet ? 20.space() : 12.space(),
                       "${controller.patientDetailsModel?.toothCase?.casePrice ?? "-"}"
                           .appCommonText(
                             weight: FontWeight.w500,
                             size: !isTablet ? 16 : 19,
                           )
                           .paddingSymmetric(horizontal: 15),
-                      13.space(),
+                      isTablet ? 20.space() : 12.space(),
                     ],
                   ),
                 ),
               ),
-              20.space(),
-              LocaleKeys.link.translateText.normalText(
-                fontWeight: FontWeight.w600,
-                fontSize: !isTablet ? 20 : 24,
-              ),
-              12.space(),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(13)),
-                  border: Border.all(color: skyColor),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+              if (controller
+                      .patientDetailsModel?.patient3DModalLink?.isNotEmpty ??
+                  false)
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    20.space(),
+                    LocaleKeys.link.translateText.normalText(
+                      fontWeight: FontWeight.w600,
+                      fontSize: !isTablet ? 20 : 24,
+                    ),
+                    12.space(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(13)),
+                        border: Border.all(color: skyColor),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              "In-Treatment Planning".appCommonText(
-                                weight: FontWeight.w500,
-                                align: TextAlign.start,
-                                size: !isTablet ? 16 : 19,
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    "In-Treatment Planning".appCommonText(
+                                      weight: FontWeight.w500,
+                                      align: TextAlign.start,
+                                      size: !isTablet ? 16 : 19,
+                                    ),
+                                    20.space(),
+                                    AppButton(
+                                      btnHeight: !isTablet ? 45 : 55,
+                                      btnWidth: !isTablet ? 125 : 150,
+                                      bgColor: primaryBrown,
+                                      fontColor: whiteColor,
+                                      radius: 100,
+                                      fontSize: !isTablet ? 16 : 19,
+                                      weight: FontWeight.w600,
+                                      text: LocaleKeys.approved.translateText,
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
                               ),
-                              20.space(),
-                              AppButton(
-                                btnHeight: !isTablet ? 45 : 55,
-                                btnWidth: !isTablet ? 125 : 150,
-                                bgColor: primaryBrown,
-                                fontColor: whiteColor,
-                                radius: 100,
-                                fontSize: !isTablet ? 16 : 19,
-                                weight: FontWeight.w600,
-                                text: LocaleKeys.approved.translateText,
-                                onTap: () {},
+                              Assets.icons.icTeethWithScreen.svg(
+                                height: !isTablet ? 50 : 70,
+                                width: !isTablet ? 50 : 70,
                               ),
                             ],
+                          ).paddingAll(20),
+                          Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: lightBrown,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(13),
+                                bottomLeft: Radius.circular(13),
+                              ),
+                            ),
+                            child: (controller.patientDetailsModel
+                                        ?.technicianStartDate ==
+                                    null)
+                                ? "-"
+                                    .appCommonText(
+                                      weight: FontWeight.w600,
+                                      size: !isTablet ? 16 : 19,
+                                      color: primaryBrown,
+                                    )
+                                    .paddingAll(12)
+                                : "${controller.patientDetailsModel!.technicianStartDate!.yyyyMMDDFormat()}"
+                                    .appCommonText(
+                                      weight: FontWeight.w600,
+                                      size: !isTablet ? 16 : 19,
+                                      color: primaryBrown,
+                                    )
+                                    .paddingAll(12),
                           ),
-                        ),
-                        Assets.icons.icTeethWithScreen.svg(
-                          height: !isTablet ? 50 : 70,
-                          width: !isTablet ? 50 : 70,
-                        ),
-                      ],
-                    ).paddingAll(20),
-                    Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        color: lightBrown,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(13),
-                          bottomLeft: Radius.circular(13),
-                        ),
+                        ],
                       ),
-                      child: "2024-07-05"
-                          .appCommonText(
-                            weight: FontWeight.w600,
-                            size: !isTablet ? 16 : 19,
-                            color: primaryBrown,
-                          )
-                          .paddingAll(12),
                     ),
                   ],
                 ),
-              ),
               20.space(),
               LocaleKeys.photos.translateText.normalText(
                 fontWeight: FontWeight.w600,
@@ -420,7 +440,7 @@ class InformationScreen extends StatelessWidget {
                 ],
               ),
               20.space(),
-              LocaleKeys.photos.translateText.normalText(
+              "Radios".normalText(
                 fontWeight: FontWeight.w600,
                 fontSize: !isTablet ? 20 : 24,
               ),
@@ -431,6 +451,7 @@ class InformationScreen extends StatelessWidget {
                     child: photoWithTitle(
                       title: "Panoramique",
                       photoHeight: isTablet ? 180 : 125,
+                      radiosHeight: 180,
                       photoWidth: Get.width,
                       imagePath: ApiUrl.patientProfileImage +
                           "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
@@ -441,6 +462,7 @@ class InformationScreen extends StatelessWidget {
                     child: photoWithTitle(
                       title: "Cephalométrique",
                       photoHeight: isTablet ? 180 : 125,
+                      radiosHeight: 180,
                       photoWidth: Get.width,
                       imagePath: ApiUrl.patientProfileImage +
                           "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
@@ -568,6 +590,7 @@ class InformationScreen extends StatelessWidget {
     required String title,
     double? photoHeight,
     double? photoWidth,
+    double? radiosHeight,
     required String imagePath,
     // AssetGenImage? assetImage,
   }) {
@@ -582,7 +605,7 @@ class InformationScreen extends StatelessWidget {
             shape: BoxShape.rectangle,
             fit: BoxFit.cover,
             width: Get.width,
-            height: !isTablet ? 120 : 140,
+            height: !isTablet ? 120 : radiosHeight,
           ),
         ),
         12.space(),

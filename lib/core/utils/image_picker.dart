@@ -242,7 +242,7 @@ class ImageUploadUtils {
     required BuildContext context,
     required Function onFileChose,
   }) async {
-    PermissionStatus status = await Permission.storage.request();
+    PermissionStatus status = await Permission.manageExternalStorage.request();
     if (status.isGranted) {
       final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.any,

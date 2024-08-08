@@ -144,6 +144,7 @@ class PatientsDetailsScreen extends StatelessWidget {
                                 : Border.all(color: skyColor, width: 1),
                           ),
                         ).onClick(() {
+                          controller.getPatientPrescriptionDetails();
                           controller.changeData(selectedIndex: 2);
                         }),
                       ),
@@ -172,6 +173,7 @@ class PatientsDetailsScreen extends StatelessWidget {
                                 : Border.all(color: skyColor, width: 1),
                           ),
                         ).onClick(() {
+                          controller.getPatientTreatmentsDetails();
                           controller.changeData(selectedIndex: 3);
                         }),
                       ),

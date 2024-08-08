@@ -13,7 +13,9 @@ class AppPatientDetailCard extends StatelessWidget {
     this.subTitle = '',
     required this.description,
     this.isShowBottomWidget = false,
+    this.isShowNote = false,
     this.bottomText = '',
+    this.note = '',
   }) : super(key: key);
 
   final String title;
@@ -22,6 +24,8 @@ class AppPatientDetailCard extends StatelessWidget {
   final String bottomText;
   final bool isShowSubTitle;
   final bool isShowBottomWidget;
+  final bool isShowNote;
+  final String note;
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +73,32 @@ class AppPatientDetailCard extends StatelessWidget {
                 ),
                 bottomText
                     .normalText(
-                        fontWeight: FontWeight.w500,
-                        fontSize: !isTablet ? 14 : 17,
-                        fontStyle: FontStyle.italic)
+                      fontWeight: FontWeight.w500,
+                      fontSize: !isTablet ? 14 : 17,
+                      fontStyle: FontStyle.italic,
+                    )
                     .paddingOnly(
                       left: 16,
                       right: 16,
                       top: 16,
-                      bottom: 20,
+                      bottom: 16,
+                    ),
+              ],
+            ),
+          if (isShowNote)
+            Column(
+              children: [
+                note
+                    .normalText(
+                      fontWeight: FontWeight.w500,
+                      color: hintStepColor,
+                      fontSize: !isTablet ? 16 : 19,
+                    )
+                    .paddingOnly(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: 16,
                     ),
               ],
             )
