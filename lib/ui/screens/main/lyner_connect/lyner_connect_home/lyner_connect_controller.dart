@@ -15,8 +15,9 @@ class LynerConnectController extends GetxController {
   }
 
   void getLynerConnectList() async {
+    isLoading = true;
+    lynerConnectList.clear();
     ResponseItem result = await PatientsRepo.getLynerConnectList();
-    isLoading = false;
     try {
       if (result.status) {
         if (result.data != null) {

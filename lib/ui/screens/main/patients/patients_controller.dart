@@ -32,6 +32,7 @@ class PatientsController extends GetxController {
     getDoctorList();
     getClinicLocationList();
     getClinicListBySearchOrFilter();
+    FocusScope.of(Get.context!).unfocus();
     super.onInit();
   }
 

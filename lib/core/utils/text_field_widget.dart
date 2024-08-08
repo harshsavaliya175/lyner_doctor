@@ -50,7 +50,7 @@ class CommonTextField extends StatefulWidget {
   final SvgGenImage? prefixIcon;
   final double? prefixIconSize;
   final double? prefixPadding;
-  Color fillColor;
+  final Color fillColor;
   final int maxLine;
   final double borderRadius;
 

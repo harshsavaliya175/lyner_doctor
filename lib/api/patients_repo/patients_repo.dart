@@ -124,6 +124,68 @@ class PatientsRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> getLynerConnectPatientsList({
+    String searchText='',
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "search_text": searchText,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getLynerConnectPatientsList,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+  static Future<ResponseItem> addLynerConnectDetails({
+
+    required String? patientId,
+    String? email,
+    String? phoneNo,
+    required String? currentAlignerStage,
+    required String? alignerStage,
+    required String? alignerDay,
+    required String? treatmentStartDate,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "email": email,
+      "phone_no": phoneNo,
+      "current_aligner_stage": currentAlignerStage,
+      "aligner_stage": alignerStage,
+      "aligner_day": alignerDay,
+      "treatment_start_date": treatmentStartDate,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.addLynerConnectDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> getClinicListBySearchOrFilter({
     required String treatmentStatus,
     required String searchText,

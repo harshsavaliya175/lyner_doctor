@@ -12,10 +12,9 @@ Future datePickerDialog(BuildContext context) {
 
   return showDatePicker(
     context: context,
-
     initialDate: currentDate,
     firstDate: minDate, // Start from 100 years ago
-    lastDate: currentDate, // Up to the current date
+    lastDate: DateTime(3000), // Up to the current date
 
     builder: (context, child) {
       return Theme(

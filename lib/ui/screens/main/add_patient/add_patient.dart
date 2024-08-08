@@ -462,7 +462,6 @@ Widget patientInformation(AddPatientController ctrl) {
               onTap: () async {
                 ctrl.pickedDate = await datePickerDialog(Get.context!);
                 if (ctrl.pickedDate != null) {
-                  ctrl.dateText = ctrl.pickedDate;
                   ctrl.dateTextField =
                       DateFormat('dd-MM-yyyy').format(ctrl.pickedDate!);
                   ctrl.dateOfBirthController.text = ctrl.dateTextField!;

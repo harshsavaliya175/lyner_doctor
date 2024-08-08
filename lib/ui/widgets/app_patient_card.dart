@@ -6,7 +6,6 @@ import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
-import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 
@@ -60,23 +59,13 @@ class AppPatientCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      height: !isTablet ? 44.w : 54.w,
-                      width: !isTablet ? 44.w : 54.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                      child: patientImagePath.isEmpty
-                          ? HomeImage.assetImage(
-                              path: Assets.images.imgUserPlaceholder.path,
-                            )
-                          : HomeImage.networkImage(
-                              path:
-                                  ApiUrl.patientProfileImage + patientImagePath,
-                              size: !isTablet ? 44.w : 54.w,
-                            ),
-                    ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+                    HomeImage.networkImage(
+                            path:
+                                ApiUrl.patientProfileImage + patientImagePath,
+                            fit: BoxFit.cover,
+                            shape: BoxShape.circle,
+                            size: !isTablet ? 44.w : 54.w,
+                          ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
