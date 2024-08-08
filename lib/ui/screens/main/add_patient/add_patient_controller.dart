@@ -108,11 +108,15 @@ class AddPatientController extends GetxController {
         dicomFileName =
             getFileName(patientData!.patientPhoto!.dcomFileName, 20);
       }
-      if (patientData?.draftViewPage == "patient_prescription_page") {
+      if (patientData?.draftViewPage == "patient_info_page") {
         isLoading = true;
-        goToStep(3);
-      } else if (patientData?.draftViewPage == "upload_photo_page") {
-        goToStep(2);
+        await goToStep(1);
+      }else if (patientData?.draftViewPage == "upload_photo_page") {
+        isLoading = true;
+        await goToStep(2);
+      }else if (patientData?.draftViewPage == "patient_prescription_page") {
+        isLoading = true;
+        await goToStep(3);
       }
       await getPatientPrescriptionDetails();
     }
@@ -503,12 +507,18 @@ class AddPatientController extends GetxController {
 
   Future<void> addNewPatient() async {
     isLoading = true;
+    if(pickedDate != null){
+      dateTextField =
+          DateFormat('yyyy-MM-dd').format(pickedDate!);
+    }else{
+      dateTextField = "";
+    }
     ResponseItem result = await AddPatientRepo.addNewPatientStep1Step2(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         clinicBillingId: selectedClinicBillingData?.clinicBillingId.toString(),
         clinicLocationId: selectedClinicDeliveryData?.clinicId.toString(),
-        dateOfBirth: dateOfBirthController.text,
+        dateOfBirth: dateTextField,
         doctorId: selectedDoctorData?.doctorId.toString(),
         email: emailController.text,
         toothCaseId: selectedProduct?.toothCaseId ?? 0);
@@ -612,13 +622,14 @@ class AddPatientController extends GetxController {
         .map((item) => item.title)
         .toList();
     print(incisorCoveringList.join(', '));
-    if (patientData?.dateOfBirth != null) {
+     if(pickedDate != null){
+      dateTextField =
+          DateFormat('yyyy-MM-dd').format(pickedDate!);
+
+    }else if (patientData?.dateOfBirth != null) {
       dateTextField =
           DateFormat('yyyy-MM-dd').format(patientData!.dateOfBirth!);
       // dateOfBirthController.text = dateTextField!;
-    } else if(pickedDate != null){
-      dateTextField =
-          DateFormat('yyyy-MM-dd').format(pickedDate!);
     }else{
       dateTextField = "";
     }
@@ -737,7 +748,7 @@ class AddPatientController extends GetxController {
             clinicId: patientData?.doctor?.clinicId ?? 0,
           );
           doctorController.text =
-              "${selectedDoctorData?.firstName} ${selectedDoctorData?.lastName}";
+              (selectedDoctorData?.firstName??'')+(selectedDoctorData?.lastName??'');
           upperJawImageFileTextCtrl.text =
               patientData?.patientPhoto?.upperJawStlFile ?? '';
           lowerJawImageFileTextCtrl.text =

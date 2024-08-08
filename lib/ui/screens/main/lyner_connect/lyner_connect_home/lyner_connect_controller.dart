@@ -34,4 +34,5 @@ class LynerConnectController extends GetxController {
     }
     update();
   }
+
 }
