@@ -16,3 +16,6 @@ const Color dividerColor = Color(0xffE6EBEE);
 const Color deleteButtonColor = Color(0xffFFF2F6);
 const Color pinkColor = Color(0xffFF3B76);
 const Color lightGrayColor = Color(0xffE8EEF3);
+const Color coolFourColor = Color(0xffD9D9D9);
+const Color lightGreenColor = Color(0xffF1F8F1);
+const Color lightPinkColor = Color(0xffFFF6F6);

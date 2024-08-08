@@ -25,6 +25,7 @@ class AppPatientCard extends StatelessWidget {
     required this.deleteOnTap,
     required this.editOrSubmitOnTap,
     required this.patientImagePath,
+    this.isShowTitle = true,
   }) : super(key: key);
 
   final bool isEditCard;
@@ -39,6 +40,7 @@ class AppPatientCard extends StatelessWidget {
   final String patientImagePath;
   final VoidCallback deleteOnTap;
   final VoidCallback editOrSubmitOnTap;
+  final bool isShowTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -52,52 +54,59 @@ class AppPatientCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              Container(
-                height: !isTablet ? 44.w : 54.w,
-                width: !isTablet ? 44.w : 54.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black,
-                ),
-                child: patientImagePath.isEmpty
-                    ? HomeImage.assetImage(
-                        path: Assets.images.imgUserPlaceholder.path,
-                      )
-                    : HomeImage.networkImage(
-                        path: ApiUrl.patientProfileImage + patientImagePath,
-                        size: !isTablet ? 44.w : 54.w,
+          if (isShowTitle)
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: !isTablet ? 44.w : 54.w,
+                      width: !isTablet ? 44.w : 54.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
                       ),
-              ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  patientName.appCommonText(
-                    weight: FontWeight.w500,
-                    size: !isTablet ? 16 : 20,
-                    color: Colors.black,
-                  ),
-                  if (isEditCard)
-                    ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
-                        .appCommonText(
-                      weight: FontWeight.w400,
-                      size:!isTablet ? 12 : 15,
-                      color: hintStepColor,
+                      child: patientImagePath.isEmpty
+                          ? HomeImage.assetImage(
+                              path: Assets.images.imgUserPlaceholder.path,
+                            )
+                          : HomeImage.networkImage(
+                              path:
+                                  ApiUrl.patientProfileImage + patientImagePath,
+                              size: !isTablet ? 44.w : 54.w,
+                            ),
+                    ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        patientName.appCommonText(
+                          weight: FontWeight.w500,
+                          size: !isTablet ? 16 : 20,
+                          color: Colors.black,
+                        ),
+                        if (isEditCard)
+                          ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
+                              .appCommonText(
+                            weight: FontWeight.w400,
+                            size: !isTablet ? 12 : 15,
+                            color: hintStepColor,
+                          ),
+                      ],
                     ),
-                ],
-              ),
-            ],
-          ),
-          DottedBorder(
-            borderType: BorderType.RRect,
-            color: skyColor,
-            padding: EdgeInsets.zero,
-            radius: Radius.circular(35),
-            dashPattern: [5, 5, 5, 5],
-            child: Container(),
-          ),
+                  ],
+                ),
+                DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: skyColor,
+                  padding: EdgeInsets.zero,
+                  radius: Radius.circular(35),
+                  dashPattern: [5, 5, 5, 5],
+                  child: Container(),
+                ),
+              ],
+            ),
           16.space(),
           Column(
             mainAxisSize: MainAxisSize.min,

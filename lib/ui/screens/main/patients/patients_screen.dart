@@ -104,8 +104,15 @@ class PatientsScreen extends StatelessWidget {
                           controller: ctrl.searchController,
                           action: TextInputAction.done,
                           onChange: (String value) {
-                            patientsController.getClinicListBySearchOrFilter(
-                              isFromSearch: true,
+                            ctrl.patientList.clear();
+                            Future.delayed(
+                              Duration(seconds: 2),
+                              () {
+                                patientsController
+                                    .getClinicListBySearchOrFilter(
+                                  isFromSearch: true,
+                                );
+                              },
                             );
                           },
                         ),
@@ -197,6 +204,10 @@ class PatientsScreen extends StatelessWidget {
                                 },
                                 patientImagePath:
                                     patientData?.patientProfile ?? '',
+                              ).onClick(
+                                () {
+                                  Get.toNamed(Routes.patientsDetailsScreen);
+                                },
                               );
                             },
                             separatorBuilder:

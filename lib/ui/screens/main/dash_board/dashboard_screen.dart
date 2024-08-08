@@ -22,11 +22,11 @@ class DashboardScreen extends StatelessWidget {
         builder: (DashboardController controller) {
           return controller.screen[controller.currentIndex];
         },
-      ).paddingOnly(bottom: !isTablet ?35:45),
+      ).paddingOnly(bottom: !isTablet ? 35 : 45),
       bottomNavigationBar: GetBuilder<DashboardController>(
         builder: (DashboardController ctrl) {
           return BottomAppBar(
-            height: !isTablet ?75.h:85.h,
+            height: !isTablet ? 75.h : 85.h,
             padding: EdgeInsets.zero,
             notchMargin: 12.w,
             color: Colors.white,

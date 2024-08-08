@@ -82,6 +82,12 @@ extension StringExtension on String {
     return length <= 1 ? "0$this" : this;
   }
 
+  String format({required String outputFormat, required String inputFormat}) {
+    DateTime dateTime = DateTime.now();
+    dateTime = DateFormat(inputFormat).parse(this);
+    return DateFormat(outputFormat).format(dateTime);
+  }
+
   List<double> get toDoubleList {
     return replaceAll('[', '')
         .replaceAll(']', '')
