@@ -24,7 +24,7 @@ class CommonTextField extends StatefulWidget {
     this.prefixIconSize,
     this.height,
     this.hintTextSize,
-    this.obscureText,
+    this.obscureText = false,
     this.readOnly,
     this.fillColor = whiteColor,
     this.isPasswordField,
@@ -38,7 +38,7 @@ class CommonTextField extends StatefulWidget {
   final TextInputAction? action;
   final String hintText;
   final bool? isPasswordField;
-  final bool? obscureText;
+  final bool obscureText;
   final num? hintTextSize;
   final double? height;
   final String? Function(String? value)? validation;
@@ -61,13 +61,16 @@ class CommonTextField extends StatefulWidget {
 class _CommonTextFieldState extends State<CommonTextField> {
   final int maxLine = 1;
   FocusNode _focus = FocusNode();
-
+  final textFieldFocusNode = FocusNode();
+  bool isFocused = false;
+  bool obscureValue = false;
   // final Color fillColor = whiteColor;
 
   @override
   void initState() {
     super.initState();
     _focus.addListener(_onFocusChange);
+    obscureValue = widget.obscureText;
   }
 
   @override
@@ -78,7 +81,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
   }
 
   void _onFocusChange() {
-    setState(() {});
+    setState(() {
+      isFocused = _focus.hasFocus;
+    });
     debugPrint("Focus: ${_focus.hasFocus.toString()}");
   }
 
@@ -98,7 +103,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         style: hintTextStyle(
             size: 16.sp, color: hintTextColor, weight: FontWeight.w400),
         inputFormatters: widget.inputFormatters,
-        obscureText: widget.obscureText ?? false,
+        obscureText: widget.obscureText,
         textInputAction: widget.action ?? TextInputAction.done,
         keyboardType: widget.keyboardType,
         cursorColor: primaryBrown,
@@ -176,7 +181,7 @@ class AppTextField extends StatefulWidget {
   final bool showPrefixIcon;
   final Widget? showPrefixWidget;
   final String suffixIcon;
-  bool showSuffixIcon;
+  final bool showSuffixIcon;
 
   final TextEditingController? textEditingController;
   final int? maxLines;
@@ -185,9 +190,8 @@ class AppTextField extends StatefulWidget {
 
   final EdgeInsets? textFieldPadding;
   final double? labelTextSize;
-  bool obscureText;
+  final bool obscureText;
   final double? radius;
-  Iterable<String>? autofillHints;
   final bool isError;
 
   final TextInputType? keyboardType;
@@ -201,7 +205,6 @@ class AppTextField extends StatefulWidget {
       {Key? key,
       this.labelText = '',
       this.textEditingController,
-      this.autofillHints,
       this.prefixIcon,
       this.suffixIcon = '',
       this.readOnly,
@@ -235,26 +238,30 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
-  final FocusNode _focusNode = FocusNode();
-  bool isFocus = false;
+  FocusNode focusNode = FocusNode();
+  final textFieldFocusNode = FocusNode();
+  bool isFocused = false;
+  bool obscureValue = false;
 
   void _onFocusChange() {
     setState(() {
-      isFocus = _focusNode.hasFocus;
+      isFocused = focusNode.hasFocus;
     });
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _focusNode.removeListener(_onFocusChange);
+    focusNode.removeListener(_onFocusChange);
+    focusNode.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    _focusNode.addListener(_onFocusChange);
+    focusNode.addListener(_onFocusChange);
+    obscureValue = widget.obscureText;
     super.initState();
   }
 
@@ -292,7 +299,7 @@ class _AppTextFieldState extends State<AppTextField> {
             controller: widget.textEditingController,
             keyboardType: widget.keyboardType ?? TextInputType.text,
             inputFormatters: widget.inputFormatter,
-            focusNode: _focusNode,
+            focusNode: focusNode,
             validator: (value) {
               return widget.validator(value!);
             },
@@ -308,7 +315,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   fontWeight: FontWeight.w400,
                   fontFamily: 'maax-medium-medium',
                 ),
-            obscureText: widget.obscureText,
+            obscureText: obscureValue,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                   vertical: !isTablet ? 15 : 20, horizontal: 20),
@@ -317,7 +324,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   ? Container(
                       child: GestureDetector(
                           onTap: _toggleObscured,
-                          child: widget.obscureText
+                          child: obscureValue
                               ? Assets.icons.openEye
                                   .svg(
                                       colorFilter: ColorFilter.mode(
@@ -373,10 +380,12 @@ class _AppTextFieldState extends State<AppTextField> {
 
   void _toggleObscured() {
     setState(() {
-      widget.obscureText = !widget.obscureText;
-      if (_focusNode.hasPrimaryFocus)
+      obscureValue = !obscureValue;
+      if (textFieldFocusNode.hasPrimaryFocus) {
         return; // If focus is on text field, dont unfocus
-      _focusNode.canRequestFocus = false; // Prevents focus if tap on eye
+      }
+      textFieldFocusNode.canRequestFocus =
+      false; // Prevents focus if tap on eye
     });
   }
 }

@@ -21,7 +21,7 @@ import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 class EditProfile extends StatelessWidget {
   EditProfile({super.key});
 
-  var controller = Get.put(EditProfileController());
+  final controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {

@@ -60,12 +60,14 @@ class AppPatientCard extends StatelessWidget {
                 Row(
                   children: [
                     HomeImage.networkImage(
-                            path:
-                                ApiUrl.patientProfileImage + patientImagePath,
-                            fit: BoxFit.cover,
-                            shape: BoxShape.circle,
-                            size: !isTablet ? 44.w : 54.w,
-                          ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+                      path: (patientImagePath != "" ||
+                              patientImagePath.isNotEmpty)
+                          ? ApiUrl.patientProfileImage + patientImagePath
+                          : "",
+                      fit: BoxFit.cover,
+                      shape: BoxShape.circle,
+                      size: !isTablet ? 44.w : 54.w,
+                    ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -18,7 +18,7 @@ import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 class AddEditLynerConnect extends StatelessWidget {
   AddEditLynerConnect({super.key});
 
-  AddEditLynerController controller = Get.put(AddEditLynerController());
+  final AddEditLynerController controller = Get.put(AddEditLynerController());
 
   @override
   Widget build(BuildContext context) {
