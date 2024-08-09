@@ -53,6 +53,9 @@ dependencies:
   # for provide fonts
   google_fonts: ^6.2.1
 
+  # for web view
+  webview_flutter: ^4.8.0
+
   # for assets generator
   flutter_gen: ^5.6.0
 

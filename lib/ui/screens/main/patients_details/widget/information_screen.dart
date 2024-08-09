@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -353,6 +354,10 @@ class InformationScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ).onClick(
+                      () {
+                        Get.toNamed(Routes.treatmentPlanning);
+                      },
                     ),
                   ],
                 ),
@@ -453,8 +458,8 @@ class InformationScreen extends StatelessWidget {
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
-                      imagePath: ApiUrl.patientProfileImage +
-                          "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                      imagePath: ApiUrl.patientPanoramique +
+                          "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
                     ),
                   ),
                   isTablet ? 50.space() : 16.space(),
@@ -464,8 +469,8 @@ class InformationScreen extends StatelessWidget {
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
-                      imagePath: ApiUrl.patientProfileImage +
-                          "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                      imagePath: ApiUrl.patientCephalometrique +
+                          "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
                     ),
                   ),
                 ],
@@ -540,6 +545,8 @@ class InformationScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ).onClick(
+                          () {},
                         ),
                         12.space(),
                         "Upper Jaw STL File".appCommonText(
@@ -576,6 +583,10 @@ class InformationScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ).onClick(
+                          () {
+                            // controller.downloadFile(ApiUrl.lowerJawStlFile+controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile);
+                          },
                         ),
                       ],
                     ),

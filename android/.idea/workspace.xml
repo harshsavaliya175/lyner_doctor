@@ -10,7 +10,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85efbc02-22dd-4dfd-870a-f32ff82829aa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_dots_menu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ios/Runner/Assets.xcassets/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/model/lyner_connect_details_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/treatment_planning_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.dart_tool/build/fcd1995bc647fb959e82ea360c6c2c9a/asset_graph.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/api/patients_repo/patients_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/api/patients_repo/patients_repo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/config/routes/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/config/routes/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/gen/assets.gen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/gen/assets.gen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/auth/edit_profile/edit_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/auth/edit_profile/edit_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/auth/sign_up/signUp_logIn_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/auth/sign_up/signUp_logIn_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/patient_treatments_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/patient_treatments_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/widgets/app_patient_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/widgets/app_patient_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

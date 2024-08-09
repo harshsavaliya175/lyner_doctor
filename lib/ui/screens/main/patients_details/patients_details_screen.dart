@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -47,11 +48,16 @@ class PatientsDetailsScreen extends StatelessWidget {
           Get.back();
         }),
         elevation: 0.5,
-        rightIcon: Assets.icons.icTeethWithScreen.svg().onClick(
-          () {
-            // Get.toNamed(Routes.addLynerConnect);
-          },
-        ).paddingOnly(right: 15),
+        rightIcon: Obx(() => patientsDetailsController.isShowLink.value
+            ? Assets.icons.icTeethWithScreen
+                .svg()
+                .paddingOnly(right: 15)
+                .onClick(
+                  () {
+                    Get.toNamed(Routes.treatmentPlanning);
+                  },
+                )
+            : const SizedBox()),
       ),
       body: GetBuilder<PatientsDetailsController>(
         builder: (PatientsDetailsController controller) {

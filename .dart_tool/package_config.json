@@ -272,6 +272,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_downloader",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.8",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "flutter_gen",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_gen-5.6.0",
       "packageUri": "lib/",
@@ -860,6 +866,30 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "webview_flutter",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/webview_flutter-4.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "webview_flutter_android",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_android-3.16.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "webview_flutter_platform_interface",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_platform_interface-2.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "webview_flutter_wkwebview",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.14.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "win32",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/win32-5.5.0",
       "packageUri": "lib/",
@@ -890,7 +920,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-08T05:46:01.339721Z",
+  "generated": "2024-08-09T12:53:59.616685Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",

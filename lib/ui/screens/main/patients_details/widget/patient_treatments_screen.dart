@@ -83,7 +83,6 @@ class PatientTreatmentsScreen extends StatelessWidget {
                       hintText:
                           LocaleKeys.enterPatientTreatmentsNotes.translateText,
                       action: TextInputAction.done,
-                      borderRadius: 20,
                     ),
                     20.space(),
                     Row(

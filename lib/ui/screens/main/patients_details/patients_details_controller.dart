@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
@@ -11,6 +14,7 @@ import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/model/patient_details_model.dart';
 import 'package:lynerdoctor/model/patient_treatment_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class PatientsDetailsController extends GetxController {
@@ -22,18 +26,29 @@ class PatientsDetailsController extends GetxController {
   TextEditingController nextVisitController = TextEditingController();
   TextEditingController treatmentNoteController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
+  RxBool isShowLink = false.obs;
   PrescriptionData? prescriptionData;
   List<CommentModel?> commentModelList = [];
   List<PatientTreatmentModel?> patientTreatmentModelList = [];
   double uploadProgress = 0.0;
   String? uploadId;
   bool isDcomFileLoading = false;
+  var taskId;
+  var progress;
 
   @override
   void onInit() {
     patientId = Get.arguments ?? 0;
     getPatientCommentsDetails();
+    getPatientInformationDetails();
+    bindBackgroundIsolate();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
   }
 
   void changeData({int? selectedIndex}) {
@@ -50,6 +65,8 @@ class PatientsDetailsController extends GetxController {
       if (result.status) {
         if (result.data != null) {
           patientDetailsModel = PatientDetailsModel.fromJson(result.data);
+          isShowLink.value =
+              patientDetailsModel?.patient3DModalLink?.isNotEmpty ?? false;
           isLoading = false;
         }
       } else {
@@ -281,5 +298,53 @@ class PatientsDetailsController extends GetxController {
   String generateUploadId() {
     var uuid = Uuid();
     return uuid.v4();
+  }
+
+  // Future<void> downloadFile(String url) async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final savedDir = directory.path;
+  //
+  //   taskId = await FlutterDownloader.enqueue(
+  //     url: url,
+  //     savedDir: savedDir,
+  //     fileName: '147_3823311178_147.svg',
+  //     // Optional: specify the name of the file
+  //     showNotification: true,
+  //     // Show download progress in notification bar
+  //     openFileFromNotification: true, // Click on notification to open the file
+  //   );
+  //   update();
+  // }
+  Future<void> downloadFile(String url) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final savedDir = directory.path;
+    final filePath = '$savedDir/downloaded_file.svg';
+
+    // Delete existing partial file
+    final file = File(filePath);
+    if (await file.exists()) {
+      await file.delete();
+    }
+
+    taskId = await FlutterDownloader.enqueue(
+      url: url,
+      savedDir: savedDir,
+      fileName: 'downloaded_file.svg', // Specify the correct file extension
+      showNotification: true,
+      openFileFromNotification: true,
+    );
+
+    update();
+  }
+  void bindBackgroundIsolate() {
+    final port = ReceivePort();
+    IsolateNameServer.registerPortWithName(
+        port.sendPort, 'downloader_send_port');
+    port.listen((dynamic data) {
+      taskId = data[0];
+      int status = data[1];
+      progress = data[2];
+    });
+    update();
   }
 }

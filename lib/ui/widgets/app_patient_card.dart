@@ -6,6 +6,7 @@ import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
+import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 
@@ -179,3 +180,162 @@ class AppPatientCard extends StatelessWidget {
     );
   }
 }
+
+class EditPatientCard extends StatelessWidget {
+  const EditPatientCard({
+    Key? key,
+    this.treatmentStartDate,
+    required this.title1,
+    required this.title2,
+    required this.title3,
+    required this.data1,
+    required this.data2,
+    required this.data3,
+    required this.patientName,
+    required this.deleteOnTap,
+    required this.editOrSubmitOnTap,
+    required this.patientImagePath,
+  }) : super(key: key);
+
+  final String? treatmentStartDate;
+  final String title1;
+  final String title2;
+  final String title3;
+  final String data1;
+  final String data2;
+  final String data3;
+  final String patientName;
+  final String patientImagePath;
+  final VoidCallback deleteOnTap;
+  final VoidCallback editOrSubmitOnTap;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        border: Border.all(color: skyColor),
+      ),
+      child: Stack(
+        alignment: Alignment.topRight,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              HomeImage.networkImage(
+                path: (patientImagePath != "" || patientImagePath.isNotEmpty)
+                    ? ApiUrl.patientProfileImage + patientImagePath
+                    : "",
+                fit: BoxFit.cover,
+                shape: BoxShape.circle,
+                size: !isTablet ? 100.w : 110.w,
+              ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    10.space(),
+                    patientName
+                        .appCommonText(
+                          weight: FontWeight.w500,
+                          size: !isTablet ? 16 : 20,
+                          align: TextAlign.start,
+                          maxLine: 2,
+                          color: Colors.black,
+                        )
+                        .paddingOnly(right: 20),
+                    ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
+                        .appCommonText(
+                          weight: FontWeight.w400,
+                          align: TextAlign.start,
+                          maxLine: 2,
+                          overflow: TextOverflow.ellipsis,
+                          size: !isTablet ? 12 : 15,
+                          color: hintStepColor,
+                        )
+                        .paddingOnly(right: 20),
+                    10.space(),
+                    Divider(
+                      color: skyColor,
+                      height: 2,
+                      thickness: 1,
+                    ),
+                    10.space(),
+                    patientCardTitleAndData(
+                      title: title1.translateText,
+                      data: data1,
+                    ),
+                    5.space(),
+                    patientCardTitleAndData(
+                      title: title2.translateText,
+                      data: data2,
+                    ),
+                    5.space(),
+                    patientCardTitleAndData(
+                      title: title3.translateText,
+                      data: data3,
+                    ),
+                    10.space(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          /*HomeImage.assetImage(
+            path: Assets.icons.icDotsMenu.path,
+            height: 21,
+            width: 25,
+            color: primaryBrown,
+          ).onClick(onTap).paddingOnly(top: 10,right: 2)*/
+          PopupMenuButton<MenuOptions>(
+            onSelected: (MenuOptions result) {
+              if (result == MenuOptions.edit) {
+                editOrSubmitOnTap();
+              } else if (result == MenuOptions.delete) {
+                deleteOnTap();
+              }
+            },
+            color: Colors.white,
+            padding: EdgeInsets.zero,
+            icon: HomeImage.assetImage(
+              path: Assets.icons.icDotsMenu.path,
+              height: 21,
+              width: 25,
+              color: primaryBrown,
+            ),
+            itemBuilder: (BuildContext context) =>
+                <PopupMenuEntry<MenuOptions>>[
+              PopupMenuItem<MenuOptions>(
+                value: MenuOptions.edit,
+                child: Text(LocaleKeys.edit.translateText,textAlign: TextAlign.center,).paddingOnly(left: 5),
+              ),
+              PopupMenuItem<MenuOptions>(
+                value: MenuOptions.delete,
+                child: Text(LocaleKeys.delete.translateText).paddingOnly(left: 5),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget patientCardTitleAndData({
+    required String title,
+    required String data,
+  }) {
+    return Row(
+      children: [
+        title.appCommonText(weight: FontWeight.w400, size: !isTablet ? 16 : 18),
+        5.space(),
+        data.appCommonText(weight: FontWeight.w500, size: !isTablet ? 16 : 18),
+      ],
+    );
+  }
+}
+
+enum MenuOptions { edit, delete }

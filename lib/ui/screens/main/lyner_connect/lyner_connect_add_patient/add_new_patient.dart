@@ -156,6 +156,7 @@ class AddNewPatient extends StatelessWidget {
                 if (ctrl.selectedIndex != -1) {
                   Get.toNamed(Routes.addEditLynerConnect, arguments: [
                     true,
+                    null,
                     ctrl.lynerPatientListData[ctrl.selectedIndex]
                   ]);
                 } else {
@@ -168,7 +169,7 @@ class AddNewPatient extends StatelessWidget {
               fontSize: !isTablet ? 20 : 24,
               bgColor: primaryBrown,
               fontColor: Colors.white,
-            ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),
+            ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
             Visibility(visible: ctrl.isLoading, child: AppProgressView())
           ],
         );

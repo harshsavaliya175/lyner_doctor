@@ -272,7 +272,9 @@ class AddEditLynerConnect extends StatelessWidget {
                     if (ctrl.patientInformationFormKey.currentState!
                         .validate()) {
                       FocusScope.of(Get.context!).unfocus();
-                      ctrl.addLynerConnectDetails();
+                      ctrl.isFromNewPatient
+                          ? ctrl.addLynerConnectDetails()
+                          : ctrl.editLynerConnectDetails();
                     }
                   },
                   boxShadow: [],

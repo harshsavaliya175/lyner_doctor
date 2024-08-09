@@ -130,10 +130,10 @@ class PatientsController extends GetxController {
   }
 
   void callDeletePatientApi(String patientId) async {
+    isLoading = true;
     ResponseItem result = await PatientsRepo.deletePatient(
       patientId: patientId,
     );
-    isLoading = false;
     try {
       if (result.status) {
         showAppSnackBar(result.msg);

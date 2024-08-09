@@ -37,7 +37,8 @@ class LynerConnectScreen extends StatelessWidget {
           rightIcon: Assets.icons.icLynerAddPatient
               .svg(
             height: !isTablet ? 28.h : 35.h,
-          ).onClick(
+          )
+              .onClick(
             () {
               Get.toNamed(Routes.addLynerConnect);
             },
@@ -56,25 +57,34 @@ class LynerConnectScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 150, top: 6),
                       itemBuilder: (BuildContext context, int index) {
                         var lynerConnectListData = ctrl.lynerConnectList[index];
-                        return AppPatientCard(
-                          isEditCard: true,
+                        return EditPatientCard(
                           title1: LocaleKeys.alignerStagesCom,
                           title2: LocaleKeys.alignerDaysCom,
                           title3: LocaleKeys.caseCom,
-                          data1: lynerConnectListData?.alignerStage.toString()??'',
-                          data2: lynerConnectListData?.alignerDay.toString()??'',
-                          data3: lynerConnectListData?.caseName.toString()??'',
-                          treatmentStartDate:  lynerConnectListData?.treatmentStartDate?.ddMMYYYYFormat(),
-                          patientName: "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
-                          deleteOnTap: () {},
+                          data1:
+                              lynerConnectListData?.alignerStage.toString() ??
+                                  '',
+                          data2:
+                              lynerConnectListData?.alignerDay.toString() ?? '',
+                          data3:
+                              lynerConnectListData?.caseName.toString() ?? '',
+                          treatmentStartDate: lynerConnectListData
+                              ?.treatmentStartDate
+                              ?.ddMMYYYYFormat(),
+                          patientName:
+                              "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
+                          deleteOnTap: () {
+                            ctrl.callDeletePatientApi(lynerConnectListData?.userId);
+                          },
                           editOrSubmitOnTap: () {
                             Get.toNamed(Routes.addEditLynerConnect,
-                                arguments: [false,null]);
+                                arguments: [false, lynerConnectListData, null]);
                           },
-                          patientImagePath: "${lynerConnectListData?.userProfilePhoto}",
+                          patientImagePath:
+                              "${lynerConnectListData?.userProfilePhoto}",
                         ).onClick(
                           () {
-                            Get.toNamed(Routes.lynerConnectDetails);
+                            Get.toNamed(Routes.lynerConnectDetails,arguments: lynerConnectListData?.userId);
                           },
                         );
                       },

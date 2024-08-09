@@ -342,7 +342,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 90,
+          height: !isTablet ? 80 : 100,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -363,7 +363,7 @@ Widget chooseTheProduct(AddPatientController ctrl) {
             fontSize: !isTablet ? 20 : 23,
             bgColor: primaryBrown,
             fontColor: Colors.white,
-          ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),
+          ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
         ),
       ),
     ],
@@ -754,7 +754,7 @@ Widget patientInformation(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 90,
+          height: !isTablet ? 80 : 100,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -779,7 +779,7 @@ Widget patientInformation(AddPatientController ctrl) {
             fontSize: !isTablet ? 20 : 25,
             bgColor: primaryBrown,
             fontColor: Colors.white,
-          ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),
+          ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
         ),
       ),
     ],
@@ -1396,7 +1396,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 90,
+          height: !isTablet ? 80 : 100,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1440,7 +1440,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 ).paddingOnly(top: 10, right: 15, left: 5),
               ),
             ],
-          ),
+          ).paddingOnly(bottom: 10),
         ),
       ),
     ],
@@ -1874,7 +1874,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: !isTablet ? 70 : 90,
+          height: !isTablet ? 80 : 100,
           width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1919,7 +1919,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
                 ).paddingOnly(top: 10, right: 15, left: 5),
               ),
             ],
-          ),
+          ).paddingOnly(bottom: 10),
         ),
       ),
     ],

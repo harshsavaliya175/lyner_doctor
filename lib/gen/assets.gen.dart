@@ -83,6 +83,10 @@ class $AssetsIconsGen {
   SvgGenImage get icDocument =>
       const SvgGenImage('assets/icons/ic_document.svg');
 
+  /// File path: assets/icons/ic_dots_menu.png
+  AssetGenImage get icDotsMenu =>
+      const AssetGenImage('assets/icons/ic_dots_menu.png');
+
   /// File path: assets/icons/ic_down.svg
   SvgGenImage get icDown => const SvgGenImage('assets/icons/ic_down.svg');
 
@@ -190,6 +194,7 @@ class $AssetsIconsGen {
         icClip,
         icDoc,
         icDocument,
+        icDotsMenu,
         icDown,
         icEditProfile,
         icFile,

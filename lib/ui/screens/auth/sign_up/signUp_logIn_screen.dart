@@ -157,7 +157,7 @@ class SignUpSignInScreen extends StatelessWidget {
         ),
         5.space(),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
@@ -165,19 +165,21 @@ class SignUpSignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Checkbox(
-                      hoverColor: primaryBrown,
-                      activeColor: primaryBrown,
-                      checkColor: Colors.white,
-                      side: BorderSide(color: primaryBrown, width: 1.5),
-                      value: ctrl.isRememberPassword,
-                      onChanged: (bool? value) {
-                        ctrl.isRememberPassword = !ctrl.isRememberPassword;
-                        ctrl.update();
-                      },
+                  Expanded(
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Checkbox(
+                        hoverColor: primaryBrown,
+                        activeColor: primaryBrown,
+                        checkColor: Colors.white,
+                        side: BorderSide(color: primaryBrown, width: 1.5),
+                        value: ctrl.isRememberPassword,
+                        onChanged: (bool? value) {
+                          ctrl.isRememberPassword = !ctrl.isRememberPassword;
+                          ctrl.update();
+                        },
+                      ),
                     ),
                   ),
                   10.space(),
@@ -198,8 +200,9 @@ class SignUpSignInScreen extends StatelessWidget {
               child: LocaleKeys.forgotPassword2.translateText.appCommonText(
                   weight: FontWeight.w500,
                   color: blackColor,
+                  align: TextAlign.start,
                   size: !isTablet ? 16.sp : 18.sp),
-            ).paddingOnly(left: 35),
+            ).paddingOnly(left: 10),
           ],
         ),
         48.space(),

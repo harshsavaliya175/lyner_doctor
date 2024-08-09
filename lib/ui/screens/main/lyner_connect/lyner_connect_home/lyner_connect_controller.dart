@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/model/lyner_connect_list_model.dart';
 
 class LynerConnectController extends GetxController {
@@ -36,4 +37,21 @@ class LynerConnectController extends GetxController {
     update();
   }
 
+  void callDeletePatientApi(int? userId) async{
+    isLoading = true;
+    ResponseItem result = await PatientsRepo.deleteLynerConnect(
+      userId: userId!,
+    );
+    try {
+      if (result.status) {
+        showAppSnackBar(result.msg);
+        getLynerConnectList();
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
 }

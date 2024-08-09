@@ -143,6 +143,8 @@ class EditProfile extends StatelessWidget {
                     textEditingController: ctrl.emailAddressController,
                     labelText: "Clinic Email Address",
                     showPrefixIcon: false,
+                    readOnly: true,
+                    showCursor: false,
                     keyboardType: TextInputType.text,
                     isError: ctrl.emailAddressError,
                     onChanged: (String value) {},

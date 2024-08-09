@@ -153,6 +153,7 @@ class CodegenLoader extends AssetLoader{
   "face": "Face",
   "smile": "Smile",
   "addPatientTreatments": "Add Patient Treatments",
+  "treatmentPlanning": "Treatment Planning",
   "editPatientTreatments": "Edit Patient Treatments",
   "nextVisit": "Next Visit",
   "enterPatientTreatmentsNextVisit": "Enter patient treatments next visit",

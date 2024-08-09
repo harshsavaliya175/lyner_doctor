@@ -123,6 +123,30 @@ class PatientsRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+  static Future<ResponseItem> getLynerConnectDetails({
+    required int userId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "user_id": userId,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getLynerConnectDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
 
   static Future<ResponseItem> getLynerConnectPatientsList({
     String searchText='',
@@ -174,6 +198,48 @@ class PatientsRepo {
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.addLynerConnectDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> editLynerConnectDetails({
+
+    required String? userId,
+    String? email,
+    String? phoneNo,
+    required String? firstName,
+    required String? lastName,
+    required String? currentAlignerStage,
+    required String? alignerStage,
+    required String? alignerDay,
+    required String? treatmentStartDate,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "user_id": userId,
+      "email": email,
+      "phone_no": phoneNo,
+      "first_name": firstName,
+      "last_name": lastName,
+      "current_aligner_stage": currentAlignerStage,
+      "aligner_stage": alignerStage,
+      "aligner_day": alignerDay,
+      "treatment_start_date": treatmentStartDate,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.editLynerConnectDetails,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;
@@ -314,6 +380,35 @@ class PatientsRepo {
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.deletePatientTreatments,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    log("==> $result");
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> deleteLynerConnect({
+    required int userId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, int> params = {
+      "user_id": userId
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.deleteLynerConnect,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;
