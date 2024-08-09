@@ -140,6 +140,10 @@ extension DateTimeOB on DateTime {
     return DateFormat('dd/MM/yyyy').format(this);
   }
 
+  String yyyyMMDDFormat() {
+    return DateFormat('yyyy-MM-dd').format(this);
+  }
+
   String hhMMaFormat() {
     return DateFormat('hh:mm a').format(this);
   }

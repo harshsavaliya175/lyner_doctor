@@ -38,66 +38,90 @@ class CommentScreen extends StatelessWidget {
               ],
             ),
             6.space(),
-            Expanded(
-              child: ListView.separated(
-                itemCount: controller.commentModelList.length,
-                padding: EdgeInsets.only(top: 10, bottom: 50),
-                separatorBuilder: (BuildContext context, int index) =>
-                    12.space(),
-                itemBuilder: (BuildContext context, int index) {
-                  CommentModel? commentModel =
-                      controller.commentModelList[index];
-                  return Container(
-                    width: Get.width,
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: (commentModel?.sentByClinic == 1)
-                          ? lightGreenColor
-                          : lightPinkColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(color: skyColor),
+            controller.commentModelList.isEmpty
+                ? Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: "Comment Not Found".normalText(
+                        color: Colors.black,
+                        fontSize: !isTablet ? 20 : 24,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ((commentModel?.sentByClinic == 1)
-                                    ? LocaleKeys.clinic
-                                    : LocaleKeys.lyner)
-                                .translateText
-                                .normalText(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: !isTablet ? 16 : 19,
-                                  color: blackColor,
-                                ),
-                            ((commentModel?.createdAt?.ddMMMyyHhSssA() ?? ""))
-                                .normalText(
-                              fontWeight: FontWeight.w500,
-                              color: hintStepColor,
-                              fontSize: !isTablet ? 12 : 15,
-                            ),
-                          ],
-                        ),
-                        6.space(),
-                        (commentModel?.comment ?? "").normalText(
-                          fontWeight: FontWeight.w500,
-                          fontSize: !isTablet ? 16 : 19,
-                          color: blackColor,
-                        ),
-                      ],
+                  )
+                : Expanded(
+                    child: ListView.separated(
+                      itemCount: controller.commentModelList.length,
+                      padding: EdgeInsets.only(top: 10, bottom: 50),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          12.space(),
+                      itemBuilder: (BuildContext context, int index) {
+                        CommentModel? commentModel =
+                            controller.commentModelList[index];
+                        return Container(
+                          width: Get.width,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: (commentModel?.sentByClinic == 1)
+                                ? lightGreenColor
+                                : lightPinkColor,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(color: skyColor),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ((commentModel?.sentByClinic == 1)
+                                          ? LocaleKeys.clinic
+                                          : LocaleKeys.lyner)
+                                      .translateText
+                                      .normalText(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: !isTablet ? 16 : 19,
+                                        color: blackColor,
+                                      ),
+                                  ((commentModel?.createdAt?.ddMMMyyHhSssA() ??
+                                          ""))
+                                      .normalText(
+                                    fontWeight: FontWeight.w500,
+                                    color: hintStepColor,
+                                    fontSize: !isTablet ? 12 : 15,
+                                  ),
+                                ],
+                              ),
+                              6.space(),
+                              (commentModel?.comment ?? "").normalText(
+                                fontWeight: FontWeight.w500,
+                                fontSize: !isTablet ? 16 : 19,
+                                color: blackColor,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
             Row(
               children: [
                 Expanded(
                   child: CommonTextField(
+                    controller: controller.commentController,
                     hintText: "Please note your comments",
+                    suffixIcon: Assets.icons.icClip
+                        .svg(
+                          height: !isTablet ? 24 : 28,
+                          width: !isTablet ? 24 : 28,
+                          fit: BoxFit.scaleDown,
+                        )
+                        .onClick(
+                          () {},
+                        ),
                   ),
                 ),
                 12.space(),

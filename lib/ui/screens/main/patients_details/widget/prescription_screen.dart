@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/prescription_model.dart';
+import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_detail_card.dart';
 
 class PrescriptionScreen extends StatelessWidget {
@@ -20,72 +23,87 @@ class PrescriptionScreen extends StatelessWidget {
               .normalText(fontWeight: FontWeight.w600),
           6.space(),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 8, bottom: 50),
-              children: [
-                AppPatientDetailCard(
-                  title: "Arcade a Traiter",
-                  subTitle: "(ou la simulation sera réalisée)",
-                  isShowSubTitle: true,
-                  description: "Les deux",
-                  isShowBottomWidget: true,
-                  bottomText:
-                      "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Objectifs Du Traitement",
-                  subTitle: "(demande du patient)",
-                  isShowSubTitle: true,
-                  description: "Alignement esthétique",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Techniques Acceptees Pour Ce Patient",
-                  subTitle: "(demande du patient)",
-                  isShowSubTitle: true,
-                  description: "Recommandé par Lyner",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Historique Dentaire",
-                  isShowSubTitle: false,
-                  description: "Rien de particulier",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Classe Dentaire",
-                  isShowSubTitle: false,
-                  description: "Maintenir",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Milieu Incisif Maxillaire",
-                  isShowSubTitle: false,
-                  description: "Centré",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Recouvrement Incisives (Supraclusion)",
-                  isShowSubTitle: false,
-                  description: "Centré",
-                  isShowBottomWidget: false,
-                ),
-                12.space(),
-                AppPatientDetailCard(
-                  title: "Autres Recommandations",
-                  isShowSubTitle: false,
-                  description:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                  isShowBottomWidget: false,
-                ),
-              ],
-            ),
+            child: GetBuilder<PatientsDetailsController>(
+                builder: (PatientsDetailsController controller) {
+              PrescriptionData? prescription = controller.prescriptionData;
+              return ListView(
+                padding: EdgeInsets.only(top: 8, bottom: 50),
+                children: [
+                  AppPatientDetailCard(
+                    title: "Arcade a Traiter",
+                    subTitle: "(ou la simulation sera réalisée)",
+                    isShowSubTitle: true,
+                    description: prescription?.arcadeToBeTreated ?? "",
+                    isShowBottomWidget: true,
+                    bottomText:
+                        "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Objectifs Du Traitement",
+                    subTitle: "(demande du patient)",
+                    isShowSubTitle: true,
+                    description: prescription?.treatmentObjectives ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.treatmentNotes ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Techniques Acceptees Pour Ce Patient",
+                    subTitle: "(demande du patient)",
+                    isShowSubTitle: true,
+                    description: prescription?.acceptedTechniques ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.acceptedTechniqueNote ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Historique Dentaire",
+                    isShowSubTitle: false,
+                    description: prescription?.dentalHistory ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.dentalHistoryNote ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Classe Dentaire",
+                    isShowSubTitle: false,
+                    description: prescription?.dentalClass ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.dentalNote ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Milieu Incisif Maxillaire",
+                    isShowSubTitle: false,
+                    description: prescription?.maxillaryIncisalMiddle ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.maxillaryIncisalNote ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Recouvrement Incisives (Supraclusion)",
+                    isShowSubTitle: false,
+                    description: prescription?.incisiveCovering ?? "",
+                    isShowBottomWidget: false,
+                    isShowNote: true,
+                    note: prescription?.incisiveCoveringNote ?? "",
+                  ),
+                  12.space(),
+                  AppPatientDetailCard(
+                    title: "Autres Recommandations",
+                    isShowSubTitle: false,
+                    description: prescription?.otherRecommendations ?? "",
+                    isShowBottomWidget: false,
+                  ),
+                ],
+              );
+            }),
           ),
         ],
       ),

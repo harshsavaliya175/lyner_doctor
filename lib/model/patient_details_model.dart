@@ -63,7 +63,7 @@ class PatientDetailsModel {
   final int? clinicLocationId;
   final int? clinicBillingId;
   final dynamic technicianId;
-  final dynamic technicianStartDate;
+  final DateTime? technicianStartDate;
   final int? adminNewCase;
   final int? technicianNewCase;
   final int? adminTask;
@@ -148,7 +148,7 @@ class PatientDetailsModel {
     int? clinicLocationId,
     int? clinicBillingId,
     dynamic technicianId,
-    dynamic technicianStartDate,
+    DateTime? technicianStartDate,
     int? adminNewCase,
     int? technicianNewCase,
     int? adminTask,
@@ -243,7 +243,9 @@ class PatientDetailsModel {
         clinicLocationId: json["clinic_location_id"],
         clinicBillingId: json["clinic_billing_id"],
         technicianId: json["technician_id"],
-        technicianStartDate: json["technician_start_date"],
+        technicianStartDate: json["technician_start_date"] == null
+            ? null
+            : DateTime.parse(json["technician_start_date"]),
         adminNewCase: json["admin_new_case"],
         technicianNewCase: json["technician_new_case"],
         adminTask: json["admin_task"],

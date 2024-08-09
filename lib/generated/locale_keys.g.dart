@@ -139,6 +139,7 @@ abstract class  LocaleKeys {
   static const face = 'face';
   static const smile = 'smile';
   static const addPatientTreatments = 'addPatientTreatments';
+  static const editPatientTreatments = 'editPatientTreatments';
   static const nextVisit = 'nextVisit';
   static const enterPatientTreatmentsNextVisit = 'enterPatientTreatmentsNextVisit';
   static const treatmentNotes = 'treatmentNotes';

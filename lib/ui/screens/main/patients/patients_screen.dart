@@ -183,6 +183,7 @@ class PatientsScreen extends StatelessWidget {
                               PatientResponseData? patientData =
                                   ctrl.patientList[index];
                               return AppPatientCard(
+                                isShowBottomWidget: patientData?.isDraft == 1,
                                 isEditCard: false,
                                 title1: LocaleKeys.statusCom,
                                 title2: LocaleKeys.patientIdCom,
@@ -196,7 +197,8 @@ class PatientsScreen extends StatelessWidget {
                                 patientName:
                                     '${patientData?.firstName ?? ''} ${patientData?.lastName ?? ''}',
                                 deleteOnTap: () {
-                                  ctrl.callDeletePatientApi(patientData?.patientId.toString()??'');
+                                  ctrl.callDeletePatientApi(
+                                      patientData?.patientId.toString() ?? '');
                                 },
                                 editOrSubmitOnTap: () {
                                   Get.toNamed(Routes.addPatientScreen,
@@ -206,7 +208,10 @@ class PatientsScreen extends StatelessWidget {
                                     patientData?.patientProfile ?? '',
                               ).onClick(
                                 () {
-                                  Get.toNamed(Routes.patientsDetailsScreen);
+                                  if (patientData?.isDraft == 0) {
+                                    Get.toNamed(Routes.patientsDetailsScreen,
+                                        arguments: patientData?.patientId);
+                                  }
                                 },
                               );
                             },

@@ -98,8 +98,8 @@ class PatientsRepo {
   }
 
   static Future<ResponseItem> getLynerConnectList({
-    String searchText='',
-    String sessionDoctorId='',
+    String searchText = '',
+    String sessionDoctorId = '',
   }) async {
     ResponseItem result;
     bool status = true;
@@ -248,6 +248,32 @@ class PatientsRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> getPatientTreatmentsDetails({
+    required int patientId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, int> params = {"patient_id": patientId};
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getPatientTreatmentsDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> getPatientCommentsDetails({
     required int patientId,
   }) async {
@@ -259,6 +285,72 @@ class PatientsRepo {
     final Map<String, int> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getPatientCommentsDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    log("==> $result");
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> deletePatientTreatments({
+    required int patientTreatmentId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, int> params = {
+      "patient_treatment_id": patientTreatmentId
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.deletePatientTreatments,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    log("==> $result");
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> addEditPatientTreatments({
+    bool isEdit = false,
+    required String treatmentNotes,
+    required String nextVisit,
+    required int patientId,
+    int? patientTreatmentId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "type": isEdit ? "edit" : "add",
+      "patient_id": patientId,
+      "patient_treatment_id": patientTreatmentId,
+      "treatment_notes": treatmentNotes,
+      "next_visit": nextVisit,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.addEditPatientTreatments,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;

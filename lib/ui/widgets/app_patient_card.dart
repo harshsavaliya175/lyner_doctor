@@ -25,6 +25,7 @@ class AppPatientCard extends StatelessWidget {
     required this.editOrSubmitOnTap,
     required this.patientImagePath,
     this.isShowTitle = true,
+    this.isShowBottomWidget = true,
   }) : super(key: key);
 
   final bool isEditCard;
@@ -40,6 +41,7 @@ class AppPatientCard extends StatelessWidget {
   final VoidCallback deleteOnTap;
   final VoidCallback editOrSubmitOnTap;
   final bool isShowTitle;
+  final bool isShowBottomWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -116,41 +118,46 @@ class AppPatientCard extends StatelessWidget {
                 title: title3.translateText,
                 data: data3,
               ),
-              28.space(),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: AppButton(
-                      btnHeight: !isTablet ? 50 : 60,
-                      text: LocaleKeys.delete.translateText,
-                      fontSize: !isTablet ? 16 : 20,
-                      fontColor: pinkColor,
-                      bgColor: deleteButtonColor,
-                      radius: 100,
-                      onTap: () {
-                        deleteOnTap();
-                      },
+              if (isShowBottomWidget)
+                Column(
+                  children: [
+                    28.space(),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: AppButton(
+                            btnHeight: !isTablet ? 50 : 60,
+                            text: LocaleKeys.delete.translateText,
+                            fontSize: !isTablet ? 16 : 20,
+                            fontColor: pinkColor,
+                            bgColor: deleteButtonColor,
+                            radius: 100,
+                            onTap: () {
+                              deleteOnTap();
+                            },
+                          ),
+                        ),
+                        20.space(),
+                        Expanded(
+                          child: AppButton(
+                            text: isEditCard
+                                ? LocaleKeys.edit.translateText
+                                : LocaleKeys.submitTheCase.translateText,
+                            bgColor: primaryBrown,
+                            fontSize: !isTablet ? 16 : 20,
+                            btnHeight: !isTablet ? 50 : 60,
+                            fontColor: whiteColor,
+                            radius: 100,
+                            onTap: () {
+                              editOrSubmitOnTap();
+                            },
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  20.space(),
-                  Expanded(
-                    child: AppButton(
-                      text: isEditCard
-                          ? LocaleKeys.edit.translateText
-                          : LocaleKeys.submitTheCase.translateText,
-                      bgColor: primaryBrown,
-                      fontSize: !isTablet ? 16 : 20,
-                      btnHeight: !isTablet ? 50 : 60,
-                      fontColor: whiteColor,
-                      radius: 100,
-                      onTap: () {
-                        editOrSubmitOnTap();
-                      },
-                    ),
-                  )
-                ],
-              ),
+                  ],
+                ),
               10.space(),
             ],
           ).paddingSymmetric(horizontal: 16),

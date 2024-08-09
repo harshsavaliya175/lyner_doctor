@@ -76,6 +76,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_clip.svg
   SvgGenImage get icClip => const SvgGenImage('assets/icons/ic_clip.svg');
 
+  /// File path: assets/icons/ic_doc.png
+  AssetGenImage get icDoc => const AssetGenImage('assets/icons/ic_doc.png');
+
   /// File path: assets/icons/ic_document.svg
   SvgGenImage get icDocument =>
       const SvgGenImage('assets/icons/ic_document.svg');
@@ -96,6 +99,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_financial.svg
   SvgGenImage get icFinancial =>
       const SvgGenImage('assets/icons/ic_financial.svg');
+
+  /// File path: assets/icons/ic_jpg.png
+  AssetGenImage get icJpg => const AssetGenImage('assets/icons/ic_jpg.png');
 
   /// File path: assets/icons/ic_library.svg
   SvgGenImage get icLibrary => const SvgGenImage('assets/icons/ic_library.svg');
@@ -160,6 +166,9 @@ class $AssetsIconsGen {
   AssetGenImage get icVideoFile =>
       const AssetGenImage('assets/icons/ic_videoFile.png');
 
+  /// File path: assets/icons/ic_zip.png
+  AssetGenImage get icZip => const AssetGenImage('assets/icons/ic_zip.png');
+
   /// File path: assets/icons/lock.svg
   SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
 
@@ -179,12 +188,14 @@ class $AssetsIconsGen {
         icCamera,
         icCancel,
         icClip,
+        icDoc,
         icDocument,
         icDown,
         icEditProfile,
         icFile,
         icFilter,
         icFinancial,
+        icJpg,
         icLibrary,
         icLogout,
         icLynerAddPatient,
@@ -203,6 +214,7 @@ class $AssetsIconsGen {
         icTeethWithScreen,
         icUser,
         icVideoFile,
+        icZip,
         lock,
         openEye,
         phone
