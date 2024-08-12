@@ -29,7 +29,7 @@ class AddEditLynerConnect extends StatelessWidget {
         title: Text(
           controller.isFromNewPatient
               ? LocaleKeys.addLynerConnect.translateText
-              : "Edit Lyner connect",
+              : LocaleKeys.editLynerConnect.translateText,
           style: TextStyle(
               fontFamily: Assets.fonts.maax,
               fontWeight: FontWeight.w700,
@@ -66,7 +66,7 @@ class AddEditLynerConnect extends StatelessWidget {
                           onChanged: (value) {},
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter firstname';
+                              return LocaleKeys.pleaseEnterFirstName.translateText;
                             }
                             ctrl.update();
                             return null;
@@ -86,7 +86,7 @@ class AddEditLynerConnect extends StatelessWidget {
                           onChanged: (value) {},
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter lastname';
+                              return LocaleKeys.pleaseEnterLastName.translateText;
                             }
                             ctrl.update();
                             return null;
@@ -107,9 +107,9 @@ class AddEditLynerConnect extends StatelessWidget {
                     onChanged: (value) {},
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter email address';
+                        return LocaleKeys.pleaseEnterEmail.translateText;
                       } else if (!ctrl.emailController.text.isValidEmail()) {
-                        return 'Please enter valid email';
+                        return LocaleKeys.pleaseEnterValidEmail.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -136,9 +136,9 @@ class AddEditLynerConnect extends StatelessWidget {
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(10),
                     ],
-                    hintText: "Enter mobile number",
+                    hintText: LocaleKeys.pleaseEnterPhoneNumber.translateText,
                     textEditingController: ctrl.mobileNumController,
-                    labelText: "Phone Number",
+                    labelText: LocaleKeys.phoneNumber.translateText,
                     showPrefixIcon: false,
                     onChanged: (String value) {},
                   ),
@@ -147,7 +147,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return 'Please enter current aligner';
+                        return LocaleKeys.pleaseEnterCurrentAligner.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -157,9 +157,9 @@ class AddEditLynerConnect extends StatelessWidget {
                     inputFormatter: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
                     ],
-                    hintText: "Enter current aligner",
+                    hintText: LocaleKeys.enterCurrentAligner.translateText,
                     textEditingController: ctrl.currentAlignerController,
-                    labelText: "Current Aligner",
+                    labelText: LocaleKeys.currentAligner.translateText,
                     showPrefixIcon: false,
                     onChanged: (String value) {},
                   ),
@@ -169,7 +169,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     onChanged: (value) {},
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter total aligner';
+                        return LocaleKeys.enterTotalAligner.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -177,8 +177,8 @@ class AddEditLynerConnect extends StatelessWidget {
                     textFieldPadding: EdgeInsets.zero,
                     keyboardType: TextInputType.text,
                     // isError: ctrl.emailError,
-                    hintText: "Enter total aligner",
-                    labelText: "Total Aligner",
+                    hintText: LocaleKeys.enterTotalAligner.translateText,
+                    labelText:LocaleKeys.totalAligner.translateText,
                     showPrefixWidget: Assets.icons.icDown
                         .svg(
                           colorFilter: ColorFilter.mode(
@@ -195,7 +195,7 @@ class AddEditLynerConnect extends StatelessWidget {
                   AppTextField(
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter aligner days';
+                        return LocaleKeys.pleaseEnterAlignerDays.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -205,9 +205,9 @@ class AddEditLynerConnect extends StatelessWidget {
                     inputFormatter: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
                     ],
-                    hintText: "Enter aligner days",
+                    hintText: LocaleKeys.enterAlignerDays.translateText,
                     textEditingController: ctrl.alignerDaysController,
-                    labelText: "Aligner Days",
+                    labelText:LocaleKeys.alignerDays.translateText,
                     showPrefixIcon: false,
                     onChanged: (String value) {},
                   ),
@@ -226,7 +226,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return 'Please enter treatment start date';
+                        return LocaleKeys.pleaseEnterTreatmentStartDate.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -246,7 +246,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     // isError: ctrl.emailError,
                     hintText: LocaleKeys.dateField.translateText,
-                    labelText: "Treatment Start Date",
+                    labelText:LocaleKeys.treatmentStartDate.translateText,
                     showPrefixIcon: false,
                   ),
                   100.space(),
@@ -256,7 +256,7 @@ class AddEditLynerConnect extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: !isTablet ? 70 : 80,
+                height: !isTablet ? 80 : 90,
                 width: Get.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -266,7 +266,7 @@ class AddEditLynerConnect extends StatelessWidget {
                   btnHeight: !isTablet ? 55 : 65,
                   text: controller.isFromNewPatient
                       ? LocaleKeys.add.translateText
-                      : "Update",
+                      : LocaleKeys.update.translateText,
                   onTap: () async {
                     FocusManager.instance.primaryFocus?.unfocus();
                     if (ctrl.patientInformationFormKey.currentState!
@@ -282,7 +282,7 @@ class AddEditLynerConnect extends StatelessWidget {
                   fontSize: !isTablet ? 20 : 24,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
-                ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),
+                ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
               ),
             ),
             Visibility(visible: ctrl.isLoading, child: AppProgressView())

@@ -74,8 +74,8 @@ class LynerConnectScreen extends StatelessWidget {
                           patientName:
                               "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
                           deleteOnTap: () {
-                            ctrl.callDeletePatientApi(
-                                lynerConnectListData?.userId);
+                            ctrl.deletePatient(lynerConnectListData?.userId);
+
                           },
                           editOrSubmitOnTap: () {
                             Get.toNamed(Routes.addEditLynerConnect,

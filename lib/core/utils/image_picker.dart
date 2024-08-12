@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -134,7 +136,7 @@ class ImageUploadUtils {
           );
   }
 
-  void _imageFormGallery(
+  /*void _imageFormGallery(
       {required BuildContext context, required Function onImageChose}) async {
     var status = await (Platform.isIOS
         ? Permission.storage.request()
@@ -236,21 +238,22 @@ class ImageUploadUtils {
       );
       return;
     }
-  }
+  }*/
 
-  void pickFileFormStorage({
-    required BuildContext context,
-    required Function onFileChose,
-  }) async {
-    PermissionStatus status = await Permission.manageExternalStorage.request();
+  void _imageFormGallery(
+      {required BuildContext context, required Function onImageChose}) async {
+    var status = await (Platform.isIOS
+        ? Permission.storage.request()
+        : Permission.mediaLibrary.request());
     if (status.isGranted) {
-      final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        // allowedExtensions: ['doc', 'pdf','zip',],
+      final pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.image,
       );
       if (pickedFile != null) {
         // controller.addImage(File(pickedFile.files.single.path!));
-        onFileChose(File(pickedFile.files.single.path!));
+        XFile? photoCompressedFile =
+            await compressImage(File(pickedFile.files.single.path!));
+        onImageChose(File(photoCompressedFile!.path));
         print(pickedFile.files.single.path);
       }
       return;
@@ -286,6 +289,151 @@ class ImageUploadUtils {
         ),
       );
       return;
+    }
+  }
+
+  Future<XFile?> compressImage(File file) async {
+    final filePath = file.absolute.path;
+    log("filePathfilePath--${filePath}");
+    // String filePath = await HeicToJpg.convert(path);
+    final lastIndex = filePath.lastIndexOf(RegExp(r'.png|.jp'));
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+
+    if (lastIndex == filePath.lastIndexOf(RegExp(r'.png'))) {
+      final compressedImage = await FlutterImageCompress.compressAndGetFile(
+          filePath, outPath,
+          minWidth: 1000,
+          minHeight: 1000,
+          quality: 50,
+          format: CompressFormat.png);
+      return compressedImage;
+    } else {
+      final compressedImage = await FlutterImageCompress.compressAndGetFile(
+        filePath,
+        outPath,
+        minWidth: 1000,
+        minHeight: 1000,
+        quality: 50,
+      );
+      return compressedImage;
+    }
+  }
+
+  void imageFromCamera(
+      {required BuildContext context, required Function onImageChose}) async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final pickedFile = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 100);
+      if (pickedFile != null) {
+        // controller.addImage(File(pickedFile.path));
+        XFile? photoCompressedFile = await compressImage(File(pickedFile.path));
+        onImageChose(File(photoCompressedFile!.path));
+      }
+      return;
+    } else if (status.isDenied) {
+      Get.showSnackbar(
+        GetSnackBar(
+            message:
+                "Without this permission app can not change profile picture.",
+            mainButton: Platform.isIOS
+                ? SnackBarAction(
+                    label: "Settings",
+                    // textColor: Theme.of(context).accentColor,
+                    onPressed: () {
+                      openAppSettings();
+                    },
+                  )
+                : SnackBarAction(
+                    label: "Settings",
+                    // textColor: Theme.of(context).accentColor,
+                    onPressed: () {
+                      openAppSettings();
+                    },
+                  ),
+            duration: Duration(seconds: 3)),
+      );
+      return;
+    } else if (status.isPermanentlyDenied) {
+      Get.showSnackbar(
+        GetSnackBar(
+            message:
+                "To access this feature please grant permission from settings.",
+            mainButton: SnackBarAction(
+              label: "Settings",
+              textColor: Colors.amber,
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
+            duration: Duration(seconds: 3)),
+      );
+      return;
+    }
+  }
+
+  void pickFileFormStorage({
+    required BuildContext context,
+    required Function onFileChose,
+  }) async {
+    if (Platform.isIOS) {
+      // Directly open file picker for iOS as it doesn't need manageExternalStorage permission
+      final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+      );
+      if (pickedFile != null) {
+        onFileChose(File(pickedFile.files.single.path!));
+        print(pickedFile.files.single.path);
+      }
+      return;
+    } else {
+      // Handle Android permissions
+      PermissionStatus status =
+          await Permission.manageExternalStorage.request();
+      if (status.isGranted) {
+        final FilePickerResult? pickedFile =
+            await FilePicker.platform.pickFiles(
+          type: FileType.any,
+        );
+        if (pickedFile != null) {
+          onFileChose(File(pickedFile.files.single.path!));
+          print(pickedFile.files.single.path);
+        }
+        return;
+      } else if (status.isDenied) {
+        Get.showSnackbar(
+          GetSnackBar(
+              message: "Without this permission app can not change  picture.",
+              mainButton: Platform.isIOS
+                  ? SnackBarAction(
+                      label: "Settings",
+                      // textColor: Theme.of(context).accentColor,
+                      onPressed: () {
+                        openAppSettings();
+                      },
+                    )
+                  : null,
+              duration: Duration(seconds: 3)),
+        );
+        return;
+      } else if (status.isPermanentlyDenied) {
+        Get.showSnackbar(
+          GetSnackBar(
+            message:
+                "To access this feature please grant permission from settings.",
+            mainButton: SnackBarAction(
+              label: "Settings",
+              textColor: Colors.amber,
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
+        return;
+      }
     }
   }
 
@@ -293,51 +441,69 @@ class ImageUploadUtils {
     required BuildContext context,
     required Function onFileChose,
   }) async {
-    PermissionStatus status = await Permission.manageExternalStorage.request();
-    if (status.isGranted) {
+    if (Platform.isIOS) {
+      // Directly open file picker for iOS as it doesn't need manageExternalStorage permission
       final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['stl',],
+        allowedExtensions: [
+          'stl',
+        ],
       );
       if (pickedFile != null) {
-        // controller.addImage(File(pickedFile.files.single.path!));
         onFileChose(File(pickedFile.files.single.path!));
         print(pickedFile.files.single.path);
       }
       return;
-    } else if (status.isDenied) {
-      Get.showSnackbar(
-        GetSnackBar(
-            message: "Without this permission app can not change  picture.",
-            mainButton: Platform.isIOS
-                ? SnackBarAction(
-                    label: "Settings",
-                    // textColor: Theme.of(context).accentColor,
-                    onPressed: () {
-                      openAppSettings();
-                    },
-                  )
-                : null,
-            duration: Duration(seconds: 3)),
-      );
-      return;
-    } else if (status.isPermanentlyDenied) {
-      Get.showSnackbar(
-        GetSnackBar(
-          message:
-              "To access this feature please grant permission from settings.",
-          mainButton: SnackBarAction(
-            label: "Settings",
-            textColor: Colors.amber,
-            onPressed: () {
-              openAppSettings();
-            },
+    } else {
+      // Handle Android permissions
+      PermissionStatus status =
+      await Permission.manageExternalStorage.request();
+      if (status.isGranted) {
+        final FilePickerResult? pickedFile =
+        await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: [
+            'stl',
+          ],
+        );
+        if (pickedFile != null) {
+          onFileChose(File(pickedFile.files.single.path!));
+          print(pickedFile.files.single.path);
+        }
+        return;
+      } else if (status.isDenied) {
+        Get.showSnackbar(
+          GetSnackBar(
+              message: "Without this permission app can not change  picture.",
+              mainButton: Platform.isIOS
+                  ? SnackBarAction(
+                label: "Settings",
+                // textColor: Theme.of(context).accentColor,
+                onPressed: () {
+                  openAppSettings();
+                },
+              )
+                  : null,
+              duration: Duration(seconds: 3)),
+        );
+        return;
+      } else if (status.isPermanentlyDenied) {
+        Get.showSnackbar(
+          GetSnackBar(
+            message:
+            "To access this feature please grant permission from settings.",
+            mainButton: SnackBarAction(
+              label: "Settings",
+              textColor: Colors.amber,
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
+            duration: Duration(seconds: 3),
           ),
-          duration: Duration(seconds: 3),
-        ),
-      );
-      return;
+        );
+        return;
+      }
     }
   }
-
 }

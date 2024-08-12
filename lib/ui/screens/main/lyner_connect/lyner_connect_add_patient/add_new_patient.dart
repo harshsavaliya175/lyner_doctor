@@ -140,7 +140,7 @@ class AddNewPatient extends StatelessWidget {
                       )
                     : Visibility(
                         visible: !ctrl.isLoading,
-                        child: "No patient found".appCommonText(
+                        child: LocaleKeys.noPatientFound.translateText.appCommonText(
                             align: TextAlign.center,
                             size: 18,
                             weight: FontWeight.w300,

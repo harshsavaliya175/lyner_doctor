@@ -65,8 +65,11 @@ class LynerConnectDetails extends StatelessWidget {
                   child: Row(
                     children: [
                       HomeImage.networkImage(
-                        path: ApiUrl.patientProfileImage +
-                            "${ctrl.lynerConnectDetailsData?.userProfilePhoto}",
+                        path: (ApiUrl.patientProfileImage.isNotEmpty ||
+                                ApiUrl.patientProfileImage != "")
+                            ? ApiUrl.patientProfileImage +
+                                "${ctrl.lynerConnectDetailsData?.userProfilePhoto}"
+                            : "",
                         height: !isTablet ? 70 : 140,
                         width: !isTablet ? 70 : 140,
                         fit: BoxFit.cover,
@@ -122,7 +125,7 @@ class LynerConnectDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            "Current Aligner"
+                            LocaleKeys.currentAligner.translateText
                                 .appCommonText(
                                     weight: FontWeight.w400,
                                     size: !isTablet ? 16 : 22,
@@ -154,7 +157,7 @@ class LynerConnectDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            "Aligner Days"
+                            LocaleKeys.alignerDays.translateText
                                 .appCommonText(
                                     weight: FontWeight.w400,
                                     size: !isTablet ? 16 : 22,
@@ -181,7 +184,7 @@ class LynerConnectDetails extends StatelessWidget {
                   validator: (value) {
                     if (value.isEmpty) {
                       ctrl.update();
-                      return 'Please enter Doctor';
+                      return LocaleKeys.pleaseEnterDoctor.translateText;
                     }
                     ctrl.update();
                     return null;
@@ -193,8 +196,8 @@ class LynerConnectDetails extends StatelessWidget {
                   },
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
-                  hintText: "Select current stage",
-                  labelText: "Current Stage",
+                  hintText: LocaleKeys.selectCurrentStage.translateText,
+                  labelText: LocaleKeys.currentStage.translateText,
                   labelTextSize: (!isTablet ? 14 : 19),
                   showPrefixWidget: Assets.icons.icDown
                       .svg(
@@ -220,6 +223,7 @@ class LynerConnectDetails extends StatelessWidget {
                     ),
                     child: ListView.builder(
                       shrinkWrap: true,
+                      padding: EdgeInsets.only(bottom: 15),
                       physics: const PageScrollPhysics(),
                       itemBuilder: (builder, index) {
                         var data = ctrl.lynerConnectDetailsData?.gallery?[
@@ -232,34 +236,43 @@ class LynerConnectDetails extends StatelessWidget {
                             ctrl.updateGalleryImageData(data!);
                             ctrl.update();
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
-                              Expanded(
-                                child:
-                                    "Stage ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})"
-                                        .appCommonText(
-                                  color: Colors.black,
-                                  maxLine: 1,
-                                  align: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  weight: FontWeight.w400,
-                                  size: !isTablet ? 15 : 18,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child:
+                                        "${LocaleKeys.stage.translateText} ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})"
+                                            .appCommonText(
+                                      color: Colors.black,
+                                      maxLine: 1,
+                                      align: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      weight: FontWeight.w400,
+                                      size: !isTablet ? 15 : 18,
+                                    ),
+                                  ),
+                                  if (ctrl.currentStageController.text.contains(
+                                      "${LocaleKeys.stage.translateText} ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})")) ...[
+                                    Assets.icons.icSelectArrow.svg(
+                                        colorFilter: ColorFilter.mode(
+                                      primaryBrown,
+                                      BlendMode.srcIn,
+                                    )),
+                                  ] else ...[
+                                    const SizedBox.shrink(),
+                                  ]
+                                ],
+                              ).paddingOnly(
+                                  left: 20, right: 20,bottom: 10,top: 10),
+                              Divider(
+                                color: skyColor,
+                                height: 2,
+                                thickness: 1,
                               ),
-                              if (ctrl.currentStageController.text.contains(
-                                  "Stage ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})")) ...[
-                                Assets.icons.icSelectArrow.svg(
-                                    colorFilter: ColorFilter.mode(
-                                  primaryBrown,
-                                  BlendMode.srcIn,
-                                )),
-                              ] else ...[
-                                const SizedBox.shrink(),
-                              ]
                             ],
-                          ).paddingOnly(
-                              left: 20, right: 20, top: 10, bottom: 10),
+                          ),
                         );
                       },
                       itemCount: ctrl.lynerConnectDetailsData?.gallery?.length,
@@ -267,13 +280,13 @@ class LynerConnectDetails extends StatelessWidget {
                   ).paddingOnly(top: 15),
                 ),
                 15.space(),
-                "Gallery".appCommonText(
+                LocaleKeys.gallery.translateText.appCommonText(
                   size: !isTablet ? 20 : 24,
                   align: TextAlign.start,
                   weight: FontWeight.w500,
                 ),
                 5.space(),
-                "Aligners in Place".appCommonText(
+                LocaleKeys.alignersInPlace.translateText.appCommonText(
                     size: !isTablet ? 14 : 18,
                     align: TextAlign.start,
                     weight: FontWeight.w400,
@@ -284,7 +297,7 @@ class LynerConnectDetails extends StatelessWidget {
                   children: [
                     photoCardWidget(
                       image: Assets.images.imgLeftAligner.path,
-                      urlImage: ctrl.selectedGalleryData?.rightWithLyner??'',
+                      urlImage: ctrl.selectedGalleryData?.rightWithLyner ?? '',
                       fileImage: ctrl.alignerLeftImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -298,8 +311,8 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgCentreAligner.path,
-
-                      urlImage: ctrl.selectedGalleryData?.straightWithLyner??'',
+                      urlImage:
+                          ctrl.selectedGalleryData?.straightWithLyner ?? '',
                       fileImage: ctrl.alignerCentreImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -313,8 +326,7 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgRightAligner.path,
-
-                      urlImage: ctrl.selectedGalleryData?.leftWithLyner??'',
+                      urlImage: ctrl.selectedGalleryData?.leftWithLyner ?? '',
                       fileImage: ctrl.alignerRightImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -328,7 +340,7 @@ class LynerConnectDetails extends StatelessWidget {
                   ],
                 ),
                 10.space(),
-                "Without Aligners".appCommonText(
+                LocaleKeys.withoutAligners.translateText.appCommonText(
                     size: !isTablet ? 14 : 18,
                     align: TextAlign.start,
                     weight: FontWeight.w400,
@@ -339,8 +351,7 @@ class LynerConnectDetails extends StatelessWidget {
                   children: [
                     photoCardWidget(
                       image: Assets.images.imgLeftAligner.path,
-
-                      urlImage: ctrl.selectedGalleryData?.right??'',
+                      urlImage: ctrl.selectedGalleryData?.right ?? '',
                       fileImage: ctrl.withoutAlignerRightImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -354,8 +365,7 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgCentreAligner.path,
-
-                      urlImage: ctrl.selectedGalleryData?.straight??'',
+                      urlImage: ctrl.selectedGalleryData?.straight ?? '',
                       fileImage: ctrl.withoutAlignerCentreImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -369,7 +379,7 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgRightAligner.path,
-                      urlImage: ctrl.selectedGalleryData?.left??'',
+                      urlImage: ctrl.selectedGalleryData?.left ?? '',
                       fileImage: ctrl.withoutAlignerLeftImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -394,13 +404,12 @@ class LynerConnectDetails extends StatelessWidget {
   }
 }
 
-Widget photoCardWidget(
-    {
-    required String image,
-    required File? fileImage,
-    required String urlImage,
-
-    required GestureTapCallback onTap,}) {
+Widget photoCardWidget({
+  required String image,
+  required File? fileImage,
+  required String urlImage,
+  required GestureTapCallback onTap,
+}) {
   return Expanded(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,

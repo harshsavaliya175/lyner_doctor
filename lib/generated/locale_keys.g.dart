@@ -42,7 +42,15 @@ abstract class  LocaleKeys {
   static const pleaseEnterEmail = 'pleaseEnterEmail';
   static const pleaseEnterValidEmail = 'pleaseEnterValidEmail';
   static const pleaseEnterPassword = 'pleaseEnterPassword';
+  static const pleaseEnterLastname = 'pleaseEnterLastname';
+  static const pleaseEnterFirstname = 'pleaseEnterFirstname';
   static const pleaseEnterClinicName = 'pleaseEnterClinicName';
+  static const enterClinicName = 'enterClinicName';
+  static const nameOfTheClinic = 'nameOfTheClinic';
+  static const clinicEmailAddress = 'clinicEmailAddress';
+  static const clinicMobileNumber = 'clinicMobileNumber';
+  static const emailNotification = 'emailNotification';
+  static const mobileNotification = 'mobileNotification';
   static const pleaseEnterFirstName = 'pleaseEnterFirstName';
   static const pleaseEnterLastName = 'pleaseEnterLastName';
   static const pleaseEnterPhoneNumber = 'pleaseEnterPhoneNumber';
@@ -70,7 +78,29 @@ abstract class  LocaleKeys {
   static const productCom = 'productCom';
   static const edit = 'edit';
   static const alignerStagesCom = 'alignerStagesCom';
+  static const stage = 'stage';
+  static const pleaseEnterOldPassword = 'pleaseEnterOldPassword';
+  static const pleaseEnterNewPassword = 'pleaseEnterNewPassword';
+  static const pleaseConfirmEnterPassword = 'pleaseConfirmEnterPassword';
+  static const passwordShouldAtlasSixCharacters = 'passwordShouldAtlasSixCharacters';
   static const alignerDaysCom = 'alignerDaysCom';
+  static const enterAlignerDays = 'enterAlignerDays';
+  static const pleaseEnterAlignerDays = 'pleaseEnterAlignerDays';
+  static const enterTotalAligner = 'enterTotalAligner';
+  static const pleaseEnterTotalAligner = 'pleaseEnterTotalAligner';
+  static const currentAligner = 'currentAligner';
+  static const enterCurrentAligner = 'enterCurrentAligner';
+  static const pleaseEnterCurrentAligner = 'pleaseEnterCurrentAligner';
+  static const enterPhoneNumber = 'enterPhoneNumber';
+  static const totalAligner = 'totalAligner';
+  static const pleaseEnterDoctor = 'pleaseEnterDoctor';
+  static const selectCurrentStage = 'selectCurrentStage';
+  static const currentStage = 'currentStage';
+  static const gallery = 'gallery';
+  static const alignersInPlace = 'alignersInPlace';
+  static const withoutAligners = 'withoutAligners';
+  static const noPatientFound = 'noPatientFound';
+  static const alignerDays = 'alignerDays';
   static const caseCom = 'caseCom';
   static const treatmentStartDateCom = 'treatmentStartDateCom';
   static const filter = 'filter';
@@ -112,7 +142,9 @@ abstract class  LocaleKeys {
   static const newPassword = 'newPassword';
   static const confirmNewPassword = 'confirmNewPassword';
   static const change = 'change';
+  static const confirm = 'confirm';
   static const addLynerConnect = 'addLynerConnect';
+  static const editLynerConnect = 'editLynerConnect';
   static const patient = 'patient';
   static const add = 'add';
   static const details = 'details';
@@ -146,6 +178,9 @@ abstract class  LocaleKeys {
   static const treatmentNotes = 'treatmentNotes';
   static const enterPatientTreatmentsNotes = 'enterPatientTreatmentsNotes';
   static const cancel = 'cancel';
+  static const areYouSureWantLogout = 'areYouSureWantLogout';
+  static const areYouSureWantDeletePatient = 'areYouSureWantDeletePatient';
+  static const deletePatient = 'deletePatient';
   static const patientTreatments = 'patientTreatments';
   static const dateCom = 'dateCom';
   static const procedureCom = 'procedureCom';
@@ -155,5 +190,8 @@ abstract class  LocaleKeys {
   static const stlFile = 'stlFile';
   static const yes = 'yes';
   static const no = 'no';
+  static const update = 'update';
+  static const treatmentStartDate = 'treatmentStartDate';
+  static const pleaseEnterTreatmentStartDate = 'pleaseEnterTreatmentStartDate';
 
 }

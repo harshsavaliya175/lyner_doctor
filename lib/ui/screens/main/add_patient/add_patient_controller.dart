@@ -573,7 +573,7 @@ class AddPatientController extends GetxController {
     isLoading = false;
     try {
       if (result.status) {
-        showAppSnackBar(result.msg);
+        // showAppSnackBar(result.msg);
         isLoading = false;
       } else {
         isLoading = false;

@@ -296,6 +296,42 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_image_compress",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_image_compress_common",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress_common-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_image_compress_macos",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress_macos-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_image_compress_ohos",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress_ohos-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_image_compress_platform_interface",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress_platform_interface-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_image_compress_web",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/flutter_image_compress_web-0.1.4+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "flutter_localizations",
       "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
@@ -920,7 +956,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-09T12:53:59.616685Z",
+  "generated": "2024-08-12T05:40:22.703768Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",

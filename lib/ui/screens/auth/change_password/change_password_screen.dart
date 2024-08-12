@@ -56,10 +56,10 @@ class ChangePasswordScreen extends StatelessWidget {
                 validator: (value) {
                   if (value.isEmpty) {
                     ctrl.update();
-                    return 'Please enter old password';
+                    return LocaleKeys.pleaseEnterOldPassword.translateText;;
                   } else if (value.length < 6) {
                     ctrl.update();
-                    return 'Password should atlas 6 characters';
+                    return LocaleKeys.passwordShouldAtlasSixCharacters.translateText;
                   }
                   ctrl.update();
                   return null;
@@ -79,10 +79,10 @@ class ChangePasswordScreen extends StatelessWidget {
                 validator: (value) {
                   if (value.isEmpty) {
                     ctrl.update();
-                    return 'Please enter new password';
+                    return LocaleKeys.pleaseEnterNewPassword.translateText;
                   } else if (value.length < 6) {
                     ctrl.update();
-                    return 'Password should atlas 6 characters';
+                    return LocaleKeys.passwordShouldAtlasSixCharacters.translateText;
                   }
                   ctrl.update();
                   return null;
@@ -102,13 +102,13 @@ class ChangePasswordScreen extends StatelessWidget {
                 validator: (value) {
                   if (value.isEmpty) {
                     ctrl.update();
-                    return 'Please confirm enter password';
+                    return LocaleKeys.pleaseEnterConfirmPassword.translateText;
                   } else if (value.length < 6) {
                     ctrl.update();
-                    return 'Password should atlas 6 characters';
+                    return LocaleKeys.passwordShouldAtlasSixCharacters.translateText;
                   } else if (value != ctrl.newPasswordController.text) {
                     ctrl.update();
-                    return "Password does not match";
+                    return LocaleKeys.passwordDoesNotMatch.translateText;
                   }
                   return null;
                 },
@@ -124,7 +124,7 @@ class ChangePasswordScreen extends StatelessWidget {
               ),
               45.space(),
               AppButton(
-                text: "Change",
+                text: LocaleKeys.change.translateText,
                 btnHeight: !isTablet ?53:68,
                 onTap: () async{
                   FocusManager.instance.primaryFocus?.unfocus();

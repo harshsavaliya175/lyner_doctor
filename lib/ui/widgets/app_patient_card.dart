@@ -231,18 +231,18 @@ class EditPatientCard extends StatelessWidget {
                     : "",
                 fit: BoxFit.cover,
                 shape: BoxShape.circle,
-                size: !isTablet ? 100.w : 110.w,
-              ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
+                size: !isTablet ? 110.w : 120.w,
+              ).paddingOnly(top: 12, left: 10, right: 12, bottom: 12),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    10.space(),
+                    15.space(),
                     patientName
                         .appCommonText(
                           weight: FontWeight.w500,
-                          size: !isTablet ? 16 : 20,
+                          size: !isTablet ? 18 : 22,
                           align: TextAlign.start,
                           maxLine: 2,
                           color: Colors.black,
@@ -279,18 +279,12 @@ class EditPatientCard extends StatelessWidget {
                       title: title3.translateText,
                       data: data3,
                     ),
-                    10.space(),
+                    15.space(),
                   ],
                 ),
               ),
             ],
           ),
-          /*HomeImage.assetImage(
-            path: Assets.icons.icDotsMenu.path,
-            height: 21,
-            width: 25,
-            color: primaryBrown,
-          ).onClick(onTap).paddingOnly(top: 10,right: 2)*/
           PopupMenuButton<MenuOptions>(
             onSelected: (MenuOptions result) {
               if (result == MenuOptions.edit) {

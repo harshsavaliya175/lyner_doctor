@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
 import 'package:lynerdoctor/model/patient_resposne_model.dart';
+import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 
 class PatientsController extends GetxController {
   bool isDataNotFound = true; //for testing
@@ -128,9 +131,30 @@ class PatientsController extends GetxController {
     }
     update();
   }
+  void deletePatient(String patientId) {
+    showDialog(
+      barrierDismissible: false,
+      context: Get.context!,
+      builder: (context) {
+        return CommonDialog(
+          dialogBackColor: Colors.white,
+          tittleText: LocaleKeys.deletePatient.translateText,
+          buttonText: LocaleKeys.confirm.translateText,
+          buttonCancelText: LocaleKeys.cancel.translateText,
+          descriptionText: LocaleKeys.areYouSureWantDeletePatient.translateText,
+          cancelOnTap: () => Get.back(),
+          onTap: () {
+            callDeletePatientApi(patientId);
 
+          },
+          alignment: Alignment.center,
+        );
+      },
+    );
+  }
   void callDeletePatientApi(String patientId) async {
     isLoading = true;
+    Get.back();
     ResponseItem result = await PatientsRepo.deletePatient(
       patientId: patientId,
     );

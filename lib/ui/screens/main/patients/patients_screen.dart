@@ -197,7 +197,7 @@ class PatientsScreen extends StatelessWidget {
                                 patientName:
                                     '${patientData?.firstName ?? ''} ${patientData?.lastName ?? ''}',
                                 deleteOnTap: () {
-                                  ctrl.callDeletePatientApi(
+                                  ctrl.deletePatient(
                                       patientData?.patientId.toString() ?? '');
                                 },
                                 editOrSubmitOnTap: () {

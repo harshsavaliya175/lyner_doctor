@@ -89,6 +89,7 @@ dependencies:
   dotted_border: ^2.1.0
   # file downloading from url
   flutter_downloader: ^1.11.8
+  flutter_image_compress: ^2.3.0
 
 dev_dependencies:
   flutter_test:
