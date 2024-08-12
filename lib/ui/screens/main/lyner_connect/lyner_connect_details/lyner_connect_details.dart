@@ -64,23 +64,12 @@ class LynerConnectDetails extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Container(
+                      HomeImage.networkImage(
+                        path: ApiUrl.patientProfileImage +
+                            "${ctrl.lynerConnectDetailsData?.userProfilePhoto}",
                         height: !isTablet ? 70 : 140,
                         width: !isTablet ? 70 : 140,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black,
-                        ),
-                        child: ctrl.patientImagePath.isEmpty
-                            ? HomeImage.assetImage(
-                                size: !isTablet ? 70 : 100,
-                                path: Assets.images.imgUserPlaceholder.path,
-                              )
-                            : HomeImage.networkImage(
-                                path: ApiUrl.patientProfileImage +
-                                    ctrl.patientImagePath,
-                                size: !isTablet ? 70 : 100,
-                              ),
+                        fit: BoxFit.cover,
                       ).paddingOnly(
                           top: 16,
                           left: !isTablet ? 16 : 25,
@@ -91,7 +80,7 @@ class LynerConnectDetails extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            'Leslie Alexander'
+                            '${ctrl.lynerConnectDetailsData?.firstName ?? ''} ${ctrl.lynerConnectDetailsData?.lastName ?? ''}'
                                 .appCommonText(
                                   weight: FontWeight.w500,
                                   align: TextAlign.start,
@@ -102,7 +91,7 @@ class LynerConnectDetails extends StatelessWidget {
                                 )
                                 .paddingOnly(right: 5),
                             3.space(),
-                            ("${LocaleKeys.treatmentStartDateCom.translateText} 12/07/2024")
+                            ("${LocaleKeys.treatmentStartDateCom.translateText} ${ctrl.lynerConnectDetailsData?.treatmentStartDate?.ddMMYYYYFormat() ?? ''}")
                                 .appCommonText(
                               weight: FontWeight.w400,
                               align: TextAlign.start,
@@ -140,7 +129,7 @@ class LynerConnectDetails extends StatelessWidget {
                                     color: blackColor,
                                     align: TextAlign.start)
                                 .paddingOnly(left: 15),
-                            "01/10"
+                            "${ctrl.lynerConnectDetailsData?.currentAlignerStage ?? '0'}/${ctrl.lynerConnectDetailsData?.alignerStage ?? '0'}"
                                 .appCommonText(
                                     weight: FontWeight.w500,
                                     size: !isTablet ? 20 : 25,
@@ -172,7 +161,7 @@ class LynerConnectDetails extends StatelessWidget {
                                     color: blackColor,
                                     align: TextAlign.start)
                                 .paddingOnly(left: 15),
-                            "5"
+                            "${ctrl.lynerConnectDetailsData?.alignerDay ?? '0'}"
                                 .appCommonText(
                                     weight: FontWeight.w500,
                                     size: !isTablet ? 20 : 25,
@@ -200,8 +189,7 @@ class LynerConnectDetails extends StatelessWidget {
                   readOnly: true,
                   showCursor: false,
                   onTap: () {
-                    // ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
-                    // ctrl.update();
+                    ctrl.onAlignerStageTap();
                   },
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
@@ -219,6 +207,64 @@ class LynerConnectDetails extends StatelessWidget {
                       )
                       .paddingOnly(left: 15, right: 15),
                   showPrefixIcon: true,
+                ),
+                Visibility(
+                  visible: ctrl.showCurrentStageDropDown,
+                  replacement: const SizedBox.shrink(),
+                  child: Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: primaryBrown),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const PageScrollPhysics(),
+                      itemBuilder: (builder, index) {
+                        var data = ctrl.lynerConnectDetailsData?.gallery?[
+                            index]; // Display filtered data when search is not empty
+                        return InkWell(
+                          onTap: () {
+                            print("onTap : $index");
+                            ctrl.showCurrentStageDropDown =
+                                !ctrl.showCurrentStageDropDown;
+                            ctrl.updateGalleryImageData(data!);
+                            ctrl.update();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child:
+                                    "Stage ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})"
+                                        .appCommonText(
+                                  color: Colors.black,
+                                  maxLine: 1,
+                                  align: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                  weight: FontWeight.w400,
+                                  size: !isTablet ? 15 : 18,
+                                ),
+                              ),
+                              if (ctrl.currentStageController.text.contains(
+                                  "Stage ${data?.alignerStage} (${data?.stageCompletedDate?.ddMMYYYYFormat()})")) ...[
+                                Assets.icons.icSelectArrow.svg(
+                                    colorFilter: ColorFilter.mode(
+                                  primaryBrown,
+                                  BlendMode.srcIn,
+                                )),
+                              ] else ...[
+                                const SizedBox.shrink(),
+                              ]
+                            ],
+                          ).paddingOnly(
+                              left: 20, right: 20, top: 10, bottom: 10),
+                        );
+                      },
+                      itemCount: ctrl.lynerConnectDetailsData?.gallery?.length,
+                    ).paddingOnly(top: 5, bottom: 5),
+                  ).paddingOnly(top: 15),
                 ),
                 15.space(),
                 "Gallery".appCommonText(
@@ -238,8 +284,7 @@ class LynerConnectDetails extends StatelessWidget {
                   children: [
                     photoCardWidget(
                       image: Assets.images.imgLeftAligner.path,
-                      title: "Profile",
-                      ctrl: ctrl,
+                      urlImage: ctrl.selectedGalleryData?.rightWithLyner??'',
                       fileImage: ctrl.alignerLeftImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -253,8 +298,8 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgCentreAligner.path,
-                      title: "Face",
-                      ctrl: ctrl,
+
+                      urlImage: ctrl.selectedGalleryData?.straightWithLyner??'',
                       fileImage: ctrl.alignerCentreImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -268,8 +313,8 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgRightAligner.path,
-                      title: "Smile",
-                      ctrl: ctrl,
+
+                      urlImage: ctrl.selectedGalleryData?.leftWithLyner??'',
                       fileImage: ctrl.alignerRightImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -294,8 +339,8 @@ class LynerConnectDetails extends StatelessWidget {
                   children: [
                     photoCardWidget(
                       image: Assets.images.imgLeftAligner.path,
-                      title: "Profile",
-                      ctrl: ctrl,
+
+                      urlImage: ctrl.selectedGalleryData?.right??'',
                       fileImage: ctrl.withoutAlignerRightImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -309,8 +354,8 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgCentreAligner.path,
-                      title: "Face",
-                      ctrl: ctrl,
+
+                      urlImage: ctrl.selectedGalleryData?.straight??'',
                       fileImage: ctrl.withoutAlignerCentreImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -324,8 +369,7 @@ class LynerConnectDetails extends StatelessWidget {
                     10.space(),
                     photoCardWidget(
                       image: Assets.images.imgRightAligner.path,
-                      title: "Smile",
-                      ctrl: ctrl,
+                      urlImage: ctrl.selectedGalleryData?.left??'',
                       fileImage: ctrl.withoutAlignerLeftImageFile ?? File(''),
                       onTap: () {
                         imageUploadUtils.openImageChooser(
@@ -342,11 +386,7 @@ class LynerConnectDetails extends StatelessWidget {
                 50.space(),
               ],
             ).paddingSymmetric(horizontal: 15),
-            ctrl.isLoading
-                ? AppProgressView(
-                    progressColor: Colors.black,
-                  )
-                : Container()
+            ctrl.isLoading ? AppProgressView() : Container()
           ],
         );
       }),
@@ -355,36 +395,41 @@ class LynerConnectDetails extends StatelessWidget {
 }
 
 Widget photoCardWidget(
-    {required String title,
+    {
     required String image,
     required File? fileImage,
-    required GestureTapCallback onTap,
-    required LynerConnectDetailsController ctrl}) {
+    required String urlImage,
+
+    required GestureTapCallback onTap,}) {
   return Expanded(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ((fileImage != null && fileImage.path != "")
-                ? HomeImage.fileImage(
-                    path: fileImage.path,
-                    // size: !isTablet ?123:220,
-                    height: !isTablet ? 123 : 215,
-                    width: !isTablet ? 123 : 240,
-                    shape: BoxShape.rectangle,
-                    fit: BoxFit.cover,
-                    radius: BorderRadius.circular(10),
-                  )
-                : HomeImage.assetImage(
-                    path: image,
-                    height: !isTablet ? 123 : 215,
-                    width: !isTablet ? 123 : 240,
-                    shape: BoxShape.rectangle,
-                    fit: BoxFit.cover,
-                    radius: BorderRadius.circular(10),
-                    // width: 123,
-                  ))
-            .onClick(onTap),
+        (urlImage.isEmpty || urlImage == "")
+            ? ((fileImage != null && fileImage.path != "")
+                    ? HomeImage.fileImage(
+                        path: fileImage.path,
+                        size: !isTablet ? 123 : 200,
+                        shape: BoxShape.rectangle,
+                        fit: BoxFit.cover,
+                        radius: BorderRadius.circular(15),
+                      )
+                    : HomeImage.assetImage(
+                        path: image,
+                        height: !isTablet ? 123 : 200,
+                        shape: BoxShape.rectangle,
+                        width: !isTablet ? 123 : 200,
+                      ))
+                .onClick(onTap)
+            : HomeImage.networkImage(
+                path: "${ApiUrl.lynerDetailsBaseUrl}/$urlImage",
+                height: !isTablet ? 123 : 200,
+                shape: BoxShape.rectangle,
+                fit: BoxFit.cover,
+                radius: BorderRadius.circular(15),
+                width: !isTablet ? 123 : 200,
+              ).onClick(onTap),
       ],
     ),
   );

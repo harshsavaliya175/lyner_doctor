@@ -517,7 +517,7 @@ class AddPatientController extends GetxController {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         clinicBillingId: selectedClinicBillingData?.clinicBillingId.toString(),
-        clinicLocationId: selectedClinicDeliveryData?.clinicId.toString(),
+        clinicLocationId: selectedClinicDeliveryData?.clinicLocationId.toString(),
         dateOfBirth: dateTextField,
         doctorId: selectedDoctorData?.doctorId.toString(),
         email: emailController.text,

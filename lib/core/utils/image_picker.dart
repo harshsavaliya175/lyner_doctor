@@ -289,4 +289,55 @@ class ImageUploadUtils {
     }
   }
 
+  void pickStlFileFormStorage({
+    required BuildContext context,
+    required Function onFileChose,
+  }) async {
+    PermissionStatus status = await Permission.manageExternalStorage.request();
+    if (status.isGranted) {
+      final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['stl',],
+      );
+      if (pickedFile != null) {
+        // controller.addImage(File(pickedFile.files.single.path!));
+        onFileChose(File(pickedFile.files.single.path!));
+        print(pickedFile.files.single.path);
+      }
+      return;
+    } else if (status.isDenied) {
+      Get.showSnackbar(
+        GetSnackBar(
+            message: "Without this permission app can not change  picture.",
+            mainButton: Platform.isIOS
+                ? SnackBarAction(
+                    label: "Settings",
+                    // textColor: Theme.of(context).accentColor,
+                    onPressed: () {
+                      openAppSettings();
+                    },
+                  )
+                : null,
+            duration: Duration(seconds: 3)),
+      );
+      return;
+    } else if (status.isPermanentlyDenied) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message:
+              "To access this feature please grant permission from settings.",
+          mainButton: SnackBarAction(
+            label: "Settings",
+            textColor: Colors.amber,
+            onPressed: () {
+              openAppSettings();
+            },
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return;
+    }
+  }
+
 }

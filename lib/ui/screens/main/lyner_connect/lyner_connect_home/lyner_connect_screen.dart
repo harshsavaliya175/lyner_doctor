@@ -74,7 +74,8 @@ class LynerConnectScreen extends StatelessWidget {
                           patientName:
                               "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
                           deleteOnTap: () {
-                            ctrl.callDeletePatientApi(lynerConnectListData?.userId);
+                            ctrl.callDeletePatientApi(
+                                lynerConnectListData?.userId);
                           },
                           editOrSubmitOnTap: () {
                             Get.toNamed(Routes.addEditLynerConnect,
@@ -84,7 +85,8 @@ class LynerConnectScreen extends StatelessWidget {
                               "${lynerConnectListData?.userProfilePhoto}",
                         ).onClick(
                           () {
-                            Get.toNamed(Routes.lynerConnectDetails,arguments: lynerConnectListData?.userId);
+                            Get.toNamed(Routes.lynerConnectDetails,
+                                arguments: lynerConnectListData?.userId);
                           },
                         );
                       },
@@ -94,11 +96,7 @@ class LynerConnectScreen extends StatelessWidget {
                   ),
                 ],
               ).paddingOnly(left: 20, right: 20),
-              ctrl.isLoading
-                  ? AppProgressView(
-                      progressColor: Colors.black,
-                    )
-                  : Container()
+              ctrl.isLoading ? AppProgressView() : Container()
             ],
           );
         },

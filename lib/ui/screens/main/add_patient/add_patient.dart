@@ -1196,13 +1196,32 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
+                  maxLines: 1,
                   readOnly: true,
                   showCursor: false,
-                  isError: ctrl.lastNameError,
+                   onTap: () {
+                     imageUploadUtils.pickStlFileFormStorage(
+                         context: Get.context!,
+                         onFileChose: (File? file) async {
+                           // ctrl.cuisinePhoto?[0] =(file!);
+                           ctrl.upperJawImageFile = file!;
+                           ctrl.upperJawImageFileTextCtrl.text =
+                           ctrl.upperJawImageFile != null
+                               ? ctrl.upperJawImageFile!.path
+                               .split('/').last
+                               : '';
+                           ctrl.uploadPatientSingleImage(
+                               paramName: 'upper_jaw_stl_file',
+                               file: file);
+                           ctrl.update();
+                         });
+                   },
+                  // isError: ctrl.lastNameError,
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     alignment: Alignment.center,
                     width: !isTablet ? 100 : 135,
+
                     decoration: BoxDecoration(
                         color: primaryBrown,
                         borderRadius: BorderRadius.circular(25)),
@@ -1211,27 +1230,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         color: Colors.white,
                         align: TextAlign.center),
                   )
-                      .onClick(
-                        () {
-                          imageUploadUtils.openImageChooser(
-                              context: Get.context!,
-                              onImageChose: (File? file) async {
-                                // ctrl.cuisinePhoto?[0] =(file!);
-                                ctrl.upperJawImageFile = file!;
-                                ctrl.upperJawImageFileTextCtrl.text =
-                                    ctrl.upperJawImageFile != null
-                                        ? ctrl.upperJawImageFile!.path
-                                            .substring(ctrl.upperJawImageFile!
-                                                    .path.length -
-                                                20)
-                                        : '';
-                                ctrl.uploadPatientSingleImage(
-                                    paramName: 'upper_jaw_stl_file',
-                                    file: file);
-                                ctrl.update();
-                              });
-                        },
-                      )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
                   hintText: "No file chosen",
@@ -1261,7 +1259,25 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   validator: (value) {},
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
-                  isError: ctrl.lastNameError,
+                  readOnly: true,
+                  maxLines: 1,
+                  showCursor: false,
+                  onTap: () {
+                    imageUploadUtils.pickStlFileFormStorage(
+                        context: Get.context!,
+                        onFileChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.lowerJawImageFile = file!;
+                          ctrl.lowerJawImageFileTextCtrl.text =
+                          ctrl.lowerJawImageFile != null
+                              ? ctrl.lowerJawImageFile!.path.split('/').last
+                              : '';
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'lower_jaw_stl_file',
+                              file: file);
+                          ctrl.update();
+                        });
+                  },
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     alignment: Alignment.center,
@@ -1274,27 +1290,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         color: Colors.white,
                         align: TextAlign.center),
                   )
-                      .onClick(
-                        () {
-                          imageUploadUtils.openImageChooser(
-                              context: Get.context!,
-                              onImageChose: (File? file) async {
-                                // ctrl.cuisinePhoto?[0] =(file!);
-                                ctrl.lowerJawImageFile = file!;
-                                ctrl.lowerJawImageFileTextCtrl.text =
-                                    ctrl.lowerJawImageFile != null
-                                        ? ctrl.lowerJawImageFile!.path
-                                            .substring(ctrl.lowerJawImageFile!
-                                                    .path.length -
-                                                20)
-                                        : '';
-                                ctrl.uploadPatientSingleImage(
-                                    paramName: 'lower_jaw_stl_file',
-                                    file: file);
-                                ctrl.update();
-                              });
-                        },
-                      )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
                   hintText: "No file chosen",
