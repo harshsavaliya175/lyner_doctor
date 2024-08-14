@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
@@ -11,7 +12,9 @@ import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 
 class CommentScreen extends StatelessWidget {
-  const CommentScreen({super.key});
+  CommentScreen({super.key});
+
+  final controller = Get.put(PatientsDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +34,15 @@ class CommentScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontSize: !isTablet ? 20 : 24,
                 ),
-                "19v8L5".normalText(
+                (controller.patientDetailsModel?.linkPassword != null
+                        ? controller.patientDetailsModel?.linkPassword
+                        : "19v8L5").toString().normalText(
                   fontWeight: FontWeight.w500,
                   fontSize: !isTablet ? 16 : 19,
-                ),
+                ).onClick(() {
+                  Clipboard.setData(ClipboardData(text: controller.patientDetailsModel?.linkPassword??'19v8L5'));
+                  showAppSnackBar('Password copied');
+                },),
               ],
             ),
             6.space(),

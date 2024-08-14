@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
@@ -71,24 +72,39 @@ class AppPatientCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       size: !isTablet ? 44.w : 54.w,
                     ).paddingOnly(top: 16, left: 16, right: 12, bottom: 12),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        patientName.appCommonText(
-                          weight: FontWeight.w500,
-                          size: !isTablet ? 16 : 20,
-                          color: Colors.black,
-                        ),
-                        if (isEditCard)
-                          ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
-                              .appCommonText(
-                            weight: FontWeight.w400,
-                            size: !isTablet ? 12 : 15,
-                            color: hintStepColor,
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          patientName.appCommonText(
+                            weight: FontWeight.w500,
+                            size: !isTablet ? 16 : 20,
+                            maxLine: 1,
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.black,
                           ),
-                      ],
+                          if (isEditCard)
+                            ("${LocaleKeys.treatmentStartDateCom.translateText} $treatmentStartDate")
+                                .appCommonText(
+                              weight: FontWeight.w400,
+                              size: !isTablet ? 12 : 15,
+                              color: hintStepColor,
+                            ),
+                        ],
+                      ),
                     ),
+                    if (isShowBottomWidget) ...[
+                      Align(
+                              alignment: Alignment.topRight,
+                              child: Assets.icons.icDeleteIcon
+                                  .svg(height: 23, width: 21))
+                          .onClick(
+                        () {
+                          deleteOnTap();
+                        },
+                      ).paddingOnly(right: 12, bottom: 25)
+                    ],
                   ],
                 ),
                 DottedBorder(
@@ -119,7 +135,7 @@ class AppPatientCard extends StatelessWidget {
                 title: title3.translateText,
                 data: data3,
               ),
-              if (isShowBottomWidget)
+              /*if (isShowBottomWidget)
                 Column(
                   children: [
                     28.space(),
@@ -158,6 +174,24 @@ class AppPatientCard extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),*/
+              if (isShowBottomWidget)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: AppButton(
+                    text: isEditCard
+                        ? LocaleKeys.edit.translateText
+                        : LocaleKeys.submitTheCase.translateText,
+                    bgColor: primaryBrown,
+                    fontSize: !isTablet ? 16 : 20,
+                    btnHeight: !isTablet ? 50 : 60,
+                    btnWidth: !isTablet ?145:180,
+                    fontColor: whiteColor,
+                    radius: 100,
+                    onTap: () {
+                      editOrSubmitOnTap();
+                    },
+                  ),
                 ),
               10.space(),
             ],
@@ -208,7 +242,6 @@ class EditPatientCard extends StatelessWidget {
   final String patientImagePath;
   final VoidCallback deleteOnTap;
   final VoidCallback editOrSubmitOnTap;
-
 
   @override
   Widget build(BuildContext context) {
@@ -305,11 +338,15 @@ class EditPatientCard extends StatelessWidget {
                 <PopupMenuEntry<MenuOptions>>[
               PopupMenuItem<MenuOptions>(
                 value: MenuOptions.edit,
-                child: Text(LocaleKeys.edit.translateText,textAlign: TextAlign.center,).paddingOnly(left: 5),
+                child: Text(
+                  LocaleKeys.edit.translateText,
+                  textAlign: TextAlign.center,
+                ).paddingOnly(left: 5),
               ),
               PopupMenuItem<MenuOptions>(
                 value: MenuOptions.delete,
-                child: Text(LocaleKeys.delete.translateText).paddingOnly(left: 5),
+                child:
+                    Text(LocaleKeys.delete.translateText).paddingOnly(left: 5),
               ),
             ],
           )
