@@ -53,7 +53,7 @@ class PatientDetailsModel {
   final String? patientProfile;
   final DateTime? bondDate;
   final String? patient3DModalLink;
-  final dynamic linkPassword;
+  final String? linkPassword;
   final String? addPlanCount;
   final String? clinicItem;
   final String? adminItem;
@@ -138,7 +138,7 @@ class PatientDetailsModel {
     String? patientProfile,
     DateTime? bondDate,
     String? patient3DModalLink,
-    dynamic linkPassword,
+    String? linkPassword,
     String? addPlanCount,
     String? clinicItem,
     String? adminItem,

@@ -37,22 +37,33 @@ class CommentScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: !isTablet ? 20 : 24,
                   ),
-                  (controller.patientDetailsModel?.linkPassword != null
-                          ? controller.patientDetailsModel?.linkPassword
-                          : "19v8L5")
-                      .toString()
-                      .normalText(
-                        fontWeight: FontWeight.w500,
-                        fontSize: !isTablet ? 16 : 19,
-                      )
-                      .onClick(
-                    () {
-                      Clipboard.setData(ClipboardData(
-                          text: controller.patientDetailsModel?.linkPassword ??
-                              '19v8L5'));
-                      showAppSnackBar('Password copied');
-                    },
-                  ),
+                  if (controller
+                          .patientDetailsModel?.linkPassword?.isNotEmpty ??
+                      false)
+                    Row(
+                      children: [
+                        controller.patientDetailsModel!.linkPassword!
+                            .normalText(
+                          fontWeight: FontWeight.w500,
+                          fontSize: !isTablet ? 16 : 19,
+                        ),
+                        5.space(),
+                        IconButton(
+                          onPressed: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text: controller
+                                    .patientDetailsModel!.linkPassword!,
+                              ),
+                            );
+                            showAppSnackBar('Password copied');
+                          },
+                          icon: Icon(
+                            Icons.copy,
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
               6.space(),

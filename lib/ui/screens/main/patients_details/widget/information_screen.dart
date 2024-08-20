@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -12,6 +15,8 @@ import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_co
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_text_button.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class InformationScreen extends StatelessWidget {
   const InformationScreen({super.key});
@@ -621,7 +626,7 @@ class InformationScreen extends StatelessWidget {
                           ),
                         ),
                         12.space(),
-                        "Upper Jaw STL File".appCommonText(
+                        "Lower Jaw STL File".appCommonText(
                           size: !isTablet ? 14 : 18,
                           weight: FontWeight.w400,
                           align: TextAlign.start,
@@ -707,7 +712,126 @@ class InformationScreen extends StatelessWidget {
                 text: 'Download All',
                 radius: 100,
                 fontColor: Colors.white,
-                onTap: () {},
+                onTap: () {
+                  List downloadUrls = [
+                    ApiUrl.patientGauche +
+                        "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                    ApiUrl.patientFace +
+                        "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                    ApiUrl.patientSourire +
+                        "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                    ApiUrl.patientSourire +
+                        "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                    ApiUrl.patientInterMandi +
+                        "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                    ApiUrl.patientInterGauche +
+                        "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                    ApiUrl.patientInterFace +
+                        "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                    ApiUrl.patientIntraDroite +
+                        "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                    if (controller
+                            .patientDetailsModel?.patientPhoto?.is3Shape ==
+                        0)
+                      ApiUrl.upperJawStlFile +
+                          (controller.patientDetailsModel?.patientPhoto
+                                  ?.upperJawStlFile ??
+                              ''),
+                    if (controller
+                            .patientDetailsModel?.patientPhoto?.is3Shape ==
+                        0)
+                      ApiUrl.lowerJawStlFile +
+                          (controller.patientDetailsModel?.patientPhoto
+                                  ?.lowerJawStlFile ??
+                              ''),
+                    if (controller.patientDetailsModel?.patientPhoto
+                            ?.dcomFileName?.isNotEmpty ??
+                        false)
+                      ApiUrl.dicomFile +
+                          controller
+                              .patientDetailsModel!.patientPhoto!.dcomFileName!,
+                  ];
+                  downloadUrls.forEach(
+                    (url) async {
+                      Directory? baseStorage;
+                      PermissionStatus status =
+                          await Permission.notification.request();
+
+                      String ext = url.split('.').last;
+                      String name = url.split('/').last.split('.').first;
+                      String fileName =
+                          '${name}_${DateTime.now().millisecondsSinceEpoch}.$ext';
+
+                      if (status.isGranted) {
+                        if (Platform.isIOS) {
+                          baseStorage =
+                              await getApplicationDocumentsDirectory();
+                        } else {
+                          baseStorage = await getExternalStorageDirectory();
+                        }
+                        String? taskId = await FlutterDownloader.enqueue(
+                          url: url,
+                          savedDir: baseStorage!.path,
+                          showNotification: true,
+                          openFileFromNotification: true,
+                          saveInPublicStorage: true,
+                          fileName: fileName,
+                        );
+
+                        downloadTaskId['taskId'] = taskId;
+                        downloadTaskId['path'] =
+                            '${baseStorage.path}/$fileName';
+
+                        if (taskId != null) {
+                          downloadTaskId.putIfAbsent(
+                            taskId,
+                            () => downloadTaskId['path'],
+                          );
+                        }
+                        isDownloadRunning = true;
+                        downloadProgress = 0.0;
+                      } else if (status.isDenied) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Without this permission app can not download file.",
+                            ),
+                            action: SnackBarAction(
+                              label: "Setting",
+                              textColor: Colors.white,
+                              onPressed: () {
+                                openAppSettings();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                              },
+                            ),
+                            backgroundColor: primaryBrown,
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      } else if (status.isPermanentlyDenied) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "To access this feature please grant permission from settings.",
+                            ),
+                            action: SnackBarAction(
+                              label: "Setting",
+                              textColor: Colors.white,
+                              onPressed: () {
+                                openAppSettings();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                              },
+                            ),
+                            backgroundColor: primaryBrown,
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
                 bgColor: primaryBrown,
               ),
             ],
