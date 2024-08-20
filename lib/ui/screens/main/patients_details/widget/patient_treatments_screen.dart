@@ -77,13 +77,13 @@ class PatientTreatmentsScreen extends StatelessWidget {
                         )
                         .paddingOnly(bottom: 8.w),
                     CommonTextField(
-                      maxLine: 5,
+                      maxLine: 3,
+                      borderRadius: 20,
                       controller:
                           patientsDetailsController.treatmentNoteController,
                       hintText:
                           LocaleKeys.enterPatientTreatmentsNotes.translateText,
                       action: TextInputAction.done,
-                      borderRadius: 20,
                     ),
                     20.space(),
                     Row(
@@ -169,6 +169,7 @@ class PatientTreatmentsScreen extends StatelessWidget {
                         PatientTreatmentModel? patientTreatmentModel =
                             controller.patientTreatmentModelList[index];
                         return AppPatientCard(
+                          isShowDeleteButtonOnBottom: true,
                           title1: LocaleKeys.dateCom,
                           title2: LocaleKeys.procedureCom,
                           title3: LocaleKeys.nextVisit,

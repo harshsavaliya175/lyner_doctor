@@ -18,6 +18,7 @@ import 'package:lynerdoctor/model/patient_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
 import 'package:lynerdoctor/model/productListModel.dart';
 import 'package:lynerdoctor/model/selection_item.dart';
+import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:uuid/uuid.dart';
 
 class AddPatientController extends GetxController {
@@ -75,7 +76,6 @@ class AddPatientController extends GetxController {
   double uploadProgress = 0.0;
   String? uploadId;
   DateTime? pickedDate;
-  DateTime? dateText;
   String? dateTextField;
   List<DoctorData?> doctorDataList = [];
   DoctorData? selectedDoctorData;
@@ -517,7 +517,7 @@ class AddPatientController extends GetxController {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         clinicBillingId: selectedClinicBillingData?.clinicBillingId.toString(),
-        clinicLocationId: selectedClinicDeliveryData?.clinicId.toString(),
+        clinicLocationId: selectedClinicDeliveryData?.clinicLocationId.toString(),
         dateOfBirth: dateTextField,
         doctorId: selectedDoctorData?.doctorId.toString(),
         email: emailController.text,
@@ -573,7 +573,7 @@ class AddPatientController extends GetxController {
     isLoading = false;
     try {
       if (result.status) {
-        showAppSnackBar(result.msg);
+        // showAppSnackBar(result.msg);
         isLoading = false;
       } else {
         isLoading = false;
@@ -669,6 +669,10 @@ class AddPatientController extends GetxController {
           patientData = patientModel.data;
           print(patientData);
           Get.back();
+          if (!isFromFinishStep) {
+
+            Get.find<PatientsController>().getClinicListBySearchOrFilter();
+          }
           showAppSnackBar(
               LocaleKeys.addPatientRecordSuccessfully.translateText);
           isLoading = false;

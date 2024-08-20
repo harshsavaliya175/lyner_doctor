@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -13,12 +14,17 @@ import 'package:lynerdoctor/ui/screens/main/patients_details/widget/patient_trea
 import 'package:lynerdoctor/ui/screens/main/patients_details/widget/prescription_screen.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
-class PatientsDetailsScreen extends StatelessWidget {
+class PatientsDetailsScreen extends StatefulWidget {
   PatientsDetailsScreen({super.key});
 
-  final PatientsDetailsController patientsDetailsController =
-      Get.put(PatientsDetailsController());
+  @override
+  State<PatientsDetailsScreen> createState() => _PatientsDetailsScreenState();
+}
+
+class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
+  final PatientsDetailsController ctrl = Get.put(PatientsDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +53,16 @@ class PatientsDetailsScreen extends StatelessWidget {
           Get.back();
         }),
         elevation: 0.5,
-        rightIcon: Assets.icons.icTeethWithScreen.svg().onClick(
-          () {
-            // Get.toNamed(Routes.addLynerConnect);
-          },
-        ).paddingOnly(right: 15),
+        rightIcon: Obx(() => ctrl.isShowLink.value
+            ? Assets.icons.icTeethWithScreen
+                .svg()
+                .paddingOnly(right: 15)
+                .onClick(
+                () {
+                  Get.toNamed(Routes.treatmentPlanning);
+                },
+              )
+            : const SizedBox()),
       ),
       body: GetBuilder<PatientsDetailsController>(
         builder: (PatientsDetailsController controller) {
@@ -193,7 +204,31 @@ class PatientsDetailsScreen extends StatelessWidget {
               ).paddingSymmetric(horizontal: 20),
               controller.isLoading
                   ? AppProgressView(progressColor: Colors.black)
-                  : Container()
+                  : Container(),
+              Visibility(
+                visible: controller.isCommentFileLoading,
+                child: Container(
+                  width: double.infinity,
+                  height: Get.height / 0,
+                  color: Colors.white.withOpacity(0.4),
+                  child: CircularPercentIndicator(
+                    radius: 40,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: primaryBrown,
+                    backgroundColor: Colors.white,
+                    lineWidth: 12,
+                    percent: controller.uploadProgress,
+                    center: Text(
+                      '${(controller.uploadProgress * 100).toStringAsFixed(0)}%',
+                      style: TextStyle(
+                        color: primaryBrown,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 
@@ -21,10 +23,10 @@ class ProfileController extends GetxController {
       builder: (context) {
         return CommonDialog(
           dialogBackColor: Colors.white,
-          tittleText: "Log out",
-          buttonText: "Confirm",
-          buttonCancelText: "Cancel",
-          descriptionText: "Are you sure you want to logout?",
+          tittleText: LocaleKeys.logOut.translateText,
+          buttonText: LocaleKeys.confirm.translateText,
+          buttonCancelText: LocaleKeys.cancel.translateText,
+          descriptionText: LocaleKeys.areYouSureWantLogout.translateText,
           cancelOnTap: () => Get.back(),
           onTap: () {
             Get.offAllNamed(Routes.signUpSignInScreen);

@@ -188,16 +188,13 @@ class PatientsScreen extends StatelessWidget {
                                 title1: LocaleKeys.statusCom,
                                 title2: LocaleKeys.patientIdCom,
                                 title3: LocaleKeys.productCom,
-                                data1: patientData?.isDraft != null &&
-                                        patientData?.isDraft == 1
-                                    ? ' ${LocaleKeys.draft.translateText}'
-                                    : 'Not draft',
+                                data1: getClinicItemStatus(patientData),
                                 data2: patientData?.patientUniqueId ?? '',
                                 data3: patientData?.caseName ?? '',
                                 patientName:
                                     '${patientData?.firstName ?? ''} ${patientData?.lastName ?? ''}',
                                 deleteOnTap: () {
-                                  ctrl.callDeletePatientApi(
+                                  ctrl.deletePatient(
                                       patientData?.patientId.toString() ?? '');
                                 },
                                 editOrSubmitOnTap: () {
@@ -231,5 +228,31 @@ class PatientsScreen extends StatelessWidget {
         },
       ),
     );
+  }
+}
+String getClinicItemStatus(PatientResponseData? patientResponseData) {
+  if (patientResponseData?.isDraft==1) {
+    return 'Brouillon';
+  } else {
+    switch (patientResponseData?.clinicItem) {
+      case 'Lyner Working':
+        return 'En cours de planification';
+      case 'Delivered':
+        return 'Expédié';
+      case 'In-Production':
+        return 'En production';
+      case 'Review Modification':
+        return 'Modification de la révision';
+      case 'Lyner Review Modification':
+        return "Modification de l'examen Lyner";
+      case 'Approved By Doctor':
+        return 'Approuvé par le Docteur';
+      default:
+        if ((patientResponseData?.clinicItem??'').contains('Review Plan')) {
+          return (patientResponseData?.clinicItem??'').replaceFirst('Review ', '');
+        } else {
+          return patientResponseData?.clinicItem??'';
+        }
+    }
   }
 }

@@ -55,6 +55,7 @@ class LynerConnectList {
   String? deviceType;
   String? verifyForgotCode;
   String? timeZone;
+  String? caseName;
   int? isLoggedOut;
   int? isBlock;
 
@@ -64,6 +65,7 @@ class LynerConnectList {
     this.patientId,
     this.clinicId,
     this.userToken,
+    this.caseName,
     this.doctorUniqId,
     this.firstName,
     this.lastName,
@@ -108,6 +110,7 @@ class LynerConnectList {
     deviceType: json["device_type"],
     verifyForgotCode: json["verify_forgot_code"],
     timeZone: json["time_zone"],
+    caseName: json["case_name"],
     isLoggedOut: json["is_logged_out"],
     isBlock: json["is_block"],
   );
@@ -122,6 +125,7 @@ class LynerConnectList {
     "first_name": firstName,
     "last_name": lastName,
     "email": email,
+    "case_name": caseName,
     "user_profile_photo": userProfilePhoto,
     "phone_no": phoneNo,
     "email_verified_at": emailVerifiedAt?.toIso8601String(),

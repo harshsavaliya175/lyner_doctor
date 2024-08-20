@@ -306,7 +306,7 @@
         <entry key="flutter">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter/lib" />
+              <option value="$USER_HOME$/Documents/flutter/packages/flutter/lib" />
             </list>
           </value>
         </entry>
@@ -314,6 +314,13 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_downloader">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.8/lib" />
             </list>
           </value>
         </entry>
@@ -341,7 +348,7 @@
         <entry key="flutter_localizations">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_localizations/lib" />
+              <option value="$USER_HOME$/Documents/flutter/packages/flutter_localizations/lib" />
             </list>
           </value>
         </entry>
@@ -369,7 +376,7 @@
         <entry key="flutter_test">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_test/lib" />
+              <option value="$USER_HOME$/Documents/flutter/packages/flutter_test/lib" />
             </list>
           </value>
         </entry>
@@ -383,7 +390,7 @@
         <entry key="flutter_web_plugins">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_web_plugins/lib" />
+              <option value="$USER_HOME$/Documents/flutter/packages/flutter_web_plugins/lib" />
             </list>
           </value>
         </entry>
@@ -845,7 +852,7 @@
         <entry key="sky_engine">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../FlutterSDK/flutter/bin/cache/pkg/sky_engine/lib" />
+              <option value="$USER_HOME$/Documents/flutter/bin/cache/pkg/sky_engine/lib" />
             </list>
           </value>
         </entry>
@@ -1078,6 +1085,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/fixnum-1.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_gen-5.6.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_gen_core-5.6.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_gen_runner-5.6.0/lib" />
@@ -1176,11 +1184,11 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xdg_directories-1.0.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xml-6.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/yaml-3.1.2/lib" />
-      <root url="file://$PROJECT_DIR$/../../FlutterSDK/flutter/bin/cache/pkg/sky_engine/lib" />
-      <root url="file://$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter/lib" />
-      <root url="file://$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_localizations/lib" />
-      <root url="file://$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_test/lib" />
-      <root url="file://$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter_web_plugins/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/bin/cache/pkg/sky_engine/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/packages/flutter/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/packages/flutter_localizations/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/packages/flutter_test/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/packages/flutter_web_plugins/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

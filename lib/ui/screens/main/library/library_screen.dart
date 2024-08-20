@@ -45,7 +45,7 @@ class LibraryScreen extends StatelessWidget {
               children: [
                 3.space(),
                 Assets.icons.icPdfFile
-                    .image(
+                    .svg(
                         height: !isTablet ? 40 : 55, width: !isTablet ? 40 : 55)
                     .paddingOnly(right: 5),
                 Expanded(
@@ -57,7 +57,9 @@ class LibraryScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       align: TextAlign.start),
                 ),
-                Assets.icons.icRight.svg(height: !isTablet ? 15:20).paddingOnly(left: 5)
+                Assets.icons.icRight
+                    .svg(height: !isTablet ? 15 : 20)
+                    .paddingOnly(left: 5)
               ],
             ),
           ).paddingSymmetric(vertical: 5);

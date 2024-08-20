@@ -26,6 +26,8 @@ class ApiUrl {
   static const String patientInterGauche =
       "${patientImage}patient_inter_gauche/";
   static const String patientInterFace = "${patientImage}patient_inter_face/";
+  static const String lynerDetailsBaseUrl =
+      "https://lynertech.com/mobile/app_images/gallery_images/";
   static const String patientIntraDroite =
       "${patientImage}patient_intra_droite/";
   static const String patientIntraMax = "${patientImage}patient_intra_max/";
@@ -37,6 +39,7 @@ class ApiUrl {
       "${patientImage}patient_cephalometrique/";
   static const String lowerJawStlFile = "${patientImage}lower_jaw_stl_file/";
   static const String upperJawStlFile = "${patientImage}upper_jaw_stl_file/";
+  static const String dicomFile = "${baseImagePath}dcom_files/final/";
 }
 
 class MethodNames {
@@ -57,13 +60,21 @@ class MethodNames {
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
   static const String deletePatient = "deletePatient";
   static const String getLynerConnectList = "getLynerConnectList";
+  static const String getLynerConnectDetails = "getLynerConnectDetails";
+  static const String getLynerConnectPatientsList =
+      "getLynerConnectPatientsList";
+  static const String addLynerConnectDetails = "addLynerConnectDetails";
+  static const String editLynerConnectDetails = "editLynerConnectDetails";
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
   static const String getPatientCommentsDetails = "getPatientCommentsDetails";
+  static const String addTextPatientComments = "addTextPatientComments";
+  static const String addFilePatientComments = "addFilePatientComments";
   static const String deletePatientTreatments = "deletePatientTreatments";
+  static const String deleteLynerConnect = "deleteLynerConnect";
   static const String addEditPatientTreatments = "addEditPatientTreatments";
   static const String getPatientTreatmentsDetails =
       "getPatientTreatmentsDetails";

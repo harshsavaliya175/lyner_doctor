@@ -99,6 +99,17 @@ extension StringExtension on String {
   String get translateText {
     return this.tr();
   }
+
+  bool isImageFileName() {
+    final ext = toLowerCase();
+    return ext.endsWith(".jpg") ||
+        ext.endsWith(".jpeg") ||
+        ext.endsWith(".png") ||
+        ext.endsWith(".gif") ||
+        ext.endsWith(".bmp") ||
+        ext.endsWith(".heic") ||
+        ext.endsWith(".heif");
+  }
 }
 
 extension AddText on String {

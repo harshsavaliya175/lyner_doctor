@@ -53,6 +53,9 @@ dependencies:
   # for provide fonts
   google_fonts: ^6.2.1
 
+  # for web view
+  webview_flutter: ^4.8.0
+
   # for assets generator
   flutter_gen: ^5.6.0
 
@@ -78,6 +81,9 @@ dependencies:
   # for cached network image
   cached_network_image: ^3.3.1
 
+  # for percent indicator
+  percent_indicator: ^4.2.3
+
   # for get path
   path_provider: ^2.1.3
   #localization
@@ -86,6 +92,8 @@ dependencies:
   dotted_border: ^2.1.0
   # file downloading from url
   flutter_downloader: ^1.11.8
+  image_gallery_saver: ^2.0.3
+  flutter_image_compress: ^2.3.0
 
 dev_dependencies:
   flutter_test:

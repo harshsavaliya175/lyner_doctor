@@ -7,15 +7,15 @@ import '../../gen/assets.gen.dart';
 
 
 class HomeImage extends StatelessWidget {
-  double? height;
-  double? width;
-  double size;
-  ImageType type;
-  String path;
-  BoxShape shape;
-  BoxFit? fit;
-  Color? color;
-  BorderRadius radius;
+final double? height;
+final double? width;
+final double size;
+final ImageType type;
+final String path;
+final BoxShape shape;
+final BoxFit? fit;
+final Color? color;
+final BorderRadius radius;
 
   HomeImage(
     this.height,

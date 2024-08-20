@@ -37,7 +37,8 @@ class LynerConnectScreen extends StatelessWidget {
           rightIcon: Assets.icons.icLynerAddPatient
               .svg(
             height: !isTablet ? 28.h : 35.h,
-          ).onClick(
+          )
+              .onClick(
             () {
               Get.toNamed(Routes.addLynerConnect);
             },
@@ -50,51 +51,42 @@ class LynerConnectScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   24.space(),
-                  /*ctrl.patientList.isEmpty
-                      ? Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: LocaleKeys.patientsNotFound.translateText
-                              .normalText(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        75.space(),
-                      ],
-                    ),
-                  )
-                      :*/
                   Expanded(
                     child: ListView.separated(
-                      itemCount: 10,
+                      itemCount: ctrl.lynerConnectList.length,
                       padding: EdgeInsets.only(bottom: 150, top: 6),
                       itemBuilder: (BuildContext context, int index) {
-                        // PatientResponseData? patientData =
-                        // ctrl.patientList[index];
-                        return AppPatientCard(
-                          isEditCard: true,
+                        var lynerConnectListData = ctrl.lynerConnectList[index];
+                        return EditPatientCard(
                           title1: LocaleKeys.alignerStagesCom,
                           title2: LocaleKeys.alignerDaysCom,
                           title3: LocaleKeys.caseCom,
-                          data1: '10',
-                          data2: '5',
-                          data3: 'Lyner Experts',
-                          treatmentStartDate: '12/7/2024',
-                          patientName: 'Lyner Patient',
-                          deleteOnTap: () {},
+                          data1:
+                              lynerConnectListData?.alignerStage.toString() ??
+                                  '',
+                          data2:
+                              lynerConnectListData?.alignerDay.toString() ?? '',
+                          data3:
+                              lynerConnectListData?.caseName.toString() ?? '',
+                          treatmentStartDate: lynerConnectListData
+                              ?.treatmentStartDate
+                              ?.ddMMYYYYFormat(),
+                          patientName:
+                              "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
+                          deleteOnTap: () {
+                            ctrl.deletePatient(lynerConnectListData?.userId);
+
+                          },
                           editOrSubmitOnTap: () {
                             Get.toNamed(Routes.addEditLynerConnect,
-                                arguments: false);
+                                arguments: [false, lynerConnectListData, null]);
                           },
-                          patientImagePath: '',
+                          patientImagePath:
+                              "${lynerConnectListData?.userProfilePhoto}",
                         ).onClick(
                           () {
-                            Get.toNamed(Routes.lynerConnectDetails);
+                            Get.toNamed(Routes.lynerConnectDetails,
+                                arguments: lynerConnectListData?.userId);
                           },
                         );
                       },
@@ -104,11 +96,7 @@ class LynerConnectScreen extends StatelessWidget {
                   ),
                 ],
               ).paddingOnly(left: 20, right: 20),
-              ctrl.isLoading
-                  ? AppProgressView(
-                      progressColor: Colors.black,
-                    )
-                  : Container()
+              ctrl.isLoading ? AppProgressView() : Container()
             ],
           );
         },

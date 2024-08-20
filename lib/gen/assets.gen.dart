@@ -76,12 +76,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_clip.svg
   SvgGenImage get icClip => const SvgGenImage('assets/icons/ic_clip.svg');
 
+  /// File path: assets/icons/ic_default_file.svg
+  SvgGenImage get icDefaultFile =>
+      const SvgGenImage('assets/icons/ic_default_file.svg');
+
+  /// File path: assets/icons/ic_delete_icon.svg
+  SvgGenImage get icDeleteIcon =>
+      const SvgGenImage('assets/icons/ic_delete_icon.svg');
+
   /// File path: assets/icons/ic_doc.png
   AssetGenImage get icDoc => const AssetGenImage('assets/icons/ic_doc.png');
 
   /// File path: assets/icons/ic_document.svg
   SvgGenImage get icDocument =>
       const SvgGenImage('assets/icons/ic_document.svg');
+
+  /// File path: assets/icons/ic_dots_menu.png
+  AssetGenImage get icDotsMenu =>
+      const AssetGenImage('assets/icons/ic_dots_menu.png');
 
   /// File path: assets/icons/ic_down.svg
   SvgGenImage get icDown => const SvgGenImage('assets/icons/ic_down.svg');
@@ -101,7 +113,10 @@ class $AssetsIconsGen {
       const SvgGenImage('assets/icons/ic_financial.svg');
 
   /// File path: assets/icons/ic_jpg.png
-  AssetGenImage get icJpg => const AssetGenImage('assets/icons/ic_jpg.png');
+  AssetGenImage get icJpgPng => const AssetGenImage('assets/icons/ic_jpg.png');
+
+  /// File path: assets/icons/ic_jpg.svg
+  SvgGenImage get icJpgSvg => const SvgGenImage('assets/icons/ic_jpg.svg');
 
   /// File path: assets/icons/ic_library.svg
   SvgGenImage get icLibrary => const SvgGenImage('assets/icons/ic_library.svg');
@@ -117,6 +132,9 @@ class $AssetsIconsGen {
   SvgGenImage get icLynerConnect =>
       const SvgGenImage('assets/icons/ic_lyner_connect.svg');
 
+  /// File path: assets/icons/ic_mp3.svg
+  SvgGenImage get icMp3 => const SvgGenImage('assets/icons/ic_mp3.svg');
+
   /// File path: assets/icons/ic_patient_treatments.svg
   SvgGenImage get icPatientTreatments =>
       const SvgGenImage('assets/icons/ic_patient_treatments.svg');
@@ -125,9 +143,8 @@ class $AssetsIconsGen {
   SvgGenImage get icPatients =>
       const SvgGenImage('assets/icons/ic_patients.svg');
 
-  /// File path: assets/icons/ic_pdfFile.png
-  AssetGenImage get icPdfFile =>
-      const AssetGenImage('assets/icons/ic_pdfFile.png');
+  /// File path: assets/icons/ic_pdfFile.svg
+  SvgGenImage get icPdfFile => const SvgGenImage('assets/icons/ic_pdfFile.svg');
 
   /// File path: assets/icons/ic_person.svg
   SvgGenImage get icPerson => const SvgGenImage('assets/icons/ic_person.svg');
@@ -135,6 +152,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_person_with_comment.svg
   SvgGenImage get icPersonWithComment =>
       const SvgGenImage('assets/icons/ic_person_with_comment.svg');
+
+  /// File path: assets/icons/ic_png.svg
+  SvgGenImage get icPng => const SvgGenImage('assets/icons/ic_png.svg');
+
+  /// File path: assets/icons/ic_ppt.svg
+  SvgGenImage get icPpt => const SvgGenImage('assets/icons/ic_ppt.svg');
 
   /// File path: assets/icons/ic_profile.svg
   SvgGenImage get icProfile => const SvgGenImage('assets/icons/ic_profile.svg');
@@ -155,6 +178,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_send.svg
   SvgGenImage get icSend => const SvgGenImage('assets/icons/ic_send.svg');
 
+  /// File path: assets/icons/ic_svg.svg
+  SvgGenImage get icSvg => const SvgGenImage('assets/icons/ic_svg.svg');
+
   /// File path: assets/icons/ic_teeth_with_screen.svg
   SvgGenImage get icTeethWithScreen =>
       const SvgGenImage('assets/icons/ic_teeth_with_screen.svg');
@@ -162,12 +188,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_user.svg
   SvgGenImage get icUser => const SvgGenImage('assets/icons/ic_user.svg');
 
-  /// File path: assets/icons/ic_videoFile.png
-  AssetGenImage get icVideoFile =>
-      const AssetGenImage('assets/icons/ic_videoFile.png');
+  /// File path: assets/icons/ic_videoFile.svg
+  SvgGenImage get icVideoFile =>
+      const SvgGenImage('assets/icons/ic_videoFile.svg');
 
-  /// File path: assets/icons/ic_zip.png
-  AssetGenImage get icZip => const AssetGenImage('assets/icons/ic_zip.png');
+  /// File path: assets/icons/ic_zip.svg
+  SvgGenImage get icZip => const SvgGenImage('assets/icons/ic_zip.svg');
 
   /// File path: assets/icons/lock.svg
   SvgGenImage get lock => const SvgGenImage('assets/icons/lock.svg');
@@ -188,29 +214,37 @@ class $AssetsIconsGen {
         icCamera,
         icCancel,
         icClip,
+        icDefaultFile,
+        icDeleteIcon,
         icDoc,
         icDocument,
+        icDotsMenu,
         icDown,
         icEditProfile,
         icFile,
         icFilter,
         icFinancial,
-        icJpg,
+        icJpgPng,
+        icJpgSvg,
         icLibrary,
         icLogout,
         icLynerAddPatient,
         icLynerConnect,
+        icMp3,
         icPatientTreatments,
         icPatients,
         icPdfFile,
         icPerson,
         icPersonWithComment,
+        icPng,
+        icPpt,
         icProfile,
         icRight,
         icSearch,
         icSelect,
         icSelectArrow,
         icSend,
+        icSvg,
         icTeethWithScreen,
         icUser,
         icVideoFile,

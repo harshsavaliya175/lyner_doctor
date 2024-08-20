@@ -12,6 +12,7 @@ import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/core/utils/image_picker.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/auth/edit_profile/edit_profile_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
@@ -21,7 +22,7 @@ import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 class EditProfile extends StatelessWidget {
   EditProfile({super.key});
 
-  var controller = Get.put(EditProfileController());
+  final controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class EditProfile extends StatelessWidget {
       appBar: appbarWithIcons(
         centerTitle: false,
         title: Text(
-          "Edit Profile",
+          LocaleKeys.editProfile.translateText,
           style: TextStyle(
               fontFamily: Assets.fonts.maax,
               fontWeight: FontWeight.w700,
@@ -110,15 +111,15 @@ class EditProfile extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return 'Please enter clinic name';
+                        return LocaleKeys.pleaseEnterClinicName.translateText;
                       }
                       ctrl.update();
                       return null;
                     },
-                    hintText: "Enter clinic name",
+                    hintText: LocaleKeys.enterClinicName.translateText,
                     textEditingController: ctrl.clinicNameController,
                     // action: TextInputAction.next,
-                    labelText: "Name of the clinic",
+                    labelText: LocaleKeys.nameOfTheClinic.translateText,
                     showPrefixIcon: false,
                     keyboardType: TextInputType.text,
                     isError: ctrl.isClinicError,
@@ -129,20 +130,22 @@ class EditProfile extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return 'Please enter email address';
+                        return LocaleKeys.pleaseEnterEmail.translateText;
                       } else if (!ctrl.emailAddressController.text
                           .isValidEmail()) {
                         // ctrl.emailAddressError = true;
                         ctrl.update();
-                        return 'Please enter valid email';
+                        return LocaleKeys.pleaseEnterValidEmail.translateText;
                       }
                       ctrl.update();
                       return null;
                     },
-                    hintText: "Enter email address",
+                    hintText: LocaleKeys.enterEmailAddress.translateText,
                     textEditingController: ctrl.emailAddressController,
-                    labelText: "Clinic Email Address",
+                    labelText: LocaleKeys.clinicEmailAddress.translateText,
                     showPrefixIcon: false,
+                    readOnly: true,
+                    showCursor: false,
                     keyboardType: TextInputType.text,
                     isError: ctrl.emailAddressError,
                     onChanged: (String value) {},
@@ -152,7 +155,7 @@ class EditProfile extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return 'Please enter mobile number';
+                        return LocaleKeys.pleaseEnterPhoneNumber.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -162,9 +165,9 @@ class EditProfile extends StatelessWidget {
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(10),
                     ],
-                    hintText: "Enter mobile number",
+                    hintText: LocaleKeys.enterPhoneNumber.translateText,
                     textEditingController: ctrl.mobileNumController,
-                    labelText: "Clinic mobile number",
+                    labelText: LocaleKeys.clinicMobileNumber.translateText,
                     showPrefixIcon: false,
                     isError: ctrl.mobileNumError,
                     onChanged: (String value) {},
@@ -196,7 +199,7 @@ class EditProfile extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: "Email Notification"
+                              child: LocaleKeys.emailNotification.translateText
                                   .appCommonText(
                                     weight: FontWeight.w400,
                                     align: TextAlign.start,
@@ -237,7 +240,7 @@ class EditProfile extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: "Mobile Notification"
+                              child: LocaleKeys.mobileNotification.translateText
                                   .appCommonText(
                                       weight: FontWeight.w400,
                                       align: TextAlign.start,
@@ -259,7 +262,7 @@ class EditProfile extends StatelessWidget {
                   ).paddingSymmetric(horizontal: 15),
                   35.space(),
                   AppButton(
-                    text: "Update",
+                    text: LocaleKeys.update.translateText,
                     btnHeight: !isTablet ?53:68,
                     onTap: () async {
                       FocusManager.instance.primaryFocus?.unfocus();

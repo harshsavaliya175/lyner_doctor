@@ -14,7 +14,7 @@ import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-  var controller = Get.put(ProfileController());
+  final controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

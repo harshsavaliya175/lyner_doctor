@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -22,18 +23,35 @@ class PatientsDetailsController extends GetxController {
   TextEditingController nextVisitController = TextEditingController();
   TextEditingController treatmentNoteController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
+  RxBool isShowLink = false.obs;
   PrescriptionData? prescriptionData;
+  CommentModel? commentModel;
   List<CommentModel?> commentModelList = [];
   List<PatientTreatmentModel?> patientTreatmentModelList = [];
   double uploadProgress = 0.0;
   String? uploadId;
-  bool isDcomFileLoading = false;
+  bool isCommentFileLoading = false;
+  bool showProgressDialog = false;
+  File? commentFile;
+  String commentFileName = "Upload Comment File";
+  var taskId;
+  var progress;
+
+  int selectedScreenIndex = 0;
+  double progressValue = 0.0;
 
   @override
   void onInit() {
     patientId = Get.arguments ?? 0;
     getPatientCommentsDetails();
+    getPatientInformationDetails();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
   }
 
   void changeData({int? selectedIndex}) {
@@ -50,6 +68,8 @@ class PatientsDetailsController extends GetxController {
       if (result.status) {
         if (result.data != null) {
           patientDetailsModel = PatientDetailsModel.fromJson(result.data);
+          isShowLink.value =
+              patientDetailsModel?.patient3DModalLink?.isNotEmpty ?? false;
           isLoading = false;
         }
       } else {
@@ -196,8 +216,39 @@ class PatientsDetailsController extends GetxController {
     return isDelete;
   }
 
-  Future<void> uploadFile(File file, var patientId) async {
-    isDcomFileLoading = true;
+  Future<bool> addTextPatientComments() async {
+    isLoading = true;
+    bool isAddTextComment = false;
+    ResponseItem result = await PatientsRepo.addTextPatientComments(
+      patientId: patientId,
+      comment: commentController.text.trim(),
+    );
+    try {
+      if (result.status) {
+        isAddTextComment = true;
+        commentController.clear();
+      }
+      isLoading = false;
+      showAppSnackBar(result.msg);
+    } catch (e) {
+      isLoading = false;
+      log("error ------> $e");
+    }
+    update();
+    return isAddTextComment;
+  }
+
+  String getFileName(String? filePath, int length) {
+    if (filePath == null || filePath.isEmpty) return "Upload Comment File";
+    return filePath.length > length
+        ? filePath.substring(filePath.length - length)
+        : filePath;
+  }
+
+  Future<bool> uploadCommentFile(File file, var patientId) async {
+    bool isUploadFile = false;
+    isCommentFileLoading = true;
+
     uploadProgress = 0.0;
     update();
     // Generate unique upload ID if not already set
@@ -232,7 +283,7 @@ class PatientsDetailsController extends GetxController {
           uploadProgress = (i + j / 100) / totalChunks;
           update();
         }
-        ResponseItem result = await AddPatientRepo.uploadPatientDcomFile(
+        ResponseItem result = await PatientsRepo.uploadCommentFileFile(
           file: chunkFile,
           chunkIndex: '$i',
           extension: fileExtension,
@@ -261,15 +312,17 @@ class PatientsDetailsController extends GetxController {
       await raf.close();
       // Reset uploadId for next upload
       uploadId = null;
-      isDcomFileLoading = false;
+      isCommentFileLoading = false;
       update();
       // Show final success or failure message
       if (allChunksUploaded) {
+        isUploadFile = true;
         showAppSnackBar('File uploaded successfully');
       } else {
         showAppSnackBar('File upload failed');
       }
     }
+    return isUploadFile;
   }
 
   String getFileExtension(File file) {
@@ -281,5 +334,16 @@ class PatientsDetailsController extends GetxController {
   String generateUploadId() {
     var uuid = Uuid();
     return uuid.v4();
+  }
+
+  void setProgressValue({double? downloadProgress, bool? showDialogProgress}) {
+    progressValue = downloadProgress ?? progressValue;
+    showProgressDialog = showDialogProgress ?? showProgressDialog;
+    log('downloadProgress ---------------> $downloadProgress');
+    if (progressValue == 100) {
+      progressValue = 0.0;
+      showProgressDialog = false;
+    }
+    update();
   }
 }

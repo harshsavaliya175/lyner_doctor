@@ -11,6 +11,7 @@ import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
+import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
 class AddNewPatient extends StatelessWidget {
   AddNewPatient({super.key});
@@ -35,11 +36,12 @@ class AddNewPatient extends StatelessWidget {
         leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-          height: !isTablet ? 25 : 30,
-          width: !isTablet ? 25 : 30,
-          fit:!isTablet ?BoxFit.scaleDown: BoxFit.fill,
-        )
-            .paddingOnly(left: 10, top: isTablet ?22:0, bottom: isTablet ?22:0)
+              height: !isTablet ? 25 : 30,
+              width: !isTablet ? 25 : 30,
+              fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
+            )
+            .paddingOnly(
+                left: 10, top: isTablet ? 22 : 0, bottom: isTablet ? 22 : 0)
             .onClick(() {
           Get.back();
         }),
@@ -59,9 +61,9 @@ class AddNewPatient extends StatelessWidget {
                   controller: ctrl.searchController,
                   action: TextInputAction.done,
                   onChange: (String value) {
-                    // patientsController.getClinicListBySearchOrFilter(
-                    //   isFromSearch: true,
-                    // );
+                    ctrl.getLynerConnectPatientList(
+                      isFromSearch: true,
+                    );
                   },
                 ).paddingSymmetric(horizontal: 15),
                 15.space(),
@@ -72,87 +74,103 @@ class AddNewPatient extends StatelessWidget {
                         weight: FontWeight.w500)
                     .paddingSymmetric(horizontal: 15),
                 10.space(),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: ctrl.patientList.length,
-                    physics: PageScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final item = ctrl.patientList[index];
-                      bool isSelected = ctrl.selectedIndex == index;
-                      return Column(
-                        children: [
-                          Container(
-                            height: !isTablet ? 55 : 65,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  !isTablet ? 25 : 40),
-                              color: Colors.white,
-                              border: Border.all(color: skyColor),
-                            ),
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                ctrl.lynerPatientListData.isNotEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          itemCount: ctrl.lynerPatientListData.length,
+                          physics: PageScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final item = ctrl.lynerPatientListData[index];
+                            bool isSelected = ctrl.selectedIndex == index;
+                            return Column(
                               children: [
-                                Expanded(
-                                  child: item.title
-                                      .appCommonText(
-                                        maxLine: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        size: !isTablet ?16:19,
-                                        align: TextAlign.start,
-                                        weight: FontWeight.w400,
-                                        color: Colors.black,
-                                      )
-                                      .paddingOnly(left: 15),
-                                ),
                                 Container(
-                                  alignment: Alignment.center,
-                                  width: 20.0,
-                                  height: 20.0,
+                                  height: !isTablet ? 55 : 65,
                                   decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? primaryBrown
-                                        : Colors.transparent,
-                                    border: Border.all(
-                                        color: primaryBrown, width: 1),
-                                    shape: BoxShape.circle,
+                                    borderRadius: BorderRadius.circular(
+                                        !isTablet ? 25 : 40),
+                                    color: Colors.white,
+                                    border: Border.all(color: skyColor),
                                   ),
-                                  child: isSelected
-                                      ? Icon(Icons.check,
-                                          color: Colors.white, size: 16)
-                                      : Container(),
-                                ).paddingOnly(right: 13),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child:
+                                            "${item?.firstName} ${item?.lastName}"
+                                                .appCommonText(
+                                                  maxLine: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  size: !isTablet ? 16 : 19,
+                                                  align: TextAlign.start,
+                                                  weight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                )
+                                                .paddingOnly(left: 15),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: 20.0,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? primaryBrown
+                                              : Colors.transparent,
+                                          border: Border.all(
+                                              color: primaryBrown, width: 1),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: isSelected
+                                            ? Icon(Icons.check,
+                                                color: Colors.white, size: 16)
+                                            : Container(),
+                                      ).paddingOnly(right: 13),
+                                    ],
+                                  ),
+                                ).paddingSymmetric(vertical: 5).onClick(() {
+                                  ctrl.togglePatientSelection(index);
+                                }),
                               ],
-                            ),
-                          ).paddingSymmetric(vertical: 5).onClick(() {
-                            ctrl.togglePatientSelection(index);
-                          }),
-                        ],
-                      );
-                    },
-                  ).paddingSymmetric(horizontal: 15),
-                ),
-                !isTablet ?70.space():80.space(),
+                            );
+                          },
+                        ).paddingSymmetric(horizontal: 15),
+                      )
+                    : Visibility(
+                        visible: !ctrl.isLoading,
+                        child: LocaleKeys.noPatientFound.translateText.appCommonText(
+                            align: TextAlign.center,
+                            size: 18,
+                            weight: FontWeight.w300,
+                            color: hintColor),
+                      ).center,
+                !isTablet ? 70.space() : 80.space(),
               ],
             ),
             AppButton(
-              btnHeight: !isTablet ?50:60,
+              btnHeight: !isTablet ? 50 : 60,
               text: LocaleKeys.add.translateText,
               onTap: () {
                 if (ctrl.selectedIndex != -1) {
-                  Get.toNamed(Routes.addEditLynerConnect, arguments: true);
+                  Get.toNamed(Routes.addEditLynerConnect, arguments: [
+                    true,
+                    null,
+                    ctrl.lynerPatientListData[ctrl.selectedIndex]
+                  ]);
                 } else {
                   showAppSnackBar(
                       LocaleKeys.pleaseSelectAnyPatient.translateText);
                 }
               },
               boxShadow: [],
-              radius: !isTablet ?25:40,
-              fontSize: !isTablet ?20:24,
+              radius: !isTablet ? 25 : 40,
+              fontSize: !isTablet ? 20 : 24,
               bgColor: primaryBrown,
               fontColor: Colors.white,
-            ).paddingOnly(top: 10).paddingSymmetric(horizontal: 15),
+            ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
+            Visibility(visible: ctrl.isLoading, child: AppProgressView())
           ],
         );
       }),

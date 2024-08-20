@@ -157,13 +157,12 @@ class SignUpSignInScreen extends StatelessWidget {
         ),
         5.space(),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 20,
@@ -182,11 +181,11 @@ class SignUpSignInScreen extends StatelessWidget {
                   ),
                   10.space(),
                   LocaleKeys.rememberPassword.translateText.appCommonText(
-                      weight: FontWeight.w400,
-                      maxLine: 2,
-                      color: hintTextColor,
-                      size: !isTablet ? 16.sp : 18.sp),
-              
+                    weight: FontWeight.w400,
+                    maxLine: 2,
+                    color: hintTextColor,
+                    size: !isTablet ? 16.sp : 18.sp,
+                  ),
                 ],
               ),
             ),
@@ -198,8 +197,9 @@ class SignUpSignInScreen extends StatelessWidget {
               child: LocaleKeys.forgotPassword2.translateText.appCommonText(
                   weight: FontWeight.w500,
                   color: blackColor,
+                  align: TextAlign.start,
                   size: !isTablet ? 16.sp : 18.sp),
-            ).paddingOnly(left: 35),
+            ).paddingOnly(left: 10),
           ],
         ),
         48.space(),

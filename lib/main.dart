@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_logger/easy_logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
@@ -15,7 +16,7 @@ void main() async {
     LevelMessages.error,
     LevelMessages.warning
   ];
-
+  await FlutterDownloader.initialize(debug: true);
   await preferences.init();
   await preferences.putAppDeviceInfo();
   runApp(EasyLocalization(
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       // designSize: Size(MediaQuery.of(context).size.width >= 500?600:430, 932),
-      designSize: Size(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height),
+      designSize: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context2, Widget? child) {

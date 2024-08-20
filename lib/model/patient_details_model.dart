@@ -602,7 +602,7 @@ class PatientPhoto {
   final String? interMandi;
   final dynamic paramiqueRadio;
   final dynamic cephalRadio;
-  final dynamic dcomFileName;
+  final String? dcomFileName;
   final int? is3Shape;
   final dynamic upperJawStlFile;
   final dynamic lowerJawStlFile;
@@ -651,7 +651,7 @@ class PatientPhoto {
     String? interMandi,
     dynamic paramiqueRadio,
     dynamic cephalRadio,
-    dynamic dcomFileName,
+    String? dcomFileName,
     int? is3Shape,
     dynamic upperJawStlFile,
     dynamic lowerJawStlFile,

@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
@@ -9,8 +15,65 @@ import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
 import 'package:lynerdoctor/ui/widgets/bottom_bar_item.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    registerIsolateProgress();
+    super.initState();
+  }
+
+  Future<void> registerIsolateProgress() async {
+    IsolateNameServer.registerPortWithName(
+      receivePort.sendPort,
+      'downloader_send_port',
+    );
+
+    receivePort.listen(
+      (message) async {
+        String id = message[0];
+        int status = message[1];
+        int progress = message[2];
+        downloadProgress = progress.toDouble();
+        // ctrl.setProgressValue(downloadProgress: downloadProgress);
+        if (status == DownloadTaskStatus.complete.index) {
+          if (Platform.isIOS) {
+            File file = File(downloadTaskId[id]);
+            if (file.path.isImageFileName) {
+              Uint8List imageBytes = file.readAsBytesSync();
+              await ImageGallerySaver.saveImage(imageBytes, quality: 100);
+            }
+          }
+          downloadTaskId.remove(id);
+          if (downloadTaskId.keys.isEmpty) {
+            isDownloadRunning = false;
+            downloadProgress = 0.0;
+          }
+        }
+        if (status == DownloadTaskStatus.failed.index) {
+          downloadTaskId.remove(id);
+          if (downloadTaskId.keys.isEmpty) {
+            downloadProgress = 0.0;
+            isDownloadRunning = false;
+          }
+        }
+      },
+    );
+    await FlutterDownloader.registerCallback(downloadCallback);
+  }
+
+  @override
+  void dispose() {
+    receivePort.close();
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +151,7 @@ class DashboardScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed(Routes.addPatientScreen,arguments: null);
+          Get.toNamed(Routes.addPatientScreen, arguments: null);
         },
         child: Icon(Icons.add, size: 40, color: whiteColor),
         heroTag: Object(),
