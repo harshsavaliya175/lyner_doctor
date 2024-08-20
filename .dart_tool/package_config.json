@@ -261,7 +261,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter",
+      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -333,7 +333,7 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_localizations",
+      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -357,7 +357,7 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -369,7 +369,7 @@
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/imac/Documents/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -430,6 +430,12 @@
     {
       "name": "http_parser",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "image_gallery_saver",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/image_gallery_saver-2.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -632,6 +638,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "percent_indicator",
+      "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/percent_indicator-4.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "permission_handler",
       "rootUri": "file:///Users/imac/.pub-cache/hosted/pub.dev/permission_handler-11.3.1",
       "packageUri": "lib/",
@@ -765,7 +777,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/imac/Documents/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -956,10 +968,10 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-12T05:40:22.703768Z",
+  "generated": "2024-08-20T12:00:05.980673Z",
   "generator": "pub",
-  "generatorVersion": "3.4.4",
-  "flutterRoot": "file:///Users/imac/Documents/kishan/FlutterSDK/flutter",
-  "flutterVersion": "3.22.3",
+  "generatorVersion": "3.4.3",
+  "flutterRoot": "file:///Users/imac/Documents/flutter",
+  "flutterVersion": "3.22.2",
   "pubCache": "file:///Users/imac/.pub-cache"
 }

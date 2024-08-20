@@ -84,10 +84,6 @@ class $AssetsIconsGen {
   SvgGenImage get icDeleteIcon =>
       const SvgGenImage('assets/icons/ic_delete_icon.svg');
 
-  /// File path: assets/icons/ic_delete_icon.svg
-  SvgGenImage get icDeleteIcon =>
-      const SvgGenImage('assets/icons/ic_delete_icon.svg');
-
   /// File path: assets/icons/ic_doc.png
   AssetGenImage get icDoc => const AssetGenImage('assets/icons/ic_doc.png');
 
@@ -219,7 +215,6 @@ class $AssetsIconsGen {
         icCancel,
         icClip,
         icDefaultFile,
-        icDeleteIcon,
         icDeleteIcon,
         icDoc,
         icDocument,

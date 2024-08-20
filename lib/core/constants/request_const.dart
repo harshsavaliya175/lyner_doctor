@@ -65,10 +65,6 @@ class MethodNames {
       "getLynerConnectPatientsList";
   static const String addLynerConnectDetails = "addLynerConnectDetails";
   static const String editLynerConnectDetails = "editLynerConnectDetails";
-  static const String getLynerConnectDetails = "getLynerConnectDetails";
-  static const String getLynerConnectPatientsList = "getLynerConnectPatientsList";
-  static const String addLynerConnectDetails = "addLynerConnectDetails";
-  static const String editLynerConnectDetails = "editLynerConnectDetails";
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
