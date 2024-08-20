@@ -9,8 +9,16 @@ import 'package:lynerdoctor/core/utils/base_binding.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/codegen_loader.g.dart';
 
+// void downloadCallback(String id, int status, int progress) {
+//   final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
+//   send?.send([id, status, progress]);
+// }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await FlutterDownloader.initialize(
+  //   debug: true, // Optional: set to false to disable printing logs to the console
+  // );
+  // FlutterDownloader.registerCallback(downloadCallback);
   await EasyLocalization.ensureInitialized();
   EasyLocalization.logger.enableLevels = [
     LevelMessages.error,

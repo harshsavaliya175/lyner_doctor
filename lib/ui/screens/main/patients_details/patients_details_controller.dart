@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
@@ -12,6 +13,7 @@ import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/model/patient_details_model.dart';
 import 'package:lynerdoctor/model/patient_treatment_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class PatientsDetailsController extends GetxController {

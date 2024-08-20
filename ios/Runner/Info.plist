@@ -41,6 +41,8 @@
 	<string>App need Required to access the camera.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>App need to save detected smiles to the photo library.</string>
+    <key>NSCameraUsageDescription</key>
+	<string>App need Required to access the camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App needs access to photo lib for profile images</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

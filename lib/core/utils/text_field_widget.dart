@@ -64,6 +64,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
   bool isFocused = false;
   bool obscureValue = false;
 
+  final textFieldFocusNode = FocusNode();
+  bool isFocused = false;
+  bool obscureValue = false;
   // final Color fillColor = whiteColor;
 
   @override

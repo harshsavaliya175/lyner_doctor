@@ -439,7 +439,9 @@ class PatientsRepo {
     dynamic data;
     String msg = "";
 
-    final Map<String, int> params = {"user_id": userId};
+    final Map<String, int> params = {
+      "user_id": userId
+    };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.deleteLynerConnect,
       RequestParam.showError: SHOW_ERROR,

@@ -137,7 +137,7 @@ class AppPatientCard extends StatelessWidget {
                 title: title3.translateText,
                 data: data3,
               ),
-              if (isShowBottomWidget)
+              /*if (isShowBottomWidget)
                 Column(
                   children: [
                     15.space(),
@@ -178,6 +178,24 @@ class AppPatientCard extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),*/
+              if (isShowBottomWidget)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: AppButton(
+                    text: isEditCard
+                        ? LocaleKeys.edit.translateText
+                        : LocaleKeys.submitTheCase.translateText,
+                    bgColor: primaryBrown,
+                    fontSize: !isTablet ? 16 : 20,
+                    btnHeight: !isTablet ? 50 : 60,
+                    btnWidth: !isTablet ?145:180,
+                    fontColor: whiteColor,
+                    radius: 100,
+                    onTap: () {
+                      editOrSubmitOnTap();
+                    },
+                  ),
                 ),
               /*if (isShowBottomWidget)
                 Align(

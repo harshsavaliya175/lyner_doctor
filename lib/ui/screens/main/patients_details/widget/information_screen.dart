@@ -624,6 +624,8 @@ class InformationScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ).onClick(
+                          () {},
                         ),
                         12.space(),
                         "Lower Jaw STL File".appCommonText(
@@ -661,6 +663,10 @@ class InformationScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ).onClick(
+                          () {
+                            // controller.downloadFile(ApiUrl.lowerJawStlFile+controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile);
+                          },
                         ),
                       ],
                     ),
