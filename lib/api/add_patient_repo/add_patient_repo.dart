@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:lynerdoctor/api/api_helpers.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
@@ -54,15 +55,15 @@ class AddPatientRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
-  static Future<ResponseItem> getPatientInformationDetails(int patientId) async {
+
+  static Future<ResponseItem> getPatientInformationDetails(
+      int patientId) async {
     ResponseItem result;
     bool status = true;
     dynamic data;
     String msg = "";
 
-    final Map<String, int> params = {
-      "patient_id":patientId
-    };
+    final Map<String, int> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getPatientInformationDetails,
       RequestParam.showError: SHOW_ERROR,
@@ -76,15 +77,15 @@ class AddPatientRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
-  static Future<ResponseItem> getPatientPrescriptionDetails(int patientId) async {
+
+  static Future<ResponseItem> getPatientPrescriptionDetails(
+      int patientId) async {
     ResponseItem result;
     bool status = true;
     dynamic data;
     String msg = "";
 
-    final Map<String, int> params = {
-      "patient_id":patientId
-    };
+    final Map<String, int> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getPatientPrescriptionDetails,
       RequestParam.showError: SHOW_ERROR,
@@ -137,6 +138,7 @@ class AddPatientRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+
   static Future<ResponseItem> addUpdatePatientDetails({
     required int toothCaseId,
     required int patientId,
@@ -191,13 +193,12 @@ class AddPatientRepo {
       "incisive_covering": incisiveCovering,
       "treatment_notes": treatmentNotes,
       "dental_note": dentalNote,
-      "maxillary_incisal_note":maxillaryIncisalNote,
+      "maxillary_incisal_note": maxillaryIncisalNote,
       "accepted_technique_note": acceptedTechniqueNote,
       "dental_history_note": dentalHistoryNote,
       "incisive_covering_note": incisiveCoveringNote,
       "other_recommendations": otherRecommendations,
       "draft_view_page": draftViewPage,
-
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.updatePatientDetails,
@@ -222,13 +223,11 @@ class AddPatientRepo {
     bool status = true;
     dynamic data;
     String msg = "";
-
-
     http.MultipartFile? imageFile;
     if (file != null) {
       File compressedFile = file;
       final List<String> mimeType =
-      lookupMimeType(compressedFile.path)!.split("/");
+          lookupMimeType(compressedFile.path)!.split("/");
       final images = http.MultipartFile.fromBytes(
         "$paramName",
         compressedFile.readAsBytesSync(),
@@ -246,7 +245,59 @@ class AddPatientRepo {
     };
     String queryString = Uri(queryParameters: queryParameters).query;
     String requestUrl = ApiUrl.baseUrl + queryString;
-    result = await BaseApiHelper.uploadFile(requestUrl,imageFile,null, params, true);
+    result = await BaseApiHelper.uploadFile(
+        requestUrl, imageFile, null, params, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> uploadPatientMultipleImage({
+    required List<File> imageList,
+    required String? patientId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+    };
+
+    List<http.MultipartFile> faceImg = [];
+    List<String> keys = [
+      "patient_gauche",
+      "patient_face",
+      "patient_sourire",
+      "patient_intra_max",
+      "patient_inter_gauche",
+      "patient_intra_droite",
+      "patient_inter_face",
+      "patient_intra_gauche",
+    ];
+
+    for (int i = 0; i < imageList.length; i++) {
+      File compressedFile = imageList[i];
+      List<String> mimeType = lookupMimeType(compressedFile.path)!.split("/");
+      http.MultipartFile plantImage = http.MultipartFile.fromBytes(
+        keys[i],
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      faceImg.add(plantImage);
+    }
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.uploadPatientSingleImage,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result =
+        await BaseApiHelper.uploadFile(requestUrl, null, faceImg, params, true);
     status = result.status;
     data = result.data;
     msg = result.msg;
@@ -316,7 +367,8 @@ class AddPatientRepo {
     if (file != null) {
       File compressedFile = file;
       final String? mimeTypeString = lookupMimeType(compressedFile.path);
-      final mimeType = mimeTypeString?.split("/") ?? ["application", "octet-stream"]; // Default MIME type
+      final mimeType = mimeTypeString?.split("/") ??
+          ["application", "octet-stream"]; // Default MIME type
 
       dicomFileType = http.MultipartFile.fromBytes(
         "dcom_file",
@@ -345,7 +397,8 @@ class AddPatientRepo {
     };
     String queryString = Uri(queryParameters: queryParameters).query;
     String requestUrl = ApiUrl.baseUrl + queryString;
-    result = await BaseApiHelper.uploadFile(requestUrl, dicomFileType, null, params, true);
+    result = await BaseApiHelper.uploadFile(
+        requestUrl, dicomFileType, null, params, true);
     status = result.status;
     data = result.data;
     msg = result.msg;

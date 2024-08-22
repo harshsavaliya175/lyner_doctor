@@ -194,5 +194,8 @@ abstract class  LocaleKeys {
   static const update = 'update';
   static const treatmentStartDate = 'treatmentStartDate';
   static const pleaseEnterTreatmentStartDate = 'pleaseEnterTreatmentStartDate';
+  static const changingCameraLens = 'changingCameraLens';
+  static const modify = 'modify';
+  static const accept = 'accept';
 
 }

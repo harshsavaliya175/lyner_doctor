@@ -50,6 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               await ImageGallerySaver.saveImage(imageBytes, quality: 100);
             }
           }
+          // showAppSnackBar("File download successfully.");
           downloadTaskId.remove(id);
           if (downloadTaskId.keys.isEmpty) {
             isDownloadRunning = false;

@@ -40,6 +40,7 @@ class ApiUrl {
   static const String lowerJawStlFile = "${patientImage}lower_jaw_stl_file/";
   static const String upperJawStlFile = "${patientImage}upper_jaw_stl_file/";
   static const String dicomFile = "${baseImagePath}dcom_files/final/";
+  static const String commentFile = "${baseImagePath}comment_files/final/";
 }
 
 class MethodNames {

@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:lynerdoctor/core/utils/face_detector/face_detector_view.dart';
 import 'package:lynerdoctor/ui/screens/auth/change_password/change_password_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/edit_profile/edit_profile.dart';
 import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_screen.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const String lynerConnectDetails = "/lynerConnectDetails";
   static const String addEditLynerConnect = "/addEditLynerConnect";
   static const String patientsDetailsScreen = "/patientsDetailsScreen";
+  static const String faceDetectorView = "/faceDetectorView";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -52,5 +54,7 @@ class Routes {
     GetPage(
         name: Routes.patientsDetailsScreen,
         page: () => PatientsDetailsScreen()),
+    GetPage(
+        name: Routes.faceDetectorView, page: () => const FaceDetectorView()),
   ];
 }

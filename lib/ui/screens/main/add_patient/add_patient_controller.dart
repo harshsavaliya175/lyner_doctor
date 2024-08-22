@@ -25,6 +25,7 @@ class AddPatientController extends GetxController {
   int currentStep = 0;
   late PageController pageController;
 
+  List<File> smileImg = [];
   List<ProductListData> products = [];
   ProductListData? selectedProduct;
   bool isSelectedProductPlan = false;
@@ -111,10 +112,10 @@ class AddPatientController extends GetxController {
       if (patientData?.draftViewPage == "patient_info_page") {
         isLoading = true;
         await goToStep(1);
-      }else if (patientData?.draftViewPage == "upload_photo_page") {
+      } else if (patientData?.draftViewPage == "upload_photo_page") {
         isLoading = true;
         await goToStep(2);
-      }else if (patientData?.draftViewPage == "patient_prescription_page") {
+      } else if (patientData?.draftViewPage == "patient_prescription_page") {
         isLoading = true;
         await goToStep(3);
       }
@@ -507,17 +508,17 @@ class AddPatientController extends GetxController {
 
   Future<void> addNewPatient() async {
     isLoading = true;
-    if(pickedDate != null){
-      dateTextField =
-          DateFormat('yyyy-MM-dd').format(pickedDate!);
-    }else{
+    if (pickedDate != null) {
+      dateTextField = DateFormat('yyyy-MM-dd').format(pickedDate!);
+    } else {
       dateTextField = "";
     }
     ResponseItem result = await AddPatientRepo.addNewPatientStep1Step2(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         clinicBillingId: selectedClinicBillingData?.clinicBillingId.toString(),
-        clinicLocationId: selectedClinicDeliveryData?.clinicLocationId.toString(),
+        clinicLocationId:
+            selectedClinicDeliveryData?.clinicLocationId.toString(),
         dateOfBirth: dateTextField,
         doctorId: selectedDoctorData?.doctorId.toString(),
         email: emailController.text,
@@ -584,6 +585,26 @@ class AddPatientController extends GetxController {
     update();
   }
 
+  Future<void> uploadPatientMultipleImage({
+    required List<File> files,
+  }) async {
+    isLoading = false;
+    ResponseItem result = await AddPatientRepo.uploadPatientMultipleImage(
+        imageList: files, patientId: patientData?.patientId.toString());
+    isLoading = false;
+    try {
+      if (result.status) {
+        // showAppSnackBar(result.msg);
+        isLoading = false;
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
   Future<void> goToStep(int step) async {
     currentStep = step;
     pageController.jumpToPage(step);
@@ -622,15 +643,13 @@ class AddPatientController extends GetxController {
         .map((item) => item.title)
         .toList();
     print(incisorCoveringList.join(', '));
-     if(pickedDate != null){
-      dateTextField =
-          DateFormat('yyyy-MM-dd').format(pickedDate!);
-
-    }else if (patientData?.dateOfBirth != null) {
+    if (pickedDate != null) {
+      dateTextField = DateFormat('yyyy-MM-dd').format(pickedDate!);
+    } else if (patientData?.dateOfBirth != null) {
       dateTextField =
           DateFormat('yyyy-MM-dd').format(patientData!.dateOfBirth!);
       // dateOfBirthController.text = dateTextField!;
-    }else{
+    } else {
       dateTextField = "";
     }
     ResponseItem result = await AddPatientRepo.addUpdatePatientDetails(
@@ -670,7 +689,6 @@ class AddPatientController extends GetxController {
           print(patientData);
           Get.back();
           if (!isFromFinishStep) {
-
             Get.find<PatientsController>().getClinicListBySearchOrFilter();
           }
           showAppSnackBar(
@@ -751,8 +769,8 @@ class AddPatientController extends GetxController {
             language: patientData?.doctor?.language ?? "",
             clinicId: patientData?.doctor?.clinicId ?? 0,
           );
-          doctorController.text =
-              (selectedDoctorData?.firstName??'')+(selectedDoctorData?.lastName??'');
+          doctorController.text = (selectedDoctorData?.firstName ?? '') +
+              (selectedDoctorData?.lastName ?? '');
           upperJawImageFileTextCtrl.text =
               patientData?.patientPhoto?.upperJawStlFile ?? '';
           lowerJawImageFileTextCtrl.text =
@@ -878,8 +896,7 @@ class AddPatientController extends GetxController {
     if (data?.dentalClass == LocaleKeys.maintenir.translateText) {
       isClassesDental = 1;
       classesDentalText = LocaleKeys.maintenir.translateText;
-    } else if (data?.dentalClass ==
-        LocaleKeys.ameliorerClasses.translateText) {
+    } else if (data?.dentalClass == LocaleKeys.ameliorerClasses.translateText) {
       isClassesDental = 2;
       classesDentalText = LocaleKeys.ameliorerClasses.translateText;
     } else {
@@ -995,7 +1012,7 @@ class AddPatientController extends GetxController {
   }*/
   Future<void> uploadDicomFile(File file, var patientId) async {
     isDcomFileLoading = true;
-    uploadProgress = 0.0 ;
+    uploadProgress = 0.0;
     update();
     // Generate unique upload ID if not already set
     if (uploadId == null) {

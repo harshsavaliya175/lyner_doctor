@@ -207,7 +207,10 @@ class CodegenLoader extends AssetLoader{
   "no": "No",
   "update": "Update",
   "treatmentStartDate": "Treatment Start Date",
-  "pleaseEnterTreatmentStartDate": "Please enter treatment start date"
+  "pleaseEnterTreatmentStartDate": "Please enter treatment start date",
+  "changingCameraLens": "Changing camera lens",
+  "modify": "Modify",
+  "accept": "Accept"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

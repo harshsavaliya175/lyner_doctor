@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -818,7 +819,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
               ),
-              "+Add all Photos".appCommonText(
+              "+Add all Photos"
+                  .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 16 : 19,
                 decoration: TextDecoration.underline,
@@ -826,6 +828,27 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 weight: FontWeight.w500,
                 color: primaryBrown,
               )
+                  .onClick(
+                () {
+                  Get.toNamed(Routes.faceDetectorView)?.then(
+                    (dynamic result) {
+                      if (result != null && result is List<File>) {
+                        ctrl.smileImg = result;
+                        ctrl.profileImageFile = ctrl.smileImg[0];
+                        ctrl.faceImageFile = ctrl.smileImg[1];
+                        ctrl.smileImageFile = ctrl.smileImg[2];
+                        ctrl.intraMaxImageFile = ctrl.smileImg[3];
+                        ctrl.intraMandImageFile = ctrl.smileImg[4];
+                        ctrl.intraRightImageFile = ctrl.smileImg[5];
+                        ctrl.intraFaceImageFile = ctrl.smileImg[6];
+                        ctrl.intraLeftImageFile = ctrl.smileImg[7];
+                        ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
+                        ctrl.update();
+                      }
+                    },
+                  );
+                },
+              ),
             ],
           ),
           !isTablet ? 10.space() : 15.space(),
