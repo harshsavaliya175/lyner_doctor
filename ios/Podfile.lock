@@ -47,6 +47,15 @@ PODS:
     - Mantle
     - SDWebImage
     - SDWebImageWebPCoder
+  - flutter_inappwebview_ios (0.0.1):
+    - Flutter
+    - flutter_inappwebview_ios/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview_ios/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
+  - flutter_pdfview (1.0.2):
+    - Flutter
   - flutter_timezone (0.0.1):
     - Flutter
   - google_mlkit_commons (0.7.1):
@@ -124,6 +133,9 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
+  - open_file (0.0.1):
+    - Flutter
+  - OrderedSet (5.0.0)
   - package_info (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -145,6 +157,8 @@ PODS:
     - Flutter
     - FlutterMacOS
   - SwiftyGif (5.4.5)
+  - url_launcher_ios (0.0.1):
+    - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
@@ -156,16 +170,20 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
+  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
+  - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - open_file (from `.symlinks/plugins/open_file/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -185,6 +203,7 @@ SPEC REPOS:
     - MLKitFaceDetection
     - MLKitVision
     - nanopb
+    - OrderedSet
     - PromisesObjC
     - SDWebImage
     - SDWebImageWebPCoder
@@ -205,6 +224,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_downloader/ios"
   flutter_image_compress_common:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
+  flutter_inappwebview_ios:
+    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
+  flutter_pdfview:
+    :path: ".symlinks/plugins/flutter_pdfview/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   google_mlkit_commons:
@@ -215,6 +238,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  open_file:
+    :path: ".symlinks/plugins/open_file/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider_foundation:
@@ -225,6 +250,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
     :path: ".symlinks/plugins/sqflite/darwin"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
@@ -238,6 +265,8 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_downloader: b7301ae057deadd4b1650dc7c05375f10ff12c39
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
+  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
+  flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   google_mlkit_commons: 96aaca445520311b84a2da013dedf3427fe4cc69
   google_mlkit_face_detection: b760d6035222630f347352b3b13f4a23ea9fb994
@@ -256,6 +285,8 @@ SPEC CHECKSUMS:
   MLKitFaceDetection: 7c0e8bf09ddd27105da32d088fca978a99fc30cc
   MLKitVision: e858c5f125ecc288e4a31127928301eaba9ae0c1
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
@@ -265,6 +296,7 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   webview_flutter_wkwebview: 2a23822e9039b7b1bc52e5add778e5d89ad488d1
 
 PODFILE CHECKSUM: 6dd3f123bb0a0235058ff10b1f3a400da85176e4
