@@ -298,6 +298,10 @@ class $AssetsImagesGen {
   AssetGenImage get imgLeftWithout =>
       const AssetGenImage('assets/images/img_left_without.png');
 
+  /// File path: assets/images/img_pdf_library.png
+  AssetGenImage get imgPdfLibrary =>
+      const AssetGenImage('assets/images/img_pdf_library.png');
+
   /// File path: assets/images/img_profile.png
   AssetGenImage get imgProfile =>
       const AssetGenImage('assets/images/img_profile.png');
@@ -325,6 +329,10 @@ class $AssetsImagesGen {
   AssetGenImage get imgUserPlaceholder =>
       const AssetGenImage('assets/images/img_user_placeholder.png');
 
+  /// File path: assets/images/img_video.png
+  AssetGenImage get imgVideo =>
+      const AssetGenImage('assets/images/img_video.png');
+
   /// List of all assets
   List<dynamic> get values => [
         imgCentreAligner,
@@ -337,13 +345,15 @@ class $AssetsImagesGen {
         imgIntraMax,
         imgLeftAligner,
         imgLeftWithout,
+        imgPdfLibrary,
         imgProfile,
         imgRightAligner,
         imgRightWithout,
         imgSmile,
         imgSplash,
         imgTab,
-        imgUserPlaceholder
+        imgUserPlaceholder,
+        imgVideo
       ];
 }
 

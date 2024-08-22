@@ -71,6 +71,7 @@ class MethodNames {
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
+  static const String getLibraryList = "getLibraryList";
   static const String getPatientCommentsDetails = "getPatientCommentsDetails";
   static const String addTextPatientComments = "addTextPatientComments";
   static const String addFilePatientComments = "addFilePatientComments";
