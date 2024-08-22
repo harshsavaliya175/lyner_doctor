@@ -56,7 +56,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 validator: (value) {
                   if (value.isEmpty) {
                     ctrl.update();
-                    return LocaleKeys.pleaseEnterOldPassword.translateText;;
+                    return LocaleKeys.pleaseEnterOldPassword.translateText;
                   } else if (value.length < 6) {
                     ctrl.update();
                     return LocaleKeys.passwordShouldAtlasSixCharacters.translateText;

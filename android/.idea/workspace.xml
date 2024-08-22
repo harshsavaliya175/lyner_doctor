@@ -10,84 +10,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85efbc02-22dd-4dfd-870a-f32ff82829aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/build/entrypoint/.packageLocations" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/build/entrypoint/build.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/build/entrypoint/build.dart.dill" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/.filecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/app.dill" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/debug_android_application.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/flutter_assets.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/gen_dart_plugin_registrant.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/gen_localizations.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/kernel_snapshot.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/kernel_snapshot.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/native_assets.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/native_assets.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/native_assets.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/7734cf2639cae4dd6dd042e25ac27426/outputs.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/.filecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/App.framework/App" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/app.dill" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/debug_ios_bundle_flutter_assets.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/debug_universal_framework.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/debug_unpack_ios.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/flutter_assets.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/gen_dart_plugin_registrant.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/gen_localizations.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/kernel_snapshot.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/kernel_snapshot.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/native_assets.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/native_assets.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/native_assets.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/97ed03f8b12f997939ac8ccb626cf5be/outputs.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/dart_plugin_registrant.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/pub/bin/build_runner/build_runner.dart-3.4.3.snapshot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.dart_tool/pub/bin/easy_localization/generate.dart-3.4.3.snapshot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_default_file.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_jpg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_mp3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_pdfFile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_png.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_ppt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_svg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_videoFile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../assets/icons/ic_zip.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../build/a7313b5f0a7038623b28aebcab7a3eb1/_composite.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../build/a7313b5f0a7038623b28aebcab7a3eb1/gen_dart_plugin_registrant.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../build/a7313b5f0a7038623b28aebcab7a3eb1/gen_localizations.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/ui/widgets/app_download_progress_dialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/filepaths.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/model/library_list_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/pdf/pdf_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/video/video_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/icons/ic_pdfFile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/icons/ic_videoFile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/icons/ic_zip.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner/AppDelegate.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/api/patients_repo/patients_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/api/patients_repo/patients_repo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/utils/text_field_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/text_field_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/gen/assets.gen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/gen/assets.gen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/image_picker.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/image_picker.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/auth/change_password/change_password_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/auth/change_password/change_password_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/patient_treatments_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/patient_treatments_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/widgets/app_download_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/widgets/app_download_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/widgets/app_patient_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/widgets/app_patient_card.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
@@ -99,11 +46,18 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/imac/.android/avd/Pixel_8_API_34.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=d4be44d8)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="resourceFile" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -114,12 +68,12 @@
     &quot;assignee&quot;: &quot;priyankgandhi0&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/priyankgandhi0/lyner_doctor.git",
-    "accountId": "308977f0-cab0-42d0-b32f-cd876f25b97f"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/priyankgandhi0/lyner_doctor.git&quot;,
+    &quot;accountId&quot;: &quot;308977f0-cab0-42d0-b32f-cd876f25b97f&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -130,6 +84,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Android App.app.executor": "Run",
     "ResourceManagerPrefKey.ResourceType": "MIPMAP",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -165,6 +120,7 @@
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />

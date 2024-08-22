@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/gen/assets.gen.dart';
 
 extension MediaQueryValues on BuildContext {
   double get width => MediaQuery.of(this).size.width;
@@ -200,4 +201,17 @@ TextStyle textFieldTextStyle({
     fontWeight: weight,
     decoration: decoration,
   );
+}
+
+String getFileIcon(String? extension) {
+  switch (extension ?? '') {
+    case "pdf":
+      return Assets.images.imgPdfLibrary.path;
+    case "video":
+      return Assets.images.imgVideo.path;
+    case "mp4":
+      return Assets.images.imgVideo.path;
+    default:
+      return Assets.images.imgPdfLibrary.path;
+  }
 }
