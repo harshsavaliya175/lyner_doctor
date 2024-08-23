@@ -70,6 +70,7 @@ abstract class  LocaleKeys {
   static const profile = 'profile';
   static const lynerOrthodocs = 'lynerOrthodocs';
   static const search = 'search';
+  static const search_financial = 'search_financial';
   static const tasks = 'tasks';
   static const delete = 'delete';
   static const submitTheCase = 'submitTheCase';

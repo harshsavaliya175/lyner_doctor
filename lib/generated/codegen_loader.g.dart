@@ -84,6 +84,7 @@ class CodegenLoader extends AssetLoader{
   "profile": "Profile",
   "lynerOrthodocs": "Lyner Orthodocs",
   "search": "Search....",
+  "search_financial": "Search financial",
   "tasks": "Tasks",
   "delete": "Delete",
   "submitTheCase": "Submit the case",

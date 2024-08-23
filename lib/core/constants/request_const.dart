@@ -80,9 +80,9 @@ class MethodNames {
   static const String addEditPatientTreatments = "addEditPatientTreatments";
   static const String getPatientTreatmentsDetails =
       "getPatientTreatmentsDetails";
-
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
+  static const String getFinancialList = "getFinancialList";
 }
 
 class RequestHeaderKey {

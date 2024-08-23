@@ -8,6 +8,7 @@ import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/splash/splash_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/financial/financial_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const String addEditLynerConnect = "/addEditLynerConnect";
   static const String patientsDetailsScreen = "/patientsDetailsScreen";
   static const String faceDetectorView = "/faceDetectorView";
+  static const String financialScreen = "/financialScreen";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -56,5 +58,6 @@ class Routes {
         page: () => PatientsDetailsScreen()),
     GetPage(
         name: Routes.faceDetectorView, page: () => const FaceDetectorView()),
+    GetPage(name: Routes.financialScreen, page: () => const FinancialScreen()),
   ];
 }

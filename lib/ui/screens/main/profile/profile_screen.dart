@@ -82,7 +82,9 @@ class ProfileScreen extends StatelessWidget {
             profileScreenItem(
               leadingIcon: Assets.icons.icFinancial,
               title: LocaleKeys.financial,
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.financialScreen);
+              },
             ),
             16.space(),
             profileScreenItem(
