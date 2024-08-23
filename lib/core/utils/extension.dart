@@ -203,13 +203,11 @@ TextStyle textFieldTextStyle({
   );
 }
 
-String getFileIcon(String? extension) {
-  switch (extension ?? '') {
-    case "pdf":
+String getFileIcon(int? isYoutube) {
+  switch (isYoutube) {
+    case 0:
       return Assets.images.imgPdfLibrary.path;
-    case "video":
-      return Assets.images.imgVideo.path;
-    case "mp4":
+    case 1:
       return Assets.images.imgVideo.path;
     default:
       return Assets.images.imgPdfLibrary.path;

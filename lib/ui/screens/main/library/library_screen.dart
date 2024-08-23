@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -54,14 +53,15 @@ class LibraryScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      3.space(),
+                      libraryData.isYoutube==1?0.space():3.space(),
                       HomeImage.assetImage(
-                          path: getFileIcon(libraryData.type ?? ''),
-                          height: !isTablet ? 45 : 60,
-                          shape: BoxShape.rectangle,
-                          width: !isTablet ? 45 : 60).paddingOnly(right: 5),
+                              path: getFileIcon(libraryData.isYoutube ),
+                              height: !isTablet ? libraryData.isYoutube==1?43:45 : 60,
+                              shape: BoxShape.rectangle,
+                              width: !isTablet ? libraryData.isYoutube==1?43:45 : 60)
+                          .paddingOnly(right: libraryData.isYoutube==1?8:5),
                       Expanded(
-                        child: (libraryData.libraryName ?? '').appCommonText(
+                        child: (libraryData.title ?? '').appCommonText(
                             size: !isTablet ? 16 : 19,
                             weight: FontWeight.w400,
                             color: blackColor,
@@ -75,10 +75,12 @@ class LibraryScreen extends StatelessWidget {
                     ],
                   ),
                 ).onTap(() {
-                  if(libraryData.type=="pdf"){
-                    ctrl.loadPdfFromUrl(libraryData.libraryUrl ?? '');
-                  }else if(libraryData.type=="video"){
-                    Get.to(() => VideoScreen());
+                  if (libraryData.isYoutube == 0) {
+                    ctrl.loadPdfFromUrl(
+                        "${ApiUrl.lynerLibraryUrl}${libraryData.file}");
+                  } else if (libraryData.isYoutube == 1) {
+                    ctrl.loadYoutubeUrl(libraryData.youtubeLink ?? '');
+
                   }
                 }).paddingSymmetric(vertical: 5);
               },

@@ -74,6 +74,7 @@ class PatientDetailsModel {
   final int? isProduction;
   final int? isDelivered;
   final int? isVirtual;
+  final int? adminArchive;
   final dynamic trackingId;
   final int? isDraft;
   final dynamic draftViewPage;
@@ -99,6 +100,7 @@ class PatientDetailsModel {
     this.addPlanCount,
     this.clinicItem,
     this.adminItem,
+    this.adminArchive,
     this.toothCaseId,
     this.doctorId,
     this.clinicId,
@@ -224,6 +226,7 @@ class PatientDetailsModel {
         patientUniqueId: json["patient_unique_id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
+        adminArchive: json["admin_archive"],
         email: json["email"],
         dateOfBirth: json["date_of_birth"] == null
             ? null
@@ -286,6 +289,7 @@ class PatientDetailsModel {
         "first_name": firstName,
         "last_name": lastName,
         "email": email,
+        "admin_archive": adminArchive,
         "date_of_birth":
             "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
         "patient_profile": patientProfile,

@@ -8,16 +8,49 @@ import 'package:lynerdoctor/model/library_list_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'video/video_screen.dart';
 
 class LibraryController extends GetxController {
   bool isLoading = false;
   List<LibraryListData> libraryListData = [];
   var pdfPath = '';
+  var youtubeUrl = '';
+
+  // late YoutubePlayerController youtubeController;
+
+/*  void initializeYoutubePlayer() {
+    String? videoId = YoutubePlayer.convertUrlToId(youtubeUrl);
+    if (videoId != null) {
+      youtubeController = YoutubePlayerController(
+        initialVideoId: videoId,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      );
+    } else {
+      print("Failed to extract video ID from URL");
+    }
+  }
+
+  @override
+  void onClose() {
+    youtubeController.dispose();
+    super.onClose();
+  }*/
+
+  void loadYoutubeUrl(String url){
+    youtubeUrl = url;
+    Get.to(() => VideoScreen());
+    update();
+  }
   Future<void> loadPdfFromUrl(String url) async {
     isLoading = true;
     update();
     try {
-      PermissionStatus status = await Permission.storage.status;
+      PermissionStatus status = await Permission.manageExternalStorage.status;
       if (status.isGranted) {
         await downloadAndOpenPdf(url);
       } else if (status.isDenied || status.isRestricted) {
