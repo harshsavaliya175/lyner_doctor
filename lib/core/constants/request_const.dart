@@ -28,6 +28,9 @@ class ApiUrl {
   static const String patientInterFace = "${patientImage}patient_inter_face/";
   static const String lynerDetailsBaseUrl =
       "https://lynertech.com/mobile/app_images/gallery_images/";
+
+  static const String lynerLibraryUrl =
+      "https://lynertech.com/app_images/library_file/";
   static const String patientIntraDroite =
       "${patientImage}patient_intra_droite/";
   static const String patientIntraMax = "${patientImage}patient_intra_max/";

@@ -21,7 +21,7 @@ class LibraryListModel {
 
   factory LibraryListModel.fromJson(Map<String, dynamic> json) => LibraryListModel(
     data: json["data"] == null ? [] : List<LibraryListData>.from(json["data"]!.map((x) => LibraryListData.fromJson(x))),
-    status: json["status"]==1,
+    status: json["status"],
     msg: json["msg"],
   );
 
@@ -34,32 +34,44 @@ class LibraryListModel {
 
 class LibraryListData {
   int? libraryId;
-  int? clinicId;
-  String? libraryName;
-  String? libraryUrl;
-  String? type;
+  String? title;
+  String? youtubeLink;
+  String? file;
+  int? isYoutube;
+  int? isDelete;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   LibraryListData({
     this.libraryId,
-    this.clinicId,
-    this.libraryName,
-    this.libraryUrl,
-    this.type,
+    this.title,
+    this.youtubeLink,
+    this.file,
+    this.isYoutube,
+    this.isDelete,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory LibraryListData.fromJson(Map<String, dynamic> json) => LibraryListData(
     libraryId: json["library_id"],
-    clinicId: json["clinic_id"],
-    libraryName: json["library_name"],
-    libraryUrl: json["library_url"],
-    type: json["type"],
+    title: json["title"],
+    youtubeLink: json["youtube_link"],
+    file: json["file"],
+    isYoutube: json["is_youtube"],
+    isDelete: json["is_delete"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
     "library_id": libraryId,
-    "clinic_id": clinicId,
-    "library_name": libraryName,
-    "library_url": libraryUrl,
-    "type": type,
+    "title": title,
+    "youtube_link": youtubeLink,
+    "file": file,
+    "is_youtube": isYoutube,
+    "is_delete": isDelete,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 }

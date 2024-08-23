@@ -2,16 +2,20 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/model/patient_details_model.dart';
 import 'package:lynerdoctor/model/patient_treatment_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
+import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
+import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class PatientsDetailsController extends GetxController {
@@ -343,6 +347,52 @@ class PatientsDetailsController extends GetxController {
     if (progressValue == 100) {
       progressValue = 0.0;
       showProgressDialog = false;
+    }
+    update();
+  }
+
+  void deletePatient(String patientId, int? adminArchive) {
+    showDialog(
+      barrierDismissible: false,
+      context: Get.context!,
+      builder: (context) {
+        return CommonDialog(
+          dialogBackColor: Colors.white,
+          tittleText: adminArchive != 0 ? "UnArchive" : "Archive",
+          buttonText: LocaleKeys.confirm.translateText,
+          buttonCancelText: LocaleKeys.cancel.translateText,
+          descriptionText:
+              "Are you sure you want to ${adminArchive != 0 ? "UnArchive" : "Archive"} this patient?",
+          cancelOnTap: () => Get.back(),
+          onTap: () {
+            callDeletePatientApi(patientId);
+            Get.find<PatientsController>().getClinicListBySearchOrFilter();
+            isLoading =false;
+            Get.back();
+          },
+          alignment: Alignment.center,
+        );
+      },
+    );
+  }
+
+  void callDeletePatientApi(String patientId) async {
+    isLoading = true;
+    Get.back();
+    ResponseItem result = await PatientsRepo.deletePatient(
+      patientId: patientId,
+    );
+    try {
+      if (result.status) {
+        showAppSnackBar(result.msg);
+
+        // patientList.clear();
+        // getClinicListBySearchOrFilter();
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
     }
     update();
   }

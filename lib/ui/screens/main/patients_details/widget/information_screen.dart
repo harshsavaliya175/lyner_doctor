@@ -37,21 +37,24 @@ class InformationScreen extends StatelessWidget {
                     height: isTablet ? 60 : 40,
                     width: isTablet ? 140 : 110,
                     alignment: Alignment.center,
-                    child: "Archive".normalText(
-                      fontWeight: FontWeight.w500,
+                    child: (controller.patientDetailsModel?.adminArchive == 0
+                            ? "Archive"
+                            : "UnArchive")
+                        .normalText(
+                      fontWeight: FontWeight.w600,
                       color: primaryBrown,
                       fontSize: !isTablet ? 16 : 19,
                     ),
                     decoration: BoxDecoration(
-                      color: controller.selectedScreen == 0
-                          ? primaryBrown
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: controller.selectedScreen == 0
-                          ? null
-                          : Border.all(color: primaryBrown, width: 1),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(13),
+                      border: Border.all(color: primaryBrown, width: 1),
                     ),
-                  ).onClick(() {}),
+                  ).onClick(() {
+                    controller.deletePatient(
+                        controller.patientDetailsModel?.patientId.toString() ??
+                            '',controller.patientDetailsModel?.adminArchive);
+                  }),
                 ),
               LocaleKeys.information.translateText.normalText(
                 fontWeight: FontWeight.w600,
