@@ -258,6 +258,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/img_app_logo.png
+  AssetGenImage get imgAppLogo =>
+      const AssetGenImage('assets/images/img_app_logo.png');
+
   /// File path: assets/images/img_centre_aligner.png
   AssetGenImage get imgCentreAligner =>
       const AssetGenImage('assets/images/img_centre_aligner.png');
@@ -335,6 +339,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+        imgAppLogo,
         imgCentreAligner,
         imgCentreWithout,
         imgFace,

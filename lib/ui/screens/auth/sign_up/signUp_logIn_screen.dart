@@ -164,21 +164,19 @@ class SignUpSignInScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Checkbox(
-                        hoverColor: primaryBrown,
-                        activeColor: primaryBrown,
-                        checkColor: Colors.white,
-                        side: BorderSide(color: primaryBrown, width: 1.5),
-                        value: ctrl.isRememberPassword,
-                        onChanged: (bool? value) {
-                          ctrl.isRememberPassword = !ctrl.isRememberPassword;
-                          ctrl.update();
-                        },
-                      ),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Checkbox(
+                      hoverColor: primaryBrown,
+                      activeColor: primaryBrown,
+                      checkColor: Colors.white,
+                      side: BorderSide(color: primaryBrown, width: 1.5),
+                      value: ctrl.isRememberPassword,
+                      onChanged: (bool? value) {
+                        ctrl.isRememberPassword = !ctrl.isRememberPassword;
+                        ctrl.update();
+                      },
                     ),
                   ),
                   10.space(),

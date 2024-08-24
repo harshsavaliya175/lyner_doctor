@@ -10,6 +10,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
@@ -38,10 +39,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
     receivePort.listen(
       (message) async {
         String id = message[0];
-        int status = message[1];
+        String status = message[1];
         int progress = message[2];
         downloadProgress = progress.toDouble();
         // ctrl.setProgressValue(downloadProgress: downloadProgress);
+
+        if (downloadProgress == 100) {
+          receivePort.sendPort.send('Done');
+
+          await NotificationUtil.showProgressBarNotification(
+            11, // Notification ID
+            "Download file successful.", // Title
+            "Successfully uploaded", // Content
+            100, // Current progress
+            100, // Max progress
+          ).then((value) async {
+            await NotificationUtil.instance().cancel(1);
+            Future.delayed(const Duration(minutes: 1), () {
+              NotificationUtil.instance().cancel(11);
+            });
+          });
+        }
         if (status == DownloadTaskStatus.complete.index) {
           if (Platform.isIOS) {
             File file = File(downloadTaskId[id]);

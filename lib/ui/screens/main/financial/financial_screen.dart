@@ -35,15 +35,12 @@ class FinancialScreen extends StatelessWidget {
         ),
         leading: Assets.icons.icBack
             .svg(
-              height: 35,
-              width: 35,
+              height: !isTablet ? 25 : 30,
+              width: !isTablet ? 25 : 30,
               fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
             )
             .paddingOnly(
-                left: 10,
-                top: isTablet ? 22 : 2,
-                bottom: isTablet ? 22 : 0,
-                right: 10)
+                left: 10, top: isTablet ? 22 : 0, bottom: isTablet ? 22 : 0)
             .onClick(() {
           Get.back();
         }),

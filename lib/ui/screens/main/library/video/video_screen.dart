@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
-import 'package:lynerdoctor/core/utils/extension.dart';
-import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/ui/screens/main/library/library_controller.dart';
-
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -30,14 +28,12 @@ class _VideoScreenState extends State<VideoScreen> {
         initialVideoId: videoId,
         flags: const YoutubePlayerFlags(
           autoPlay: false,
-
           mute: false,
         ),
       );
     } else {
       print("Failed to extract video ID from URL");
     }
-
   }
 
   @override
@@ -49,52 +45,61 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appBgColor,
-      body: GetBuilder<LibraryController>(builder: (ctrl) {
-        double aspectRatio = MediaQuery.of(context).orientation == Orientation.portrait ? 9 / 16 : 16 / 9;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          /*  30.space(),
-            IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              tooltip: "Back",
-            ),*/
-
-            Expanded(
-              child: YoutubePlayer(
-                controller: _youtubeController,
-                showVideoProgressIndicator: false,
-                topActions: [
-                  SafeArea(
-                    child: GestureDetector(
-                      onTap: () {
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                        Get.back(); // Navigate back on tap
-                      },
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ).paddingOnly(left: 10),
-                ],
-                progressIndicatorColor: Colors.red,
-                onReady: () {
-                  print('Player is ready.');
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: appBgColor,
+        body: GetBuilder<LibraryController>(builder: (ctrl) {
+          double aspectRatio =
+              MediaQuery.of(context).orientation == Orientation.portrait
+                  ? 9 / 16
+                  : 16 / 9;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*  30.space(),
+              IconButton(
+                onPressed: () {
+                  Get.back();
                 },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                tooltip: "Back",
+              ),*/
+
+              Expanded(
+                child: YoutubePlayer(
+                  thumbnail: Assets.images.imgAppLogo.image(
+                    fit: BoxFit.fill,
+                  ),
+                  controller: _youtubeController,
+                  showVideoProgressIndicator: false,
+                  topActions: [
+                    SafeArea(
+                      child: GestureDetector(
+                        onTap: () {
+                          SystemChrome.setPreferredOrientations(
+                              [DeviceOrientation.portraitUp]);
+                          Get.back(); // Navigate back on tap
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ).paddingOnly(left: 10),
+                  ],
+                  progressIndicatorColor: Colors.red,
+                  onReady: () {
+                    print('Player is ready.');
+                  },
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+            ],
+          );
+        }),
+      ),
     );
   }
 }
