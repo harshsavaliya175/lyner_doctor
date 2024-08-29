@@ -183,7 +183,10 @@ class PatientsScreen extends StatelessWidget {
                               PatientResponseData? patientData =
                                   ctrl.patientList[index];
                               return AppPatientCard(
-                                isShowBottomWidget: patientData?.isDraft == 1,
+                                isDraft: patientData?.isDraft ?? 0,
+                                // isShowBottomWidget: patientData?.isDraft == 1,
+                                isShowBottomWidget:
+                                    ctrl.treatmentStatusFilterValue == 1,
                                 isEditCard: false,
                                 title1: LocaleKeys.statusCom,
                                 title2: LocaleKeys.patientIdCom,
@@ -198,14 +201,20 @@ class PatientsScreen extends StatelessWidget {
                                       patientData?.patientId.toString() ?? '');
                                 },
                                 editOrSubmitOnTap: () {
-                                  Get.toNamed(Routes.addPatientScreen,
-                                      arguments: patientData?.patientId);
+                                  if (patientData?.isDraft == 0) {
+                                    Get.toNamed(Routes.patientsDetailsScreen,
+                                        arguments: patientData?.patientId);
+                                  } else {
+                                    Get.toNamed(Routes.addPatientScreen,
+                                        arguments: patientData?.patientId);
+                                  }
                                 },
                                 patientImagePath:
                                     patientData?.patientProfile ?? '',
                               ).onClick(
                                 () {
-                                  if (patientData?.isDraft == 0) {
+                                  if (patientData?.isDraft == 0 &&
+                                      ctrl.treatmentStatusFilterValue != 1) {
                                     Get.toNamed(Routes.patientsDetailsScreen,
                                         arguments: patientData?.patientId);
                                   }
@@ -230,8 +239,9 @@ class PatientsScreen extends StatelessWidget {
     );
   }
 }
+
 String getClinicItemStatus(PatientResponseData? patientResponseData) {
-  if (patientResponseData?.isDraft==1) {
+  if (patientResponseData?.isDraft == 1) {
     return 'Brouillon';
   } else {
     switch (patientResponseData?.clinicItem) {
@@ -248,10 +258,11 @@ String getClinicItemStatus(PatientResponseData? patientResponseData) {
       case 'Approved By Doctor':
         return 'Approuvé par le Docteur';
       default:
-        if ((patientResponseData?.clinicItem??'').contains('Review Plan')) {
-          return (patientResponseData?.clinicItem??'').replaceFirst('Review ', '');
+        if ((patientResponseData?.clinicItem ?? '').contains('Review Plan')) {
+          return (patientResponseData?.clinicItem ?? '')
+              .replaceFirst('Review ', '');
         } else {
-          return patientResponseData?.clinicItem??'';
+          return patientResponseData?.clinicItem ?? '';
         }
     }
   }

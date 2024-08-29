@@ -9,6 +9,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color? bgColor;
   final Color? fontColor;
+  final Color? buttonBorderColor;
   final double? fontSize;
   final double? btnHeight;
   final double? btnWidth;
@@ -27,6 +28,7 @@ class AppButton extends StatelessWidget {
     this.boxShadow,
     this.fontSize,
     this.fontColor,
+    this.buttonBorderColor,
   });
 
   @override
@@ -38,6 +40,7 @@ class AppButton extends StatelessWidget {
         width: btnWidth ?? double.infinity,
         decoration: BoxDecoration(
           color: bgColor ?? Colors.white,
+          border: Border.all(color: buttonBorderColor ?? Colors.transparent),
           boxShadow: boxShadow ??
               [
                 BoxShadow(

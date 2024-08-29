@@ -29,6 +29,7 @@ class AppPatientCard extends StatelessWidget {
     this.isShowTitle = true,
     this.isShowBottomWidget = true,
     this.isShowDeleteButtonOnBottom = false,
+    this.isDraft = 0,
   }) : super(key: key);
 
   final bool isEditCard;
@@ -46,6 +47,7 @@ class AppPatientCard extends StatelessWidget {
   final bool isShowTitle;
   final bool isShowBottomWidget;
   final bool isShowDeleteButtonOnBottom;
+  final int isDraft;
 
   @override
   Widget build(BuildContext context) {
@@ -96,12 +98,14 @@ class AppPatientCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (isShowBottomWidget) ...[
+                    if (isDraft == 1) ...[
                       Align(
-                              alignment: Alignment.topRight,
-                              child: Assets.icons.icDeleteIcon
-                                  .svg(height: 23, width: 21))
-                          .onClick(
+                        alignment: Alignment.topRight,
+                        child: Assets.icons.icDeleteIcon.svg(
+                          height: 23,
+                          width: 21,
+                        ),
+                      ).onClick(
                         () {
                           deleteOnTap();
                         },
@@ -123,9 +127,27 @@ class AppPatientCard extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              patientCardTitleAndData(
-                title: title1.translateText,
-                data: data1,
+              Row(
+                children: [
+                  Expanded(
+                    child: patientCardTitleAndData(
+                      title: title1.translateText,
+                      data: data1,
+                    ),
+                  ),
+                  if (isShowDeleteButtonOnBottom)
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Assets.icons.icDeleteIcon.svg(
+                        height: 23,
+                        width: 21,
+                      ),
+                    ).onClick(
+                      () {
+                        deleteOnTap();
+                      },
+                    ).paddingOnly(right: 12),
+                ],
               ),
               12.space(),
               patientCardTitleAndData(
@@ -137,59 +159,19 @@ class AppPatientCard extends StatelessWidget {
                 title: title3.translateText,
                 data: data3,
               ),
-              /*if (isShowBottomWidget)
-                Column(
-                  children: [
-                    15.space(),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: isShowDeleteButtonOnBottom
-                              ? AppButton(
-                                  btnHeight: !isTablet ? 50 : 60,
-                                  text: LocaleKeys.delete.translateText,
-                                  fontSize: !isTablet ? 16 : 20,
-                                  fontColor: pinkColor,
-                                  bgColor: deleteButtonColor,
-                                  radius: 100,
-                                  onTap: () {
-                                    deleteOnTap();
-                                  },
-                                )
-                              : SizedBox(),
-                        ),
-                        20.space(),
-                        Expanded(
-                          child: AppButton(
-                            text: isEditCard
-                                ? LocaleKeys.edit.translateText
-                                : LocaleKeys.submitTheCase.translateText,
-                            bgColor: primaryBrown,
-                            fontSize: !isTablet ? 16 : 20,
-                            btnHeight: !isTablet ? 50 : 60,
-                            fontColor: whiteColor,
-                            radius: 100,
-                            onTap: () {
-                              editOrSubmitOnTap();
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),*/
               if (isShowBottomWidget)
                 Align(
                   alignment: Alignment.topRight,
                   child: AppButton(
                     text: isEditCard
                         ? LocaleKeys.edit.translateText
-                        : LocaleKeys.submitTheCase.translateText,
+                        : isDraft == 1
+                            ? LocaleKeys.check_draft.translateText
+                            : LocaleKeys.check_modification.translateText,
                     bgColor: primaryBrown,
                     fontSize: !isTablet ? 16 : 20,
                     btnHeight: !isTablet ? 50 : 60,
-                    btnWidth: !isTablet ?145:180,
+                    btnWidth: !isTablet ? 150 : 180,
                     fontColor: whiteColor,
                     radius: 100,
                     onTap: () {
@@ -197,24 +179,6 @@ class AppPatientCard extends StatelessWidget {
                     },
                   ),
                 ),
-              /*if (isShowBottomWidget)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: AppButton(
-                    text: isEditCard
-                        ? LocaleKeys.edit.translateText
-                        : LocaleKeys.submitTheCase.translateText,
-                    bgColor: primaryBrown,
-                    fontSize: !isTablet ? 16 : 20,
-                    btnHeight: !isTablet ? 50 : 60,
-                    btnWidth: !isTablet ? 145 : 180,
-                    fontColor: whiteColor,
-                    radius: 100,
-                    onTap: () {
-                      editOrSubmitOnTap();
-                    },
-                  ),
-                ),*/
               10.space(),
             ],
           ).paddingSymmetric(horizontal: 16),

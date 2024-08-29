@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'face_detector/detect_single_image/single_image_click_face_detector_view.dart';
 
 ImageUploadUtils imageUploadUtils = ImageUploadUtils();
 
@@ -43,6 +46,96 @@ class ImageUploadUtils {
                   ],
                 ),
               );
+            },
+          )
+        : showDialog(
+            context: context,
+            useSafeArea: false,
+            builder: (context) {
+              return SimpleDialog(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                title: Text("Select Image"),
+                children: [
+                  ListTile(
+                    title: Text("Photo Library"),
+                    leading: Icon(Icons.photo_library),
+                    onTap: () {
+                      _imageFormGallery(
+                          context: context, onImageChose: onImageChose);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Camera"),
+                    leading: Icon(Icons.photo_camera),
+                    onTap: () {
+                      imageFromCamera(
+                          context: context, onImageChose: onImageChose);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+  }
+
+  void faceDetectingOpenImageChooser({
+    required BuildContext context,
+    required Function onImageChose,
+    required int imageCount,
+    required String title,
+  }) {
+    Platform.isIOS
+        ? showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            builder: (context) {
+              return GetBuilder<AddPatientController>(
+                  builder: (AddPatientController ctrl) {
+                return Container(
+                  child: Wrap(
+                    children: [
+                      ListTile(
+                        title: Text("Gallery"),
+                        leading: Icon(Icons.photo_library),
+                        onTap: () {
+                          _imageFormGallery(
+                              context: context, onImageChose: onImageChose);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Camera"),
+                        leading: Icon(Icons.photo_camera),
+                        onTap: () {
+                          Get.to(() => SingleImageClickFaceDetectorView(
+                                imageCount: imageCount,
+                                title: title,
+                              ))?.then(
+                            (result) {
+                              if (result != null && result is File) {
+                                onImageChose(result);
+                                Get.back();
+                                // ctrl.intraLeftImageFile = result;
+                                // ctrl.uploadPatientSingleImage(
+                                //     paramName: 'patient_inter_gauche',
+                                //     file: result);
+                                // ctrl.update();
+                              }
+                            },
+                          );
+                          // imageFromCamera(
+                          //     context: context, onImageChose: onImageChose);
+                          // Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              });
             },
           )
         : showDialog(
@@ -457,10 +550,10 @@ class ImageUploadUtils {
     } else {
       // Handle Android permissions
       PermissionStatus status =
-      await Permission.manageExternalStorage.request();
+          await Permission.manageExternalStorage.request();
       if (status.isGranted) {
         final FilePickerResult? pickedFile =
-        await FilePicker.platform.pickFiles(
+            await FilePicker.platform.pickFiles(
           type: FileType.custom,
           allowedExtensions: [
             'stl',
@@ -477,12 +570,12 @@ class ImageUploadUtils {
               message: "Without this permission app can not change  picture.",
               mainButton: Platform.isIOS
                   ? SnackBarAction(
-                label: "Settings",
-                // textColor: Theme.of(context).accentColor,
-                onPressed: () {
-                  openAppSettings();
-                },
-              )
+                      label: "Settings",
+                      // textColor: Theme.of(context).accentColor,
+                      onPressed: () {
+                        openAppSettings();
+                      },
+                    )
                   : null,
               duration: Duration(seconds: 3)),
         );
@@ -491,7 +584,7 @@ class ImageUploadUtils {
         Get.showSnackbar(
           GetSnackBar(
             message:
-            "To access this feature please grant permission from settings.",
+                "To access this feature please grant permission from settings.",
             mainButton: SnackBarAction(
               label: "Settings",
               textColor: Colors.amber,
@@ -507,9 +600,6 @@ class ImageUploadUtils {
     }
   }
 }
-
-
-
 
 /*ImageUploadUtils imageUploadUtils = ImageUploadUtils();
 
@@ -639,7 +729,7 @@ class ImageUploadUtils {
     );
   }
 
-  *//*void _imageFormGallery(
+  */ /*void _imageFormGallery(
       {required BuildContext context, required Function onImageChose}) async {
     var status = await (Platform.isIOS
         ? Permission.storage.request()
@@ -741,7 +831,7 @@ class ImageUploadUtils {
       );
       return;
     }
-  }*//*
+  }*/ /*
 
   void _imageFormGallery(
       {required BuildContext context, required Function onImageChose}) async {

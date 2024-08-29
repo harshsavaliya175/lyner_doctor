@@ -262,6 +262,10 @@ class $AssetsImagesGen {
   AssetGenImage get imgAppLogo =>
       const AssetGenImage('assets/images/img_app_logo.png');
 
+  /// File path: assets/images/img_black_card.png
+  AssetGenImage get imgBlackCard =>
+      const AssetGenImage('assets/images/img_black_card.png');
+
   /// File path: assets/images/img_centre_aligner.png
   AssetGenImage get imgCentreAligner =>
       const AssetGenImage('assets/images/img_centre_aligner.png');
@@ -274,25 +278,49 @@ class $AssetsImagesGen {
   AssetGenImage get imgFace =>
       const AssetGenImage('assets/images/img_face.png');
 
+  /// File path: assets/images/img_face_detect.png
+  AssetGenImage get imgFaceDetect =>
+      const AssetGenImage('assets/images/img_face_detect.png');
+
   /// File path: assets/images/img_inter_face.png
   AssetGenImage get imgInterFace =>
       const AssetGenImage('assets/images/img_inter_face.png');
+
+  /// File path: assets/images/img_inter_face_detect.png
+  AssetGenImage get imgInterFaceDetect =>
+      const AssetGenImage('assets/images/img_inter_face_detect.png');
 
   /// File path: assets/images/img_inter_left.png
   AssetGenImage get imgInterLeft =>
       const AssetGenImage('assets/images/img_inter_left.png');
 
+  /// File path: assets/images/img_inter_left_detect.png
+  AssetGenImage get imgInterLeftDetect =>
+      const AssetGenImage('assets/images/img_inter_left_detect.png');
+
   /// File path: assets/images/img_inter_right.png
   AssetGenImage get imgInterRight =>
       const AssetGenImage('assets/images/img_inter_right.png');
+
+  /// File path: assets/images/img_inter_right_detect.png
+  AssetGenImage get imgInterRightDetect =>
+      const AssetGenImage('assets/images/img_inter_right_detect.png');
 
   /// File path: assets/images/img_intra_mand.png
   AssetGenImage get imgIntraMand =>
       const AssetGenImage('assets/images/img_intra_mand.png');
 
+  /// File path: assets/images/img_intra_mand_detect.png
+  AssetGenImage get imgIntraMandDetect =>
+      const AssetGenImage('assets/images/img_intra_mand_detect.png');
+
   /// File path: assets/images/img_intra_max.png
   AssetGenImage get imgIntraMax =>
       const AssetGenImage('assets/images/img_intra_max.png');
+
+  /// File path: assets/images/img_intra_max_detect.png
+  AssetGenImage get imgIntraMaxDetect =>
+      const AssetGenImage('assets/images/img_intra_max_detect.png');
 
   /// File path: assets/images/img_left_aligner.png
   AssetGenImage get imgLeftAligner =>
@@ -310,6 +338,10 @@ class $AssetsImagesGen {
   AssetGenImage get imgProfile =>
       const AssetGenImage('assets/images/img_profile.png');
 
+  /// File path: assets/images/img_profile_detect.png
+  AssetGenImage get imgProfileDetect =>
+      const AssetGenImage('assets/images/img_profile_detect.png');
+
   /// File path: assets/images/img_right_aligner.png
   AssetGenImage get imgRightAligner =>
       const AssetGenImage('assets/images/img_right_aligner.png');
@@ -321,6 +353,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/img_smile.png
   AssetGenImage get imgSmile =>
       const AssetGenImage('assets/images/img_smile.png');
+
+  /// File path: assets/images/img_smile_detect.png
+  AssetGenImage get imgSmileDetect =>
+      const AssetGenImage('assets/images/img_smile_detect.png');
 
   /// File path: assets/images/img_splash.svg
   SvgGenImage get imgSplash =>
@@ -340,21 +376,30 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         imgAppLogo,
+        imgBlackCard,
         imgCentreAligner,
         imgCentreWithout,
         imgFace,
+        imgFaceDetect,
         imgInterFace,
+        imgInterFaceDetect,
         imgInterLeft,
+        imgInterLeftDetect,
         imgInterRight,
+        imgInterRightDetect,
         imgIntraMand,
+        imgIntraMandDetect,
         imgIntraMax,
+        imgIntraMaxDetect,
         imgLeftAligner,
         imgLeftWithout,
         imgPdfLibrary,
         imgProfile,
+        imgProfileDetect,
         imgRightAligner,
         imgRightWithout,
         imgSmile,
+        imgSmileDetect,
         imgSplash,
         imgTab,
         imgUserPlaceholder,

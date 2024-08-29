@@ -14,8 +14,6 @@ import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/auth/edit_profile/edit_profile_controller.dart';
-import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
-import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
@@ -28,29 +26,39 @@ class EditProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBgColor,
-      appBar: appbarWithIcons(
+      appBar: AppBar(
+        toolbarHeight: 70,
         centerTitle: false,
         title: Text(
           LocaleKeys.editProfile.translateText,
+          textAlign: TextAlign.start,
           style: TextStyle(
-              fontFamily: Assets.fonts.maax,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              fontSize: !isTablet ? 20 : 22),
+            fontFamily: Assets.fonts.maax,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontSize: !isTablet ? 20 : 22,
+          ),
         ),
-        backgroundColor: Colors.white,
-        leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-          height: !isTablet ? 25 : 30,
-          width: !isTablet ? 25 : 30,
-          fit:!isTablet ?BoxFit.scaleDown: BoxFit.fill,
-        )
-            .paddingOnly(left: 10, top: isTablet ?22:0, bottom: isTablet ?22:0)
+              height: 35,
+              width: 35,
+              fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
+            )
+            .paddingOnly(
+              left: 10,
+              top: isTablet ? 22 : 2,
+              bottom: isTablet ? 22 : 0,
+              right: 10,
+            )
             .onClick(() {
           Get.back();
-          Get.find<ProfileController>().update();
         }),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.grey[300],
+        titleSpacing: 1,
+        elevation: 0.5,
+        scrolledUnderElevation: 0,
       ),
       body: GetBuilder<EditProfileController>(builder: (ctrl) {
         return Stack(
@@ -263,7 +271,7 @@ class EditProfile extends StatelessWidget {
                   35.space(),
                   AppButton(
                     text: LocaleKeys.update.translateText,
-                    btnHeight: !isTablet ?53:68,
+                    btnHeight: !isTablet ? 53 : 68,
                     onTap: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (ctrl.editProfileFormKey.currentState!.validate()) {
@@ -272,8 +280,8 @@ class EditProfile extends StatelessWidget {
                       }
                     },
                     boxShadow: [],
-                    radius: !isTablet ?25:40,
-                    fontSize: !isTablet ?20:23,
+                    radius: !isTablet ? 25 : 40,
+                    fontSize: !isTablet ? 20 : 23,
                     bgColor: primaryBrown,
                     weight: FontWeight.w700,
                     fontColor: Colors.white,

@@ -37,7 +37,7 @@ class InformationScreen extends StatelessWidget {
                     height: isTablet ? 60 : 40,
                     width: isTablet ? 140 : 110,
                     alignment: Alignment.center,
-                    child: (controller.patientDetailsModel?.adminArchive == 0
+                    child: (controller.patientDetailsModel?.isDeleted == 0
                             ? "Archive"
                             : "UnArchive")
                         .normalText(
@@ -52,8 +52,10 @@ class InformationScreen extends StatelessWidget {
                     ),
                   ).onClick(() {
                     controller.deletePatient(
-                        controller.patientDetailsModel?.patientId.toString() ??
-                            '',controller.patientDetailsModel?.adminArchive);
+                      controller.patientDetailsModel?.patientId.toString() ??
+                          '',
+                      controller.patientDetailsModel?.adminArchive,
+                    );
                   }),
                 ),
               LocaleKeys.information.translateText.normalText(
@@ -157,7 +159,7 @@ class InformationScreen extends StatelessWidget {
                                 fontSize: !isTablet ? 16 : 19,
                               ),
                               6.space(),
-                              (controller.patientDetailsModel?.bondDate
+                              (controller.patientDetailsModel?.dateOfBirth
                                           ?.isBlank ??
                                       true)
                                   ? "-".normalText(

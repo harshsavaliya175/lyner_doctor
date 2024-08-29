@@ -16,7 +16,6 @@ import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
-import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
@@ -30,29 +29,39 @@ class AddPatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbarWithIcons(
+        appBar: AppBar(
+          toolbarHeight: 70,
           centerTitle: false,
           title: Text(
             LocaleKeys.addNewPatient.translateText,
+            textAlign: TextAlign.start,
             style: TextStyle(
-                fontFamily: Assets.fonts.maax,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-                fontSize: !isTablet ? 20 : 25),
+              fontFamily: Assets.fonts.maax,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              fontSize: !isTablet ? 20 : 22,
+            ),
           ),
-          backgroundColor: Colors.white,
-          leadingWidth: !isTablet ? 40 : 50,
           leading: Assets.icons.icBack
               .svg(
-                height: !isTablet ? 25 : 30,
-                width: !isTablet ? 25 : 30,
+                height: 35,
+                width: 35,
                 fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
               )
               .paddingOnly(
-                  left: 10, top: isTablet ? 22 : 0, bottom: isTablet ? 22 : 0)
+                left: 10,
+                top: isTablet ? 22 : 2,
+                bottom: isTablet ? 22 : 0,
+                right: 10,
+              )
               .onClick(() {
             Get.back();
           }),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.grey[300],
+          titleSpacing: 1,
+          elevation: 0.5,
+          scrolledUnderElevation: 0,
         ),
         body: GetBuilder<AddPatientController>(builder: (ctrl) {
           return Stack(
@@ -819,36 +828,36 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
               ),
-              "+Add all Photos"
-                  .appCommonText(
-                align: TextAlign.start,
-                size: !isTablet ? 16 : 19,
-                decoration: TextDecoration.underline,
-                decorationColor: primaryBrown,
-                weight: FontWeight.w500,
-                color: primaryBrown,
-              )
-                  .onClick(
-                () {
-                  Get.toNamed(Routes.faceDetectorView)?.then(
-                    (dynamic result) {
-                      if (result != null && result is List<File>) {
-                        ctrl.smileImg = result;
-                        ctrl.profileImageFile = ctrl.smileImg[0];
-                        ctrl.faceImageFile = ctrl.smileImg[1];
-                        ctrl.smileImageFile = ctrl.smileImg[2];
-                        ctrl.intraMaxImageFile = ctrl.smileImg[3];
-                        ctrl.intraMandImageFile = ctrl.smileImg[4];
-                        ctrl.intraRightImageFile = ctrl.smileImg[5];
-                        ctrl.intraFaceImageFile = ctrl.smileImg[6];
-                        ctrl.intraLeftImageFile = ctrl.smileImg[7];
-                        ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
-                        ctrl.update();
-                      }
-                    },
-                  );
-                },
-              ),
+              // "+Add all Photos"
+              //     .appCommonText(
+              //   align: TextAlign.start,
+              //   size: !isTablet ? 16 : 19,
+              //   decoration: TextDecoration.underline,
+              //   decorationColor: primaryBrown,
+              //   weight: FontWeight.w500,
+              //   color: primaryBrown,
+              // )
+              //     .onClick(
+              //   () {
+              //     Get.toNamed(Routes.faceDetectorView)?.then(
+              //       (dynamic result) {
+              //         if (result != null && result is List<File>) {
+              //           ctrl.smileImg = result;
+              //           ctrl.profileImageFile = ctrl.smileImg[0];
+              //           ctrl.faceImageFile = ctrl.smileImg[1];
+              //           ctrl.smileImageFile = ctrl.smileImg[2];
+              //           ctrl.intraMaxImageFile = ctrl.smileImg[3];
+              //           ctrl.intraMandImageFile = ctrl.smileImg[4];
+              //           ctrl.intraRightImageFile = ctrl.smileImg[5];
+              //           ctrl.intraFaceImageFile = ctrl.smileImg[6];
+              //           ctrl.intraLeftImageFile = ctrl.smileImg[7];
+              //           ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
+              //           ctrl.update();
+              //         }
+              //       },
+              //     );
+              //   },
+              // ),
             ],
           ),
           !isTablet ? 10.space() : 15.space(),
@@ -862,15 +871,31 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_gauche",
                 fileImage: ctrl.profileImageFile ?? File(''),
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.profileImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_gauche', file: file);
-                        ctrl.update();
-                      });
+                  imageUploadUtils.faceDetectingOpenImageChooser(
+                    context: Get.context!,
+                    imageCount: 0,
+                    title: "Profile",
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.profileImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_gauche', file: file);
+                      ctrl.update();
+                    },
+                  );
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 0,
+                  //   title: "Profile",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.profileImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_gauche', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
               10.space(),
@@ -881,8 +906,10 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_face",
                 fileImage: ctrl.faceImageFile ?? File(''),
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
+                  imageUploadUtils.faceDetectingOpenImageChooser(
                       context: Get.context!,
+                      imageCount: 1,
+                      title: "Face",
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.faceImageFile = file!;
@@ -890,6 +917,19 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                             paramName: 'patient_face', file: file);
                         ctrl.update();
                       });
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 1,
+                  //   title: "Face",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.faceImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_face', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
               10.space(),
@@ -900,15 +940,31 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_sourire",
                 fileImage: ctrl.smileImageFile ?? File(''),
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.smileImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_sourire', file: file);
-                        ctrl.update();
-                      });
+                  imageUploadUtils.faceDetectingOpenImageChooser(
+                    context: Get.context!,
+                    imageCount: 2,
+                    title: "Smile",
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.smileImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_sourire', file: file);
+                      ctrl.update();
+                    },
+                  );
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 2,
+                  //   title: "Smile",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.smileImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_sourire', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
             ],
@@ -916,6 +972,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           5.space(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
@@ -925,18 +983,70 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.intraMaxImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_intra_max', file: file);
-                        ctrl.update();
-                      });
+                    context: Get.context!,
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.intraMaxImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_intra_max', file: file);
+                      ctrl.update();
+                    },
+                  );
                 },
               ),
-              Spacer(),
-              // !isTablet ? 143.space() : 260.space(),
+              10.space(),
+              Expanded(
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: skyColor,
+                  padding: EdgeInsets.all(2),
+                  radius: Radius.circular(10),
+                  dashPattern: [5, 5, 5, 5],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          HomeImage.assetImage(
+                            path: Assets.images.imgBlackCard.path,
+                            height: !isTablet ? 123 : 200,
+                            shape: BoxShape.rectangle,
+                            width: !isTablet ? 123 : 200,
+                          ),
+                          Icon(
+                            Icons.camera_alt,
+                            color: primaryBrown,
+                            size: 30,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ).onClick(
+                  () {
+                    Get.toNamed(Routes.faceDetectorView)?.then(
+                      (dynamic result) {
+                        if (result != null && result is List<File>) {
+                          ctrl.smileImg = result;
+                          ctrl.profileImageFile = ctrl.smileImg[0];
+                          ctrl.faceImageFile = ctrl.smileImg[1];
+                          ctrl.smileImageFile = ctrl.smileImg[2];
+                          ctrl.intraMaxImageFile = ctrl.smileImg[3];
+                          ctrl.intraMandImageFile = ctrl.smileImg[4];
+                          ctrl.intraRightImageFile = ctrl.smileImg[5];
+                          ctrl.intraFaceImageFile = ctrl.smileImg[6];
+                          ctrl.intraLeftImageFile = ctrl.smileImg[7];
+                          ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
+                          ctrl.update();
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+              10.space(),
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
                 title: "Intra Mand",
@@ -945,14 +1055,15 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.intraMandImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.intraMandImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_intra_gauche', file: file);
-                        ctrl.update();
-                      });
+                    context: Get.context!,
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.intraMandImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_intra_gauche', file: file);
+                      ctrl.update();
+                    },
+                  );
                 },
               ),
             ],
@@ -968,15 +1079,31 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.intraRightImageFile ?? File(''),
                 title: "Inter Right",
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.intraRightImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_intra_droite', file: file);
-                        ctrl.update();
-                      });
+                  imageUploadUtils.faceDetectingOpenImageChooser(
+                    context: Get.context!,
+                    imageCount: 5,
+                    title: "Inter Right",
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.intraRightImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_intra_droite', file: file);
+                      ctrl.update();
+                    },
+                  );
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 5,
+                  //   title: "Inter Right",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.intraRightImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_intra_droite', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
               10.space(),
@@ -987,15 +1114,31 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 image: Assets.images.imgInterFace.path,
                 title: "Inter Face",
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.intraFaceImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_inter_face', file: file);
-                        ctrl.update();
-                      });
+                  imageUploadUtils.faceDetectingOpenImageChooser(
+                    context: Get.context!,
+                    imageCount: 6,
+                    title: "Inter Face",
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.intraFaceImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_inter_face', file: file);
+                      ctrl.update();
+                    },
+                  );
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 6,
+                  //   title: "Inter Face",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.intraFaceImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_inter_face', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
               10.space(),
@@ -1006,15 +1149,31 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 image: Assets.images.imgInterLeft.path,
                 title: "Inter Left",
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
-                      context: Get.context!,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.intraLeftImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_inter_gauche', file: file);
-                        ctrl.update();
-                      });
+                  imageUploadUtils.faceDetectingOpenImageChooser(
+                    context: Get.context!,
+                    imageCount: 7,
+                    title: "Inter Left",
+                    onImageChose: (File file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.intraLeftImageFile = file;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_inter_gauche', file: file);
+                      ctrl.update();
+                    },
+                  );
+                  // Get.to(SingleImageClickFaceDetectorView(
+                  //   imageCount: 7,
+                  //   title: "Inter Left",
+                  // ))?.then(
+                  //   (result) {
+                  //     if (result != null && result is File) {
+                  //       ctrl.intraLeftImageFile = result;
+                  //       ctrl.uploadPatientSingleImage(
+                  //           paramName: 'patient_inter_gauche', file: result);
+                  //       ctrl.update();
+                  //     }
+                  //   },
+                  // );
                 },
               ),
             ],

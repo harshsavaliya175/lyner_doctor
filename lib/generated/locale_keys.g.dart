@@ -198,5 +198,10 @@ abstract class  LocaleKeys {
   static const changingCameraLens = 'changingCameraLens';
   static const modify = 'modify';
   static const accept = 'accept';
+  static const check_draft = 'check_draft';
+  static const check_modification = 'check_modification';
+  static const password_copied = 'password_copied';
+  static const comment_not_found = 'comment_not_found';
+  static const please_note_your_comments = 'please_note_your_comments';
 
 }

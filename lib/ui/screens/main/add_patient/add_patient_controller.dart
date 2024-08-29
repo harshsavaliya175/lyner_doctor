@@ -24,7 +24,7 @@ import 'package:uuid/uuid.dart';
 class AddPatientController extends GetxController {
   int currentStep = 0;
   late PageController pageController;
-
+  bool isClick = false;
   List<File> smileImg = [];
   List<ProductListData> products = [];
   ProductListData? selectedProduct;

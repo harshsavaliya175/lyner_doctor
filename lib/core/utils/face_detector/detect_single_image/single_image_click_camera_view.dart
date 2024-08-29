@@ -4,15 +4,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 
-class CameraView extends StatefulWidget {
-  const CameraView({
+class SingleImageClickCameraView extends StatefulWidget {
+  const SingleImageClickCameraView({
     Key? key,
     required this.customPaint,
     required this.onImage,
@@ -21,7 +21,9 @@ class CameraView extends StatefulWidget {
     this.onCameraLensDirectionChanged,
     this.initialCameraLensDirection = CameraLensDirection.back,
     required this.imageClickCountTap,
-  }) : super(key: key);
+    required this.photoIndex,
+    required this.title,
+  });
 
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
@@ -30,20 +32,23 @@ class CameraView extends StatefulWidget {
   final CameraLensDirection initialCameraLensDirection;
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final Function(int imageClickCount) imageClickCountTap;
+  final int photoIndex;
+  final String title;
 
   @override
-  State<CameraView> createState() => _CameraViewState();
+  State<SingleImageClickCameraView> createState() =>
+      _SingleImageClickCameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _SingleImageClickCameraViewState
+    extends State<SingleImageClickCameraView> {
   final AddPatientController addPatientController =
       Get.put(AddPatientController());
+
   static List<CameraDescription> _cameras = [];
   CameraController? _controller;
   int _cameraIndex = -1;
   bool _changingCameraLens = false;
-  List<File> smileImg = [];
-  String faceText = "Profile";
   final CameraLensDirection initialCameraLensDirection =
       CameraLensDirection.front;
 
@@ -85,21 +90,21 @@ class _CameraViewState extends State<CameraView> {
     if (_controller?.value.isInitialized == false) return Container();
 
     AssetGenImage image = Assets.images.imgProfileDetect;
-    if (smileImg.length == 0) {
+    if (widget.photoIndex == 0) {
       image = Assets.images.imgProfileDetect;
-    } else if (smileImg.length == 1) {
+    } else if (widget.photoIndex == 1) {
       image = Assets.images.imgFaceDetect;
-    } else if (smileImg.length == 2) {
+    } else if (widget.photoIndex == 2) {
       image = Assets.images.imgSmileDetect;
-    } else if (smileImg.length == 3) {
-      image = Assets.images.imgIntraMaxDetect;
-    } else if (smileImg.length == 4) {
-      image = Assets.images.imgIntraMandDetect;
-    } else if (smileImg.length == 5) {
+    } else if (widget.photoIndex == 3) {
+      // image = Assets.images.imgIntraMaxDetect;
+    } else if (widget.photoIndex == 4) {
+      // image = Assets.images.imgIntraMandDetect;
+    } else if (widget.photoIndex == 5) {
       image = Assets.images.imgInterRightDetect;
-    } else if (smileImg.length == 6) {
+    } else if (widget.photoIndex == 6) {
       image = Assets.images.imgInterFaceDetect;
-    } else if (smileImg.length == 7) {
+    } else if (widget.photoIndex == 7) {
       image = Assets.images.imgInterLeftDetect;
     }
     return SafeArea(
@@ -113,33 +118,33 @@ class _CameraViewState extends State<CameraView> {
                     child: Text(LocaleKeys.changingCameraLens.translateText))
                 : CameraPreview(_controller!),
             if (widget.customPaint != null) widget.customPaint!,
-            if (smileImg.length != 3 && smileImg.length != 4)
+            if (widget.photoIndex != 3 && widget.photoIndex != 4)
               Align(
                 alignment: Alignment.center,
                 child: Container(
                   width: MediaQuery.of(context).size.width *
-                      ((smileImg.length == 0) ||
-                              (smileImg.length == 1) ||
-                              (smileImg.length == 2)
+                      ((widget.photoIndex == 0) ||
+                              (widget.photoIndex == 1) ||
+                              (widget.photoIndex == 2)
                           ? 0.7
                           : 0.4),
                   height: MediaQuery.of(context).size.width *
-                      ((smileImg.length == 0) ||
-                              (smileImg.length == 1) ||
-                              (smileImg.length == 2)
+                      ((widget.photoIndex == 0) ||
+                              (widget.photoIndex == 1) ||
+                              (widget.photoIndex == 2)
                           ? 0.7
                           : 0.4),
                   child: image.image(
                     width: MediaQuery.of(context).size.width *
-                        ((smileImg.length == 0) ||
-                                (smileImg.length == 1) ||
-                                (smileImg.length == 2)
+                        ((widget.photoIndex == 0) ||
+                                (widget.photoIndex == 1) ||
+                                (widget.photoIndex == 2)
                             ? 0.85
                             : 0.5),
                     height: MediaQuery.of(context).size.height *
-                        ((smileImg.length == 0) ||
-                                (smileImg.length == 1) ||
-                                (smileImg.length == 2)
+                        ((widget.photoIndex == 0) ||
+                                (widget.photoIndex == 1) ||
+                                (widget.photoIndex == 2)
                             ? 0.33
                             : 0.15),
                     fit: BoxFit.contain,
@@ -157,27 +162,6 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
-
-  // Widget _switchLiveCameraToggle() => Positioned(
-  //       bottom: 8,
-  //       right: 8,
-  //       child: SizedBox(
-  //         height: 50.0,
-  //         width: 50.0,
-  //         child: FloatingActionButton(
-  //           heroTag: Object(),
-  //           onPressed: _switchLiveCamera,
-  //           backgroundColor: Colors.black,
-  //           child: Icon(
-  //             Platform.isIOS
-  //                 ? Icons.flip_camera_ios_outlined
-  //                 : Icons.flip_camera_android_outlined,
-  //             size: 25,
-  //             color: Colors.white,
-  //           ),
-  //         ),
-  //       ),
-  //     );
 
   Widget _backButton() => Positioned(
         top: 10,
@@ -200,7 +184,7 @@ class _CameraViewState extends State<CameraView> {
               ),
             ),
             10.space(),
-            faceText.normalText(fontSize: 18),
+            widget.title.normalText(fontSize: 18),
           ],
         ),
       );
@@ -257,32 +241,9 @@ class _CameraViewState extends State<CameraView> {
                       child: InkWell(
                         onTap: () {
                           Get.back();
-                          smileImg.add(File(image?.path ?? ''));
-                          widget.imageClickCountTap(smileImg.length);
-                          if (smileImg.length == 1) {
-                            faceText = "Face";
-                          }
-                          if (smileImg.length == 2) {
-                            faceText = "Smile";
-                          }
-                          if (smileImg.length == 3) {
-                            faceText = "Intra Max";
-                          }
-                          if (smileImg.length == 4) {
-                            faceText = "Intra Mand";
-                          }
-                          if (smileImg.length == 5) {
-                            faceText = "Inter Right";
-                          }
-                          if (smileImg.length == 6) {
-                            faceText = "Inter Face";
-                          }
-                          if (smileImg.length == 7) {
-                            faceText = "Inter Lest";
-                          }
-                          if (smileImg.length == 8) {
-                            Get.back(result: smileImg);
-                          }
+                          // smileImg.add(File(image?.path ?? ''));
+                          // widget.imageClickCountTap(smileImg.length);
+                          Get.back(result: File(image?.path ?? ''));
                           setState(() {});
                         },
                         child: Column(

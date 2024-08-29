@@ -173,7 +173,6 @@ class PatientTreatmentsScreen extends StatelessWidget {
                           title1: LocaleKeys.dateCom,
                           title2: LocaleKeys.procedureCom,
                           title3: LocaleKeys.nextVisit,
-                          // data1: "19/07/2024",
                           data1: patientTreatmentModel?.treatmentDate
                                   ?.ddMMYYYYFormat() ??
                               '',

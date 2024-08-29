@@ -211,7 +211,12 @@ class CodegenLoader extends AssetLoader{
   "pleaseEnterTreatmentStartDate": "Please enter treatment start date",
   "changingCameraLens": "Changing camera lens",
   "modify": "Modify",
-  "accept": "Accept"
+  "accept": "Accept",
+  "check_draft": "Check Draft",
+  "check_modification": "Check Modification",
+  "password_copied": "Password copied",
+  "comment_not_found": "Comment Not Found",
+  "please_note_your_comments": "Please note your comments"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en};
 }

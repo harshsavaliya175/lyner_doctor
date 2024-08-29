@@ -75,6 +75,7 @@ class PatientDetailsModel {
   final int? isDelivered;
   final int? isVirtual;
   final int? adminArchive;
+  final int? isDeleted;
   final dynamic trackingId;
   final int? isDraft;
   final dynamic draftViewPage;
@@ -119,6 +120,7 @@ class PatientDetailsModel {
     this.isDelivered,
     this.isVirtual,
     this.trackingId,
+    this.isDeleted,
     this.isDraft,
     this.draftViewPage,
     this.createdAt,
@@ -163,6 +165,7 @@ class PatientDetailsModel {
     int? isVirtual,
     dynamic trackingId,
     int? isDraft,
+    int? isDeleted,
     dynamic draftViewPage,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -194,6 +197,7 @@ class PatientDetailsModel {
         technicianId: technicianId ?? this.technicianId,
         technicianStartDate: technicianStartDate ?? this.technicianStartDate,
         adminNewCase: adminNewCase ?? this.adminNewCase,
+        isDeleted: isDeleted ?? this.isDeleted,
         technicianNewCase: technicianNewCase ?? this.technicianNewCase,
         adminTask: adminTask ?? this.adminTask,
         adminPatient: adminPatient ?? this.adminPatient,
@@ -261,6 +265,7 @@ class PatientDetailsModel {
         isVirtual: json["is_virtual"],
         trackingId: json["tracking_id"],
         isDraft: json["is_draft"],
+        isDeleted: json["is_deleted"],
         draftViewPage: json["draft_view_page"],
         createdAt: json["created_at"] == null
             ? null
@@ -319,6 +324,7 @@ class PatientDetailsModel {
         "is_virtual": isVirtual,
         "tracking_id": trackingId,
         "is_draft": isDraft,
+        "is_deleted": isDeleted,
         "draft_view_page": draftViewPage,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
