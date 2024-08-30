@@ -50,6 +50,8 @@ class SharedPreference {
   static const String IS_PHONE_NOTIFICATION = "IS_PHONE_NOTIFICATION";
   static const String CREATE_AT = "CREATE_AT";
   static const clinicData = "clinicData";
+  static const String LANGUAGE_CODE = "LANGUAGE_CODE";
+
   saveClinicItem(ClinicData data) {
     preferences.putBool(SharedPreference.IS_LOGGED_IN, true);
     _preferences?.setInt(CLINIC_ID, data.clinicId);
@@ -72,6 +74,7 @@ class SharedPreference {
     }
     return null;
   }
+
   putAppDeviceInfo() async {
     bool isiOS = Platform.isIOS;
     putString(APP_DEVICE_TYPE, isiOS ? "iOS" : "android");

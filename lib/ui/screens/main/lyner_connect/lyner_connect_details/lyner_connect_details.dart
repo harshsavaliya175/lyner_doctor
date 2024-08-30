@@ -16,7 +16,8 @@ import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 class LynerConnectDetails extends StatelessWidget {
   LynerConnectDetails({super.key});
 
-  var controller = Get.put(LynerConnectDetailsController());
+  final LynerConnectDetailsController controller =
+      Get.put(LynerConnectDetailsController());
 
   @override
   Widget build(BuildContext context) {

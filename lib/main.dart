@@ -19,12 +19,21 @@ void main() async {
   await FlutterDownloader.initialize(debug: true);
   await preferences.init();
   await preferences.putAppDeviceInfo();
-  runApp(EasyLocalization(
-    supportedLocales: const [Locale('en', '')],
-    path: 'assets/translations',
-    assetLoader: const CodegenLoader(),
-    child: const MyApp(),
-  ));
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+      ],
+      path: 'assets/translations',
+      saveLocale: true,
+      useOnlyLangCode: true,
+      startLocale: const Locale('en'),
+      fallbackLocale: const Locale('fr'),
+      assetLoader: const CodegenLoader(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -43,6 +52,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
+          locale: context.locale,
           debugShowCheckedModeBanner: false,
           title: 'Lyner Doctor',
           getPages: Routes.pages,

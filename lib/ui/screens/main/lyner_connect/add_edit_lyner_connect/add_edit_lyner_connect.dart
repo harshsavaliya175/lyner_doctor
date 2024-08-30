@@ -10,7 +10,6 @@ import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_controller.dart';
-import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
@@ -24,31 +23,40 @@ class AddEditLynerConnect extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBgColor,
-      appBar: appbarWithIcons(
+      appBar: AppBar(
+        toolbarHeight: 70,
         centerTitle: false,
         title: Text(
           controller.isFromNewPatient
               ? LocaleKeys.addLynerConnect.translateText
               : LocaleKeys.editLynerConnect.translateText,
+          textAlign: TextAlign.start,
           style: TextStyle(
-              fontFamily: Assets.fonts.maax,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              fontSize: 20),
+            fontFamily: Assets.fonts.maax,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontSize: !isTablet ? 20 : 22,
+          ),
         ),
-        backgroundColor: Colors.white,
-        leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-              height: !isTablet ? 25 : 30,
-              width: !isTablet ? 25 : 30,
+              height: 35,
+              width: 35,
               fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
             )
             .paddingOnly(
-                left: 10, top: isTablet ? 22 : 0, bottom: isTablet ? 22 : 0)
+                left: 10,
+                top: isTablet ? 22 : 2,
+                bottom: isTablet ? 22 : 0,
+                right: 10)
             .onClick(() {
           Get.back();
         }),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.grey[300],
+        titleSpacing: 1,
+        elevation: 0.5,
+        scrolledUnderElevation: 0,
       ),
       body: GetBuilder<AddEditLynerController>(builder: (ctrl) {
         return Stack(
@@ -66,7 +74,8 @@ class AddEditLynerConnect extends StatelessWidget {
                           onChanged: (value) {},
                           validator: (value) {
                             if (value.isEmpty) {
-                              return LocaleKeys.pleaseEnterFirstName.translateText;
+                              return LocaleKeys
+                                  .pleaseEnterFirstName.translateText;
                             }
                             ctrl.update();
                             return null;
@@ -86,7 +95,8 @@ class AddEditLynerConnect extends StatelessWidget {
                           onChanged: (value) {},
                           validator: (value) {
                             if (value.isEmpty) {
-                              return LocaleKeys.pleaseEnterLastName.translateText;
+                              return LocaleKeys
+                                  .pleaseEnterLastName.translateText;
                             }
                             ctrl.update();
                             return null;
@@ -147,7 +157,8 @@ class AddEditLynerConnect extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return LocaleKeys.pleaseEnterCurrentAligner.translateText;
+                        return LocaleKeys
+                            .pleaseEnterCurrentAligner.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -178,7 +189,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     // isError: ctrl.emailError,
                     hintText: LocaleKeys.enterTotalAligner.translateText,
-                    labelText:LocaleKeys.totalAligner.translateText,
+                    labelText: LocaleKeys.totalAligner.translateText,
                     showPrefixWidget: Assets.icons.icDown
                         .svg(
                           colorFilter: ColorFilter.mode(
@@ -207,7 +218,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     ],
                     hintText: LocaleKeys.enterAlignerDays.translateText,
                     textEditingController: ctrl.alignerDaysController,
-                    labelText:LocaleKeys.alignerDays.translateText,
+                    labelText: LocaleKeys.alignerDays.translateText,
                     showPrefixIcon: false,
                     onChanged: (String value) {},
                   ),
@@ -226,7 +237,8 @@ class AddEditLynerConnect extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         ctrl.update();
-                        return LocaleKeys.pleaseEnterTreatmentStartDate.translateText;
+                        return LocaleKeys
+                            .pleaseEnterTreatmentStartDate.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -246,7 +258,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     // isError: ctrl.emailError,
                     hintText: LocaleKeys.dateField.translateText,
-                    labelText:LocaleKeys.treatmentStartDate.translateText,
+                    labelText: LocaleKeys.treatmentStartDate.translateText,
                     showPrefixIcon: false,
                   ),
                   100.space(),
@@ -282,7 +294,9 @@ class AddEditLynerConnect extends StatelessWidget {
                   fontSize: !isTablet ? 20 : 24,
                   bgColor: primaryBrown,
                   fontColor: Colors.white,
-                ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
+                )
+                    .paddingOnly(top: 10, bottom: 10)
+                    .paddingSymmetric(horizontal: 15),
               ),
             ),
             Visibility(visible: ctrl.isLoading, child: AppProgressView())

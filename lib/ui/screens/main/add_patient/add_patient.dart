@@ -24,7 +24,7 @@ import 'package:lynerdoctor/ui/widgets/custom_radio_button.dart';
 class AddPatientScreen extends StatelessWidget {
   AddPatientScreen({super.key});
 
-  final controller = Get.put(AddPatientController());
+  final AddPatientController controller = Get.put(AddPatientController());
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,8 @@ class AddPatientScreen extends StatelessWidget {
           elevation: 0.5,
           scrolledUnderElevation: 0,
         ),
-        body: GetBuilder<AddPatientController>(builder: (ctrl) {
+        body: GetBuilder<AddPatientController>(
+            builder: (AddPatientController ctrl) {
           return Stack(
             children: [
               Container(
@@ -973,7 +974,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
@@ -996,34 +996,27 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               ),
               10.space(),
               Expanded(
-                child: DottedBorder(
-                  borderType: BorderType.RRect,
-                  color: skyColor,
-                  padding: EdgeInsets.all(2),
-                  radius: Radius.circular(10),
-                  dashPattern: [5, 5, 5, 5],
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          HomeImage.assetImage(
-                            path: Assets.images.imgBlackCard.path,
-                            height: !isTablet ? 123 : 200,
-                            shape: BoxShape.rectangle,
-                            width: !isTablet ? 123 : 200,
-                          ),
-                          Icon(
-                            Icons.camera_alt,
-                            color: primaryBrown,
-                            size: 30,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        HomeImage.assetImage(
+                          path: Assets.images.imgBlackCard.path,
+                          height: !isTablet ? 123 : 200,
+                          shape: BoxShape.rectangle,
+                          width: !isTablet ? 123 : 200,
+                        ),
+                        Icon(
+                          Icons.camera_alt,
+                          color: primaryBrown,
+                          size: !isTablet ? 30 : 50,
+                        ),
+                      ],
+                    ),
+                  ],
                 ).onClick(
                   () {
                     Get.toNamed(Routes.faceDetectorView)?.then(

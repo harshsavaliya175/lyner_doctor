@@ -14,7 +14,9 @@ import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-  final controller = Get.put(ProfileController());
+
+  final ProfileController controller = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0.5,
         scrolledUnderElevation: 0,
       ),
-      body: GetBuilder<ProfileController>(builder: (ctrl) {
+      body: GetBuilder<ProfileController>(builder: (ProfileController ctrl) {
         return ListView(
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 20, right: 20, top: 24),
@@ -62,14 +64,13 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   16.w.space(),
-                  (ctrl.clinicData?.clinicName ?? "Jane Cooper").normalText(
+                  (ctrl.clinicData?.clinicName ?? "").normalText(
                     color: blackColor,
                     fontWeight: FontWeight.w500,
                     fontSize: !isTablet ? 20 : 26,
                   ),
                   8.w.space(),
-                  (ctrl.clinicData?.email ?? "Janecooperlyner@gmail.com")
-                      .normalText(
+                  (ctrl.clinicData?.email ?? "").normalText(
                     color: hintStepColor,
                     fontWeight: FontWeight.w400,
                     fontSize: !isTablet ? 14 : 20,
@@ -100,6 +101,122 @@ class ProfileScreen extends StatelessWidget {
               title: LocaleKeys.changePassword,
               onTap: () {
                 Get.toNamed(Routes.changePasswordScreen);
+              },
+            ),
+            16.space(),
+            profileScreenItem(
+              leadingIcon: Assets.icons.lock,
+              title: LocaleKeys.changeLanguage,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      contentPadding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      titlePadding: EdgeInsets.zero,
+                      actionsPadding: EdgeInsets.zero,
+                      surfaceTintColor: Colors.white,
+                      backgroundColor: Colors.white,
+                      content: Container(
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LocaleKeys.selectLanguage.translateText
+                                .normalText(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                )
+                                .paddingOnly(top: 20, left: 20),
+                            15.space(),
+                            ListTile(
+                              onTap: () {
+                                ctrl.changeLanguage('fr');
+                              },
+                              dense: true,
+                              leading: Radio(
+                                value: 'fr',
+                                groupValue: ctrl.languageCode,
+                                onChanged: (String? value) {
+                                  ctrl.changeLanguage('fr');
+                                },
+                                activeColor: Colors.black,
+                                fillColor:
+                                    WidgetStateProperty.all(Colors.black),
+                              ),
+                              title: 'French'.boldText(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                              ),
+                            ),
+                            ListTile(
+                              onTap: () {
+                                ctrl.changeLanguage('en');
+                              },
+                              dense: true,
+                              leading: Radio(
+                                value: 'en',
+                                groupValue: ctrl.languageCode,
+                                onChanged: (String? value) {
+                                  ctrl.changeLanguage('en');
+                                },
+                                activeColor: Colors.black,
+                                fillColor:
+                                    WidgetStateProperty.all(Colors.black),
+                              ),
+                              title: 'English'.boldText(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                              ),
+                            ),
+                            5.space(),
+                            // Container(
+                            //   height: 40,
+                            //   width: Get.width,
+                            //   child: Row(
+                            //     children: [
+                            //       10.spaceW(),
+                            //       Radio(
+                            //         value: 'fr',
+                            //         groupValue:
+                            //             ctrl.languageCode,
+                            //         onChanged: (String? value) {
+                            //           ctrl.changeLanguage('en');
+                            //         },
+                            //         activeColor: Colors.black,
+                            //         fillColor:
+                            //             WidgetStateProperty.all(
+                            //                 Colors.black),
+                            //       ),
+                            //       'French'.boldText(
+                            //         fontWeight: FontWeight.w400,
+                            //         fontSize: 16,
+                            //         color: appBlackColor,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ).onClick(
+                            //   () {
+                            //     ctrl.changeLanguage('fr');
+                            //   },
+                            // ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
             ),
             16.space(),

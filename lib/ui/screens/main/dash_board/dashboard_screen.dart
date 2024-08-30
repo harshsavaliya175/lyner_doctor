@@ -14,6 +14,7 @@ import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:lynerdoctor/ui/widgets/bottom_bar_item.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -125,6 +126,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     itemText: LocaleKeys.patients,
                     onTap: () {
                       ctrl.changeData(currentIdx: 0);
+                      Get.find<PatientsController>()
+                          .getClinicListBySearchOrFilter();
                     },
                   ),
                 ),

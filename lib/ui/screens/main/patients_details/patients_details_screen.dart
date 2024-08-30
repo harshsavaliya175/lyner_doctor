@@ -44,9 +44,8 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
         backgroundColor: Colors.white,
         leading: Assets.icons.icBack
             .svg(
-              height: 25,
-              width: 25,
-              fit: BoxFit.scaleDown,
+              height: !isTablet ? 25 : 30,
+              width: !isTablet ? 25 : 30,
             )
             .paddingOnly(left: 10)
             .onClick(() {

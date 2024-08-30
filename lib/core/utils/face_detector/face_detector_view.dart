@@ -1,7 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/face_detector/face_detector_painter.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 
 import 'detector_view.dart';
 
@@ -37,7 +39,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   @override
   Widget build(BuildContext context) {
     return DetectorView(
-      title: 'Face Detector',
+      title: LocaleKeys.faceDetector.translateText,
       customPaint: customPaint,
       text: _text,
       onImage: (InputImage inputImage) {

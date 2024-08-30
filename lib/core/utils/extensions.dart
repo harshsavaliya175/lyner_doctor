@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 
 extension DateTimeExtension on DateTime {
   DateTime toLocalDateTime({String format = "yyyy-MM-dd HH:mm:ss"}) {
@@ -235,7 +237,7 @@ showAppSnackBar(String tittle, [bool button = false]) {
                 },
                 // child: "Setting".mediumText(
                 //     color: app_Orange_FF7448, size: 16, fontWeight: FontWeight.w500),
-                child: "Setting".boldText(
+                child: LocaleKeys.setting.translateText.boldText(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w500),

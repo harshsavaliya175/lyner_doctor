@@ -21,36 +21,35 @@ class EditProfileController extends GetxController {
   bool isEmailNotification = false;
   bool isLoading = false;
   ClinicData? clinicData;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     clinicData = preferences.getClinicData();
-    emailAddressController.text = clinicData?.email??'';
-    clinicNameController.text = clinicData?.clinicName??'';
-    mobileNumController.text = clinicData?.clinicMobileNumber??'';
-    isEmailNotification = clinicData?.isEmailNotification==1?true:false;
-    isMobileNotification = clinicData?.isPhoneNotification==1?true:false;
+    emailAddressController.text = clinicData?.email ?? '';
+    clinicNameController.text = clinicData?.clinicName ?? '';
+    mobileNumController.text = clinicData?.clinicMobileNumber ?? '';
+    isEmailNotification = clinicData?.isEmailNotification == 1 ? true : false;
+    isMobileNotification = clinicData?.isPhoneNotification == 1 ? true : false;
     update();
   }
+
   void onUpdateProfileClick() async {
     isLoading = true;
     ResponseItem result = ResponseItem(data: null, msg: '', status: false);
     result = await AuthRepo.editProfile(
-      email: emailAddressController.text,
-      fullName: clinicNameController.text,
-      isEmailNotification: isEmailNotification ? 1 : 0,
-      isMobileNotification: isMobileNotification ? 1 : 0,
-      phoneNumber: mobileNumController.text,
-      profileImage: profileImage
-    );
+        email: emailAddressController.text,
+        fullName: clinicNameController.text,
+        isEmailNotification: isEmailNotification ? 1 : 0,
+        isMobileNotification: isMobileNotification ? 1 : 0,
+        phoneNumber: mobileNumController.text,
+        profileImage: profileImage);
     isLoading = false;
     try {
       if (result.status) {
         ClinicData doctorData = ClinicData.fromJson(result.data);
         preferences.saveClinicItem(doctorData);
         showAppSnackBar(result.msg);
-        // Get.offAllNamed(Routes.signUpSignInScreen);
       } else {
         isLoading = false;
         showAppSnackBar(result.msg);

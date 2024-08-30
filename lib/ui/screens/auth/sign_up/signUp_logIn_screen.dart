@@ -25,7 +25,7 @@ class SignUpSignInScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryBrown,
       body: OrientationBuilder(
-        builder: (context, orientation) {
+        builder: (BuildContext context, Orientation orientation) {
           if (orientation == Orientation.portrait) {
             return mainScreen(context, orientation == Orientation.portrait);
           } else {
@@ -155,7 +155,7 @@ class SignUpSignInScreen extends StatelessWidget {
           ),
           prefixIcon: Assets.icons.lock,
         ),
-        5.space(),
+        10.space(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,6 +163,7 @@ class SignUpSignInScreen extends StatelessWidget {
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 20,
@@ -179,12 +180,16 @@ class SignUpSignInScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  10.space(),
-                  LocaleKeys.rememberPassword.translateText.appCommonText(
-                    weight: FontWeight.w400,
-                    maxLine: 2,
-                    color: hintTextColor,
-                    size: !isTablet ? 16.sp : 18.sp,
+                  8.space(),
+                  Expanded(
+                    child:
+                        LocaleKeys.rememberPassword.translateText.appCommonText(
+                      weight: FontWeight.w400,
+                      maxLine: 2,
+                      align: TextAlign.start,
+                      color: hintTextColor,
+                      size: !isTablet ? 16.sp : 18.sp,
+                    ),
                   ),
                 ],
               ),

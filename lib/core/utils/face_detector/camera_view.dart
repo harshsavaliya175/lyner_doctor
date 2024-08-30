@@ -43,7 +43,7 @@ class _CameraViewState extends State<CameraView> {
   int _cameraIndex = -1;
   bool _changingCameraLens = false;
   List<File> smileImg = [];
-  String faceText = "Profile";
+  String faceText = LocaleKeys.profile.translateText;
   final CameraLensDirection initialCameraLensDirection =
       CameraLensDirection.front;
 
@@ -260,25 +260,25 @@ class _CameraViewState extends State<CameraView> {
                           smileImg.add(File(image?.path ?? ''));
                           widget.imageClickCountTap(smileImg.length);
                           if (smileImg.length == 1) {
-                            faceText = "Face";
+                            faceText = LocaleKeys.face.translateText;
                           }
                           if (smileImg.length == 2) {
-                            faceText = "Smile";
+                            faceText = LocaleKeys.smile.translateText;
                           }
                           if (smileImg.length == 3) {
-                            faceText = "Intra Max";
+                            faceText = LocaleKeys.intraMax.translateText;
                           }
                           if (smileImg.length == 4) {
-                            faceText = "Intra Mand";
+                            faceText = LocaleKeys.intraMand.translateText;
                           }
                           if (smileImg.length == 5) {
-                            faceText = "Inter Right";
+                            faceText = LocaleKeys.intraRight.translateText;
                           }
                           if (smileImg.length == 6) {
-                            faceText = "Inter Face";
+                            faceText = LocaleKeys.intraFace.translateText;
                           }
                           if (smileImg.length == 7) {
-                            faceText = "Inter Lest";
+                            faceText = LocaleKeys.intraLeft.translateText;
                           }
                           if (smileImg.length == 8) {
                             Get.back(result: smileImg);

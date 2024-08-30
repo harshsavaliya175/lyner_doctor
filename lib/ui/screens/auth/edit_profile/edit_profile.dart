@@ -20,7 +20,7 @@ import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 class EditProfile extends StatelessWidget {
   EditProfile({super.key});
 
-  final controller = Get.put(EditProfileController());
+  final EditProfileController controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,6 @@ class EditProfile extends StatelessWidget {
                     },
                     hintText: LocaleKeys.enterClinicName.translateText,
                     textEditingController: ctrl.clinicNameController,
-                    // action: TextInputAction.next,
                     labelText: LocaleKeys.nameOfTheClinic.translateText,
                     showPrefixIcon: false,
                     keyboardType: TextInputType.text,
@@ -141,7 +140,6 @@ class EditProfile extends StatelessWidget {
                         return LocaleKeys.pleaseEnterEmail.translateText;
                       } else if (!ctrl.emailAddressController.text
                           .isValidEmail()) {
-                        // ctrl.emailAddressError = true;
                         ctrl.update();
                         return LocaleKeys.pleaseEnterValidEmail.translateText;
                       }
@@ -201,7 +199,6 @@ class EditProfile extends StatelessWidget {
                                 onChanged: (bool? value) {
                                   ctrl.isEmailNotification =
                                       !ctrl.isEmailNotification;
-                                  // ctrl.isMobileNotification = false;
                                   ctrl.update();
                                 },
                               ),
@@ -221,7 +218,6 @@ class EditProfile extends StatelessWidget {
                           () {
                             ctrl.isEmailNotification =
                                 !ctrl.isEmailNotification;
-                            // ctrl.isMobileNotification = false;
                             ctrl.update();
                           },
                         ),
@@ -242,7 +238,6 @@ class EditProfile extends StatelessWidget {
                                 onChanged: (bool? value) {
                                   ctrl.isMobileNotification =
                                       !ctrl.isMobileNotification;
-                                  // ctrl.isEmailNotification = false;
                                   ctrl.update();
                                 },
                               ),
@@ -261,7 +256,6 @@ class EditProfile extends StatelessWidget {
                           () {
                             ctrl.isMobileNotification =
                                 !ctrl.isMobileNotification;
-                            // ctrl.isEmailNotification = false;
                             ctrl.update();
                           },
                         ),

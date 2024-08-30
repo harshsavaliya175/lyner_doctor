@@ -17,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 3)).then(
       (dynamic value) {
-        // Get.offAllNamed(Routes.patientsDetailsScreen);
         if (preferences.getBool(SharedPreference.IS_LOGGED_IN) ?? false) {
           Get.offAllNamed(Routes.dashboardScreen);
         } else {

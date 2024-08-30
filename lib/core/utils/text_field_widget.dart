@@ -251,7 +251,6 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     focusNode.removeListener(_onFocusChange);
     focusNode.dispose();
     super.dispose();
@@ -259,7 +258,6 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void initState() {
-    // TODO: implement initState
     focusNode.addListener(_onFocusChange);
     obscureValue = widget.obscureText;
     super.initState();

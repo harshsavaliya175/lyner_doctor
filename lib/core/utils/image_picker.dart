@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -26,7 +28,7 @@ class ImageUploadUtils {
                 child: Wrap(
                   children: [
                     ListTile(
-                      title: Text("Gallery"),
+                      title: Text(LocaleKeys.gallery.translateText),
                       leading: Icon(Icons.photo_library),
                       onTap: () {
                         _imageFormGallery(
@@ -35,7 +37,7 @@ class ImageUploadUtils {
                       },
                     ),
                     ListTile(
-                      title: Text("Camera"),
+                      title: Text(LocaleKeys.camera.translateText),
                       leading: Icon(Icons.photo_camera),
                       onTap: () {
                         imageFromCamera(
@@ -55,10 +57,10 @@ class ImageUploadUtils {
               return SimpleDialog(
                 elevation: 0,
                 backgroundColor: Colors.white,
-                title: Text("Select Image"),
+                title: Text(LocaleKeys.selectImage.translateText),
                 children: [
                   ListTile(
-                    title: Text("Photo Library"),
+                    title: Text(LocaleKeys.photoLibrary.translateText),
                     leading: Icon(Icons.photo_library),
                     onTap: () {
                       _imageFormGallery(
@@ -67,7 +69,7 @@ class ImageUploadUtils {
                     },
                   ),
                   ListTile(
-                    title: Text("Camera"),
+                    title: Text(LocaleKeys.camera.translateText),
                     leading: Icon(Icons.photo_camera),
                     onTap: () {
                       imageFromCamera(
@@ -99,7 +101,7 @@ class ImageUploadUtils {
                   child: Wrap(
                     children: [
                       ListTile(
-                        title: Text("Gallery"),
+                        title: Text(LocaleKeys.gallery.translateText),
                         leading: Icon(Icons.photo_library),
                         onTap: () {
                           _imageFormGallery(
@@ -108,7 +110,7 @@ class ImageUploadUtils {
                         },
                       ),
                       ListTile(
-                        title: Text("Camera"),
+                        title: Text(LocaleKeys.camera.translateText),
                         leading: Icon(Icons.photo_camera),
                         onTap: () {
                           Get.to(() => SingleImageClickFaceDetectorView(
@@ -145,10 +147,10 @@ class ImageUploadUtils {
               return SimpleDialog(
                 elevation: 0,
                 backgroundColor: Colors.white,
-                title: Text("Select Image"),
+                title: Text(LocaleKeys.selectImage.translateText),
                 children: [
                   ListTile(
-                    title: Text("Photo Library"),
+                    title: Text(LocaleKeys.photoLibrary.translateText),
                     leading: Icon(Icons.photo_library),
                     onTap: () {
                       _imageFormGallery(
@@ -157,7 +159,7 @@ class ImageUploadUtils {
                     },
                   ),
                   ListTile(
-                    title: Text("Camera"),
+                    title: Text(LocaleKeys.camera.translateText),
                     leading: Icon(Icons.photo_camera),
                     onTap: () {
                       imageFromCamera(
@@ -184,14 +186,14 @@ class ImageUploadUtils {
                   child: Wrap(
                     children: [
                       ListTile(
-                        title: Text("Select photo"),
+                        title: Text(LocaleKeys.selectPhoto.translateText),
                         onTap: () {
                           onProfileChose();
                           Navigator.pop(context);
                         },
                       ),
                       ListTile(
-                        title: Text("Select logo"),
+                        title: Text(LocaleKeys.selectLogo.translateText),
                         onTap: () {
                           onLogoChose();
                           Navigator.pop(context);
@@ -207,17 +209,17 @@ class ImageUploadUtils {
             context: context,
             builder: (context) {
               return SimpleDialog(
-                title: Text("Select Photo or Logo"),
+                title: Text(LocaleKeys.selectPhotoOrLogo.translateText),
                 children: [
                   ListTile(
-                    title: Text("Select photo"),
+                    title: Text(LocaleKeys.selectPhoto.translateText),
                     onTap: () {
                       Navigator.pop(context);
                       onProfileChose();
                     },
                   ),
                   ListTile(
-                    title: Text("Select logo"),
+                    title: Text(LocaleKeys.selectLogo.translateText),
                     onTap: () {
                       Navigator.pop(context);
                       onLogoChose();
@@ -353,10 +355,12 @@ class ImageUploadUtils {
     } else if (status.isDenied) {
       Get.showSnackbar(
         GetSnackBar(
-            message: "Without this permission app can not change  picture.",
+            message: LocaleKeys
+                .withoutThisPermissionAppCanNotChangeProfilePicture
+                .translateText,
             mainButton: Platform.isIOS
                 ? SnackBarAction(
-                    label: "Settings",
+                    label: LocaleKeys.settings.translateText,
                     // textColor: Theme.of(context).accentColor,
                     onPressed: () {
                       openAppSettings();
@@ -369,10 +373,11 @@ class ImageUploadUtils {
     } else if (status.isPermanentlyDenied) {
       Get.showSnackbar(
         GetSnackBar(
-          message:
-              "To access this feature please grant permission from settings.",
+          message: LocaleKeys
+              .toAccessThisFeaturePleaseGrantPermissionFromSettings
+              .translateText,
           mainButton: SnackBarAction(
-            label: "Settings",
+            label: LocaleKeys.settings.translateText,
             textColor: Colors.amber,
             onPressed: () {
               openAppSettings();
@@ -428,18 +433,19 @@ class ImageUploadUtils {
     } else if (status.isDenied) {
       Get.showSnackbar(
         GetSnackBar(
-            message:
-                "Without this permission app can not change profile picture.",
+            message: LocaleKeys
+                .withoutThisPermissionAppCanNotChangeProfilePicture
+                .translateText,
             mainButton: Platform.isIOS
                 ? SnackBarAction(
-                    label: "Settings",
+                    label: LocaleKeys.settings.translateText,
                     // textColor: Theme.of(context).accentColor,
                     onPressed: () {
                       openAppSettings();
                     },
                   )
                 : SnackBarAction(
-                    label: "Settings",
+                    label: LocaleKeys.settings.translateText,
                     // textColor: Theme.of(context).accentColor,
                     onPressed: () {
                       openAppSettings();
@@ -451,10 +457,11 @@ class ImageUploadUtils {
     } else if (status.isPermanentlyDenied) {
       Get.showSnackbar(
         GetSnackBar(
-            message:
-                "To access this feature please grant permission from settings.",
+            message: LocaleKeys
+                .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                .translateText,
             mainButton: SnackBarAction(
-              label: "Settings",
+              label: LocaleKeys.settings.translateText,
               textColor: Colors.amber,
               onPressed: () {
                 openAppSettings();
@@ -497,10 +504,12 @@ class ImageUploadUtils {
       } else if (status.isDenied) {
         Get.showSnackbar(
           GetSnackBar(
-              message: "Without this permission app can not change  picture.",
+              message: LocaleKeys
+                  .withoutThisPermissionAppCanNotChangeProfilePicture
+                  .translateText,
               mainButton: Platform.isIOS
                   ? SnackBarAction(
-                      label: "Settings",
+                      label: LocaleKeys.settings.translateText,
                       // textColor: Theme.of(context).accentColor,
                       onPressed: () {
                         openAppSettings();
@@ -513,10 +522,11 @@ class ImageUploadUtils {
       } else if (status.isPermanentlyDenied) {
         Get.showSnackbar(
           GetSnackBar(
-            message:
-                "To access this feature please grant permission from settings.",
+            message: LocaleKeys
+                .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                .translateText,
             mainButton: SnackBarAction(
-              label: "Settings",
+              label: LocaleKeys.settings.translateText,
               textColor: Colors.amber,
               onPressed: () {
                 openAppSettings();
@@ -567,10 +577,12 @@ class ImageUploadUtils {
       } else if (status.isDenied) {
         Get.showSnackbar(
           GetSnackBar(
-              message: "Without this permission app can not change  picture.",
+              message: LocaleKeys
+                  .withoutThisPermissionAppCanNotChangeProfilePicture
+                  .translateText,
               mainButton: Platform.isIOS
                   ? SnackBarAction(
-                      label: "Settings",
+                      label: LocaleKeys.settings.translateText,
                       // textColor: Theme.of(context).accentColor,
                       onPressed: () {
                         openAppSettings();
@@ -583,10 +595,11 @@ class ImageUploadUtils {
       } else if (status.isPermanentlyDenied) {
         Get.showSnackbar(
           GetSnackBar(
-            message:
-                "To access this feature please grant permission from settings.",
+            message: LocaleKeys
+                .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                .translateText,
             mainButton: SnackBarAction(
-              label: "Settings",
+              label: LocaleKeys.settings.translateText,
               textColor: Colors.amber,
               onPressed: () {
                 openAppSettings();
