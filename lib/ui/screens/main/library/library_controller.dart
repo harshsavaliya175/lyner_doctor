@@ -1,22 +1,24 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/library_list_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'video/video_screen.dart';
 
 class LibraryController extends GetxController {
   bool isLoading = false;
   List<LibraryListData> libraryListData = [];
-  var pdfPath = '';
-  var youtubeUrl = '';
+  String pdfPath = '';
+  String youtubeUrl = '';
 
   // late YoutubePlayerController youtubeController;
 
@@ -41,11 +43,12 @@ class LibraryController extends GetxController {
     super.onClose();
   }*/
 
-  void loadYoutubeUrl(String url){
+  void loadYoutubeUrl(String url) {
     youtubeUrl = url;
     Get.to(() => VideoScreen());
     update();
   }
+
   Future<void> loadPdfFromUrl(String url) async {
     isLoading = true;
     update();
@@ -58,26 +61,35 @@ class LibraryController extends GetxController {
         if (result.isGranted) {
           await downloadAndOpenPdf(url);
         } else if (result.isDenied) {
-          showAppSnackBar( 'Permission Denied : Storage permission is required to download and open PDF files.');
+          showAppSnackBar(LocaleKeys
+              .permissionDeniedStoragePermissionIsRequiredToDownloadAndOpenPDFFiles
+              .translateText);
         } else if (result.isPermanentlyDenied) {
           // Permission permanently denied, direct user to settings
-          showAppSnackBar( 'Permission Permanently Denied : Please enable storage permission in settings.');
+          showAppSnackBar(LocaleKeys
+              .permissionPermanentlyDeniedPleaseEnableStoragePermissionInSettings
+              .translateText);
           openAppSettings();
         }
       } else if (status.isPermanentlyDenied) {
-        showAppSnackBar('Permission Permanently Denied : Please enable storage permission in settings.');
+        showAppSnackBar(LocaleKeys
+            .permissionPermanentlyDeniedPleaseEnableStoragePermissionInSettings
+            .translateText);
         openAppSettings();
       } else if (status.isRestricted) {
         // Permission is restricted on this device (like parental controls)
-        showAppSnackBar( 'Permission Restricted : Storage permission is restricted on this device.');
+        showAppSnackBar(LocaleKeys
+            .permissionRestrictedStoragePermissionIsRestrictedOnThisDevice
+            .translateText);
       }
     } catch (e) {
-      showAppSnackBar( "Error : ${e.toString()}");
+      showAppSnackBar("Error : ${e.toString()}");
     } finally {
       isLoading = false;
       update();
     }
   }
+
   Future<void> downloadAndOpenPdf(String url) async {
     try {
       var response = await http.get(Uri.parse(url));
@@ -92,13 +104,12 @@ class LibraryController extends GetxController {
         throw Exception('Failed to load PDF');
       }
     } catch (e) {
-      showAppSnackBar( "Error : ${e.toString()}");
+      showAppSnackBar("Error : ${e.toString()}");
     }
   }
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getLibraryListApi();
   }
@@ -111,7 +122,8 @@ class LibraryController extends GetxController {
     try {
       if (result.status) {
         if (result.data != null) {
-          LibraryListModel libraryListModel = LibraryListModel.fromJson(result.toJson());
+          LibraryListModel libraryListModel =
+              LibraryListModel.fromJson(result.toJson());
           libraryListData.addAll(libraryListModel.data!);
           isLoading = false;
           print(libraryListModel);

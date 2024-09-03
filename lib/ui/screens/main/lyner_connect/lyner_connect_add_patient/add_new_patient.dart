@@ -8,6 +8,7 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/lyner_patient_list_model.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
@@ -16,7 +17,7 @@ import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 class AddNewPatient extends StatelessWidget {
   AddNewPatient({super.key});
 
-  var controller = Get.put(AddNewPatientController());
+  final AddNewPatientController controller = Get.put(AddNewPatientController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class AddNewPatient extends StatelessWidget {
         leadingWidth: !isTablet ? 40 : 50,
         leading: Assets.icons.icBack
             .svg(
-              height: !isTablet ? 25 : 30,
-              width: !isTablet ? 25 : 30,
+              height: 35,
+              width: 35,
               fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
             )
             .paddingOnly(
@@ -46,7 +47,8 @@ class AddNewPatient extends StatelessWidget {
           Get.back();
         }),
       ),
-      body: GetBuilder<AddNewPatientController>(builder: (ctrl) {
+      body: GetBuilder<AddNewPatientController>(
+          builder: (AddNewPatientController ctrl) {
         return Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -80,8 +82,9 @@ class AddNewPatient extends StatelessWidget {
                           itemCount: ctrl.lynerPatientListData.length,
                           physics: PageScrollPhysics(),
                           shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final item = ctrl.lynerPatientListData[index];
+                          itemBuilder: (BuildContext context, int index) {
+                            final LynerPatientListData? item =
+                                ctrl.lynerPatientListData[index];
                             bool isSelected = ctrl.selectedIndex == index;
                             return Column(
                               children: [
@@ -140,11 +143,12 @@ class AddNewPatient extends StatelessWidget {
                       )
                     : Visibility(
                         visible: !ctrl.isLoading,
-                        child: LocaleKeys.noPatientFound.translateText.appCommonText(
-                            align: TextAlign.center,
-                            size: 18,
-                            weight: FontWeight.w300,
-                            color: hintColor),
+                        child: LocaleKeys.noPatientFound.translateText
+                            .appCommonText(
+                                align: TextAlign.center,
+                                size: 18,
+                                weight: FontWeight.w300,
+                                color: hintColor),
                       ).center,
                 !isTablet ? 70.space() : 80.space(),
               ],
@@ -169,7 +173,7 @@ class AddNewPatient extends StatelessWidget {
               fontSize: !isTablet ? 20 : 24,
               bgColor: primaryBrown,
               fontColor: Colors.white,
-            ).paddingOnly(top: 10,bottom: 10).paddingSymmetric(horizontal: 15),
+            ).paddingOnly(top: 10, bottom: 10).paddingSymmetric(horizontal: 15),
             Visibility(visible: ctrl.isLoading, child: AppProgressView())
           ],
         );

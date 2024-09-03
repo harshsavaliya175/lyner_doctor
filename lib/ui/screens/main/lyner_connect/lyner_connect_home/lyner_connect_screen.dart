@@ -8,6 +8,7 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/lyner_connect_list_model.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_home/lyner_connect_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_patient_card.dart';
@@ -44,7 +45,7 @@ class LynerConnectScreen extends StatelessWidget {
             },
           ).paddingOnly(right: 15)),
       body: GetBuilder<LynerConnectController>(
-        builder: (ctrl) {
+        builder: (LynerConnectController ctrl) {
           return Stack(
             children: [
               Column(
@@ -56,7 +57,8 @@ class LynerConnectScreen extends StatelessWidget {
                       itemCount: ctrl.lynerConnectList.length,
                       padding: EdgeInsets.only(bottom: 150, top: 6),
                       itemBuilder: (BuildContext context, int index) {
-                        var lynerConnectListData = ctrl.lynerConnectList[index];
+                        LynerConnectList? lynerConnectListData =
+                            ctrl.lynerConnectList[index];
                         return EditPatientCard(
                           title1: LocaleKeys.alignerStagesCom,
                           title2: LocaleKeys.alignerDaysCom,
@@ -75,7 +77,6 @@ class LynerConnectScreen extends StatelessWidget {
                               "${lynerConnectListData?.firstName} ${lynerConnectListData?.lastName}",
                           deleteOnTap: () {
                             ctrl.deletePatient(lynerConnectListData?.userId);
-
                           },
                           editOrSubmitOnTap: () {
                             Get.toNamed(Routes.addEditLynerConnect,

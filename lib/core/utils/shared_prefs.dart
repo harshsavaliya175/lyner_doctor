@@ -25,6 +25,7 @@ class SharedPreference {
   static const String APP_DEVICE_MODEL = "APP_DEVICE_MODEL";
   static const String APP_OS_VERSION = "APP_OS_VERSION";
   static const String APP_STORE_BUILD_NUMBER = "APP_STORE_BUILD_NUMBER";
+  static const String APP_DEVICE_ID = "APP_DEVICE_ID";
   static const String AUTH_TOKEN = "AUTH_TOKEN";
   static const String USER_TOKEN = "USER_TOKEN";
   static const String FIRST_NAME = "FIRST_NAME";
@@ -86,9 +87,11 @@ class SharedPreference {
       IosDeviceInfo iosDeviceInfo = (deviceInfo as IosDeviceInfo);
       putString(APP_DEVICE_MODEL, "Test");
       putString(APP_OS_VERSION, "iOS ${iosDeviceInfo.systemVersion}");
+      putString(APP_DEVICE_ID, deviceInfo.identifierForVendor);
     } else {
       AndroidDeviceInfo androidDeviceInfo = (deviceInfo as AndroidDeviceInfo);
       putString(APP_DEVICE_MODEL, androidDeviceInfo.model);
+      putString(APP_DEVICE_ID, androidDeviceInfo.id);
       putString(APP_OS_VERSION, androidDeviceInfo.version.release);
     }
     putString(APP_STORE_VERSION, packageInfo.version);

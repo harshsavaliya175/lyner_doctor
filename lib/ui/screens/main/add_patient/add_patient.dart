@@ -11,10 +11,16 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/core/utils/image_picker.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/step_indicator.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/clinic_billing_model.dart';
+import 'package:lynerdoctor/model/clinic_location_model.dart';
+import 'package:lynerdoctor/model/doctor_model.dart';
+import 'package:lynerdoctor/model/productListModel.dart';
+import 'package:lynerdoctor/model/selection_item.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
@@ -54,9 +60,11 @@ class AddPatientScreen extends StatelessWidget {
                 bottom: isTablet ? 22 : 0,
                 right: 10,
               )
-              .onClick(() {
-            Get.back();
-          }),
+              .onClick(
+            () {
+              Get.back();
+            },
+          ),
           backgroundColor: Colors.white,
           shadowColor: Colors.grey[300],
           titleSpacing: 1,
@@ -108,16 +116,18 @@ class AddPatientScreen extends StatelessWidget {
                                 ctrl.goToStep(index);
                               } else {
                                 ctrl.stepErrors[0] = true;
-                                showAppSnackBar(
-                                    "Please select any product plan to go next step");
+                                showAppSnackBar(LocaleKeys
+                                    .pleaseSelectAnyProductPlanToGoNextStep
+                                    .translateText);
                               }
                               break;
                             case 2:
                               if (ctrl.firstNameController.text.isEmpty ||
                                   ctrl.lastNameController.text.isEmpty) {
                                 if (ctrl.currentStep == 1) {
-                                  showAppSnackBar(
-                                      "Please enter firstname and lastname");
+                                  showAppSnackBar(LocaleKeys
+                                      .pleaseEnterFirstnameAndLastname
+                                      .translateText);
                                 }
                                 return;
                               } else {
@@ -152,8 +162,9 @@ class AddPatientScreen extends StatelessWidget {
                               if (ctrl.firstNameController.text.isEmpty ||
                                   ctrl.lastNameController.text.isEmpty) {
                                 if (ctrl.currentStep == 1) {
-                                  showAppSnackBar(
-                                      "Please enter firstname and lastname");
+                                  showAppSnackBar(LocaleKeys
+                                      .pleaseEnterFirstnameAndLastname
+                                      .translateText);
                                 }
                                 return;
                               } else {
@@ -240,9 +251,9 @@ Widget chooseTheProduct(AddPatientController ctrl) {
             padding: const EdgeInsets.only(bottom: 10),
             physics: const PageScrollPhysics(),
             shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final product = ctrl.products[index];
-              final isSelectedProductPlan =
+            itemBuilder: (BuildContext context, int index) {
+              final ProductListData product = ctrl.products[index];
+              final bool isSelectedProductPlan =
                   ctrl.selectedProduct?.toothCaseId == product.toothCaseId;
               return GestureDetector(
                 onTap: () {
@@ -366,7 +377,8 @@ Widget chooseTheProduct(AddPatientController ctrl) {
               if (ctrl.isSelectedProductPlan) {
                 ctrl.goToStep(1);
               } else {
-                showAppSnackBar("Please select any product plan to continue ");
+                showAppSnackBar(LocaleKeys
+                    .pleaseSelectAnyProductPlanToContinue.translateText);
               }
             },
             boxShadow: [],
@@ -406,14 +418,13 @@ Widget patientInformation(AddPatientController ctrl) {
                       if (value.isEmpty) {
                         ctrl.firstNameError = true;
                         ctrl.update();
-                        return 'Please enter firstname';
+                        return LocaleKeys.pleaseEnterFirstname.translateText;
                       }
                       ctrl.update();
                       return null;
                     },
                     textFieldPadding: EdgeInsets.zero,
                     keyboardType: TextInputType.text,
-                    // isError: ctrl.firstNameError,
                     hintText: LocaleKeys.enterName.translateText,
                     labelText: LocaleKeys.firstName.translateText,
                     showPrefixIcon: false,
@@ -428,7 +439,7 @@ Widget patientInformation(AddPatientController ctrl) {
                       if (value.isEmpty) {
                         ctrl.lastNameError = true;
                         ctrl.update();
-                        return 'Please enter lastname';
+                        return LocaleKeys.pleaseEnterLastName.translateText;
                       }
                       ctrl.update();
                       return null;
@@ -446,8 +457,8 @@ Widget patientInformation(AddPatientController ctrl) {
             15.space(),
             AppTextField(
               textEditingController: ctrl.emailController,
-              onChanged: (value) {},
-              validator: (value) {},
+              onChanged: (String value) {},
+              validator: (String value) {},
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
               // isError: ctrl.emailError,
@@ -465,16 +476,23 @@ Widget patientInformation(AddPatientController ctrl) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
-                  return 'Please select date of birth';
+                  return LocaleKeys.pleaseSelectDateOfBirth.translateText;
                 }
                 ctrl.update();
                 return null;
               },
               onTap: () async {
-                ctrl.pickedDate = await datePickerDialog(Get.context!);
+                ctrl.pickedDate = await datePickerDialog(
+                    context: Get.context!, isDateOfBirth: true);
                 if (ctrl.pickedDate != null) {
-                  ctrl.dateTextField =
-                      DateFormat('dd-MM-yyyy').format(ctrl.pickedDate!);
+                  ctrl.dateTextField = DateFormat(
+                    'dd-MM-yyyy',
+                    (preferences.getString(SharedPreference.LANGUAGE_CODE) ??
+                                'fr')
+                            .isEmpty
+                        ? 'fr'
+                        : 'en',
+                  ).format(ctrl.pickedDate!);
                   ctrl.dateOfBirthController.text = ctrl.dateTextField!;
                   print(ctrl.dateOfBirthController.text);
                 }
@@ -496,7 +514,7 @@ Widget patientInformation(AddPatientController ctrl) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
-                  return 'Please select doctor';
+                  return LocaleKeys.pleaseSelectDoctor.translateText;
                 }
                 ctrl.update();
                 return null;
@@ -534,8 +552,8 @@ Widget patientInformation(AddPatientController ctrl) {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
-                  itemBuilder: (builder, index) {
-                    var data = ctrl.doctorDataList[
+                  itemBuilder: (BuildContext builder, int index) {
+                    DoctorData? data = ctrl.doctorDataList[
                         index]; // Display filtered data when search is not empty
                     return InkWell(
                       onTap: () {
@@ -588,7 +606,7 @@ Widget patientInformation(AddPatientController ctrl) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
-                  return 'Please select billing address';
+                  return LocaleKeys.pleaseSelectBillingAddress.translateText;
                 }
                 ctrl.update();
                 return null;
@@ -625,8 +643,8 @@ Widget patientInformation(AddPatientController ctrl) {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
-                  itemBuilder: (builder, index) {
-                    var data = ctrl.clinicBillingList[
+                  itemBuilder: (BuildContext builder, int index) {
+                    ClinicBillingData? data = ctrl.clinicBillingList[
                         index]; // Display filtered data when search is not empty
                     return InkWell(
                       onTap: () {
@@ -677,7 +695,7 @@ Widget patientInformation(AddPatientController ctrl) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
-                  return 'Please select delivery address';
+                  return LocaleKeys.pleaseSelectDeliveryAddress.translateText;
                 }
                 ctrl.update();
                 return null;
@@ -714,8 +732,8 @@ Widget patientInformation(AddPatientController ctrl) {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
-                  itemBuilder: (builder, index) {
-                    var data = ctrl.clinicDeliveryLocationList[
+                  itemBuilder: (BuildContext builder, int index) {
+                    ClinicLocation? data = ctrl.clinicDeliveryLocationList[
                         index]; // Display filtered data when search is not empty
                     return InkWell(
                       onTap: () {
@@ -818,7 +836,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       weight: FontWeight.w500,
                       color: Colors.black,
                     ),
-                    (".jpg & .heif format").appCommonText(
+                    (LocaleKeys.jpgAndHeifFormat.translateText).appCommonText(
                       align: TextAlign.start,
                       size: !isTablet ? 16 : 19,
                       maxLine: 2,
@@ -867,7 +885,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               photoCardWidget(
                 image: Assets.images.imgProfile.path,
-                title: "Profile",
+                title: LocaleKeys.profile.translateText,
                 urlImage: ctrl.patientData?.patientPhoto?.gauche ?? '',
                 urlPath: "patient_gauche",
                 fileImage: ctrl.profileImageFile ?? File(''),
@@ -875,7 +893,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
                     imageCount: 0,
-                    title: "Profile",
+                    title: LocaleKeys.profile.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.profileImageFile = file!;
@@ -902,7 +920,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               10.space(),
               photoCardWidget(
                 image: Assets.images.imgFace.path,
-                title: "Face",
+                title: LocaleKeys.face.translateText,
                 urlImage: ctrl.patientData?.patientPhoto?.face ?? '',
                 urlPath: "patient_face",
                 fileImage: ctrl.faceImageFile ?? File(''),
@@ -910,7 +928,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                       context: Get.context!,
                       imageCount: 1,
-                      title: "Face",
+                      title: LocaleKeys.face.translateText,
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.faceImageFile = file!;
@@ -936,7 +954,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               10.space(),
               photoCardWidget(
                 image: Assets.images.imgSmile.path,
-                title: "Smile",
+                title: LocaleKeys.smile.translateText,
                 urlImage: ctrl.patientData?.patientPhoto?.sourire ?? '',
                 urlPath: "patient_sourire",
                 fileImage: ctrl.smileImageFile ?? File(''),
@@ -944,7 +962,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
                     imageCount: 2,
-                    title: "Smile",
+                    title: LocaleKeys.smile.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.smileImageFile = file!;
@@ -977,7 +995,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             children: [
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
-                title: "Intra Max",
+                title: LocaleKeys.intraMax.translateText,
                 urlImage: ctrl.patientData?.patientPhoto?.interMax ?? '',
                 urlPath: "patient_intra_max",
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
@@ -1042,7 +1060,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               10.space(),
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
-                title: "Intra Mand",
+                title: LocaleKeys.intraMand.translateText,
                 urlImage: ctrl.patientData?.patientPhoto?.interMandi ?? '',
                 urlPath: "patient_intra_gauche",
                 fileImage: ctrl.intraMandImageFile ?? File(''),
@@ -1070,12 +1088,12 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_intra_droite",
                 urlImage: ctrl.patientData?.patientPhoto?.interDroite ?? '',
                 fileImage: ctrl.intraRightImageFile ?? File(''),
-                title: "Inter Right",
+                title: LocaleKeys.intraRight.translateText,
                 onTap: () {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
                     imageCount: 5,
-                    title: "Inter Right",
+                    title: LocaleKeys.intraRight.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraRightImageFile = file!;
@@ -1105,12 +1123,12 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.intraFaceImageFile ?? File(''),
                 urlPath: "patient_inter_face",
                 image: Assets.images.imgInterFace.path,
-                title: "Inter Face",
+                title: LocaleKeys.intraFace.translateText,
                 onTap: () {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
                     imageCount: 6,
-                    title: "Inter Face",
+                    title: LocaleKeys.intraFace.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraFaceImageFile = file!;
@@ -1140,12 +1158,12 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.intraLeftImageFile ?? File(''),
                 urlPath: "patient_inter_gauche",
                 image: Assets.images.imgInterLeft.path,
-                title: "Inter Left",
+                title: LocaleKeys.intraLeft.translateText,
                 onTap: () {
                   imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
                     imageCount: 7,
-                    title: "Inter Left",
+                    title: LocaleKeys.intraLeft.translateText,
                     onImageChose: (File file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraLeftImageFile = file;
@@ -1172,7 +1190,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             ],
           ),
           5.space(),
-          "Radios".appCommonText(
+          LocaleKeys.radios.translateText.appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
             maxLine: 2,
@@ -1180,7 +1198,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             weight: FontWeight.w500,
             color: Colors.black,
           ),
-          "(.jpg & .heif format)".appCommonText(
+          LocaleKeys.jpgAndHeifFormat.translateText.appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 16 : 19,
             maxLine: 2,
@@ -1281,7 +1299,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             ],
           ),
           10.space(),
-          "STL Files".appCommonText(
+          LocaleKeys.stlFiles.translateText.appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
             maxLine: 2,
@@ -1302,7 +1320,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                           color: ctrl.isUploadStl ? Colors.white : skyColor,
                           width: 1),
                       borderRadius: BorderRadius.circular(!isTablet ? 25 : 40)),
-                  child: 'Upload STL'.appCommonText(
+                  child: LocaleKeys.uploadStl.translateText.appCommonText(
                       align: TextAlign.center,
                       color: ctrl.isUploadStl ? Colors.white : darkSkyColor,
                       size: !isTablet ? 16 : 20),
@@ -1324,7 +1342,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       border: Border.all(
                           color: !ctrl.isUploadStl ? Colors.white : skyColor,
                           width: 1)),
-                  child: 'Posted by 3shape'.appCommonText(
+                  child: LocaleKeys.postedBy3shape.translateText.appCommonText(
                       align: TextAlign.center,
                       color: !ctrl.isUploadStl ? Colors.white : darkSkyColor,
                       size: !isTablet ? 16 : 20,
@@ -1345,7 +1363,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 10.space(),
                 Row(
                   children: [
-                    "Upper Jaw STL File".appCommonText(
+                    LocaleKeys.upperJawStlFile.translateText.appCommonText(
                         size: !isTablet ? 14 : 18,
                         weight: FontWeight.w400,
                         align: TextAlign.start),
@@ -1391,21 +1409,21 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     decoration: BoxDecoration(
                         color: primaryBrown,
                         borderRadius: BorderRadius.circular(25)),
-                    child: "Choose File".appCommonText(
+                    child: LocaleKeys.chooseFile.translateText.appCommonText(
                         size: !isTablet ? 14 : 18,
                         color: Colors.white,
                         align: TextAlign.center),
                   )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
-                  hintText: "No file chosen",
+                  hintText: LocaleKeys.noFileChosen.translateText,
                   // labelText: "Upper Jaw STL File*",
                   showPrefixIcon: false,
                 ),
                 10.space(),
                 Row(
                   children: [
-                    "Lower Jaw STL File".appCommonText(
+                    LocaleKeys.lowerJawStlFile.translateText.appCommonText(
                         size: !isTablet ? 14 : 18,
                         weight: FontWeight.w400,
                         align: TextAlign.start),
@@ -1450,14 +1468,14 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     decoration: BoxDecoration(
                         color: primaryBrown,
                         borderRadius: BorderRadius.circular(25)),
-                    child: "Choose File".appCommonText(
+                    child: LocaleKeys.chooseFile.translateText.appCommonText(
                         size: !isTablet ? 14 : 18,
                         color: Colors.white,
                         align: TextAlign.center),
                   )
                       .paddingSymmetric(vertical: 7)
                       .paddingOnly(left: 10, right: 6),
-                  hintText: "No file chosen",
+                  hintText: LocaleKeys.noFileChosen.translateText,
                   // labelText: "Upper Jaw STL File*",
                   showPrefixIcon: false,
                 ),
@@ -1465,7 +1483,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             ),
           ),
           10.space(),
-          "CBCT / DICOM".appCommonText(
+          LocaleKeys.cbctDICOM.translateText.appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
             maxLine: 2,
@@ -1513,7 +1531,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       }
                       ctrl.update();
                       ctrl.uploadDicomFile(file, ctrl.patientData?.patientId);
-
                       print('Chosen file path: ${file.path}');
                     },
                   );
@@ -1567,7 +1584,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               Expanded(
                 child: AppBorderButton(
                   btnHeight: !isTablet ? 55 : 70,
-                  text: "Finish Latter",
+                  text: LocaleKeys.finishLatter.translateText,
                   onTap: () {
                     ctrl.addUpdatePatientDetails(
                         isFromFinishStep: true,
@@ -1589,7 +1606,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                     if (ctrl.validateUploadPhotoFiles()) {
                       ctrl.goToStep(3);
                     } else {
-                      showAppSnackBar("Please select all required photos");
+                      showAppSnackBar(LocaleKeys
+                          .pleaseSelectAllRequiredPhotos.translateText);
                     }
                   },
                   boxShadow: [],
@@ -1679,7 +1697,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
                 color: Colors.black,
               )
               .paddingSymmetric(horizontal: 15),
-          "((ou la simulation sera réalisée)"
+          LocaleKeys.whereTheSimulationWillBeCarriedOut.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 16 : 19,
@@ -1768,7 +1786,9 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             ctrl.changeArcadeValue(3);
           }),
           10.space(),
-          "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade."
+          LocaleKeys
+              .threeDScansOfBothArchesAreNecessaryEvenIfYouChooseToTreatOnlyOneArch
+              .translateText
               .appCommonText(
                 weight: FontWeight.w400,
                 align: TextAlign.start,
@@ -1792,7 +1812,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             thickness: 3,
           ),
           12.space(),
-          "Classe Dentaire"
+          LocaleKeys.dentalClass.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 24 : 27,
@@ -1855,7 +1875,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             ctrl.changeClassesDentalValue(2);
           }),
           7.space(),
-          "Notes"
+          LocaleKeys.notes.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 24 : 27,
@@ -1872,7 +1892,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
               if (value.isEmpty) {
                 ctrl.emailError = true;
                 ctrl.update();
-                return 'Please enter Date of Birth';
+                return LocaleKeys.pleaseEnterDateOfBirth.translateText;
               }
               ctrl.update();
               return null;
@@ -1881,7 +1901,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             keyboardType: TextInputType.text,
             radius: 20,
             isError: ctrl.emailError,
-            hintText: "Saisir une remarque",
+            hintText: LocaleKeys.enterARemark.translateText,
             maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
@@ -1893,7 +1913,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             thickness: 3,
           ),
           12.space(),
-          "Milieu Incisif Maxillaire"
+          LocaleKeys.middleMaxillaryIncisor.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 24 : 27,
@@ -1952,7 +1972,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             },
           ).paddingSymmetric(horizontal: 15),
           5.space(),
-          "Notes"
+          LocaleKeys.notes.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 24 : 27,
@@ -1969,7 +1989,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
               if (value.isEmpty) {
                 ctrl.emailError = true;
                 ctrl.update();
-                return 'Please enter Date of Birth';
+                return LocaleKeys.pleaseEnterDateOfBirth.translateText;
               }
               ctrl.update();
               return null;
@@ -1978,7 +1998,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             keyboardType: TextInputType.text,
             isError: ctrl.emailError,
             radius: 20,
-            hintText: "Saisir une remarque",
+            hintText: LocaleKeys.enterARemark.translateText,
             maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
@@ -1996,7 +2016,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             thickness: 3,
           ),
           15.space(),
-          "Autres Recommandations"
+          LocaleKeys.otherRecommendations.translateText
               .appCommonText(
                 align: TextAlign.start,
                 size: !isTablet ? 24 : 27,
@@ -2013,7 +2033,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
               if (value.isEmpty) {
                 ctrl.emailError = true;
                 ctrl.update();
-                return 'Please enter Date of Birth';
+                return LocaleKeys.pleaseEnterDateOfBirth.translateText;
               }
               ctrl.update();
               return null;
@@ -2022,7 +2042,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
             textFieldPadding: EdgeInsets.zero,
             keyboardType: TextInputType.text,
             isError: ctrl.emailError,
-            hintText: "Saisir une remarque",
+            hintText: LocaleKeys.enterARemark.translateText,
             maxLines: !isTablet ? 3 : 5,
             // labelText: LocaleKeys.deliveryAddress.translateText,
             showPrefixIcon: false,
@@ -2044,7 +2064,7 @@ Widget prescriptionScreen(AddPatientController ctrl) {
               Expanded(
                 child: AppBorderButton(
                   btnHeight: !isTablet ? 55 : 70,
-                  text: "Finish Latter",
+                  text: LocaleKeys.finishLatter.translateText,
                   onTap: () {
                     // ctrl.goToStep(1);
                     ctrl.addUpdatePatientDetails(
@@ -2062,12 +2082,13 @@ Widget prescriptionScreen(AddPatientController ctrl) {
               Expanded(
                 child: AppButton(
                   btnHeight: !isTablet ? 55 : 70,
-                  text: "Add",
+                  text: LocaleKeys.add.translateText,
                   onTap: () {
                     if (ctrl.validateArcadeFields()) {
                       ctrl.addUpdatePatientDetails();
                     } else {
-                      showAppSnackBar("Please select all required fields");
+                      showAppSnackBar(LocaleKeys
+                          .pleaseSelectAllRequiredFields.translateText);
                     }
                   },
                   boxShadow: [],
@@ -2091,7 +2112,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       10.space(),
-      "Techniques Acceptees Pour Ce Patient"
+      LocaleKeys.acceptedTechniquesForThisPatient.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2105,8 +2126,8 @@ Widget techniquesPatient(AddPatientController ctrl) {
         itemCount: ctrl.patientTechniquesItems.length,
         physics: PageScrollPhysics(),
         shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final item = ctrl.patientTechniquesItems[index];
+        itemBuilder: (BuildContext context, int index) {
+          final SelectionItem item = ctrl.patientTechniquesItems[index];
           return Column(
             children: [
               Container(
@@ -2162,7 +2183,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
                     if (value.isEmpty) {
                       ctrl.emailError = true;
                       ctrl.update();
-                      return 'Please enter Date of Birth';
+                      return LocaleKeys.pleaseEnterDateOfBirth.translateText;
                     }
                     ctrl.update();
                     return null;
@@ -2170,7 +2191,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
                   isError: ctrl.emailError,
-                  hintText: "Saisir une remarque",
+                  hintText: LocaleKeys.enterARemark.translateText,
                   maxLines: !isTablet ? 3 : 5,
                   radius: 20,
                   // labelText: LocaleKeys.deliveryAddress.translateText,
@@ -2182,7 +2203,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
         },
       ).paddingSymmetric(horizontal: 15),
       5.space(),
-      "Notes"
+      LocaleKeys.notes.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2199,7 +2220,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
           if (value.isEmpty) {
             ctrl.emailError = true;
             ctrl.update();
-            return 'Please enter Date of Birth';
+            return LocaleKeys.pleaseEnterDateOfBirth.translateText;
           }
           ctrl.update();
           return null;
@@ -2208,7 +2229,7 @@ Widget techniquesPatient(AddPatientController ctrl) {
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
         radius: 20,
-        hintText: "Saisir une remarque",
+        hintText: LocaleKeys.enterARemark.translateText,
         maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
@@ -2224,7 +2245,7 @@ Widget dentalHistory(AddPatientController ctrl) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       15.space(),
-      "Historique Dentaire"
+      LocaleKeys.dentalHistory.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2239,8 +2260,8 @@ Widget dentalHistory(AddPatientController ctrl) {
         itemCount: ctrl.dentalHistoryItems.length,
         physics: PageScrollPhysics(),
         shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final item = ctrl.dentalHistoryItems[index];
+        itemBuilder: (BuildContext context, int index) {
+          final SelectionItem item = ctrl.dentalHistoryItems[index];
           return Column(
             children: [
               Container(
@@ -2295,7 +2316,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                     if (value.isEmpty) {
                       ctrl.emailError = true;
                       ctrl.update();
-                      return 'Please enter Date of Birth';
+                      return LocaleKeys.pleaseEnterDateOfBirth.translateText;
                     }
                     ctrl.update();
                     return null;
@@ -2303,7 +2324,7 @@ Widget dentalHistory(AddPatientController ctrl) {
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
                   isError: ctrl.emailError,
-                  hintText: "Saisir une remarque",
+                  hintText: LocaleKeys.enterARemark.translateText,
                   maxLines: !isTablet ? 3 : 5,
                   // labelText: LocaleKeys.deliveryAddress.translateText,
                   showPrefixIcon: false,
@@ -2410,7 +2431,7 @@ Widget dentalHistory(AddPatientController ctrl) {
         },
       ).paddingSymmetric(horizontal: 15),
       5.space(),
-      "Notes"
+      LocaleKeys.notes.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2422,13 +2443,13 @@ Widget dentalHistory(AddPatientController ctrl) {
           .paddingSymmetric(horizontal: 15),
       AppTextField(
         textEditingController: ctrl.dentalHistoryNoteCtrl,
-        onChanged: (value) {},
+        onChanged: (String value) {},
         radius: 20,
-        validator: (value) {
+        validator: (String value) {
           if (value.isEmpty) {
             ctrl.emailError = true;
             ctrl.update();
-            return 'Please enter Date of Birth';
+            return LocaleKeys.pleaseEnterDateOfBirth.translateText;
           }
           ctrl.update();
           return null;
@@ -2436,7 +2457,7 @@ Widget dentalHistory(AddPatientController ctrl) {
         textFieldPadding: EdgeInsets.zero,
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
-        hintText: "Saisir une remarque",
+        hintText: LocaleKeys.enterARemark.translateText,
         maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
@@ -2452,7 +2473,7 @@ Widget incisorCovering(AddPatientController ctrl) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       15.space(),
-      "Recouvrement Incisives (Supraclusion)"
+      LocaleKeys.incisorCoveringOverbite.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2467,8 +2488,8 @@ Widget incisorCovering(AddPatientController ctrl) {
         itemCount: ctrl.incisorCoveringItems.length,
         physics: PageScrollPhysics(),
         shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final item = ctrl.incisorCoveringItems[index];
+        itemBuilder: (BuildContext context, int index) {
+          final SelectionItem item = ctrl.incisorCoveringItems[index];
           return Container(
             height: !isTablet ? 55 : 65,
             decoration: BoxDecoration(
@@ -2510,7 +2531,7 @@ Widget incisorCovering(AddPatientController ctrl) {
         },
       ).paddingSymmetric(horizontal: 15),
       5.space(),
-      "Notes"
+      LocaleKeys.notes.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2527,7 +2548,7 @@ Widget incisorCovering(AddPatientController ctrl) {
           if (value.isEmpty) {
             ctrl.emailError = true;
             ctrl.update();
-            return 'Please enter text';
+            return LocaleKeys.pleaseEnterText.translateText;
           }
           ctrl.update();
           return null;
@@ -2536,7 +2557,7 @@ Widget incisorCovering(AddPatientController ctrl) {
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
         radius: 20,
-        hintText: "Saisir....",
+        hintText: LocaleKeys.toInput.translateText,
         maxLines: !isTablet ? 3 : 5,
         // labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,
@@ -2551,7 +2572,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      "Objectifs Du Traitement"
+      LocaleKeys.treatmentGoals.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 24 : 27,
@@ -2561,7 +2582,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
             color: Colors.black,
           )
           .paddingSymmetric(horizontal: 15),
-      "(demande du patient)"
+      LocaleKeys.patientRequest.translateText
           .appCommonText(
             align: TextAlign.start,
             size: !isTablet ? 16 : 19,
@@ -2636,13 +2657,13 @@ Widget treatmentGoals(AddPatientController ctrl) {
       10.space(),
       AppTextField(
         textEditingController: ctrl.objectifsTraitementDeliveryAddressCtrl,
-        onChanged: (value) {},
+        onChanged: (String value) {},
         radius: 20,
-        validator: (value) {
+        validator: (String value) {
           if (value.isEmpty) {
             ctrl.emailError = true;
             ctrl.update();
-            return 'Please enter address';
+            return LocaleKeys.pleaseEnterAddress.translateText;
           }
           ctrl.update();
           return null;
@@ -2650,7 +2671,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
         textFieldPadding: EdgeInsets.zero,
         keyboardType: TextInputType.text,
         isError: ctrl.emailError,
-        hintText: "Saisir une remarque",
+        hintText: LocaleKeys.enterARemark.translateText,
         maxLines: !isTablet ? 3 : 5,
         labelText: LocaleKeys.deliveryAddress.translateText,
         showPrefixIcon: false,

@@ -94,7 +94,7 @@ class AddPatientController extends GetxController {
 
   var patientId;
 
-  String dicomFileName = "Upload DICOM File";
+  String dicomFileName = LocaleKeys.uploadDICOMFile.translateText;
 
   @override
   Future<void> onInit() async {
@@ -129,13 +129,14 @@ class AddPatientController extends GetxController {
   }
 
   String getFileName(String? filePath, int length) {
-    if (filePath == null || filePath.isEmpty) return "Upload DICOM File";
+    if (filePath == null || filePath.isEmpty)
+      return LocaleKeys.uploadDICOMFile.translateText;
     return filePath.length > length
         ? filePath.substring(filePath.length - length)
         : filePath;
   }
 
-  var patientTechniquesItems = <SelectionItem>[
+  List<SelectionItem> patientTechniquesItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
     SelectionItem(title: LocaleKeys.iprStripping.translateText),
     SelectionItem(title: LocaleKeys.taquets.translateText),
@@ -198,7 +199,7 @@ class AddPatientController extends GetxController {
   }
 
   bool validateTechniquesAcceptPatientFields() {
-    for (var item in patientTechniquesItems) {
+    for (SelectionItem item in patientTechniquesItems) {
       if (item.isSelected) {
         return true;
       }
@@ -207,7 +208,7 @@ class AddPatientController extends GetxController {
   }
 
   bool validateMiddleMaxillaryFields() {
-    for (var item in middleMaxillaryItems) {
+    for (SelectionItem item in middleMaxillaryItems) {
       if (item.isSelected) {
         return true;
       }
@@ -216,7 +217,7 @@ class AddPatientController extends GetxController {
   }
 
   bool validateIncisorCoveringFields() {
-    for (var item in incisorCoveringItems) {
+    for (SelectionItem item in incisorCoveringItems) {
       if (item.isSelected) {
         return true;
       }
@@ -235,7 +236,7 @@ class AddPatientController extends GetxController {
     return true;
   }
 
-  var dentalHistoryItems = <SelectionItem>[
+  List<SelectionItem> dentalHistoryItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.rienDeParticulier.translateText),
     SelectionItem(
         title: LocaleKeys.dentsMobiles.translateText, requiresNote: true),
@@ -251,12 +252,14 @@ class AddPatientController extends GetxController {
         title: LocaleKeys.autresInformationsPertinentes.translateText,
         requiresNote: true),
   ];
-  var middleMaxillaryItems = <SelectionItem>[
+
+  List<SelectionItem> middleMaxillaryItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.centre.translateText),
     SelectionItem(title: LocaleKeys.decaleVersLaDroite.translateText),
     SelectionItem(title: LocaleKeys.decaleVersLaGauche.translateText),
   ];
-  var incisorCoveringItems = <SelectionItem>[
+
+  List<SelectionItem> incisorCoveringItems = <SelectionItem>[
     SelectionItem(title: LocaleKeys.recommandeLyner.translateText),
     SelectionItem(title: LocaleKeys.augmentationDimension.translateText),
     SelectionItem(
@@ -264,7 +267,8 @@ class AddPatientController extends GetxController {
     SelectionItem(
         title: LocaleKeys.ingressionDesIncisivesMandibulaires.translateText),
   ];
-  var stepErrors = <int, bool>{};
+
+  Map<int, bool> stepErrors = <int, bool>{};
 
   void checkStepErrors() {
     if (currentStep == 0) {
@@ -509,7 +513,12 @@ class AddPatientController extends GetxController {
   Future<void> addNewPatient() async {
     isLoading = true;
     if (pickedDate != null) {
-      dateTextField = DateFormat('yyyy-MM-dd').format(pickedDate!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(pickedDate!);
     } else {
       dateTextField = "";
     }
@@ -552,10 +561,11 @@ class AddPatientController extends GetxController {
           billingAddressController.text.isEmpty) {
         goToStep(1);
       } else if (!validateUploadPhotoFiles()) {
-        showAppSnackBar("Please upload required photograph");
+        showAppSnackBar(
+            LocaleKeys.pleaseUploadRequiredPhotograph.translateText);
         goToStep(2);
       } else if (!validateArcadeFields()) {
-        showAppSnackBar("Please select all required fields");
+        showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredFields.translateText);
       } else {
         callAddUpdatePatientDetails(isFromFinishStep: false, draftViewPage: '');
       }
@@ -616,38 +626,47 @@ class AddPatientController extends GetxController {
     isLoading = true;
     List<String> acceptedTechniquesList;
     acceptedTechniquesList = patientTechniquesItems
-        .where((item) => item.isSelected)
-        .map((item) =>
+        .where((SelectionItem item) => item.isSelected)
+        .map((SelectionItem item) =>
             item.note != null ? "${item.title}:${item.note}" : item.title)
         .toList();
     print(acceptedTechniquesList.join(', '));
 
     List<String> dentalHistoryList;
     dentalHistoryList = dentalHistoryItems
-        .where((item) => item.isSelected)
-        .map((item) =>
+        .where((SelectionItem item) => item.isSelected)
+        .map((SelectionItem item) =>
             item.note != null ? "${item.title}:${item.note}" : item.title)
         .toList();
     print(dentalHistoryList.join(', '));
 
     List<String> middleMaxillaryList;
     middleMaxillaryList = middleMaxillaryItems
-        .where((item) => item.isSelected)
-        .map((item) => item.title)
+        .where((SelectionItem item) => item.isSelected)
+        .map((SelectionItem item) => item.title)
         .toList();
     print(middleMaxillaryList.join(', '));
 
     List<String> incisorCoveringList;
     incisorCoveringList = incisorCoveringItems
-        .where((item) => item.isSelected)
-        .map((item) => item.title)
+        .where((SelectionItem item) => item.isSelected)
+        .map((SelectionItem item) => item.title)
         .toList();
     print(incisorCoveringList.join(', '));
     if (pickedDate != null) {
-      dateTextField = DateFormat('yyyy-MM-dd').format(pickedDate!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(pickedDate!);
     } else if (patientData?.dateOfBirth != null) {
-      dateTextField =
-          DateFormat('yyyy-MM-dd').format(patientData!.dateOfBirth!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(patientData!.dateOfBirth!);
       // dateOfBirthController.text = dateTextField!;
     } else {
       dateTextField = "";
@@ -728,8 +747,13 @@ class AddPatientController extends GetxController {
           emailController.text = patientData?.email ?? '';
 
           if (patientData?.dateOfBirth != null) {
-            dateTextField =
-                DateFormat('dd-MM-yyyy').format(patientData!.dateOfBirth!);
+            dateTextField = DateFormat(
+              'dd-MM-yyyy',
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+                      .isEmpty
+                  ? 'fr'
+                  : 'en',
+            ).format(patientData!.dateOfBirth!);
             dateOfBirthController.text = dateTextField!;
           } else {
             dateOfBirthController.text = '';
@@ -1079,9 +1103,9 @@ class AddPatientController extends GetxController {
       update();
       // Show final success or failure message
       if (allChunksUploaded) {
-        showAppSnackBar('File uploaded successfully');
+        showAppSnackBar(LocaleKeys.fileUploadedSuccessfully.translateText);
       } else {
-        showAppSnackBar('File upload failed');
+        showAppSnackBar(LocaleKeys.fileUploadFailed.translateText);
       }
     }
   }

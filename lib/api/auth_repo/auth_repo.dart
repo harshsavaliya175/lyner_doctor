@@ -5,6 +5,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:lynerdoctor/api/api_helpers.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:mime/mime.dart';
 
 class AuthRepo {
@@ -134,6 +135,26 @@ class AuthRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  Future<ResponseItem> updateDeviceToken({
+    String devicePushToken = '',
+    String deviceId = '',
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+    final Map<String, dynamic> params = {
+      "device_id": deviceId,
+      "device_push_token": devicePushToken,
+    };
+    String requestUrl = ApiUrl.baseUrl;
+    result = await BaseApiHelper.postRequest(requestUrl, params);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> changePassword(
       {required String oldPassword, required String newPassword}) async {
     ResponseItem result;
@@ -236,24 +257,31 @@ class AuthRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
-  static Future<ResponseItem> logOut() async {
+  static Future<ResponseItem> logout() async {
+    String deviceId =
+        preferences.getString(SharedPreference.APP_DEVICE_ID) ?? '';
     ResponseItem result;
     bool status = true;
     dynamic data;
     String msg = "";
 
+    final Map<String, String> params = {"device_id": deviceId};
     final Map<String, String> queryParameters = {
-      // RequestParam.service: MethodNames.logOut,
-      RequestParam.showError: SHOW_ERROR
+      RequestParam.service: MethodNames.logout,
+      RequestParam.showError: SHOW_ERROR,
     };
-    String queryString = Uri(queryParameters: queryParameters).query;
+    String queryString = Uri(
+      queryParameters: queryParameters,
+    ).query;
     String requestUrl = ApiUrl.baseUrl + queryString;
-    result =
-        await BaseApiHelper.postRequest(requestUrl, {}, passAuthToken: true);
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
     status = result.status;
     data = result.data;
     msg = result.msg;
-
     return ResponseItem(data: data, msg: msg, status: status);
   }
 }

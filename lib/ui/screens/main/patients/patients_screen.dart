@@ -6,6 +6,7 @@ import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/push_notification_utils.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -22,8 +23,11 @@ class PatientsScreen extends StatelessWidget {
 
   final PatientsController patientsController = Get.put(PatientsController());
 
+  NotificationUtils notificationUtils = NotificationUtils();
+
   @override
   Widget build(BuildContext context) {
+    notificationUtils.init();
     return Scaffold(
       backgroundColor: appBgColor,
       resizeToAvoidBottomInset: false,
@@ -228,9 +232,7 @@ class PatientsScreen extends StatelessWidget {
                 ],
               ).paddingOnly(left: 20, right: 20),
               ctrl.isLoading
-                  ? AppProgressView(
-                      progressColor: Colors.black,
-                    )
+                  ? AppProgressView(progressColor: Colors.black)
                   : Container()
             ],
           );

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -63,10 +65,11 @@ class AppDownloadTextButton extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        "Without this permission app can not download file.",
+                        LocaleKeys.withoutThisPermissionAppCanNotDownloadFile
+                            .translateText,
                       ),
                       action: SnackBarAction(
-                        label: "Setting",
+                        label: LocaleKeys.setting.translateText,
                         textColor: Colors.white,
                         onPressed: () {
                           openAppSettings();
@@ -81,10 +84,12 @@ class AppDownloadTextButton extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        "To access this feature please grant permission from settings.",
+                        LocaleKeys
+                            .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                            .translateText,
                       ),
                       action: SnackBarAction(
-                        label: "Setting",
+                        label: LocaleKeys.setting.translateText,
                         textColor: Colors.white,
                         onPressed: () {
                           openAppSettings();
@@ -100,7 +105,7 @@ class AppDownloadTextButton extends StatelessWidget {
             );
           },
           child: Text(
-            "Download",
+            LocaleKeys.download.translateText,
             style: const TextStyle(
               decoration: TextDecoration.underline,
               fontWeight: FontWeight.w600,

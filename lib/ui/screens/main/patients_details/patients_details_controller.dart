@@ -37,7 +37,7 @@ class PatientsDetailsController extends GetxController {
   bool isCommentFileLoading = false;
   bool showProgressDialog = false;
   File? commentFile;
-  String commentFileName = "Upload Comment File";
+  String commentFileName = LocaleKeys.uploadCommentFile.translateText;
   var taskId;
   var progress;
 
@@ -163,9 +163,9 @@ class PatientsDetailsController extends GetxController {
     bool isEditOrAdd = false;
     hideKeyBoard(context);
     if (nextVisitController.text.isEmpty) {
-      showAppSnackBar("Please enter next visit.");
+      showAppSnackBar(LocaleKeys.pleaseEnterNextVisit.translateText);
     } else if (treatmentNoteController.text.isEmpty) {
-      showAppSnackBar("Please enter treatment notes.");
+      showAppSnackBar(LocaleKeys.pleaseEnterTreatmentNotes.translateText);
     } else {
       isLoading = true;
       commentModelList.clear();
@@ -243,7 +243,8 @@ class PatientsDetailsController extends GetxController {
   }
 
   String getFileName(String? filePath, int length) {
-    if (filePath == null || filePath.isEmpty) return "Upload Comment File";
+    if (filePath == null || filePath.isEmpty)
+      return LocaleKeys.uploadCommentFile.translateText;
     return filePath.length > length
         ? filePath.substring(filePath.length - length)
         : filePath;
@@ -321,9 +322,9 @@ class PatientsDetailsController extends GetxController {
       // Show final success or failure message
       if (allChunksUploaded) {
         isUploadFile = true;
-        showAppSnackBar('File uploaded successfully');
+        showAppSnackBar(LocaleKeys.fileUploadedSuccessfully.translateText);
       } else {
-        showAppSnackBar('File upload failed');
+        showAppSnackBar(LocaleKeys.fileUploadFailed.translateText);
       }
     }
     return isUploadFile;
@@ -358,16 +359,24 @@ class PatientsDetailsController extends GetxController {
       builder: (context) {
         return CommonDialog(
           dialogBackColor: Colors.white,
-          tittleText: adminArchive != 0 ? "UnArchive" : "Archive",
+          tittleText: adminArchive != 0
+              ? LocaleKeys.unArchive.translateText
+              : LocaleKeys.archive.translateText,
           buttonText: LocaleKeys.confirm.translateText,
           buttonCancelText: LocaleKeys.cancel.translateText,
-          descriptionText:
-              "Are you sure you want to ${adminArchive != 0 ? "UnArchive" : "Archive"} this patient?",
+          // descriptionText:
+          //     "Are you sure you want to ${adminArchive != 0 ? "UnArchive" : "Archive"} this patient?",
+          descriptionText: LocaleKeys.areYouSureYouWantToThisPatient
+              .translateTextWithArgument(
+            adminArchive != 0
+                ? LocaleKeys.unArchive.translateText
+                : LocaleKeys.archive.translateText,
+          ),
           cancelOnTap: () => Get.back(),
           onTap: () {
             callDeletePatientApi(patientId);
             Get.find<PatientsController>().getClinicListBySearchOrFilter();
-            isLoading =false;
+            isLoading = false;
             Get.back();
           },
           alignment: Alignment.center,

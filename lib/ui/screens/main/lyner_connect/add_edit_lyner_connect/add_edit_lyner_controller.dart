@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/model/lyner_connect_list_model.dart';
 import 'package:lynerdoctor/model/lyner_patient_list_model.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_patient/add_new_patient_controller.dart';
@@ -27,16 +28,20 @@ class AddEditLynerController extends GetxController {
 
   LynerConnectList? lynerConnectListData;
   LynerPatientListData? lynerPatientListData;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     isFromNewPatient = Get.arguments[0];
     lynerConnectListData = Get.arguments[1];
     lynerPatientListData = Get.arguments[2];
-    firstNameController.text = lynerConnectListData?.firstName ?? lynerPatientListData?.firstName??'';
-    lastNameController.text = lynerConnectListData?.lastName ??  lynerPatientListData?.lastName??'';
-    emailController.text = lynerConnectListData?.email ??  lynerPatientListData?.email??'';
+    firstNameController.text = lynerConnectListData?.firstName ??
+        lynerPatientListData?.firstName ??
+        '';
+    lastNameController.text =
+        lynerConnectListData?.lastName ?? lynerPatientListData?.lastName ?? '';
+    emailController.text =
+        lynerConnectListData?.email ?? lynerPatientListData?.email ?? '';
     totalAlignerController.text =
         lynerConnectListData?.alignerStage.toString() ?? '';
     currentAlignerController.text =
@@ -51,10 +56,14 @@ class AddEditLynerController extends GetxController {
 
   void addLynerConnectDetails() async {
     isLoading = true;
-    if(pickedDate != null){
-      dateTextField =
-          DateFormat('yyyy-MM-dd').format(pickedDate!);
-    }else{
+    if (pickedDate != null) {
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(pickedDate!);
+    } else {
       dateTextField = "";
     }
     ResponseItem result = await PatientsRepo.addLynerConnectDetails(
@@ -91,10 +100,19 @@ class AddEditLynerController extends GetxController {
   void editLynerConnectDetails() async {
     isLoading = true;
     if (pickedDate != null) {
-      dateTextField = DateFormat('yyyy-MM-dd').format(pickedDate!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(pickedDate!);
     } else if (lynerConnectListData?.treatmentStartDate != null) {
-      dateTextField = DateFormat('yyyy-MM-dd')
-          .format(lynerConnectListData!.treatmentStartDate!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(lynerConnectListData!.treatmentStartDate!);
     } else {
       dateTextField = "";
     }

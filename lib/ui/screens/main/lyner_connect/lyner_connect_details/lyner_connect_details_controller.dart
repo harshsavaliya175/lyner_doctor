@@ -24,7 +24,6 @@ class LynerConnectDetailsController extends GetxController {
   Gallery? selectedGalleryData;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     userId = Get.arguments;
     getLynerConnectDetailsApi();

@@ -38,14 +38,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                         .appCommonText(
                             color: whiteColor,
                             size: 40.sp,
-                            weight: FontWeight.w700)
+                            weight: FontWeight.w700,
+                            align: TextAlign.start)
                         .paddingOnly(bottom: 10.w, left: 20.w, right: 20.w),
                     (LocaleKeys.forgotPasswordText)
                         .translateText
                         .appCommonText(
                             color: whiteColor,
                             size: !isTablet ? 16.sp : 20.sp,
-                            weight: FontWeight.w400)
+                            weight: FontWeight.w400,
+                            align: TextAlign.start)
                         .paddingSymmetric(horizontal: 20.w),
                     48.space(),
                     Container(

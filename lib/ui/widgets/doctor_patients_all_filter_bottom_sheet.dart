@@ -29,7 +29,7 @@ class DoctorPatientsAllFilterBottomSheet extends StatefulWidget {
 class _DoctorPatientsAllFilterBottomSheetState
     extends State<DoctorPatientsAllFilterBottomSheet> {
   dynamic allDoctorAndClinicAddressGroupValue = 'All';
-  String appbarSubTitle = 'All';
+  String appbarSubTitle = '';
   String filterType = '';
   String clinicLocationId = '';
   String sessionDoctorId = '';
@@ -37,6 +37,7 @@ class _DoctorPatientsAllFilterBottomSheetState
 
   @override
   void initState() {
+    appbarSubTitle = LocaleKeys.all.translateText;
     allDoctorAndClinicAddressGroupValue =
         patientsController.allDoctorAndClinicAddressGroupValue;
     appbarSubTitle = patientsController.appbarSubTitle;
@@ -80,9 +81,9 @@ class _DoctorPatientsAllFilterBottomSheetState
                 // ),
                 // 12.space(),
                 Container(
-                  height: !isTablet ?55:60,
+                  height: !isTablet ? 55 : 60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(!isTablet ?25:35),
+                    borderRadius: BorderRadius.circular(!isTablet ? 25 : 35),
                     color: Colors.white,
                     border: Border.all(color: skyColor),
                   ),
@@ -91,7 +92,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                     children: [
                       LocaleKeys.all.translateText
                           .appCommonText(
-                            size: !isTablet ?16:18,
+                            size: !isTablet ? 16 : 18,
                             weight: FontWeight.w400,
                             color: Colors.black,
                           )
@@ -119,7 +120,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                 ).onClick(() {
                   setState(() {
                     allDoctorAndClinicAddressGroupValue = 'All';
-                    appbarSubTitle = 'All';
+                    appbarSubTitle = LocaleKeys.all.translateText;
                     filterType = '';
                   });
                 }),
@@ -157,12 +158,12 @@ class _DoctorPatientsAllFilterBottomSheetState
 
   Widget doctorData(PatientsController ctrl) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(!isTablet ?12:15),
+      borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(!isTablet ?12:15),
+          borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
           border: Border.all(color: skyColor, width: 1),
         ),
         child: Column(
@@ -174,11 +175,11 @@ class _DoctorPatientsAllFilterBottomSheetState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(!isTablet ?12:15),
+                borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
               ),
               child: LocaleKeys.doctor.translateText
                   .appCommonText(
-                    size: !isTablet ?16:18,
+                    size: !isTablet ? 16 : 18,
                     weight: FontWeight.w400,
                     color: Colors.black,
                   )
@@ -190,9 +191,9 @@ class _DoctorPatientsAllFilterBottomSheetState
               children: [
                 const Divider(color: skyColor, thickness: 1, height: 0),
                 ctrl.doctorDataList.isEmpty
-                    ? "Doctor Not Found"
+                    ? LocaleKeys.doctorNotFound.translateText
                         .appCommonText(
-                          size: !isTablet ?15:17,
+                          size: !isTablet ? 15 : 17,
                           weight: FontWeight.w300,
                           color: Colors.black,
                         )
@@ -213,7 +214,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                                 child:
                                     "Dr. ${doctor?.firstName ?? ''} ${doctor?.lastName ?? ''}"
                                         .appCommonText(
-                                  size: !isTablet ?16:18,
+                                  size: !isTablet ? 16 : 18,
                                   weight: FontWeight.w300,
                                   color: Colors.black,
                                   align: TextAlign.start,
@@ -266,12 +267,12 @@ class _DoctorPatientsAllFilterBottomSheetState
 
   Widget clinicAddressData(PatientsController ctrl) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(!isTablet ?12:15),
+      borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(!isTablet ?12:15),
+          borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
           border: Border.all(color: skyColor, width: 1),
         ),
         child: Column(
@@ -283,11 +284,11 @@ class _DoctorPatientsAllFilterBottomSheetState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(!isTablet ?12:15),
+                borderRadius: BorderRadius.circular(!isTablet ? 12 : 15),
               ),
               child: LocaleKeys.clinic.translateText
                   .appCommonText(
-                    size: !isTablet ?16:18,
+                    size: !isTablet ? 16 : 18,
                     weight: FontWeight.w400,
                     color: Colors.black,
                   )
@@ -299,9 +300,9 @@ class _DoctorPatientsAllFilterBottomSheetState
               children: [
                 const Divider(color: skyColor, thickness: 1, height: 0),
                 ctrl.clinicLocationList.isEmpty
-                    ? "Clinic Location Not Found"
+                    ? LocaleKeys.clinicLocationNotFound.translateText
                         .appCommonText(
-                          size: !isTablet ?15:17,
+                          size: !isTablet ? 15 : 17,
                           weight: FontWeight.w300,
                           color: Colors.black,
                         )
@@ -322,7 +323,7 @@ class _DoctorPatientsAllFilterBottomSheetState
                               Expanded(
                                 child:
                                     "${location?.address ?? ''}".appCommonText(
-                                  size: !isTablet ?16:18,
+                                  size: !isTablet ? 16 : 18,
                                   weight: FontWeight.w300,
                                   color: Colors.black,
                                   align: TextAlign.start,
@@ -352,14 +353,16 @@ class _DoctorPatientsAllFilterBottomSheetState
                             ],
                           ).onClick(
                             () {
-                              setState(() {
-                                allDoctorAndClinicAddressGroupValue =
-                                    ctrl.clinicLocationList[index];
-                                appbarSubTitle = '${location?.address ?? ''}';
-                                filterType = 'location';
-                                clinicLocationId =
-                                    '${ctrl.clinicLocationList[index]?.clinicLocationId}';
-                              });
+                              setState(
+                                () {
+                                  allDoctorAndClinicAddressGroupValue =
+                                      ctrl.clinicLocationList[index];
+                                  appbarSubTitle = '${location?.address ?? ''}';
+                                  filterType = 'location';
+                                  clinicLocationId =
+                                      '${ctrl.clinicLocationList[index]?.clinicLocationId}';
+                                },
+                              );
                             },
                           );
                         },

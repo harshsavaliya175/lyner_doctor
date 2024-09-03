@@ -86,6 +86,7 @@ class MethodNames {
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
   static const String getFinancialList = "getFinancialList";
+  static const String logout = "logout";
 }
 
 class RequestHeaderKey {
@@ -140,6 +141,9 @@ ReceivePort receivePort = ReceivePort();
 double downloadProgress = 0.0;
 bool isDownloadRunning = false;
 int isUploadRunning = 0;
+const String channelId = "doctorApp_app_channel";
+const String channelName = "doctorApp_app";
+const String channelDes = "doctorApp_app_channel_des";
 
 @pragma('vm:entry-point')
 void downloadCallback(String id, int status, int progress) {

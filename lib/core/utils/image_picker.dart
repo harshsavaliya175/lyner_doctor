@@ -23,7 +23,7 @@ class ImageUploadUtils {
             context: context,
             backgroundColor: Colors.white,
             elevation: 0,
-            builder: (context) {
+            builder: (BuildContext context) {
               return Container(
                 child: Wrap(
                   children: [
@@ -53,7 +53,7 @@ class ImageUploadUtils {
         : showDialog(
             context: context,
             useSafeArea: false,
-            builder: (context) {
+            builder: (BuildContext context) {
               return SimpleDialog(
                 elevation: 0,
                 backgroundColor: Colors.white,
@@ -94,7 +94,7 @@ class ImageUploadUtils {
             context: context,
             backgroundColor: Colors.white,
             elevation: 0,
-            builder: (context) {
+            builder: (BuildContext context) {
               return GetBuilder<AddPatientController>(
                   builder: (AddPatientController ctrl) {
                 return Container(
@@ -143,7 +143,7 @@ class ImageUploadUtils {
         : showDialog(
             context: context,
             useSafeArea: false,
-            builder: (context) {
+            builder: (BuildContext context) {
               return SimpleDialog(
                 elevation: 0,
                 backgroundColor: Colors.white,
@@ -180,7 +180,7 @@ class ImageUploadUtils {
     Platform.isIOS
         ? showModalBottomSheet(
             context: context,
-            builder: (context) {
+            builder: (BuildContext context) {
               return SafeArea(
                 child: Container(
                   child: Wrap(
@@ -207,7 +207,7 @@ class ImageUploadUtils {
           )
         : showDialog(
             context: context,
-            builder: (context) {
+            builder: (BuildContext context) {
               return SimpleDialog(
                 title: Text(LocaleKeys.selectPhotoOrLogo.translateText),
                 children: [
@@ -337,11 +337,11 @@ class ImageUploadUtils {
 
   void _imageFormGallery(
       {required BuildContext context, required Function onImageChose}) async {
-    var status = await (Platform.isIOS
+    PermissionStatus status = await (Platform.isIOS
         ? Permission.storage.request()
         : Permission.mediaLibrary.request());
     if (status.isGranted) {
-      final pickedFile = await FilePicker.platform.pickFiles(
+      final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.image,
       );
       if (pickedFile != null) {
@@ -355,19 +355,19 @@ class ImageUploadUtils {
     } else if (status.isDenied) {
       Get.showSnackbar(
         GetSnackBar(
-            message: LocaleKeys
-                .withoutThisPermissionAppCanNotChangeProfilePicture
-                .translateText,
-            mainButton: Platform.isIOS
-                ? SnackBarAction(
-                    label: LocaleKeys.settings.translateText,
-                    // textColor: Theme.of(context).accentColor,
-                    onPressed: () {
-                      openAppSettings();
-                    },
-                  )
-                : null,
-            duration: Duration(seconds: 3)),
+          message: LocaleKeys
+              .withoutThisPermissionAppCanNotChangeProfilePicture.translateText,
+          mainButton: Platform.isIOS
+              ? SnackBarAction(
+                  label: LocaleKeys.settings.translateText,
+                  // textColor: Theme.of(context).accentColor,
+                  onPressed: () {
+                    openAppSettings();
+                  },
+                )
+              : null,
+          duration: Duration(seconds: 3),
+        ),
       );
       return;
     } else if (status.isPermanentlyDenied) {
@@ -548,9 +548,7 @@ class ImageUploadUtils {
       // Directly open file picker for iOS as it doesn't need manageExternalStorage permission
       final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: [
-          'stl',
-        ],
+        allowedExtensions: ['stl'],
       );
       if (pickedFile != null) {
         onFileChose(File(pickedFile.files.single.path!));
@@ -565,9 +563,7 @@ class ImageUploadUtils {
         final FilePickerResult? pickedFile =
             await FilePicker.platform.pickFiles(
           type: FileType.custom,
-          allowedExtensions: [
-            'stl',
-          ],
+          allowedExtensions: ['stl'],
         );
         if (pickedFile != null) {
           onFileChose(File(pickedFile.files.single.path!));

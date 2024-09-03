@@ -247,10 +247,14 @@ class CommentScreen extends StatelessWidget {
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          "Without this permission app can not download file.",
+                                                          LocaleKeys
+                                                              .withoutThisPermissionAppCanNotDownloadFile
+                                                              .translateText,
                                                         ),
                                                         action: SnackBarAction(
-                                                          label: "Setting",
+                                                          label: LocaleKeys
+                                                              .setting
+                                                              .translateText,
                                                           textColor:
                                                               Colors.white,
                                                           onPressed: () {
@@ -274,10 +278,14 @@ class CommentScreen extends StatelessWidget {
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          "To access this feature please grant permission from settings.",
+                                                          LocaleKeys
+                                                              .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                                                              .translateText,
                                                         ),
                                                         action: SnackBarAction(
-                                                          label: "Setting",
+                                                          label: LocaleKeys
+                                                              .setting
+                                                              .translateText,
                                                           textColor:
                                                               Colors.white,
                                                           onPressed: () {

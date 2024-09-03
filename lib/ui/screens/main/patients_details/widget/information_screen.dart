@@ -38,8 +38,8 @@ class InformationScreen extends StatelessWidget {
                     width: isTablet ? 140 : 110,
                     alignment: Alignment.center,
                     child: (controller.patientDetailsModel?.isDeleted == 0
-                            ? "Archive"
-                            : "UnArchive")
+                            ? LocaleKeys.archive.translateText
+                            : LocaleKeys.unArchive.translateText)
                         .normalText(
                       fontWeight: FontWeight.w600,
                       color: primaryBrown,
@@ -50,13 +50,15 @@ class InformationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(13),
                       border: Border.all(color: primaryBrown, width: 1),
                     ),
-                  ).onClick(() {
-                    controller.deletePatient(
-                      controller.patientDetailsModel?.patientId.toString() ??
-                          '',
-                      controller.patientDetailsModel?.adminArchive,
-                    );
-                  }),
+                  ).onClick(
+                    () {
+                      controller.deletePatient(
+                        controller.patientDetailsModel?.patientId.toString() ??
+                            '',
+                        controller.patientDetailsModel?.adminArchive,
+                      );
+                    },
+                  ),
                 ),
               LocaleKeys.information.translateText.normalText(
                 fontWeight: FontWeight.w600,
@@ -334,7 +336,8 @@ class InformationScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    "In-Treatment Planning".appCommonText(
+                                    LocaleKeys.inTreatmentPlanning.translateText
+                                        .appCommonText(
                                       weight: FontWeight.w500,
                                       align: TextAlign.start,
                                       size: !isTablet ? 16 : 19,
@@ -463,7 +466,7 @@ class InformationScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: photoWithTitle(
-                      title: "Intra Max",
+                      title: LocaleKeys.intraMax.translateText,
                       imagePath: ApiUrl.patientSourire +
                           "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
                       radiosHeight: isTablet ? 120 : null,
@@ -474,7 +477,7 @@ class InformationScreen extends StatelessWidget {
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
                     child: photoWithTitle(
-                      title: "Intra Mand",
+                      title: LocaleKeys.intraMand.translateText,
                       imagePath: ApiUrl.patientInterMandi +
                           "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
                       radiosHeight: isTablet ? 120 : null,
@@ -487,7 +490,7 @@ class InformationScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: photoWithTitle(
-                      title: "Inter Right",
+                      title: LocaleKeys.intraRight.translateText,
                       imagePath: ApiUrl.patientInterGauche +
                           "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
                       radiosHeight: isTablet ? 120 : null,
@@ -496,7 +499,7 @@ class InformationScreen extends StatelessWidget {
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
                     child: photoWithTitle(
-                      title: "Inter Face",
+                      title: LocaleKeys.intraFace.translateText,
                       imagePath: ApiUrl.patientInterFace +
                           "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
                       radiosHeight: isTablet ? 120 : null,
@@ -505,7 +508,7 @@ class InformationScreen extends StatelessWidget {
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
                     child: photoWithTitle(
-                      title: "Inter Left",
+                      title: LocaleKeys.intraLeft.translateText,
                       imagePath: ApiUrl.patientIntraDroite +
                           "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
                       radiosHeight: isTablet ? 120 : null,
@@ -517,7 +520,7 @@ class InformationScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  "Radios".normalText(
+                  LocaleKeys.radios.translateText.normalText(
                     fontWeight: FontWeight.w600,
                     fontSize: !isTablet ? 20 : 24,
                   ),
@@ -537,7 +540,7 @@ class InformationScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: photoWithTitle(
-                      title: "Panoramique",
+                      title: LocaleKeys.panoramic.translateText,
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
@@ -548,7 +551,7 @@ class InformationScreen extends StatelessWidget {
                   isTablet ? 50.space() : 16.space(),
                   Expanded(
                     child: photoWithTitle(
-                      title: "Cephalométrique",
+                      title: LocaleKeys.cephalometric.translateText,
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
@@ -578,7 +581,8 @@ class InformationScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: "Posted By 3shape".normalText(
+                            child: LocaleKeys.postedBy3shape.translateText
+                                .normalText(
                               fontWeight: FontWeight.w500,
                               color: primaryBrown,
                               fontSize: !isTablet ? 16 : 19,
@@ -594,7 +598,7 @@ class InformationScreen extends StatelessWidget {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        "Upper Jaw STL File".appCommonText(
+                        LocaleKeys.upperJawStlFile.translateText.appCommonText(
                           size: !isTablet ? 14 : 18,
                           weight: FontWeight.w400,
                           align: TextAlign.start,
@@ -633,7 +637,7 @@ class InformationScreen extends StatelessWidget {
                           () {},
                         ),
                         12.space(),
-                        "Lower Jaw STL File".appCommonText(
+                        LocaleKeys.lowerJawStlFile.translateText.appCommonText(
                           size: !isTablet ? 14 : 18,
                           weight: FontWeight.w400,
                           align: TextAlign.start,
@@ -720,7 +724,7 @@ class InformationScreen extends StatelessWidget {
                 ),
               20.space(),
               AppButton(
-                text: 'Download All',
+                text: LocaleKeys.downloadAll.translateText,
                 radius: 100,
                 fontColor: Colors.white,
                 onTap: () {
@@ -805,10 +809,12 @@ class InformationScreen extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              "Without this permission app can not download file.",
+                              LocaleKeys
+                                  .withoutThisPermissionAppCanNotDownloadFile
+                                  .translateText,
                             ),
                             action: SnackBarAction(
-                              label: "Setting",
+                              label: LocaleKeys.setting.translateText,
                               textColor: Colors.white,
                               onPressed: () {
                                 openAppSettings();
@@ -824,10 +830,12 @@ class InformationScreen extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              "To access this feature please grant permission from settings.",
+                              LocaleKeys
+                                  .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                                  .translateText,
                             ),
                             action: SnackBarAction(
-                              label: "Setting",
+                              label: LocaleKeys.setting.translateText,
                               textColor: Colors.white,
                               onPressed: () {
                                 openAppSettings();

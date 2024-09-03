@@ -197,6 +197,7 @@ abstract class  LocaleKeys {
   static const changingCameraLens = 'changingCameraLens';
   static const modify = 'modify';
   static const accept = 'accept';
+  static const uploadDICOMFile = 'uploadDICOMFile';
   static const check_draft = 'check_draft';
   static const check_modification = 'check_modification';
   static const password_copied = 'password_copied';
@@ -257,5 +258,29 @@ abstract class  LocaleKeys {
   static const treatmentGoals = 'treatmentGoals';
   static const patientRequest = 'patientRequest';
   static const pleaseEnterAddress = 'pleaseEnterAddress';
+  static const pleaseUploadRequiredPhotograph = 'pleaseUploadRequiredPhotograph';
+  static const fileUploadedSuccessfully = 'fileUploadedSuccessfully';
+  static const fileUploadFailed = 'fileUploadFailed';
+  static const downloadFileSuccessful = 'downloadFileSuccessful';
+  static const successfullyUploaded = 'successfullyUploaded';
+  static const permissionDeniedStoragePermissionIsRequiredToDownloadAndOpenPDFFiles = 'permissionDeniedStoragePermissionIsRequiredToDownloadAndOpenPDFFiles';
+  static const permissionPermanentlyDeniedPleaseEnableStoragePermissionInSettings = 'permissionPermanentlyDeniedPleaseEnableStoragePermissionInSettings';
+  static const permissionRestrictedStoragePermissionIsRestrictedOnThisDevice = 'permissionRestrictedStoragePermissionIsRestrictedOnThisDevice';
+  static const withoutThisPermissionAppCanNotDownloadFile = 'withoutThisPermissionAppCanNotDownloadFile';
+  static const archive = 'archive';
+  static const unArchive = 'unArchive';
+  static const panoramic = 'panoramic';
+  static const cephalometric = 'cephalometric';
+  static const downloadAll = 'downloadAll';
+  static const download = 'download';
+  static const treatmentNotFound = 'treatmentNotFound';
+  static const uploadCommentFile = 'uploadCommentFile';
+  static const pleaseEnterNextVisit = 'pleaseEnterNextVisit';
+  static const pleaseEnterTreatmentNotes = 'pleaseEnterTreatmentNotes';
+  static const areYouSureYouWantToThisPatient = 'areYouSureYouWantToThisPatient';
+  static const noUrlAvailableToLoad = 'noUrlAvailableToLoad';
+  static const arcadeToTreat = 'arcadeToTreat';
+  static const doctorNotFound = 'doctorNotFound';
+  static const clinicLocationNotFound = 'clinicLocationNotFound';
 
 }

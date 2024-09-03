@@ -19,7 +19,7 @@ class PatientsController extends GetxController {
   int treatmentStatusFilterValue = 1;
   String treatmentStatusFilter = 'task';
   dynamic allDoctorAndClinicAddressGroupValue = 'All';
-  String appbarSubTitle = 'All';
+  String appbarSubTitle = LocaleKeys.all.translateText;
   String filterType = '';
   String clinicLocationId = '';
   String sessionDoctorId = '';
@@ -131,11 +131,12 @@ class PatientsController extends GetxController {
     }
     update();
   }
+
   void deletePatient(String patientId) {
     showDialog(
       barrierDismissible: false,
       context: Get.context!,
-      builder: (context) {
+      builder: (BuildContext context) {
         return CommonDialog(
           dialogBackColor: Colors.white,
           tittleText: LocaleKeys.deletePatient.translateText,
@@ -145,13 +146,13 @@ class PatientsController extends GetxController {
           cancelOnTap: () => Get.back(),
           onTap: () {
             callDeletePatientApi(patientId);
-
           },
           alignment: Alignment.center,
         );
       },
     );
   }
+
   void callDeletePatientApi(String patientId) async {
     isLoading = true;
     Get.back();

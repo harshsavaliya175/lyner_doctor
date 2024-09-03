@@ -101,6 +101,12 @@ extension StringExtension on String {
     return this.tr();
   }
 
+  String translateTextWithArgument(String args1) {
+    return this.tr(
+      args: [args1],
+    );
+  }
+
   bool isImageFileName() {
     final ext = toLowerCase();
     return ext.endsWith(".jpg") ||

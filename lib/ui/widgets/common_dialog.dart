@@ -5,16 +5,20 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 
 import 'app_button.dart';
 
-Future datePickerDialog(BuildContext context) {
+Future datePickerDialog(
+    {required BuildContext context, bool isDateOfBirth = false}) {
   DateTime currentDate = DateTime.now();
-  DateTime minDate = DateTime(currentDate.year - 200, currentDate.month, currentDate.day);
+  DateTime minDate =
+      DateTime(currentDate.year - 200, currentDate.month, currentDate.day);
   // DateTime maxDate = currentDate.add(Duration(days: 15));
 
   return showDatePicker(
     context: context,
     initialDate: currentDate,
-    firstDate: minDate, // Start from 100 years ago
-    lastDate: DateTime(3000), // Up to the current date
+    firstDate: minDate,
+    // Start from 100 years ago
+    lastDate: isDateOfBirth ? DateTime.now() : DateTime(3000),
+    // Up to the current date
 
     builder: (context, child) {
       return Theme(
@@ -34,22 +38,23 @@ Future datePickerDialog(BuildContext context) {
     },
   );
 }
+
 class CommonDialog extends StatelessWidget {
   CommonDialog(
       {Key? key,
-        required this.alignment,
-        this.bottomMargin,
-        this.tittleText,
-        this.tittleColor,
-        this.onTap,
-        this.cancelOnTap,
-        this.buttonCancelText,
-        this.buttonText,
-        this.descriptionText,
-        this.dialogBackColor,
-        this.topMargin,
-        this.rowMargin,
-        this.mainContent})
+      required this.alignment,
+      this.bottomMargin,
+      this.tittleText,
+      this.tittleColor,
+      this.onTap,
+      this.cancelOnTap,
+      this.buttonCancelText,
+      this.buttonText,
+      this.descriptionText,
+      this.dialogBackColor,
+      this.topMargin,
+      this.rowMargin,
+      this.mainContent})
       : super(key: key);
 
   final AlignmentGeometry alignment;
@@ -104,14 +109,14 @@ class CommonDialog extends StatelessWidget {
                     children: [
                       Expanded(
                           child: AppBorderButton(
-                            borderColor: primaryBrown,
-                            borderWidth: 1,
-                            fontColor: primaryBrown,
-                            text: buttonCancelText ?? "",
-                            onTap: () {
-                              cancelOnTap!();
-                            },
-                          )),
+                        borderColor: primaryBrown,
+                        borderWidth: 1,
+                        fontColor: primaryBrown,
+                        text: buttonCancelText ?? "",
+                        onTap: () {
+                          cancelOnTap!();
+                        },
+                      )),
                       20.space(),
                       Expanded(
                         child: AppButton(

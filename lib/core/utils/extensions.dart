@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 
@@ -96,8 +97,12 @@ extension AddPadding on Widget {
 // }
 extension DateTimeOB on DateTime {
   DateTime getLocalDateTime() {
-    String dateUtc = DateFormat('yyyy-MM-dd HH:mm:ss').format(this);
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateUtc, true);
+    String dateUtc = DateFormat('yyyy-MM-dd HH:mm:ss',
+            preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+        .format(this);
+    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss",
+            preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+        .parse(dateUtc, true);
     var dateLocal = dateTime.toLocal();
     return dateLocal;
   }
@@ -113,45 +118,105 @@ extension DateTimeOB on DateTime {
 
     var different = currentDate.difference(this.getLocalDateTime());
 
-    if (different.inDays > 365) return DateFormat("dd MMMM, yyyy").format(this);
+    if (different.inDays > 365)
+      return DateFormat(
+        "dd MMMM, yyyy",
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(this);
 
-    if (different.inDays >= 1) return DateFormat("dd MMMM, EEEE").format(this);
+    if (different.inDays >= 1)
+      return DateFormat(
+        "dd MMMM, EEEE",
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+            ? 'fr'
+            : 'en',
+      ).format(this);
 
     if (different.inDays == 0) return "Today";
 
-    return DateFormat("dd MMMM, yyyy").format(this);
+    return DateFormat(
+            "dd MMMM, yyyy",
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+                    .isEmpty
+                ? 'fr'
+                : 'en')
+        .format(this);
   }
 
   String formatDate() {
-    return DateFormat('EEE, MMM d, yyyy').format(this);
+    return DateFormat(
+      'EEE, MMM d, yyyy',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String timeAgo() {
-    return DateFormat("h:mm a").format(this);
+    return DateFormat(
+      "h:mm a",
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String ddEEEFormat() {
-    return DateFormat('dd MMM').format(this);
+    return DateFormat(
+      'dd MMM',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String ddMMMyyHhSssA() {
-    return DateFormat('dd, MMM yy hh:mm a').format(this);
+    return DateFormat(
+      'dd, MMM yy hh:mm a',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String ddMMYYYYFormat() {
-    return DateFormat('dd/MM/yyyy').format(this);
+    return DateFormat(
+      'dd/MM/yyyy',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String yyyyMMDDFormat() {
-    return DateFormat('yyyy-MM-dd').format(this);
+    return DateFormat(
+            'yyyy-MM-dd',
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+                    .isEmpty
+                ? 'fr'
+                : 'en')
+        .format(this);
   }
 
   String hhMMaFormat() {
-    return DateFormat('hh:mm a').format(this);
+    return DateFormat(
+            'hh:mm a',
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
+                    .isEmpty
+                ? 'fr'
+                : 'en')
+        .format(this);
   }
 
   String hhMMSSFormat() {
-    return DateFormat('HH:mm:ss').format(this);
+    return DateFormat(
+      'HH:mm:ss',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
+          ? 'fr'
+          : 'en',
+    ).format(this);
   }
 
   String Hm() {

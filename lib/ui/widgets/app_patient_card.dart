@@ -346,10 +346,15 @@ class EditPatientCard extends StatelessWidget {
     required String data,
   }) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title.appCommonText(weight: FontWeight.w400, size: !isTablet ? 16 : 18),
         5.space(),
-        data.appCommonText(weight: FontWeight.w500, size: !isTablet ? 16 : 18),
+        Expanded(
+            child: data.appCommonText(
+                weight: FontWeight.w500,
+                size: !isTablet ? 16 : 18,
+                align: TextAlign.start)),
       ],
     );
   }

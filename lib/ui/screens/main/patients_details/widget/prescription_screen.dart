@@ -24,86 +24,90 @@ class PrescriptionScreen extends StatelessWidget {
           6.space(),
           Expanded(
             child: GetBuilder<PatientsDetailsController>(
-                builder: (PatientsDetailsController controller) {
-              PrescriptionData? prescription = controller.prescriptionData;
-              return ListView(
-                padding: EdgeInsets.only(top: 8, bottom: 50),
-                children: [
-                  AppPatientDetailCard(
-                    title: "Arcade a Traiter",
-                    subTitle: "(ou la simulation sera réalisée)",
-                    isShowSubTitle: true,
-                    description: prescription?.arcadeToBeTreated ?? "",
-                    isShowBottomWidget: true,
-                    bottomText:
-                        "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Objectifs Du Traitement",
-                    subTitle: "(demande du patient)",
-                    isShowSubTitle: true,
-                    description: prescription?.treatmentObjectives ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.treatmentNotes ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Techniques Acceptees Pour Ce Patient",
-                    subTitle: "(demande du patient)",
-                    isShowSubTitle: true,
-                    description: prescription?.acceptedTechniques ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.acceptedTechniqueNote ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Historique Dentaire",
-                    isShowSubTitle: false,
-                    description: prescription?.dentalHistory ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.dentalHistoryNote ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Classe Dentaire",
-                    isShowSubTitle: false,
-                    description: prescription?.dentalClass ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.dentalNote ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Milieu Incisif Maxillaire",
-                    isShowSubTitle: false,
-                    description: prescription?.maxillaryIncisalMiddle ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.maxillaryIncisalNote ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Recouvrement Incisives (Supraclusion)",
-                    isShowSubTitle: false,
-                    description: prescription?.incisiveCovering ?? "",
-                    isShowBottomWidget: false,
-                    isShowNote: true,
-                    note: prescription?.incisiveCoveringNote ?? "",
-                  ),
-                  12.space(),
-                  AppPatientDetailCard(
-                    title: "Autres Recommandations",
-                    isShowSubTitle: false,
-                    description: prescription?.otherRecommendations ?? "",
-                    isShowBottomWidget: false,
-                  ),
-                ],
-              );
-            }),
+              builder: (PatientsDetailsController controller) {
+                PrescriptionData? prescription = controller.prescriptionData;
+                return ListView(
+                  padding: EdgeInsets.only(top: 8, bottom: 50),
+                  children: [
+                    AppPatientDetailCard(
+                      title: LocaleKeys.arcadeToTreat.translateText,
+                      subTitle: LocaleKeys
+                          .whereTheSimulationWillBeCarriedOut.translateText,
+                      isShowSubTitle: true,
+                      description: prescription?.arcadeToBeTreated ?? "",
+                      isShowBottomWidget: true,
+                      bottomText: LocaleKeys
+                          .threeDScansOfBothArchesAreNecessaryEvenIfYouChooseToTreatOnlyOneArch
+                          .translateText,
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.treatmentGoals.translateText,
+                      subTitle: LocaleKeys.patientRequest.translateText,
+                      isShowSubTitle: true,
+                      description: prescription?.treatmentObjectives ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.treatmentNotes ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys
+                          .acceptedTechniquesForThisPatient.translateText,
+                      subTitle: LocaleKeys.patientRequest.translateText,
+                      isShowSubTitle: true,
+                      description: prescription?.acceptedTechniques ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.acceptedTechniqueNote ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.dentalHistory.translateText,
+                      isShowSubTitle: false,
+                      description: prescription?.dentalHistory ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.dentalHistoryNote ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.dentalClass.translateText,
+                      isShowSubTitle: false,
+                      description: prescription?.dentalClass ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.dentalNote ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.middleMaxillaryIncisor.translateText,
+                      isShowSubTitle: false,
+                      description: prescription?.maxillaryIncisalMiddle ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.maxillaryIncisalNote ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.incisorCoveringOverbite.translateText,
+                      isShowSubTitle: false,
+                      description: prescription?.incisiveCovering ?? "",
+                      isShowBottomWidget: false,
+                      isShowNote: true,
+                      note: prescription?.incisiveCoveringNote ?? "",
+                    ),
+                    12.space(),
+                    AppPatientDetailCard(
+                      title: LocaleKeys.otherRecommendations.translateText,
+                      isShowSubTitle: false,
+                      description: prescription?.otherRecommendations ?? "",
+                      isShowBottomWidget: false,
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ],
       ),

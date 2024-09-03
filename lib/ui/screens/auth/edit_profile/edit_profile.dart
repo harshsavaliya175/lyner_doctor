@@ -181,10 +181,11 @@ class EditProfile extends StatelessWidget {
                   15.space(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 20,
@@ -224,6 +225,7 @@ class EditProfile extends StatelessWidget {
                       ),
                       Expanded(
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 20,
@@ -284,7 +286,7 @@ class EditProfile extends StatelessWidget {
               ),
             ),
             GetBuilder<EditProfileController>(
-              builder: (controller) {
+              builder: (EditProfileController controller) {
                 return controller.isLoading
                     ? AppProgressView(progressColor: Colors.black)
                     : Container();

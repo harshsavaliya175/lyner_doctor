@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_logger/easy_logger.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +13,16 @@ import 'package:lynerdoctor/core/utils/base_binding.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/codegen_loader.g.dart';
 
+import 'core/utils/firebase_options.dart';
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackGroundHandler(RemoteMessage message) async {
+  if (message.notification != null) {
+    log('some notification received');
+    await Firebase.initializeApp();
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -16,6 +30,8 @@ void main() async {
     LevelMessages.error,
     LevelMessages.warning
   ];
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackGroundHandler);
   await FlutterDownloader.initialize(debug: true);
   await preferences.init();
   await preferences.putAppDeviceInfo();
@@ -28,7 +44,7 @@ void main() async {
       path: 'assets/translations',
       saveLocale: true,
       useOnlyLangCode: true,
-      startLocale: const Locale('en'),
+      startLocale: const Locale('fr'),
       fallbackLocale: const Locale('fr'),
       assetLoader: const CodegenLoader(),
       child: const MyApp(),

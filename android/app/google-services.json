@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229925731679",
+    "project_id": "lyner-doctor-2024",
+    "storage_bucket": "lyner-doctor-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229925731679:android:cb6d38a4024e306da2caea",
+        "android_client_info": {
+          "package_name": "com.lynertech.doctorApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKigxFVAoXyHjCGw9AnZWojF5qve9sLEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

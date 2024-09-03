@@ -153,7 +153,8 @@ class PatientTreatmentsScreen extends StatelessWidget {
                 ? Expanded(
                     child: Container(
                       alignment: Alignment.center,
-                      child: "Treatment Not Found".normalText(
+                      child:
+                          LocaleKeys.treatmentNotFound.translateText.normalText(
                         color: Colors.black,
                         fontSize: !isTablet ? 20 : 24,
                         fontWeight: FontWeight.w500,
