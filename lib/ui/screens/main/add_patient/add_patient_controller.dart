@@ -175,17 +175,20 @@ class AddPatientController extends GetxController {
     if (intraFaceImageFile == null &&
         (patientData?.patientPhoto?.interFace == null ||
             patientData?.patientPhoto?.interFace == '')) return false;
-    if (radiosFirstImageFile == null &&
-        (patientData?.patientPhoto?.paramiqueRadio == null ||
-            patientData?.patientPhoto?.paramiqueRadio == '')) return false;
-    if (radiosSecondImageFile == null &&
-        (patientData?.patientPhoto?.cephalRadio == null ||
-            patientData?.patientPhoto?.cephalRadio == '')) return false;
+    // if (radiosFirstImageFile == null &&
+    //     (patientData?.patientPhoto?.paramiqueRadio == null ||
+    //         patientData?.patientPhoto?.paramiqueRadio == '')) return false;
+    // if (radiosSecondImageFile == null &&
+    //     (patientData?.patientPhoto?.cephalRadio == null ||
+    //         patientData?.patientPhoto?.cephalRadio == '')) return false;
     if (isUploadStl) {
-      if (upperJawImageFile == null) return false;
-      if (upperJawImageFile == null) return false;
+      if (upperJawImageFile == null &&
+          (patientData?.patientPhoto?.upperJawStlFile == null ||
+              patientData?.patientPhoto?.upperJawStlFile == '')) return false;
+      if (lowerJawImageFile == null &&
+          (patientData?.patientPhoto?.lowerJawStlFile == null ||
+              patientData?.patientPhoto?.lowerJawStlFile == '')) return false;
     }
-
     return true;
   }
 

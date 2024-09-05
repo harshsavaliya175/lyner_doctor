@@ -84,7 +84,7 @@ class AddPatientScreen extends StatelessWidget {
                       totalSteps: 4,
                       stepErrors: ctrl.stepErrors,
                       currentStep: ctrl.currentStep,
-                      onStepTapped: (index) async {
+                      onStepTapped: (int index) async {
                         if (index < ctrl.currentStep) {
                           if (ctrl.patientInformationFormKey.currentState !=
                               null) {
@@ -902,19 +902,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 0,
-                  //   title: "Profile",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.profileImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_gauche', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
                 },
               ),
               10.space(),
@@ -926,29 +913,17 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 fileImage: ctrl.faceImageFile ?? File(''),
                 onTap: () {
                   imageUploadUtils.faceDetectingOpenImageChooser(
-                      context: Get.context!,
-                      imageCount: 1,
-                      title: LocaleKeys.face.translateText,
-                      onImageChose: (File? file) async {
-                        // ctrl.cuisinePhoto?[0] =(file!);
-                        ctrl.faceImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_face', file: file);
-                        ctrl.update();
-                      });
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 1,
-                  //   title: "Face",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.faceImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_face', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
+                    context: Get.context!,
+                    imageCount: 1,
+                    title: LocaleKeys.face.translateText,
+                    onImageChose: (File? file) async {
+                      // ctrl.cuisinePhoto?[0] =(file!);
+                      ctrl.faceImageFile = file!;
+                      ctrl.uploadPatientSingleImage(
+                          paramName: 'patient_face', file: file);
+                      ctrl.update();
+                    },
+                  );
                 },
               ),
               10.space(),
@@ -971,19 +946,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 2,
-                  //   title: "Smile",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.smileImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_sourire', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
                 },
               ),
             ],
@@ -1102,19 +1064,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 5,
-                  //   title: "Inter Right",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.intraRightImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_intra_droite', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
                 },
               ),
               10.space(),
@@ -1137,19 +1086,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 6,
-                  //   title: "Inter Face",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.intraFaceImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_inter_face', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
                 },
               ),
               10.space(),
@@ -1172,19 +1108,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
-                  // Get.to(SingleImageClickFaceDetectorView(
-                  //   imageCount: 7,
-                  //   title: "Inter Left",
-                  // ))?.then(
-                  //   (result) {
-                  //     if (result != null && result is File) {
-                  //       ctrl.intraLeftImageFile = result;
-                  //       ctrl.uploadPatientSingleImage(
-                  //           paramName: 'patient_inter_gauche', file: result);
-                  //       ctrl.update();
-                  //     }
-                  //   },
-                  // );
                 },
               ),
             ],
@@ -1211,9 +1134,9 @@ Widget uploadPhotographs(AddPatientController ctrl) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  imageUploadUtils.openImageChooser(
+                child: GestureDetector(
+                  onTap: () {
+                    imageUploadUtils.openImageChooser(
                       context: Get.context!,
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
@@ -1221,43 +1144,45 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_panoramique', file: file);
                         ctrl.update();
-                      });
-                },
-                child: (ctrl.radiosFirstImageFile != null &&
-                        ctrl.radiosFirstImageFile?.path != "")
-                    ? HomeImage.fileImage(
-                        path: ctrl.radiosFirstImageFile!.path,
-                        height: !isTablet ? 121 : 215,
-                        width: !isTablet ? 200 : 230,
-                        shape: BoxShape.rectangle,
-                        fit: BoxFit.cover,
-                        radius: BorderRadius.circular(10),
-                      )
-                    : (ctrl.patientData?.patientPhoto?.paramiqueRadio == "" ||
-                            ctrl.patientData?.patientPhoto?.paramiqueRadio ==
-                                null)
-                        ? HomeImage.assetImage(
-                            path: Assets.images.imgTab.path,
-                            height: !isTablet ? 135 : 230,
-                            width: !isTablet ? 200 : 230,
-                            shape: BoxShape.rectangle,
-                            // fit: BoxFit.cover,
-                          )
-                        : HomeImage.networkImage(
-                            path:
-                                "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
-                            height: !isTablet ? 121 : 215,
-                            width: !isTablet ? 200 : 230,
-                            shape: BoxShape.rectangle,
-                            fit: BoxFit.cover,
-                            radius: BorderRadius.circular(12),
-                          ),
-              )),
+                      },
+                    );
+                  },
+                  child: (ctrl.radiosFirstImageFile != null &&
+                          ctrl.radiosFirstImageFile?.path != "")
+                      ? HomeImage.fileImage(
+                          path: ctrl.radiosFirstImageFile!.path,
+                          height: !isTablet ? 121 : 215,
+                          width: !isTablet ? 200 : 230,
+                          shape: BoxShape.rectangle,
+                          fit: BoxFit.cover,
+                          radius: BorderRadius.circular(10),
+                        )
+                      : (ctrl.patientData?.patientPhoto?.paramiqueRadio == "" ||
+                              ctrl.patientData?.patientPhoto?.paramiqueRadio ==
+                                  null)
+                          ? HomeImage.assetImage(
+                              path: Assets.images.imgTab.path,
+                              height: !isTablet ? 135 : 230,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              // fit: BoxFit.cover,
+                            )
+                          : HomeImage.networkImage(
+                              path:
+                                  "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
+                              height: !isTablet ? 121 : 215,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              fit: BoxFit.cover,
+                              radius: BorderRadius.circular(12),
+                            ),
+                ),
+              ),
               15.space(),
               Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  imageUploadUtils.openImageChooser(
+                child: GestureDetector(
+                  onTap: () {
+                    imageUploadUtils.openImageChooser(
                       context: Get.context!,
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
@@ -1265,37 +1190,40 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_cephalometrique', file: file);
                         ctrl.update();
-                      });
-                },
-                child: (ctrl.radiosSecondImageFile != null &&
-                        ctrl.radiosSecondImageFile?.path != "")
-                    ? HomeImage.fileImage(
-                        path: ctrl.radiosSecondImageFile!.path,
-                        height: !isTablet ? 121 : 215,
-                        width: !isTablet ? 200 : 230,
-                        shape: BoxShape.rectangle,
-                        fit: BoxFit.cover,
-                        radius: BorderRadius.circular(10),
-                      )
-                    : (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
-                            ctrl.patientData?.patientPhoto?.cephalRadio == null)
-                        ? HomeImage.assetImage(
-                            path: Assets.images.imgTab.path,
-                            height: !isTablet ? 135 : 230,
-                            width: !isTablet ? 200 : 230,
-                            shape: BoxShape.rectangle,
-                            // fit: BoxFit.cover,
-                          )
-                        : HomeImage.networkImage(
-                            path:
-                                "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
-                            height: !isTablet ? 121 : 215,
-                            width: !isTablet ? 200 : 230,
-                            shape: BoxShape.rectangle,
-                            fit: BoxFit.cover,
-                            radius: BorderRadius.circular(15),
-                          ),
-              )),
+                      },
+                    );
+                  },
+                  child: (ctrl.radiosSecondImageFile != null &&
+                          ctrl.radiosSecondImageFile?.path != "")
+                      ? HomeImage.fileImage(
+                          path: ctrl.radiosSecondImageFile!.path,
+                          height: !isTablet ? 121 : 215,
+                          width: !isTablet ? 200 : 230,
+                          shape: BoxShape.rectangle,
+                          fit: BoxFit.cover,
+                          radius: BorderRadius.circular(10),
+                        )
+                      : (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
+                              ctrl.patientData?.patientPhoto?.cephalRadio ==
+                                  null)
+                          ? HomeImage.assetImage(
+                              path: Assets.images.imgTab.path,
+                              height: !isTablet ? 135 : 230,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              // fit: BoxFit.cover,
+                            )
+                          : HomeImage.networkImage(
+                              path:
+                                  "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
+                              height: !isTablet ? 121 : 215,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              fit: BoxFit.cover,
+                              radius: BorderRadius.circular(15),
+                            ),
+                ),
+              ),
             ],
           ),
           10.space(),

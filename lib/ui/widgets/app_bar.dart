@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
-import 'package:lynerdoctor/core/constants/request_const.dart';
 
 AppBar appbarWithIcons(
     {required Widget title,
@@ -12,7 +11,7 @@ AppBar appbarWithIcons(
     double elevation = 0.5,
     Color? backgroundColor}) {
   return AppBar(
-    toolbarHeight: isTablet ? 90 : 70,
+    toolbarHeight: 70,
     centerTitle: centerTitle,
     leading: leading,
     title: title,

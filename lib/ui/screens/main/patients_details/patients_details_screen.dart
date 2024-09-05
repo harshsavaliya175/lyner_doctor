@@ -48,7 +48,11 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
               width: 35,
               fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
             )
-            .paddingOnly(left: 10)
+            .paddingOnly(
+                left: 10,
+                top: isTablet ? 22 : 2,
+                bottom: isTablet ? 22 : 0,
+                right: 10)
             .onClick(() {
           Get.back();
         }),
