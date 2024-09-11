@@ -96,48 +96,51 @@ class ImageUploadUtils {
             elevation: 0,
             builder: (BuildContext context) {
               return GetBuilder<AddPatientController>(
-                  builder: (AddPatientController ctrl) {
-                return Container(
-                  child: Wrap(
-                    children: [
-                      ListTile(
-                        title: Text(LocaleKeys.gallery.translateText),
-                        leading: Icon(Icons.photo_library),
-                        onTap: () {
-                          _imageFormGallery(
-                              context: context, onImageChose: onImageChose);
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: Text(LocaleKeys.camera.translateText),
-                        leading: Icon(Icons.photo_camera),
-                        onTap: () {
-                          Get.to(() => SingleImageClickFaceDetectorView(
+                builder: (AddPatientController ctrl) {
+                  return Container(
+                    child: Wrap(
+                      children: [
+                        ListTile(
+                          title: Text(LocaleKeys.gallery.translateText),
+                          leading: Icon(Icons.photo_library),
+                          onTap: () {
+                            _imageFormGallery(
+                                context: context, onImageChose: onImageChose);
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: Text(LocaleKeys.camera.translateText),
+                          leading: Icon(Icons.photo_camera),
+                          onTap: () {
+                            Get.to(
+                              () => SingleImageClickFaceDetectorView(
                                 imageCount: imageCount,
                                 title: title,
-                              ))?.then(
-                            (result) {
-                              if (result != null && result is File) {
-                                onImageChose(result);
-                                Get.back();
-                                // ctrl.intraLeftImageFile = result;
-                                // ctrl.uploadPatientSingleImage(
-                                //     paramName: 'patient_inter_gauche',
-                                //     file: result);
-                                // ctrl.update();
-                              }
-                            },
-                          );
-                          // imageFromCamera(
-                          //     context: context, onImageChose: onImageChose);
-                          // Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              });
+                              ),
+                            )?.then(
+                              (result) {
+                                if (result != null && result is File) {
+                                  onImageChose(result);
+                                  Get.back();
+                                  // ctrl.intraLeftImageFile = result;
+                                  // ctrl.uploadPatientSingleImage(
+                                  //     paramName: 'patient_inter_gauche',
+                                  //     file: result);
+                                  // ctrl.update();
+                                }
+                              },
+                            );
+                            // imageFromCamera(
+                            //     context: context, onImageChose: onImageChose);
+                            // Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           )
         : showDialog(

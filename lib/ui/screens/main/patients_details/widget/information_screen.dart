@@ -55,7 +55,7 @@ class InformationScreen extends StatelessWidget {
                       controller.deletePatient(
                         controller.patientDetailsModel?.patientId.toString() ??
                             '',
-                        controller.patientDetailsModel?.adminArchive,
+                        controller.patientDetailsModel?.isDeleted,
                       );
                     },
                   ),
@@ -726,6 +726,7 @@ class InformationScreen extends StatelessWidget {
               AppButton(
                 text: LocaleKeys.downloadAll.translateText,
                 radius: 100,
+                btnHeight: !isTablet ? 55 : 70,
                 fontColor: Colors.white,
                 onTap: () {
                   List downloadUrls = [

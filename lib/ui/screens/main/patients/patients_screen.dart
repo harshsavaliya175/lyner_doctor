@@ -23,7 +23,7 @@ class PatientsScreen extends StatelessWidget {
 
   final PatientsController patientsController = Get.put(PatientsController());
 
-  NotificationUtils notificationUtils = NotificationUtils();
+  final NotificationUtils notificationUtils = NotificationUtils();
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +220,13 @@ class PatientsScreen extends StatelessWidget {
                                   if (patientData?.isDraft == 0 &&
                                       ctrl.treatmentStatusFilterValue != 1) {
                                     Get.toNamed(Routes.patientsDetailsScreen,
-                                        arguments: patientData?.patientId);
+                                            arguments: patientData?.patientId)
+                                        ?.then(
+                                      (value) {
+                                        ctrl.getClinicListBySearchOrFilter();
+                                        ctrl.update();
+                                      },
+                                    );
                                   }
                                 },
                               );

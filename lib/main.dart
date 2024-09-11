@@ -9,6 +9,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
+import 'package:lynerdoctor/config/themes/app_theme.dart';
 import 'package:lynerdoctor/core/utils/base_binding.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/codegen_loader.g.dart';
@@ -64,8 +65,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context2, Widget? child) {
-        // ScreenUtil.init(context);
         return GetMaterialApp(
+          theme: AppTheme.lightTheme,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

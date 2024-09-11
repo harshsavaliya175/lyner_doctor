@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -35,44 +36,44 @@ class AddPatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 70,
-          centerTitle: false,
-          title: Text(
-            LocaleKeys.addNewPatient.translateText,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontFamily: Assets.fonts.maax,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              fontSize: !isTablet ? 20 : 22,
-            ),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        centerTitle: false,
+        title: Text(
+          LocaleKeys.addNewPatient.translateText,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontFamily: Assets.fonts.maax,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontSize: !isTablet ? 20 : 22,
           ),
-          leading: Assets.icons.icBack
-              .svg(
-                height: 35,
-                width: 35,
-                fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
-              )
-              .paddingOnly(
-                left: 10,
-                top: isTablet ? 22 : 2,
-                bottom: isTablet ? 22 : 0,
-                right: 10,
-              )
-              .onClick(
-            () {
-              Get.back();
-            },
-          ),
-          backgroundColor: Colors.white,
-          shadowColor: Colors.grey[300],
-          titleSpacing: 1,
-          elevation: 0.5,
-          scrolledUnderElevation: 0,
         ),
-        body: GetBuilder<AddPatientController>(
-            builder: (AddPatientController ctrl) {
+        leading: Assets.icons.icBack
+            .svg(
+              height: 35,
+              width: 35,
+              fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
+            )
+            .paddingOnly(
+              left: 10,
+              top: isTablet ? 22 : 2,
+              bottom: isTablet ? 22 : 0,
+              right: 10,
+            )
+            .onClick(
+          () {
+            Get.back();
+          },
+        ),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.grey[300],
+        titleSpacing: 1,
+        elevation: 0.5,
+        scrolledUnderElevation: 0,
+      ),
+      body: GetBuilder<AddPatientController>(
+        builder: (AddPatientController ctrl) {
           return Stack(
             children: [
               Container(
@@ -206,8 +207,20 @@ class AddPatientScreen extends StatelessWidget {
                       child: PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: ctrl.pageController,
-                        onPageChanged: (index) {
+                        onPageChanged: (int index) {
                           ctrl.goToStep(index);
+                          if (ctrl.currentStep == 2) {
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                            ]);
+                          } else {
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                              DeviceOrientation.portraitDown,
+                              DeviceOrientation.landscapeLeft,
+                              DeviceOrientation.landscapeRight,
+                            ]);
+                          }
                         },
                         children: [
                           chooseTheProduct(ctrl),
@@ -229,7 +242,9 @@ class AddPatientScreen extends StatelessWidget {
               ),
             ],
           );
-        }));
+        },
+      ),
+    );
   }
 }
 
@@ -640,9 +655,18 @@ Widget patientInformation(AddPatientController ctrl) {
                   border: Border.all(color: primaryBrown),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: ListView.builder(
+                child: ListView.separated(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: primaryBrown,
+                    padding: EdgeInsets.zero,
+                    radius: const Radius.circular(35),
+                    dashPattern: const [5, 5, 5, 5],
+                    child: Container(),
+                  ),
                   itemBuilder: (BuildContext builder, int index) {
                     ClinicBillingData? data = ctrl.clinicBillingList[
                         index]; // Display filtered data when search is not empty
@@ -690,8 +714,8 @@ Widget patientInformation(AddPatientController ctrl) {
             15.space(),
             AppTextField(
               textEditingController: ctrl.deliveryAddressController,
-              onChanged: (value) {},
-              validator: (value) {
+              onChanged: (String value) {},
+              validator: (String value) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
@@ -729,9 +753,18 @@ Widget patientInformation(AddPatientController ctrl) {
                   border: Border.all(color: primaryBrown),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: ListView.builder(
+                child: ListView.separated(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: primaryBrown,
+                    padding: EdgeInsets.zero,
+                    radius: const Radius.circular(35),
+                    dashPattern: const [5, 5, 5, 5],
+                    child: Container(),
+                  ),
                   itemBuilder: (BuildContext builder, int index) {
                     ClinicLocation? data = ctrl.clinicDeliveryLocationList[
                         index]; // Display filtered data when search is not empty
@@ -776,7 +809,7 @@ Widget patientInformation(AddPatientController ctrl) {
                 ).paddingOnly(top: 5, bottom: 5),
               ).paddingOnly(top: 15),
             ),
-            100.space(),
+            200.space(),
           ],
         ).paddingSymmetric(horizontal: 15),
       ),
@@ -1248,10 +1281,16 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                           color: ctrl.isUploadStl ? Colors.white : skyColor,
                           width: 1),
                       borderRadius: BorderRadius.circular(!isTablet ? 25 : 40)),
-                  child: LocaleKeys.uploadStl.translateText.appCommonText(
+                  child: Padding(
+                    padding: !isTablet
+                        ? EdgeInsets.symmetric(horizontal: 10)
+                        : EdgeInsets.zero,
+                    child: LocaleKeys.uploadStl.translateText.appCommonText(
                       align: TextAlign.center,
                       color: ctrl.isUploadStl ? Colors.white : darkSkyColor,
-                      size: !isTablet ? 16 : 20),
+                      size: !isTablet ? 16 : 20,
+                    ),
+                  ),
                 ).onClick(
                   () {
                     ctrl.isUploadStl = true;
@@ -1307,8 +1346,8 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 ),
                 AppTextField(
                   textEditingController: ctrl.upperJawImageFileTextCtrl,
-                  onChanged: (value) {},
-                  validator: (value) {},
+                  onChanged: (String value) {},
+                  validator: (String value) {},
                   textFieldPadding: EdgeInsets.zero,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
@@ -1573,7 +1612,7 @@ Widget photoCardWidget({
                 shape: BoxShape.rectangle,
                 fit: BoxFit.cover,
                 radius: BorderRadius.circular(15),
-              )
+              ).onClick(onTap)
             : (urlImage.isEmpty || urlImage == "")
                 ? HomeImage.assetImage(
                     path: image,

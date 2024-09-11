@@ -352,14 +352,14 @@ class PatientsDetailsController extends GetxController {
     update();
   }
 
-  void deletePatient(String patientId, int? adminArchive) {
+  void deletePatient(String patientId, int? isDeleted) {
     showDialog(
       barrierDismissible: false,
       context: Get.context!,
       builder: (context) {
         return CommonDialog(
           dialogBackColor: Colors.white,
-          tittleText: adminArchive != 0
+          tittleText: isDeleted != 0
               ? LocaleKeys.unArchive.translateText
               : LocaleKeys.archive.translateText,
           buttonText: LocaleKeys.confirm.translateText,
@@ -368,7 +368,7 @@ class PatientsDetailsController extends GetxController {
           //     "Are you sure you want to ${adminArchive != 0 ? "UnArchive" : "Archive"} this patient?",
           descriptionText: LocaleKeys.areYouSureYouWantToThisPatient
               .translateTextWithArgument(
-            adminArchive != 0
+            isDeleted != 0
                 ? LocaleKeys.unArchive.translateText
                 : LocaleKeys.archive.translateText,
           ),

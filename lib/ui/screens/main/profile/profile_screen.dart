@@ -108,7 +108,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 16.space(),
                 profileScreenItem(
-                  leadingIcon: Assets.icons.lock,
+                  leading: Icon(
+                    Icons.language,
+                    size: !isTablet ? 24 : 30,
+                  ),
                   title: LocaleKeys.changeLanguage,
                   onTap: () {
                     showDialog(
@@ -245,7 +248,8 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget profileScreenItem({
-    required SvgGenImage leadingIcon,
+    SvgGenImage? leadingIcon,
+    Widget? leading,
     Color leadingIconColor = blackColor,
     required String title,
     required VoidCallback onTap,
@@ -270,12 +274,13 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               20.space(),
-              leadingIcon.svg(
-                height: !isTablet ? 24 : 30,
-                width: !isTablet ? 24 : 30,
-                colorFilter:
-                    ColorFilter.mode(leadingIconColor, BlendMode.srcIn),
-              ),
+              leading ??
+                  leadingIcon!.svg(
+                    height: !isTablet ? 24 : 30,
+                    width: !isTablet ? 24 : 30,
+                    colorFilter:
+                        ColorFilter.mode(leadingIconColor, BlendMode.srcIn),
+                  ),
               12.space(),
               Expanded(
                 child: title.translateText.normalText(

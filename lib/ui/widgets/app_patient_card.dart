@@ -9,7 +9,6 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-import 'package:lynerdoctor/ui/widgets/app_button.dart';
 
 class AppPatientCard extends StatelessWidget {
   const AppPatientCard({
@@ -162,22 +161,46 @@ class AppPatientCard extends StatelessWidget {
               if (isShowBottomWidget)
                 Align(
                   alignment: Alignment.topRight,
-                  child: AppButton(
-                    text: isEditCard
-                        ? LocaleKeys.edit.translateText
-                        : isDraft == 1
-                            ? LocaleKeys.check_draft.translateText
-                            : LocaleKeys.check_modification.translateText,
-                    bgColor: primaryBrown,
-                    fontSize: !isTablet ? 16 : 20,
-                    btnHeight: !isTablet ? 50 : 60,
-                    btnWidth: !isTablet ? 150 : 180,
-                    fontColor: whiteColor,
-                    radius: 100,
+                  child: GestureDetector(
                     onTap: () {
                       editOrSubmitOnTap();
                     },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primaryBrown,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        child: (isEditCard
+                                ? LocaleKeys.edit.translateText
+                                : isDraft == 1
+                                    ? LocaleKeys.check_draft.translateText
+                                    : LocaleKeys
+                                        .check_modification.translateText)
+                            .appCommonText(
+                          size: !isTablet ? 16 : 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ).paddingOnly(top: 5),
                   ),
+                  // child: AppButton(
+                  //   text: isEditCard
+                  //       ? LocaleKeys.edit.translateText
+                  //       : isDraft == 1
+                  //           ? LocaleKeys.check_draft.translateText
+                  //           : LocaleKeys.check_modification.translateText,
+                  //   bgColor: primaryBrown,
+                  //   fontSize: !isTablet ? 16 : 20,
+                  //   btnHeight: !isTablet ? 50 : 60,
+                  //   fontColor: whiteColor,
+                  //   radius: 100,
+                  //   onTap: () {
+                  //     editOrSubmitOnTap();
+                  //   },
+                  // ),
                 ),
               10.space(),
             ],
