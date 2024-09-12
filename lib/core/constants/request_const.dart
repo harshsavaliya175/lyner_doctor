@@ -85,6 +85,8 @@ class MethodNames {
       "getPatientTreatmentsDetails";
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
+  static const String sendModification = "sendModification";
+  static const String approveOrder = "approveOrder";
   static const String getFinancialList = "getFinancialList";
   static const String logout = "logout";
 }
@@ -133,6 +135,10 @@ Map<String, String> requestHeaders(bool passAuthToken) {
 const int LIMIT = 10;
 
 const USER_TYPE = "user";
+const String patientIdString = "patientId";
+const String isShowCheckModificationButtonString =
+    "isShowCheckModificationButton";
+const String reviewModification = "Review Modification";
 
 bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true : false;
 

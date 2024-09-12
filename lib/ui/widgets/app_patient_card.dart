@@ -29,6 +29,7 @@ class AppPatientCard extends StatelessWidget {
     this.isShowBottomWidget = true,
     this.isShowDeleteButtonOnBottom = false,
     this.isDraft = 0,
+    this.clinicItem = '',
   }) : super(key: key);
 
   final bool isEditCard;
@@ -47,6 +48,7 @@ class AppPatientCard extends StatelessWidget {
   final bool isShowBottomWidget;
   final bool isShowDeleteButtonOnBottom;
   final int isDraft;
+  final String clinicItem;
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +179,11 @@ class AppPatientCard extends StatelessWidget {
                                 ? LocaleKeys.edit.translateText
                                 : isDraft == 1
                                     ? LocaleKeys.check_draft.translateText
-                                    : LocaleKeys
-                                        .check_modification.translateText)
+                                    : isDraft == 0 &&
+                                            clinicItem == reviewModification
+                                        ? LocaleKeys
+                                            .check_modification.translateText
+                                        : LocaleKeys.checkPlan.translateText)
                             .appCommonText(
                           size: !isTablet ? 16 : 20,
                           color: Colors.white,
@@ -186,21 +191,6 @@ class AppPatientCard extends StatelessWidget {
                       ),
                     ).paddingOnly(top: 5),
                   ),
-                  // child: AppButton(
-                  //   text: isEditCard
-                  //       ? LocaleKeys.edit.translateText
-                  //       : isDraft == 1
-                  //           ? LocaleKeys.check_draft.translateText
-                  //           : LocaleKeys.check_modification.translateText,
-                  //   bgColor: primaryBrown,
-                  //   fontSize: !isTablet ? 16 : 20,
-                  //   btnHeight: !isTablet ? 50 : 60,
-                  //   fontColor: whiteColor,
-                  //   radius: 100,
-                  //   onTap: () {
-                  //     editOrSubmitOnTap();
-                  //   },
-                  // ),
                 ),
               10.space(),
             ],

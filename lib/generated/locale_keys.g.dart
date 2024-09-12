@@ -282,5 +282,8 @@ abstract class  LocaleKeys {
   static const arcadeToTreat = 'arcadeToTreat';
   static const doctorNotFound = 'doctorNotFound';
   static const clinicLocationNotFound = 'clinicLocationNotFound';
+  static const sendModification = 'sendModification';
+  static const approveOrder = 'approveOrder';
+  static const checkPlan = 'checkPlan';
 
 }

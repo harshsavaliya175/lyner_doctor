@@ -59,9 +59,7 @@ class AddEditLynerController extends GetxController {
     if (pickedDate != null) {
       dateTextField = DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
       ).format(pickedDate!);
     } else {
       dateTextField = "";
@@ -102,16 +100,12 @@ class AddEditLynerController extends GetxController {
     if (pickedDate != null) {
       dateTextField = DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
       ).format(pickedDate!);
     } else if (lynerConnectListData?.treatmentStartDate != null) {
       dateTextField = DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
       ).format(lynerConnectListData!.treatmentStartDate!);
     } else {
       dateTextField = "";

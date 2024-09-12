@@ -279,5 +279,8 @@
   "noUrlAvailableToLoad": "No URL available to load",
   "arcadeToTreat": "Arcade to Treat",
   "doctorNotFound": "Doctor Not Found",
-  "clinicLocationNotFound": "Clinic Location Not Found"
+  "clinicLocationNotFound": "Clinic Location Not Found",
+  "sendModification": "Send modification",
+  "approveOrder": "Approve order",
+  "checkPlan": "Check Plan"
 }

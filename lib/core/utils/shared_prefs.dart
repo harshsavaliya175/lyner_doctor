@@ -54,7 +54,7 @@ class SharedPreference {
   static const String LANGUAGE_CODE = "LANGUAGE_CODE";
 
   saveClinicItem(ClinicData data) {
-    preferences.putBool(SharedPreference.IS_LOGGED_IN, true);
+    _preferences?.setBool(IS_LOGGED_IN, true);
     _preferences?.setInt(CLINIC_ID, data.clinicId);
     _preferences?.setString(CLINIC_NAME, data.clinicName);
     _preferences?.setString(EMAIL, data.email);

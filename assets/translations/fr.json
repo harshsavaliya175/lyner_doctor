@@ -221,7 +221,7 @@
   "toAccessThisFeaturePleaseGrantPermissionFromSettings": "Pour accéder à cette fonctionnalité, veuillez accorder l'autorisation depuis les paramètres.",
   "withoutThisPermissionAppCanNotChangeProfilePicture": "Sans cette autorisation, l'application ne peut pas modifier la photo de profil.",
   "pleaseSelectAnyProductPlanToGoNextStep": "Veuillez sélectionner n'importe quel plan de produit pour passer à l'étape suivante",
-  "pleaseEnterFirstnameAndLastname":"Veuillez saisir votre prénom et votre nom",
+  "pleaseEnterFirstnameAndLastname": "Veuillez saisir votre prénom et votre nom",
   "pleaseSelectAnyProductPlanToContinue": "Veuillez sélectionner n'importe quel plan de produit pour continuer ",
   "pleaseSelectDateOfBirth": "Veuillez sélectionner la date de naissance",
   "pleaseSelectDoctor": "Veuillez sélectionner un médecin",
@@ -279,5 +279,8 @@
   "noUrlAvailableToLoad": "Aucune URL disponible pour le chargement",
   "arcadeToTreat": "Arcade a Traiter",
   "doctorNotFound": "Médecin introuvable",
-  "clinicLocationNotFound": "Emplacement de la clinique introuvable"
+  "clinicLocationNotFound": "Emplacement de la clinique introuvable",
+  "sendModification": "Envoyer modification",
+  "approveOrder": "Approuver commande",
+  "checkPlan": "Vérifier le plan"
 }

@@ -147,8 +147,15 @@ class AuthRepo {
       "device_id": deviceId,
       "device_push_token": devicePushToken,
     };
-    String requestUrl = ApiUrl.baseUrl;
-    result = await BaseApiHelper.postRequest(requestUrl, params);
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.updateDeviceToken,
+      RequestParam.showError: SHOW_ERROR
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
     status = result.status;
     data = result.data;
     msg = result.msg;

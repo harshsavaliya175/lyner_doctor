@@ -487,7 +487,7 @@ Widget patientInformation(AddPatientController ctrl) {
               // onChanged: (value) {},
               readOnly: true,
               showCursor: false,
-              validator: (value) {
+              validator: (String value) {
                 if (value.isEmpty) {
                   ctrl.emailError = true;
                   ctrl.update();
@@ -498,15 +498,24 @@ Widget patientInformation(AddPatientController ctrl) {
               },
               onTap: () async {
                 ctrl.pickedDate = await datePickerDialog(
-                    context: Get.context!, isDateOfBirth: true);
+                  context: Get.context!,
+                  isDateOfBirth: true,
+                  currentTime: ctrl.pickedDate == null
+                      ? ctrl.dateOfBirthController.text.isNotEmpty
+                          ? DateFormat(
+                                  "dd/MM/yyyy",
+                                  (preferences.getString(
+                                          SharedPreference.LANGUAGE_CODE) ??
+                                      'fr'))
+                              .parse(ctrl.dateOfBirthController.text)
+                          : null
+                      : ctrl.pickedDate,
+                );
                 if (ctrl.pickedDate != null) {
                   ctrl.dateTextField = DateFormat(
-                    'dd-MM-yyyy',
+                    'dd/MM/yyyy',
                     (preferences.getString(SharedPreference.LANGUAGE_CODE) ??
-                                'fr')
-                            .isEmpty
-                        ? 'fr'
-                        : 'en',
+                        'fr'),
                   ).format(ctrl.pickedDate!);
                   ctrl.dateOfBirthController.text = ctrl.dateTextField!;
                   print(ctrl.dateOfBirthController.text);
@@ -880,36 +889,6 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                   ],
                 ),
               ),
-              // "+Add all Photos"
-              //     .appCommonText(
-              //   align: TextAlign.start,
-              //   size: !isTablet ? 16 : 19,
-              //   decoration: TextDecoration.underline,
-              //   decorationColor: primaryBrown,
-              //   weight: FontWeight.w500,
-              //   color: primaryBrown,
-              // )
-              //     .onClick(
-              //   () {
-              //     Get.toNamed(Routes.faceDetectorView)?.then(
-              //       (dynamic result) {
-              //         if (result != null && result is List<File>) {
-              //           ctrl.smileImg = result;
-              //           ctrl.profileImageFile = ctrl.smileImg[0];
-              //           ctrl.faceImageFile = ctrl.smileImg[1];
-              //           ctrl.smileImageFile = ctrl.smileImg[2];
-              //           ctrl.intraMaxImageFile = ctrl.smileImg[3];
-              //           ctrl.intraMandImageFile = ctrl.smileImg[4];
-              //           ctrl.intraRightImageFile = ctrl.smileImg[5];
-              //           ctrl.intraFaceImageFile = ctrl.smileImg[6];
-              //           ctrl.intraLeftImageFile = ctrl.smileImg[7];
-              //           ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
-              //           ctrl.update();
-              //         }
-              //       },
-              //     );
-              //   },
-              // ),
             ],
           ),
           !isTablet ? 10.space() : 15.space(),

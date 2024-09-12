@@ -22,7 +22,6 @@ class PatientsScreen extends StatelessWidget {
   PatientsScreen({super.key});
 
   final PatientsController patientsController = Get.put(PatientsController());
-
   final NotificationUtils notificationUtils = NotificationUtils();
 
   @override
@@ -191,6 +190,7 @@ class PatientsScreen extends StatelessWidget {
                                 // isShowBottomWidget: patientData?.isDraft == 1,
                                 isShowBottomWidget:
                                     ctrl.treatmentStatusFilterValue == 1,
+                                clinicItem: patientData?.clinicItem ?? '',
                                 isEditCard: false,
                                 title1: LocaleKeys.statusCom,
                                 title2: LocaleKeys.patientIdCom,
@@ -207,7 +207,21 @@ class PatientsScreen extends StatelessWidget {
                                 editOrSubmitOnTap: () {
                                   if (patientData?.isDraft == 0) {
                                     Get.toNamed(Routes.patientsDetailsScreen,
-                                        arguments: patientData?.patientId);
+                                        arguments: [
+                                          {
+                                            patientIdString:
+                                                patientData?.patientId,
+                                            isShowCheckModificationButtonString:
+                                                (patientData?.patient3DModalLink
+                                                        ?.isNotEmpty ??
+                                                    false),
+                                          }
+                                        ])?.then(
+                                      (value) {
+                                        ctrl.getClinicListBySearchOrFilter();
+                                        ctrl.update();
+                                      },
+                                    );
                                   } else {
                                     Get.toNamed(Routes.addPatientScreen,
                                         arguments: patientData?.patientId);
@@ -220,8 +234,12 @@ class PatientsScreen extends StatelessWidget {
                                   if (patientData?.isDraft == 0 &&
                                       ctrl.treatmentStatusFilterValue != 1) {
                                     Get.toNamed(Routes.patientsDetailsScreen,
-                                            arguments: patientData?.patientId)
-                                        ?.then(
+                                        arguments: [
+                                          {
+                                            patientIdString:
+                                                patientData?.patientId
+                                          }
+                                        ])?.then(
                                       (value) {
                                         ctrl.getClinicListBySearchOrFilter();
                                         ctrl.update();

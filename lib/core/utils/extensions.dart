@@ -121,101 +121,73 @@ extension DateTimeOB on DateTime {
     if (different.inDays > 365)
       return DateFormat(
         "dd MMMM, yyyy",
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
       ).format(this);
 
     if (different.inDays >= 1)
       return DateFormat(
         "dd MMMM, EEEE",
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
       ).format(this);
 
     if (different.inDays == 0) return "Today";
 
-    return DateFormat(
-            "dd MMMM, yyyy",
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-                    .isEmpty
-                ? 'fr'
-                : 'en')
+    return DateFormat("dd MMMM, yyyy",
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
         .format(this);
   }
 
   String formatDate() {
     return DateFormat(
       'EEE, MMM d, yyyy',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 
   String timeAgo() {
     return DateFormat(
       "h:mm a",
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 
   String ddEEEFormat() {
     return DateFormat(
       'dd MMM',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 
   String ddMMMyyHhSssA() {
     return DateFormat(
       'dd, MMM yy hh:mm a',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 
   String ddMMYYYYFormat() {
     return DateFormat(
       'dd/MM/yyyy',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 
   String yyyyMMDDFormat() {
-    return DateFormat(
-            'yyyy-MM-dd',
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-                    .isEmpty
-                ? 'fr'
-                : 'en')
+    return DateFormat('yyyy-MM-dd',
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
         .format(this);
   }
 
   String hhMMaFormat() {
-    return DateFormat(
-            'hh:mm a',
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-                    .isEmpty
-                ? 'fr'
-                : 'en')
+    return DateFormat('hh:mm a',
+            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
         .format(this);
   }
 
   String hhMMSSFormat() {
     return DateFormat(
       'HH:mm:ss',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-          ? 'fr'
-          : 'en',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
     ).format(this);
   }
 

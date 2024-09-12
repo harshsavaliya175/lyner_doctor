@@ -169,7 +169,7 @@ class InformationScreen extends StatelessWidget {
                                       color: blackColor,
                                       fontSize: !isTablet ? 16 : 19,
                                     )
-                                  : "${controller.patientDetailsModel!.dateOfBirth!.ddMMYYYYFormat()}"
+                                  : "${controller.patientDetailsModel!.createdAt!.ddMMYYYYFormat()}"
                                       .normalText(
                                       fontWeight: FontWeight.w500,
                                       color: blackColor,

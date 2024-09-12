@@ -5,9 +5,12 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 
 import 'app_button.dart';
 
-Future datePickerDialog(
-    {required BuildContext context, bool isDateOfBirth = false}) {
-  DateTime currentDate = DateTime.now();
+Future datePickerDialog({
+  required BuildContext context,
+  bool isDateOfBirth = false,
+  DateTime? currentTime,
+}) {
+  DateTime currentDate = currentTime ?? DateTime.now();
   DateTime minDate =
       DateTime(currentDate.year - 200, currentDate.month, currentDate.day);
   // DateTime maxDate = currentDate.add(Duration(days: 15));
@@ -20,7 +23,7 @@ Future datePickerDialog(
     lastDate: isDateOfBirth ? DateTime.now() : DateTime(3000),
     // Up to the current date
 
-    builder: (context, child) {
+    builder: (BuildContext context, Widget? child) {
       return Theme(
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(

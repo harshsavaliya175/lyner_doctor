@@ -247,18 +247,29 @@ class AddEditLynerConnect extends StatelessWidget {
                         return null;
                       },
                       onTap: () async {
-                        ctrl.pickedDate =
-                            await datePickerDialog(context: Get.context!);
+                        ctrl.pickedDate = await datePickerDialog(
+                          context: Get.context!,
+                          currentTime: ctrl.pickedDate == null
+                              ? ctrl.treatmentStartDateController.text
+                                      .isNotEmpty
+                                  ? DateFormat(
+                                          "dd/MM/yyyy",
+                                          (preferences.getString(
+                                                  SharedPreference
+                                                      .LANGUAGE_CODE) ??
+                                              'fr'))
+                                      .parse(ctrl
+                                          .treatmentStartDateController.text)
+                                  : null
+                              : ctrl.pickedDate,
+                        );
                         if (ctrl.pickedDate != null) {
                           // ctrl.dateText = ctrl.pickedDate;
                           ctrl.dateTextField = DateFormat(
-                                  'dd-MM-yyyy',
-                                  (preferences.getString(SharedPreference
-                                                  .LANGUAGE_CODE) ??
-                                              'fr')
-                                          .isEmpty
-                                      ? 'fr'
-                                      : 'en')
+                                  'dd/MM/yyyy',
+                                  (preferences.getString(
+                                          SharedPreference.LANGUAGE_CODE) ??
+                                      'fr'))
                               .format(ctrl.pickedDate!);
                           ctrl.treatmentStartDateController.text =
                               ctrl.dateTextField!;

@@ -2,13 +2,16 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/model/patient_details_model.dart';
@@ -19,6 +22,7 @@ import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class PatientsDetailsController extends GetxController {
+  bool isShowModificationButton = false;
   int selectedScreen = 0;
   bool isLoading = false;
   int patientId = 0;
@@ -26,8 +30,10 @@ class PatientsDetailsController extends GetxController {
   TextEditingController commentController = TextEditingController();
   TextEditingController nextVisitController = TextEditingController();
   TextEditingController treatmentNoteController = TextEditingController();
+  TextEditingController bondDateController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
   RxBool isShowLink = false.obs;
+  DateTime? bondDate;
   PrescriptionData? prescriptionData;
   CommentModel? commentModel;
   List<CommentModel?> commentModelList = [];
@@ -37,6 +43,7 @@ class PatientsDetailsController extends GetxController {
   bool isCommentFileLoading = false;
   bool showProgressDialog = false;
   File? commentFile;
+  bool emailError = false;
   String commentFileName = LocaleKeys.uploadCommentFile.translateText;
   var taskId;
   var progress;
@@ -46,9 +53,16 @@ class PatientsDetailsController extends GetxController {
 
   @override
   void onInit() {
-    patientId = Get.arguments ?? 0;
+    patientId = Get.arguments[0][patientIdString] ?? 0;
+    isShowModificationButton =
+        Get.arguments[0][isShowCheckModificationButtonString] ?? false;
     getPatientCommentsDetails();
     getPatientInformationDetails();
+    commentController.addListener(
+      () {
+        update();
+      },
+    );
     super.onInit();
   }
 
@@ -150,6 +164,52 @@ class PatientsDetailsController extends GetxController {
         }
       } else {
         isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+      log("error ------> $e");
+    }
+    update();
+  }
+
+  sendModification() async {
+    isLoading = true;
+    ResponseItem result = await PatientsRepo.sendModification(
+      patientId: patientId,
+      comment: commentController.text.trim(),
+    );
+    try {
+      if (result.status) {
+        isLoading = false;
+        Get.back();
+        showAppSnackBar(result.msg);
+        Get.put(PatientsController()).getClinicListBySearchOrFilter();
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+      log("error ------> $e");
+    }
+    update();
+  }
+
+  approveOrder(BuildContext context) async {
+    hideKeyBoard(context);
+    isLoading = true;
+    ResponseItem result = await PatientsRepo.approveOrder(
+      patientId: patientId,
+      bondDate: DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
+      ).format(bondDate!),
+    );
+    try {
+      if (result.status) {
+        isLoading = false;
+        Get.back();
+        showAppSnackBar(result.msg);
+        Get.put(PatientsController()).getClinicListBySearchOrFilter();
       }
     } catch (e) {
       isLoading = false;
@@ -356,7 +416,7 @@ class PatientsDetailsController extends GetxController {
     showDialog(
       barrierDismissible: false,
       context: Get.context!,
-      builder: (context) {
+      builder: (BuildContext context) {
         return CommonDialog(
           dialogBackColor: Colors.white,
           tittleText: isDeleted != 0
@@ -375,9 +435,6 @@ class PatientsDetailsController extends GetxController {
           cancelOnTap: () => Get.back(),
           onTap: () {
             callDeletePatientApi(patientId);
-            Get.find<PatientsController>().getClinicListBySearchOrFilter();
-            isLoading = false;
-            Get.back();
           },
           alignment: Alignment.center,
         );
@@ -393,10 +450,10 @@ class PatientsDetailsController extends GetxController {
     );
     try {
       if (result.status) {
+        isLoading = false;
+        Get.back();
         showAppSnackBar(result.msg);
-
-        // patientList.clear();
-        // getClinicListBySearchOrFilter();
+        Get.put(PatientsController()).getClinicListBySearchOrFilter();
       } else {
         isLoading = false;
       }

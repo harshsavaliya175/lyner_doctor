@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -9,11 +10,14 @@ import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/image_picker.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
+import 'package:lynerdoctor/ui/widgets/app_button.dart';
+import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -75,7 +79,6 @@ class CommentScreen extends StatelessWidget {
                       ),
                   ],
                 ),
-                6.space(),
                 controller.commentModelList.isEmpty
                     ? Expanded(
                         child: Container(
@@ -91,7 +94,7 @@ class CommentScreen extends StatelessWidget {
                     : Expanded(
                         child: ListView.separated(
                           itemCount: controller.commentModelList.length,
-                          padding: EdgeInsets.only(top: 10, bottom: 50),
+                          padding: EdgeInsets.only(top: 5, bottom: 50),
                           separatorBuilder: (BuildContext context, int index) =>
                               12.space(),
                           itemBuilder: (BuildContext context, int index) {
@@ -314,6 +317,205 @@ class CommentScreen extends StatelessWidget {
                           },
                         ),
                       ),
+                Visibility(
+                  visible: ctrl.isShowModificationButton,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          btnHeight: !isTablet ? 45 : 50,
+                          fontSize: 16,
+                          text: LocaleKeys.sendModification.translateText,
+                          fontColor: controller.commentController.text
+                                  .trim()
+                                  .isNotEmpty
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.5),
+                          onTap: () async {
+                            if (ctrl.commentController.text.trim().isNotEmpty) {
+                              ctrl.sendModification();
+                            }
+                          },
+                          bgColor: controller.commentController.text
+                                  .trim()
+                                  .isNotEmpty
+                              ? primaryBrown
+                              : primaryBrown.withOpacity(0.5),
+                        ),
+                      ),
+                      5.space(),
+                      Expanded(
+                        child: AppButton(
+                          btnHeight: !isTablet ? 45 : 50,
+                          fontSize: 16,
+                          text: LocaleKeys.approveOrder.translateText,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  insetPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  titlePadding: EdgeInsets.zero,
+                                  actionsPadding: EdgeInsets.zero,
+                                  surfaceTintColor: Colors.white,
+                                  backgroundColor: Colors.white,
+                                  content: Container(
+                                    width: Get.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            LocaleKeys
+                                                .approveOrder.translateText
+                                                .normalText(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                )
+                                                .center,
+                                            Spacer(),
+                                            IconButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              icon: Icon(
+                                                Icons.cancel_outlined,
+                                                size: 30,
+                                              ),
+                                            )
+                                          ],
+                                        ).paddingOnly(
+                                          right: 20,
+                                          left: 20,
+                                          bottom: 10,
+                                          top: 10,
+                                        ),
+                                        Divider(color: Colors.grey, height: 0),
+                                        20.space(),
+                                        AppTextField(
+                                          textEditingController:
+                                              ctrl.bondDateController,
+                                          readOnly: true,
+                                          showCursor: false,
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              ctrl.emailError = true;
+                                              ctrl.update();
+                                              return "Please select bond date.";
+                                            }
+                                            ctrl.update();
+                                            return null;
+                                          },
+                                          onTap: () async {
+                                            ctrl.bondDate =
+                                                await datePickerDialog(
+                                              context: Get.context!,
+                                              isDateOfBirth: false,
+                                              currentTime: ctrl.bondDate == null
+                                                  ? ctrl.bondDateController.text
+                                                          .isNotEmpty
+                                                      ? DateFormat(
+                                                              "dd/MM/yyyy",
+                                                              (preferences.getString(
+                                                                      SharedPreference
+                                                                          .LANGUAGE_CODE) ??
+                                                                  'fr'))
+                                                          .parse(ctrl
+                                                              .bondDateController
+                                                              .text)
+                                                      : null
+                                                  : ctrl.bondDate,
+                                            );
+                                            if (ctrl.bondDate != null) {
+                                              ctrl.bondDateController.text =
+                                                  DateFormat(
+                                                'dd/MM/yyyy',
+                                                (preferences.getString(
+                                                        SharedPreference
+                                                            .LANGUAGE_CODE) ??
+                                                    'fr'),
+                                              ).format(ctrl.bondDate!);
+                                            }
+                                            ctrl.update();
+                                          },
+                                          textFieldPadding: EdgeInsets.zero,
+                                          keyboardType: TextInputType.text,
+                                          // isError: ctrl.emailError,
+                                          hintText: LocaleKeys
+                                              .dateField.translateText,
+                                          labelText: "Bond Date",
+                                          showPrefixIcon: false,
+                                        ).paddingSymmetric(horizontal: 20),
+                                        20.space(),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: AppButton(
+                                                btnHeight: !isTablet ? 55 : 60,
+                                                text: "Save",
+                                                fontColor: Colors.white,
+                                                onTap: () async {
+                                                  if (ctrl
+                                                      .bondDateController.text
+                                                      .trim()
+                                                      .isNotEmpty) {
+                                                    Get.back();
+                                                    ctrl.approveOrder(context);
+                                                  } else {
+                                                    showAppSnackBar(
+                                                        "Please select bond date");
+                                                  }
+                                                },
+                                                bgColor: primaryBrown,
+                                              ),
+                                            ),
+                                            20.space(),
+                                            Expanded(
+                                              child: AppButton(
+                                                btnHeight: !isTablet ? 55 : 60,
+                                                text: "Cancel",
+                                                fontColor: Colors.red,
+                                                onTap: () {
+                                                  Get.back();
+                                                },
+                                                bgColor: Colors.white,
+                                                buttonBorderColor: primaryBrown,
+                                              ),
+                                            ),
+                                          ],
+                                        ).paddingSymmetric(horizontal: 20),
+                                        20.space(),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          bgColor: Colors.white,
+                          buttonBorderColor: primaryBrown,
+                        ),
+                      ),
+                    ],
+                  ).paddingOnly(top: 10),
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -352,24 +554,26 @@ class CommentScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    12.space(),
-                    FloatingActionButton(
-                      onPressed: () async {
-                        if (controller.commentController.text.isNotEmpty) {
-                          context.hideKeyBoard(context);
-                          bool isDone =
-                              await controller.addTextPatientComments();
-                          if (isDone) {
-                            controller.getPatientCommentsDetails();
+                    Visibility(
+                      visible: !(ctrl.isShowModificationButton),
+                      child: FloatingActionButton(
+                        onPressed: () async {
+                          if (controller.commentController.text.isNotEmpty) {
+                            context.hideKeyBoard(context);
+                            bool isDone =
+                                await controller.addTextPatientComments();
+                            if (isDone) {
+                              controller.getPatientCommentsDetails();
+                            }
                           }
-                        }
-                      },
-                      child: Assets.icons.icSend.svg(),
-                      shape: CircleBorder(),
-                      backgroundColor: primaryBrown,
+                        },
+                        child: Assets.icons.icSend.svg(),
+                        shape: CircleBorder(),
+                        backgroundColor: primaryBrown,
+                      ).paddingOnly(left: 12),
                     ),
                   ],
-                ).paddingSymmetric(vertical: 15),
+                ).paddingOnly(top: 10, bottom: 10),
               ],
             );
           },

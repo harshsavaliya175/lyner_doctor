@@ -12,7 +12,6 @@ import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 
 class NotificationUtils {
   final AuthRepo _authRepo = AuthRepo();
-  final SharedPreference preferences = SharedPreference();
 
   late AndroidNotificationChannel channel;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -61,17 +60,18 @@ class NotificationUtils {
       String deviceId =
           preferences.getString(SharedPreference.APP_DEVICE_ID) ?? '';
 
-      FirebaseMessaging.instance.getToken().then((String? token) async {
-        if (kDebugMode) {
-          print("TOKEN ========================================== $token");
-        }
-        if (preferences.getBool(SharedPreference.IS_LOGGED_IN) ?? false) {
-          await _authRepo.updateDeviceToken(
-            devicePushToken: token!,
-            deviceId: deviceId,
-          );
-        }
-      });
+      FirebaseMessaging.instance.getToken().then(
+        (String? token) async {
+          if (kDebugMode) {
+            print("TOKEN ========================================== $token");
+          }
+          if (await preferences.getBool(SharedPreference.IS_LOGGED_IN) ??
+              false) {
+            await _authRepo.updateDeviceToken(
+                devicePushToken: token!, deviceId: deviceId);
+          }
+        },
+      );
     } else {
       if (kDebugMode) {
         print('User declined or has not accepted permission');

@@ -528,12 +528,9 @@ class AddPatientController extends GetxController {
   Future<void> addNewPatient() async {
     isLoading = true;
     if (pickedDate != null) {
-      dateTextField = DateFormat(
-        'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
-      ).format(pickedDate!);
+      dateTextField = DateFormat('yyyy-MM-dd',
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
+          .format(pickedDate!);
     } else {
       dateTextField = "";
     }
@@ -763,11 +760,8 @@ class AddPatientController extends GetxController {
 
           if (patientData?.dateOfBirth != null) {
             dateTextField = DateFormat(
-              'dd-MM-yyyy',
-              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-                      .isEmpty
-                  ? 'fr'
-                  : 'en',
+              'dd/MM/yyyy',
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
             ).format(patientData!.dateOfBirth!);
             dateOfBirthController.text = dateTextField!;
           } else {

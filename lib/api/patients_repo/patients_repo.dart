@@ -54,6 +54,7 @@ class PatientsRepo {
     msg = result.msg;
     return ResponseItem(data: data, msg: msg, status: status);
   }
+
   static Future<ResponseItem> getLibraryList() async {
     ResponseItem result;
     bool status = true;
@@ -375,6 +376,68 @@ class PatientsRepo {
     final Map<String, int> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getPatientCommentsDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    log("==> $result");
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> sendModification({
+    required int patientId,
+    required String comment,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "comment": comment,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.sendModification,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    log("==> $result");
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> approveOrder({
+    required int patientId,
+    required String bondDate,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "bond_date": bondDate,
+    };
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.approveOrder,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;

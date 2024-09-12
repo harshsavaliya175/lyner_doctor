@@ -87,7 +87,7 @@ class CodegenLoader extends AssetLoader{
   "tasks": "Tasks",
   "delete": "Delete",
   "submitTheCase": "Submit the case",
-  "statusCom": "Status:",
+  "statusCom": "Item:",
   "patientIdCom": "Patient ID:",
   "productCom": "Product:",
   "edit": "Edit",
@@ -295,7 +295,10 @@ class CodegenLoader extends AssetLoader{
   "noUrlAvailableToLoad": "No URL available to load",
   "arcadeToTreat": "Arcade to Treat",
   "doctorNotFound": "Doctor Not Found",
-  "clinicLocationNotFound": "Clinic Location Not Found"
+  "clinicLocationNotFound": "Clinic Location Not Found",
+  "sendModification": "Send modification",
+  "approveOrder": "Approve order",
+  "checkPlan": "Check Plan"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Doctor",
@@ -578,7 +581,10 @@ static const Map<String,dynamic> fr = {
   "noUrlAvailableToLoad": "Aucune URL disponible pour le chargement",
   "arcadeToTreat": "Arcade a Traiter",
   "doctorNotFound": "Médecin introuvable",
-  "clinicLocationNotFound": "Emplacement de la clinique introuvable"
+  "clinicLocationNotFound": "Emplacement de la clinique introuvable",
+  "sendModification": "Envoyer modification",
+  "approveOrder": "Approuver commande",
+  "checkPlan": "Vérifier le plan"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

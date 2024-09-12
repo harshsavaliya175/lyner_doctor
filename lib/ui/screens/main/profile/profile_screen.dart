@@ -235,7 +235,7 @@ class ProfileScreen extends StatelessWidget {
                     ctrl.logout();
                   },
                 ),
-                !isTablet ? 20.space() : 100.space(),
+                !isTablet ? 100.space() : 150.space(),
               ],
             ),
             ctrl.isLoading
