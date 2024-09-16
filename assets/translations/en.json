@@ -282,5 +282,13 @@
   "clinicLocationNotFound": "Clinic Location Not Found",
   "sendModification": "Send modification",
   "approveOrder": "Approve order",
-  "checkPlan": "Check Plan"
+  "checkPlan": "Check Plan",
+  "deleteTreatment": "Delete Treatment",
+  "areYouSureWantDeleteTreatment": "Are you sure want delete treatment ?",
+  "pleaseSelectBondDate": "Please select bond date",
+  "save": "Save",
+  "deleteAccount": "Delete Account",
+  "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
+  "afterDeleteAccountShowSnackBarText": "We received your delete account request, we will verify your request and start delete procedure.",
+  "dataNotFound": "Data Not Found"
 }

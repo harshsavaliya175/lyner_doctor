@@ -12,6 +12,7 @@ import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/profile/profile_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
+import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -221,6 +222,47 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                16.space(),
+                profileScreenItem(
+                  leadingIcon: Assets.icons.icDeleteIcon,
+                  title: LocaleKeys.deleteAccount,
+                  leadingIconColor: Colors.red,
+                  onTap: () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (BuildContext context) {
+                        return CommonDialog(
+                          dialogBackColor: Colors.white,
+                          tittleText: LocaleKeys.deleteAccount.translateText,
+                          buttonText: LocaleKeys.delete.translateText,
+                          buttonCancelText: LocaleKeys.cancel.translateText,
+                          descriptionText: LocaleKeys
+                              .areYouSureYouWantToDeleteYourAccount
+                              .translateText,
+                          cancelOnTap: () => Get.back(),
+                          onTap: () {
+                            Get.back();
+                            ctrl.isLoading = true;
+                            ctrl.update();
+                            Future.delayed(
+                              Duration(seconds: 3),
+                              () {
+                                ctrl.isLoading = false;
+                                showAppSnackBar(LocaleKeys
+                                    .afterDeleteAccountShowSnackBarText
+                                    .translateText);
+                                preferences.clearUserItem();
+                                Get.offAllNamed(Routes.signUpSignInScreen);
+                              },
+                            );
+                          },
+                          alignment: Alignment.center,
                         );
                       },
                     );

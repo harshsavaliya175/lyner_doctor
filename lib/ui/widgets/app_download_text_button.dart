@@ -12,10 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 class AppDownloadTextButton extends StatelessWidget {
   final List downloadUrls;
 
-  AppDownloadTextButton({
-    super.key,
-    required this.downloadUrls,
-  });
+  AppDownloadTextButton({super.key, required this.downloadUrls});
 
   @override
   Widget build(BuildContext context) {

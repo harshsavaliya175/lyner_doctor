@@ -97,9 +97,9 @@ class _SingleImageClickCameraViewState
     } else if (widget.photoIndex == 2) {
       image = Assets.images.imgSmileDetect;
     } else if (widget.photoIndex == 3) {
-      // image = Assets.images.imgIntraMaxDetect;
+      image = Assets.images.imgIntraMaxDetect;
     } else if (widget.photoIndex == 4) {
-      // image = Assets.images.imgIntraMandDetect;
+      image = Assets.images.imgIntraMandDetect;
     } else if (widget.photoIndex == 5) {
       image = Assets.images.imgInterRightDetect;
     } else if (widget.photoIndex == 6) {
@@ -118,42 +118,41 @@ class _SingleImageClickCameraViewState
                     child: Text(LocaleKeys.changingCameraLens.translateText))
                 : CameraPreview(_controller!),
             if (widget.customPaint != null) widget.customPaint!,
-            if (widget.photoIndex != 3 && widget.photoIndex != 4)
-              Align(
-                alignment: Alignment.center,
-                child: Container(
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: MediaQuery.of(context).size.width *
+                    ((widget.photoIndex == 0) ||
+                            (widget.photoIndex == 1) ||
+                            (widget.photoIndex == 2)
+                        ? 0.7
+                        : 0.4),
+                height: MediaQuery.of(context).size.width *
+                    ((widget.photoIndex == 0) ||
+                            (widget.photoIndex == 1) ||
+                            (widget.photoIndex == 2)
+                        ? 0.7
+                        : 0.4),
+                child: image.image(
                   width: MediaQuery.of(context).size.width *
                       ((widget.photoIndex == 0) ||
                               (widget.photoIndex == 1) ||
                               (widget.photoIndex == 2)
-                          ? 0.7
-                          : 0.4),
-                  height: MediaQuery.of(context).size.width *
+                          ? 0.85
+                          : 0.5),
+                  height: MediaQuery.of(context).size.height *
                       ((widget.photoIndex == 0) ||
                               (widget.photoIndex == 1) ||
                               (widget.photoIndex == 2)
-                          ? 0.7
-                          : 0.4),
-                  child: image.image(
-                    width: MediaQuery.of(context).size.width *
-                        ((widget.photoIndex == 0) ||
-                                (widget.photoIndex == 1) ||
-                                (widget.photoIndex == 2)
-                            ? 0.85
-                            : 0.5),
-                    height: MediaQuery.of(context).size.height *
-                        ((widget.photoIndex == 0) ||
-                                (widget.photoIndex == 1) ||
-                                (widget.photoIndex == 2)
-                            ? 0.33
-                            : 0.15),
-                    fit: BoxFit.contain,
-                    color: addPatientController.isClick
-                        ? Colors.green.shade700
-                        : Colors.red.shade700,
-                  ),
+                          ? 0.33
+                          : 0.15),
+                  fit: BoxFit.contain,
+                  color: addPatientController.isClick
+                      ? Colors.green.shade700
+                      : Colors.red.shade700,
                 ),
               ),
+            ),
             _backButton(),
             _captureCamera(),
             //_switchLiveCameraToggle(),

@@ -152,7 +152,7 @@ class CommentScreen extends StatelessWidget {
                                             color: blackColor,
                                           ),
                                       ((commentModel?.createdAt
-                                                  ?.ddMMMyyHhSssA() ??
+                                                  ?.ddMMYyyyHhMmA() ??
                                               ""))
                                           .normalText(
                                         fontWeight: FontWeight.w500,
@@ -377,35 +377,17 @@ class CommentScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Spacer(),
-                                            LocaleKeys
-                                                .approveOrder.translateText
-                                                .normalText(
-                                                  fontSize: 22,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                )
-                                                .center,
-                                            Spacer(),
-                                            IconButton(
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                              icon: Icon(
-                                                Icons.cancel_outlined,
-                                                size: 30,
-                                              ),
-                                            )
-                                          ],
-                                        ).paddingOnly(
-                                          right: 20,
-                                          left: 20,
-                                          bottom: 10,
-                                          top: 10,
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: LocaleKeys
+                                              .approveOrder.translateText
+                                              .normalText(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              )
+                                              .center,
                                         ),
                                         Divider(color: Colors.grey, height: 0),
                                         20.space(),
@@ -432,14 +414,19 @@ class CommentScreen extends StatelessWidget {
                                                   ? ctrl.bondDateController.text
                                                           .isNotEmpty
                                                       ? DateFormat(
-                                                              "dd/MM/yyyy",
-                                                              (preferences.getString(
-                                                                      SharedPreference
-                                                                          .LANGUAGE_CODE) ??
-                                                                  'fr'))
-                                                          .parse(ctrl
-                                                              .bondDateController
-                                                              .text)
+                                                          "dd/MM/yyyy",
+                                                          (preferences.getString(
+                                                                          SharedPreference
+                                                                              .LANGUAGE_CODE) ??
+                                                                      '')
+                                                                  .isNotEmpty
+                                                              ? preferences.getString(
+                                                                  SharedPreference
+                                                                      .LANGUAGE_CODE)
+                                                              : 'fr',
+                                                        ).parse(ctrl
+                                                          .bondDateController
+                                                          .text)
                                                       : null
                                                   : ctrl.bondDate,
                                             );
@@ -448,9 +435,14 @@ class CommentScreen extends StatelessWidget {
                                                   DateFormat(
                                                 'dd/MM/yyyy',
                                                 (preferences.getString(
+                                                                SharedPreference
+                                                                    .LANGUAGE_CODE) ??
+                                                            '')
+                                                        .isNotEmpty
+                                                    ? preferences.getString(
                                                         SharedPreference
-                                                            .LANGUAGE_CODE) ??
-                                                    'fr'),
+                                                            .LANGUAGE_CODE)
+                                                    : 'fr',
                                               ).format(ctrl.bondDate!);
                                             }
                                             ctrl.update();
@@ -469,7 +461,8 @@ class CommentScreen extends StatelessWidget {
                                             Expanded(
                                               child: AppButton(
                                                 btnHeight: !isTablet ? 55 : 60,
-                                                text: "Save",
+                                                text: LocaleKeys
+                                                    .save.translateText,
                                                 fontColor: Colors.white,
                                                 onTap: () async {
                                                   if (ctrl
@@ -479,8 +472,9 @@ class CommentScreen extends StatelessWidget {
                                                     Get.back();
                                                     ctrl.approveOrder(context);
                                                   } else {
-                                                    showAppSnackBar(
-                                                        "Please select bond date");
+                                                    showAppSnackBar(LocaleKeys
+                                                        .pleaseSelectBondDate
+                                                        .translateText);
                                                   }
                                                 },
                                                 bgColor: primaryBrown,
@@ -490,7 +484,8 @@ class CommentScreen extends StatelessWidget {
                                             Expanded(
                                               child: AppButton(
                                                 btnHeight: !isTablet ? 55 : 60,
-                                                text: "Cancel",
+                                                text: LocaleKeys
+                                                    .cancel.translateText,
                                                 fontColor: Colors.red,
                                                 onTap: () {
                                                   Get.back();
@@ -516,64 +511,65 @@ class CommentScreen extends StatelessWidget {
                     ],
                   ).paddingOnly(top: 10),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CommonTextField(
-                        controller: controller.commentController,
-                        hintText:
-                            LocaleKeys.please_note_your_comments.translateText,
-                        suffixIcon: Assets.icons.icClip
-                            .svg(
-                          height: !isTablet ? 24 : 28,
-                          width: !isTablet ? 24 : 28,
-                          fit: BoxFit.scaleDown,
-                        )
-                            .onClick(
-                          () {
-                            context.hideKeyBoard(context);
-                            imageUploadUtils.pickFileFormStorage(
-                              context: Get.context!,
-                              onFileChose: (File file) async {
-                                // Handle the chosen file
-                                ctrl.commentFile = file;
-                                if (ctrl.commentFile != null) {
-                                  ctrl.commentFileName = ctrl.getFileName(
-                                      ctrl.commentFile?.path, 15);
-                                }
-                                ctrl.update();
-                                print('Chosen file path: ${file.path}');
-                                bool isUploadFile = await ctrl
-                                    .uploadCommentFile(file, ctrl.patientId);
-                                if (isUploadFile) {
-                                  controller.getPatientCommentsDetails();
-                                }
-                              },
-                            );
-                          },
+                if (ctrl.isShowAddCommentFiled)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CommonTextField(
+                          controller: controller.commentController,
+                          hintText: LocaleKeys
+                              .please_note_your_comments.translateText,
+                          suffixIcon: Assets.icons.icClip
+                              .svg(
+                            height: !isTablet ? 24 : 28,
+                            width: !isTablet ? 24 : 28,
+                            fit: BoxFit.scaleDown,
+                          )
+                              .onClick(
+                            () {
+                              context.hideKeyBoard(context);
+                              imageUploadUtils.pickFileFormStorage(
+                                context: Get.context!,
+                                onFileChose: (File file) async {
+                                  // Handle the chosen file
+                                  ctrl.commentFile = file;
+                                  if (ctrl.commentFile != null) {
+                                    ctrl.commentFileName = ctrl.getFileName(
+                                        ctrl.commentFile?.path, 15);
+                                  }
+                                  ctrl.update();
+                                  print('Chosen file path: ${file.path}');
+                                  bool isUploadFile = await ctrl
+                                      .uploadCommentFile(file, ctrl.patientId);
+                                  if (isUploadFile) {
+                                    controller.getPatientCommentsDetails();
+                                  }
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: !(ctrl.isShowModificationButton),
-                      child: FloatingActionButton(
-                        onPressed: () async {
-                          if (controller.commentController.text.isNotEmpty) {
-                            context.hideKeyBoard(context);
-                            bool isDone =
-                                await controller.addTextPatientComments();
-                            if (isDone) {
-                              controller.getPatientCommentsDetails();
+                      Visibility(
+                        visible: !(ctrl.isShowModificationButton),
+                        child: FloatingActionButton(
+                          onPressed: () async {
+                            if (controller.commentController.text.isNotEmpty) {
+                              context.hideKeyBoard(context);
+                              bool isDone =
+                                  await controller.addTextPatientComments();
+                              if (isDone) {
+                                controller.getPatientCommentsDetails();
+                              }
                             }
-                          }
-                        },
-                        child: Assets.icons.icSend.svg(),
-                        shape: CircleBorder(),
-                        backgroundColor: primaryBrown,
-                      ).paddingOnly(left: 12),
-                    ),
-                  ],
-                ).paddingOnly(top: 10, bottom: 10),
+                          },
+                          child: Assets.icons.icSend.svg(),
+                          shape: CircleBorder(),
+                          backgroundColor: primaryBrown,
+                        ).paddingOnly(left: 12),
+                      ),
+                    ],
+                  ).paddingOnly(top: 10, bottom: 10),
               ],
             );
           },

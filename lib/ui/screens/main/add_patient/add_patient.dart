@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
@@ -209,18 +208,18 @@ class AddPatientScreen extends StatelessWidget {
                         controller: ctrl.pageController,
                         onPageChanged: (int index) {
                           ctrl.goToStep(index);
-                          if (ctrl.currentStep == 2) {
-                            SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.portraitUp,
-                            ]);
-                          } else {
-                            SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.portraitUp,
-                              DeviceOrientation.portraitDown,
-                              DeviceOrientation.landscapeLeft,
-                              DeviceOrientation.landscapeRight,
-                            ]);
-                          }
+                          // if (ctrl.currentStep == 2) {
+                          //   SystemChrome.setPreferredOrientations([
+                          //     DeviceOrientation.portraitUp,
+                          //   ]);
+                          // } else {
+                          //   SystemChrome.setPreferredOrientations([
+                          //     DeviceOrientation.portraitUp,
+                          //     DeviceOrientation.portraitDown,
+                          //     DeviceOrientation.landscapeLeft,
+                          //     DeviceOrientation.landscapeRight,
+                          //   ]);
+                          // }
                         },
                         children: [
                           chooseTheProduct(ctrl),
@@ -503,11 +502,15 @@ Widget patientInformation(AddPatientController ctrl) {
                   currentTime: ctrl.pickedDate == null
                       ? ctrl.dateOfBirthController.text.isNotEmpty
                           ? DateFormat(
-                                  "dd/MM/yyyy",
-                                  (preferences.getString(
-                                          SharedPreference.LANGUAGE_CODE) ??
-                                      'fr'))
-                              .parse(ctrl.dateOfBirthController.text)
+                              "dd/MM/yyyy",
+                              (preferences.getString(
+                                              SharedPreference.LANGUAGE_CODE) ??
+                                          '')
+                                      .isNotEmpty
+                                  ? preferences
+                                      .getString(SharedPreference.LANGUAGE_CODE)
+                                  : 'fr',
+                            ).parse(ctrl.dateOfBirthController.text)
                           : null
                       : ctrl.pickedDate,
                 );
@@ -515,7 +518,10 @@ Widget patientInformation(AddPatientController ctrl) {
                   ctrl.dateTextField = DateFormat(
                     'dd/MM/yyyy',
                     (preferences.getString(SharedPreference.LANGUAGE_CODE) ??
-                        'fr'),
+                                '')
+                            .isNotEmpty
+                        ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+                        : 'fr',
                   ).format(ctrl.pickedDate!);
                   ctrl.dateOfBirthController.text = ctrl.dateTextField!;
                   print(ctrl.dateOfBirthController.text);
@@ -573,9 +579,18 @@ Widget patientInformation(AddPatientController ctrl) {
                   border: Border.all(color: primaryBrown),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: ListView.builder(
+                child: ListView.separated(
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: primaryBrown,
+                    padding: EdgeInsets.zero,
+                    radius: const Radius.circular(35),
+                    dashPattern: const [5, 5, 5, 5],
+                    child: Container(),
+                  ),
                   itemBuilder: (BuildContext builder, int index) {
                     DoctorData? data = ctrl.doctorDataList[
                         index]; // Display filtered data when search is not empty
@@ -974,8 +989,10 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_intra_max",
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
+                  imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
+                    imageCount: 3,
+                    title: LocaleKeys.intraMax.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMaxImageFile = file!;
@@ -984,6 +1001,16 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
+                  // imageUploadUtils.openImageChooser(
+                  //   context: Get.context!,
+                  //   onImageChose: (File? file) async {
+                  //     // ctrl.cuisinePhoto?[0] =(file!);
+                  //     ctrl.intraMaxImageFile = file!;
+                  //     ctrl.uploadPatientSingleImage(
+                  //         paramName: 'patient_intra_max', file: file);
+                  //     ctrl.update();
+                  //   },
+                  // );
                 },
               ),
               10.space(),
@@ -1039,8 +1066,10 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                 urlPath: "patient_intra_gauche",
                 fileImage: ctrl.intraMandImageFile ?? File(''),
                 onTap: () {
-                  imageUploadUtils.openImageChooser(
+                  imageUploadUtils.faceDetectingOpenImageChooser(
                     context: Get.context!,
+                    imageCount: 4,
+                    title: LocaleKeys.intraMand.translateText,
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMandImageFile = file!;
@@ -1049,6 +1078,17 @@ Widget uploadPhotographs(AddPatientController ctrl) {
                       ctrl.update();
                     },
                   );
+
+                  // imageUploadUtils.openImageChooser(
+                  //   context: Get.context!,
+                  //   onImageChose: (File? file) async {
+                  //     // ctrl.cuisinePhoto?[0] =(file!);
+                  //     ctrl.intraMandImageFile = file!;
+                  //     ctrl.uploadPatientSingleImage(
+                  //         paramName: 'patient_intra_gauche', file: file);
+                  //     ctrl.update();
+                  //   },
+                  // );
                 },
               ),
             ],

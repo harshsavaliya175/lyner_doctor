@@ -32,6 +32,7 @@ class CommonTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.maxLine = 1,
     this.borderRadius = 100,
+    this.prefixString = '',
   }) : super(key: key);
   final TextEditingController? controller;
   final TextCapitalization textCapitalization;
@@ -53,6 +54,7 @@ class CommonTextField extends StatefulWidget {
   final Color fillColor;
   final int maxLine;
   final double borderRadius;
+  final String prefixString;
 
   @override
   State<CommonTextField> createState() => _CommonTextFieldState();
@@ -63,6 +65,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
   final textFieldFocusNode = FocusNode();
   bool isFocused = false;
   bool obscureValue = false;
+
   // final Color fillColor = whiteColor;
 
   @override
@@ -116,6 +119,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
               size: widget.hintTextSize ?? (!isTablet ? 16.sp : 20.sp),
               weight: FontWeight.w500,
               color: hintColor),
+          prefixText: widget.prefixString,
           prefixIcon: widget.prefixIcon != null
               ? (widget.prefixIcon!
                       .svg(
@@ -200,38 +204,40 @@ class AppTextField extends StatefulWidget {
   final Function(String value) validator;
   final bool? readOnly;
   final bool showCursor;
+  final String prefixText;
 
-  AppTextField(
-      {Key? key,
-      this.labelText = '',
-      this.textEditingController,
-      this.prefixIcon,
-      this.suffixIcon = '',
-      this.readOnly,
-      this.showCursor = true,
-      this.hintTextStyle,
-      this.onTap,
-      this.textStyle,
-      this.showPrefixWidget,
-      this.maxLines = 1,
-      this.radius,
-      this.maxLength,
-      required this.validator,
-      this.onChanged,
-      this.textFieldPadding,
-      this.labelTextSize,
-      this.keyboardType,
-      this.isError = false,
-      this.obscureText = false,
-      this.showPrefixIcon = true,
-      this.inputFormatter,
-      this.showSuffixIcon = false,
-      this.prefixIconHeight = 16,
-      this.suffixIconHeight = 24,
-      this.prefixIconWidth = 20,
-      this.suffixIconWidth = 24,
-      this.hintText = ''})
-      : super(key: key);
+  AppTextField({
+    Key? key,
+    this.labelText = '',
+    this.textEditingController,
+    this.prefixIcon,
+    this.suffixIcon = '',
+    this.readOnly,
+    this.showCursor = true,
+    this.hintTextStyle,
+    this.onTap,
+    this.textStyle,
+    this.showPrefixWidget,
+    this.maxLines = 1,
+    this.radius,
+    this.maxLength,
+    required this.validator,
+    this.onChanged,
+    this.textFieldPadding,
+    this.labelTextSize,
+    this.keyboardType,
+    this.isError = false,
+    this.obscureText = false,
+    this.showPrefixIcon = true,
+    this.inputFormatter,
+    this.showSuffixIcon = false,
+    this.prefixIconHeight = 16,
+    this.suffixIconHeight = 24,
+    this.prefixIconWidth = 20,
+    this.suffixIconWidth = 24,
+    this.hintText = '',
+    this.prefixText = '',
+  }) : super(key: key);
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -315,6 +321,13 @@ class _AppTextFieldState extends State<AppTextField> {
                 ),
             obscureText: obscureValue,
             decoration: InputDecoration(
+              prefixText: widget.prefixText,
+              prefixStyle: TextStyle(
+                fontSize: !isTablet ? 15 : 18,
+                color: blackColor,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'maax-medium-medium',
+              ),
               contentPadding: EdgeInsets.symmetric(
                   vertical: !isTablet ? 15 : 20, horizontal: 20),
               prefixIcon: widget.prefixIcon,

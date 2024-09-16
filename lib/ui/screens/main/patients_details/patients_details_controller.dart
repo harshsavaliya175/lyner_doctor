@@ -33,7 +33,7 @@ class PatientsDetailsController extends GetxController {
   TextEditingController bondDateController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
   RxBool isShowLink = false.obs;
-  DateTime? bondDate;
+  DateTime? bondDate = DateTime.now();
   PrescriptionData? prescriptionData;
   CommentModel? commentModel;
   List<CommentModel?> commentModelList = [];
@@ -50,12 +50,14 @@ class PatientsDetailsController extends GetxController {
 
   int selectedScreenIndex = 0;
   double progressValue = 0.0;
+  bool isShowAddCommentFiled = true;
 
   @override
   void onInit() {
     patientId = Get.arguments[0][patientIdString] ?? 0;
     isShowModificationButton =
         Get.arguments[0][isShowCheckModificationButtonString] ?? false;
+    isShowAddCommentFiled = !(Get.arguments[0][commentString] == "archived");
     getPatientCommentsDetails();
     getPatientInformationDetails();
     commentController.addListener(
@@ -201,7 +203,9 @@ class PatientsDetailsController extends GetxController {
       patientId: patientId,
       bondDate: DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+            ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+            : 'fr',
       ).format(bondDate!),
     );
     try {
@@ -257,27 +261,25 @@ class PatientsDetailsController extends GetxController {
     return isEditOrAdd;
   }
 
-  Future<bool> deletePatientTreatments() async {
+  deletePatientTreatments() async {
     isLoading = true;
-    bool isDelete = false;
-    commentModelList.clear();
     ResponseItem result = await PatientsRepo.deletePatientTreatments(
         patientTreatmentId: patientTreatmentId);
     try {
       if (result.status) {
-        isDelete = true;
         isLoading = false;
+        Get.back();
+        showAppSnackBar(result.msg);
+        getPatientTreatmentsDetails();
       } else {
         isLoading = false;
       }
-      showAppSnackBar(result.msg);
     } catch (e) {
       showAppSnackBar(result.msg);
       isLoading = false;
       log("error ------> $e");
     }
     update();
-    return isDelete;
   }
 
   Future<bool> addTextPatientComments() async {
@@ -461,5 +463,27 @@ class PatientsDetailsController extends GetxController {
       isLoading = false;
     }
     update();
+  }
+
+  void deleteTreatment() {
+    showDialog(
+      barrierDismissible: true,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return CommonDialog(
+          dialogBackColor: Colors.white,
+          tittleText: LocaleKeys.deleteTreatment.translateText,
+          buttonText: LocaleKeys.confirm.translateText,
+          buttonCancelText: LocaleKeys.cancel.translateText,
+          descriptionText:
+              LocaleKeys.areYouSureWantDeleteTreatment.translateText,
+          cancelOnTap: () => Get.back(),
+          onTap: () async {
+            deletePatientTreatments();
+          },
+          alignment: Alignment.center,
+        );
+      },
+    );
   }
 }

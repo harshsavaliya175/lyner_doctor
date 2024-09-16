@@ -22,28 +22,29 @@ class LynerConnectScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: appBgColor,
       appBar: appbarWithIcons(
-          centerTitle: false,
-          title: Text(
-            LocaleKeys.lynerConnect.translateText,
-            style: TextStyle(
-                fontFamily: Assets.fonts.maax,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-                fontSize: !isTablet ? 20 : 25),
-          ),
-          backgroundColor: Colors.white,
-          leadingWidth: 5,
-          leading: SizedBox(),
-          elevation: 0.5,
-          rightIcon: Assets.icons.icLynerAddPatient
-              .svg(
-            height: !isTablet ? 28.h : 35.h,
-          )
-              .onClick(
-            () {
-              Get.toNamed(Routes.addLynerConnect);
-            },
-          ).paddingOnly(right: 15)),
+        centerTitle: false,
+        title: Text(
+          LocaleKeys.lynerConnect.translateText,
+          style: TextStyle(
+              fontFamily: Assets.fonts.maax,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              fontSize: !isTablet ? 20 : 25),
+        ),
+        backgroundColor: Colors.white,
+        leadingWidth: 5,
+        leading: SizedBox(),
+        elevation: 0.5,
+        rightIcon: Assets.icons.icLynerAddPatient
+            .svg(
+          height: !isTablet ? 28.h : 35.h,
+        )
+            .onClick(
+          () {
+            Get.toNamed(Routes.addLynerConnect);
+          },
+        ).paddingOnly(right: 15),
+      ),
       body: GetBuilder<LynerConnectController>(
         builder: (LynerConnectController ctrl) {
           return Stack(

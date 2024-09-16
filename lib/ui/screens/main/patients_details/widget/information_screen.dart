@@ -382,7 +382,7 @@ class InformationScreen extends StatelessWidget {
                                       color: primaryBrown,
                                     )
                                     .paddingAll(12)
-                                : "${controller.patientDetailsModel!.technicianStartDate!.yyyyMMDDFormat()}"
+                                : "${controller.patientDetailsModel!.technicianStartDate!.ddMMYYYYFormat()}"
                                     .appCommonText(
                                       weight: FontWeight.w600,
                                       size: !isTablet ? 16 : 19,

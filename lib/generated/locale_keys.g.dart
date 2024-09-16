@@ -285,5 +285,13 @@ abstract class  LocaleKeys {
   static const sendModification = 'sendModification';
   static const approveOrder = 'approveOrder';
   static const checkPlan = 'checkPlan';
+  static const deleteTreatment = 'deleteTreatment';
+  static const areYouSureWantDeleteTreatment = 'areYouSureWantDeleteTreatment';
+  static const pleaseSelectBondDate = 'pleaseSelectBondDate';
+  static const save = 'save';
+  static const deleteAccount = 'deleteAccount';
+  static const areYouSureYouWantToDeleteYourAccount = 'areYouSureYouWantToDeleteYourAccount';
+  static const afterDeleteAccountShowSnackBarText = 'afterDeleteAccountShowSnackBarText';
+  static const dataNotFound = 'dataNotFound';
 
 }

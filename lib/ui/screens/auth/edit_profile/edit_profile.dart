@@ -10,6 +10,7 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/core/utils/image_picker.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
@@ -131,6 +132,7 @@ class EditProfile extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     isError: ctrl.isClinicError,
                     onChanged: (String value) {},
+                    readOnly: true,
                   ),
                   15.space(),
                   AppTextField(
@@ -158,7 +160,7 @@ class EditProfile extends StatelessWidget {
                   ),
                   15.space(),
                   AppTextField(
-                    validator: (value) {
+                    validator: (String value) {
                       if (value.isEmpty) {
                         ctrl.update();
                         return LocaleKeys.pleaseEnterPhoneNumber.translateText;
@@ -169,12 +171,19 @@ class EditProfile extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     inputFormatter: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10),
+                      LengthLimitingTextInputFormatter(12),
                     ],
                     hintText: LocaleKeys.enterPhoneNumber.translateText,
+                    prefixText: ((preferences.getString(
+                                    SharedPreference.LANGUAGE_CODE) ??
+                                'fr') ==
+                            "fr")
+                        ? "+33 "
+                        : "",
                     textEditingController: ctrl.mobileNumController,
                     labelText: LocaleKeys.clinicMobileNumber.translateText,
                     showPrefixIcon: false,
+                    readOnly: true,
                     isError: ctrl.mobileNumError,
                     onChanged: (String value) {},
                   ),

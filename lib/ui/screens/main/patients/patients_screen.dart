@@ -89,6 +89,18 @@ class PatientsScreen extends StatelessWidget {
           ],
         ),
         titleSpacing: 20,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              size: !isTablet ? 30 : 35,
+            ),
+            onPressed: () {
+              Get.toNamed(Routes.globalSearchScreen);
+            },
+          ),
+          10.space(),
+        ],
       ),
       body: GetBuilder<PatientsController>(
         builder: (PatientsController ctrl) {
@@ -237,7 +249,9 @@ class PatientsScreen extends StatelessWidget {
                                         arguments: [
                                           {
                                             patientIdString:
-                                                patientData?.patientId
+                                                patientData?.patientId,
+                                            commentString:
+                                                ctrl.treatmentStatusFilter,
                                           }
                                         ])?.then(
                                       (value) {

@@ -72,6 +72,7 @@ class AddEditLynerConnect extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AppTextField(
+                            readOnly: !(controller.isFromNewPatient),
                             textEditingController: ctrl.firstNameController,
                             onChanged: (String value) {},
                             validator: (String value) {
@@ -93,6 +94,7 @@ class AddEditLynerConnect extends StatelessWidget {
                         10.space(),
                         Expanded(
                           child: AppTextField(
+                            readOnly: !(controller.isFromNewPatient),
                             textEditingController: ctrl.lastNameController,
                             onChanged: (String value) {},
                             validator: (String value) {
@@ -146,8 +148,14 @@ class AddEditLynerConnect extends StatelessWidget {
                       textFieldPadding: EdgeInsets.zero,
                       inputFormatter: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(10),
+                        LengthLimitingTextInputFormatter(12),
                       ],
+                      prefixText: ((preferences.getString(
+                                      SharedPreference.LANGUAGE_CODE) ??
+                                  'fr') ==
+                              "fr")
+                          ? "+33 "
+                          : "",
                       hintText: LocaleKeys.pleaseEnterPhoneNumber.translateText,
                       textEditingController: ctrl.mobileNumController,
                       labelText: LocaleKeys.phoneNumber.translateText,
@@ -266,11 +274,15 @@ class AddEditLynerConnect extends StatelessWidget {
                         if (ctrl.pickedDate != null) {
                           // ctrl.dateText = ctrl.pickedDate;
                           ctrl.dateTextField = DateFormat(
-                                  'dd/MM/yyyy',
-                                  (preferences.getString(
-                                          SharedPreference.LANGUAGE_CODE) ??
-                                      'fr'))
-                              .format(ctrl.pickedDate!);
+                            'dd/MM/yyyy',
+                            (preferences.getString(
+                                            SharedPreference.LANGUAGE_CODE) ??
+                                        '')
+                                    .isNotEmpty
+                                ? preferences
+                                    .getString(SharedPreference.LANGUAGE_CODE)
+                                : 'fr',
+                          ).format(ctrl.pickedDate!);
                           ctrl.treatmentStartDateController.text =
                               ctrl.dateTextField!;
                         }

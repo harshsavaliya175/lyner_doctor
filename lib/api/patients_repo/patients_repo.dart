@@ -313,6 +313,31 @@ class PatientsRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> getGlobalSearchData(
+      {required String searchText}) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, String> params = {"search_txt": searchText};
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getGlobalSearchData,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(
+      requestUrl,
+      params,
+      passAuthToken: true,
+    );
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> getPatientInformationDetails({
     required int patientId,
   }) async {

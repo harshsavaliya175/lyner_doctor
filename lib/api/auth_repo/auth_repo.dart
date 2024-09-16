@@ -172,7 +172,7 @@ class AuthRepo {
 
     final Map<String, String> params = {
       "old_password": oldPassword,
-      "new_password": newPassword
+      "new_password": newPassword,
     };
 
     final Map<String, String> queryParameters = {
@@ -207,9 +207,8 @@ class AuthRepo {
     String msg = "";
 
     final Map<String, dynamic> params = {
-      "first_name": fullName,
-      "email": email,
-      "phone_number": phoneNumber,
+      // "clinic_name": fullName,
+      // "clinic_mobile_number": phoneNumber,
       "is_email_notification": isEmailNotification,
       "is_mobile_notification": isMobileNotification,
     };

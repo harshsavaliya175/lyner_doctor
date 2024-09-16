@@ -183,12 +183,13 @@ class PatientTreatmentsScreen extends StatelessWidget {
                           deleteOnTap: () async {
                             controller.patientTreatmentId =
                                 patientTreatmentModel?.patientTreatmentId ?? 0;
-                            bool isDelete =
-                                await controller.deletePatientTreatments();
-                            if (isDelete) {
-                              patientsDetailsController
-                                  .getPatientTreatmentsDetails();
-                            }
+                            // bool isDelete =
+                            //     await controller.deletePatientTreatments();
+                            // if (isDelete) {
+                            //   patientsDetailsController
+                            //       .getPatientTreatmentsDetails();
+                            // }
+                            controller.deleteTreatment();
                           },
                           editOrSubmitOnTap: () {
                             controller.patientTreatmentId =

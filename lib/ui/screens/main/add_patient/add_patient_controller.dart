@@ -528,9 +528,12 @@ class AddPatientController extends GetxController {
   Future<void> addNewPatient() async {
     isLoading = true;
     if (pickedDate != null) {
-      dateTextField = DateFormat('yyyy-MM-dd',
-              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
-          .format(pickedDate!);
+      dateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+            ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+            : 'fr',
+      ).format(pickedDate!);
     } else {
       dateTextField = "";
     }
@@ -668,16 +671,16 @@ class AddPatientController extends GetxController {
     if (pickedDate != null) {
       dateTextField = DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+            ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+            : 'fr',
       ).format(pickedDate!);
     } else if (patientData?.dateOfBirth != null) {
       dateTextField = DateFormat(
         'yyyy-MM-dd',
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr').isEmpty
-            ? 'fr'
-            : 'en',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+            ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+            : 'fr',
       ).format(patientData!.dateOfBirth!);
       // dateOfBirthController.text = dateTextField!;
     } else {
@@ -761,7 +764,10 @@ class AddPatientController extends GetxController {
           if (patientData?.dateOfBirth != null) {
             dateTextField = DateFormat(
               'dd/MM/yyyy',
-              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '')
+                      .isNotEmpty
+                  ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+                  : 'fr',
             ).format(patientData!.dateOfBirth!);
             dateOfBirthController.text = dateTextField!;
           } else {

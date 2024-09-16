@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,13 +7,6 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-
-extension DateTimeExtension on DateTime {
-  DateTime toLocalDateTime({String format = "yyyy-MM-dd HH:mm:ss"}) {
-    var dateTime = DateFormat(format).parse(toString(), true);
-    return dateTime.toLocal();
-  }
-}
 
 extension Validation on String {
   bool isValidEmail() {
@@ -28,21 +18,6 @@ extension Validation on String {
 
 hideKeyBoard(BuildContext context) {
   return FocusScope.of(context).unfocus();
-}
-
-extension extOnDynamic on dynamic {
-  get debugPrint {
-    if (kDebugMode) {
-      print("--->(@) ${this.toString()}");
-    }
-  }
-
-  get printLine {
-    if (kDebugMode) {
-      print(
-          "--------------------------------------------------------------------------------------------->(*)");
-    }
-  }
 }
 
 extension AddPadding on Widget {
@@ -87,112 +62,23 @@ extension AddPadding on Widget {
   }
 }
 
-// extension DateTimeOB on DateTime {
-//   DateTime getLocalDateTime() {
-//     String dateUtc = DateFormat('yyyy-MM-dd HH:mm:ss').format(this);
-//     var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateUtc, true);
-//     var dateLocal = dateTime.toLocal();
-//     return dateLocal;
-//   }
-// }
 extension DateTimeOB on DateTime {
-  DateTime getLocalDateTime() {
-    String dateUtc = DateFormat('yyyy-MM-dd HH:mm:ss',
-            preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-        .format(this);
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss",
-            preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr')
-        .parse(dateUtc, true);
-    var dateLocal = dateTime.toLocal();
-    return dateLocal;
-  }
-
-  int getDateForChatListGroup() {
-    return DateTime(year, month, day, 0, 0, 0)
-        .getLocalDateTime()
-        .millisecondsSinceEpoch;
-  }
-
-  String timeDifferenceForChatListGroup() {
-    DateTime currentDate = DateTime.now();
-
-    var different = currentDate.difference(this.getLocalDateTime());
-
-    if (different.inDays > 365)
-      return DateFormat(
-        "dd MMMM, yyyy",
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-      ).format(this);
-
-    if (different.inDays >= 1)
-      return DateFormat(
-        "dd MMMM, EEEE",
-        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-      ).format(this);
-
-    if (different.inDays == 0) return "Today";
-
-    return DateFormat("dd MMMM, yyyy",
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
-        .format(this);
-  }
-
-  String formatDate() {
+  String ddMMYyyyHhMmA() {
     return DateFormat(
-      'EEE, MMM d, yyyy',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-    ).format(this);
-  }
-
-  String timeAgo() {
-    return DateFormat(
-      "h:mm a",
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-    ).format(this);
-  }
-
-  String ddEEEFormat() {
-    return DateFormat(
-      'dd MMM',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-    ).format(this);
-  }
-
-  String ddMMMyyHhSssA() {
-    return DateFormat(
-      'dd, MMM yy hh:mm a',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
+      'dd/MM/yyyy hh:mm a',
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+          ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+          : 'fr',
     ).format(this);
   }
 
   String ddMMYYYYFormat() {
     return DateFormat(
       'dd/MM/yyyy',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
+      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+          ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+          : 'fr',
     ).format(this);
-  }
-
-  String yyyyMMDDFormat() {
-    return DateFormat('yyyy-MM-dd',
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
-        .format(this);
-  }
-
-  String hhMMaFormat() {
-    return DateFormat('hh:mm a',
-            (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'))
-        .format(this);
-  }
-
-  String hhMMSSFormat() {
-    return DateFormat(
-      'HH:mm:ss',
-      (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? 'fr'),
-    ).format(this);
-  }
-
-  String Hm() {
-    return DateFormat.Hm().format(this);
   }
 }
 
@@ -260,36 +146,25 @@ extension AppStyle on String {
 showAppSnackBar(String tittle, [bool button = false]) {
   return Get.showSnackbar(
     GetSnackBar(
-        message: tittle,
-        backgroundColor: primaryBrown,
-        borderRadius: 10,
-        margin: const EdgeInsets.all(8),
-        duration: const Duration(seconds: 5),
-        snackStyle: SnackStyle.FLOATING,
-        messageText: tittle.boldText(color: Colors.white, fontSize: 15),
-        mainButton: button
-            ? TextButton(
-                onPressed: () {
-                  AppSettings.openAppSettings();
-                },
-                // child: "Setting".mediumText(
-                //     color: app_Orange_FF7448, size: 16, fontWeight: FontWeight.w500),
-                child: LocaleKeys.setting.translateText.boldText(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
-              )
-            : null),
-  );
-}
-
-void printData({required dynamic tittle, dynamic val}) {
-  log("$tittle:-$val");
-}
-
-Decoration indicatorWidth() {
-  return UnderlineTabIndicator(
-    borderSide: BorderSide(color: primaryBrown, width: 2),
-    insets: const EdgeInsets.only(bottom: 3),
+      message: tittle,
+      backgroundColor: primaryBrown,
+      borderRadius: 10,
+      margin: const EdgeInsets.all(8),
+      duration: const Duration(seconds: 1),
+      snackStyle: SnackStyle.FLOATING,
+      messageText: tittle.boldText(color: Colors.white, fontSize: 15),
+      mainButton: button
+          ? TextButton(
+              onPressed: () {
+                AppSettings.openAppSettings();
+              },
+              child: LocaleKeys.setting.translateText.boldText(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            )
+          : null,
+    ),
   );
 }

@@ -133,7 +133,7 @@ class ImageUploadUtils {
                             );
                             // imageFromCamera(
                             //     context: context, onImageChose: onImageChose);
-                            // Navigator.pop(context);
+                            //Navigator.pop(context);
                           },
                         ),
                       ],
@@ -165,9 +165,30 @@ class ImageUploadUtils {
                     title: Text(LocaleKeys.camera.translateText),
                     leading: Icon(Icons.photo_camera),
                     onTap: () {
-                      imageFromCamera(
-                          context: context, onImageChose: onImageChose);
-                      Navigator.pop(context);
+                      Get.to(
+                        () => SingleImageClickFaceDetectorView(
+                          imageCount: imageCount,
+                          title: title,
+                        ),
+                      )?.then(
+                        (result) {
+                          if (result != null && result is File) {
+                            onImageChose(result);
+                            Get.back();
+                            // ctrl.intraLeftImageFile = result;
+                            // ctrl.uploadPatientSingleImage(
+                            //     paramName: 'patient_inter_gauche',
+                            //     file: result);
+                            // ctrl.update();
+                          }
+                        },
+                      );
+                      // imageFromCamera(
+                      //     context: context, onImageChose: onImageChose);
+                      // Navigator.pop(context);
+                      // imageFromCamera(
+                      //     context: context, onImageChose: onImageChose);
+                      // Navigator.pop(context);
                     },
                   ),
                 ],

@@ -85,6 +85,7 @@ class MethodNames {
       "getPatientTreatmentsDetails";
   static const String getClinicListBySearchOrFilter =
       "getClinicListBySearchOrFilter";
+  static const String getGlobalSearchData = "getGlobalSearchData";
   static const String sendModification = "sendModification";
   static const String approveOrder = "approveOrder";
   static const String getFinancialList = "getFinancialList";
@@ -136,6 +137,7 @@ const int LIMIT = 10;
 
 const USER_TYPE = "user";
 const String patientIdString = "patientId";
+const String commentString = "commentString";
 const String isShowCheckModificationButtonString =
     "isShowCheckModificationButton";
 const String reviewModification = "Review Modification";

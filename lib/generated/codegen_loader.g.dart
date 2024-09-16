@@ -298,7 +298,15 @@ class CodegenLoader extends AssetLoader{
   "clinicLocationNotFound": "Clinic Location Not Found",
   "sendModification": "Send modification",
   "approveOrder": "Approve order",
-  "checkPlan": "Check Plan"
+  "checkPlan": "Check Plan",
+  "deleteTreatment": "Delete Treatment",
+  "areYouSureWantDeleteTreatment": "Are you sure want delete treatment ?",
+  "pleaseSelectBondDate": "Please select bond date",
+  "save": "Save",
+  "deleteAccount": "Delete Account",
+  "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
+  "afterDeleteAccountShowSnackBarText": "We received your delete account request, we will verify your request and start delete procedure.",
+  "dataNotFound": "Data Not Found"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Doctor",
@@ -388,7 +396,7 @@ static const Map<String,dynamic> fr = {
   "pleaseEnterAlignerDays": "Veuillez entrer les jours des aligneurs",
   "enterTotalAligner": "Entrez le total des aligneurs",
   "pleaseEnterTotalAligner": "Veuillez entrer le total des aligneurs",
-  "currentAligner": "Aligneur de courant",
+  "currentAligner": "Aligneur actuel",
   "enterCurrentAligner": "Entrez l'aligner actuel",
   "pleaseEnterCurrentAligner": "Veuillez entrer l'aligner actuel",
   "enterPhoneNumber": "Entrez le numéro de téléphone",
@@ -400,7 +408,7 @@ static const Map<String,dynamic> fr = {
   "alignersInPlace": "Aligneurs en place",
   "withoutAligners": "Sans aligneurs",
   "noPatientFound": "Aucun patient trouvé",
-  "alignerDays": "Jours d'alignement",
+  "alignerDays": "Nombre de jours par aligneur",
   "caseCom": "Produit :",
   "treatmentStartDateCom": "Date de début du traitement :",
   "filter": "Filtrer",
@@ -539,7 +547,7 @@ static const Map<String,dynamic> fr = {
   "noFileChosen": "Aucun fichier choisi",
   "lowerJawStlFile": "STL arcarde mandibulaire",
   "cbctDICOM": "CBCT / DICOM",
-  "finishLatter": "Terminer ce dernier",
+  "finishLatter": "Sauvegarder le cas",
   "pleaseSelectAllRequiredPhotos": "Veuillez sélectionner toutes les photos requises",
   "whereTheSimulationWillBeCarriedOut": "((ou la simulation sera réalisée)",
   "threeDScansOfBothArchesAreNecessaryEvenIfYouChooseToTreatOnlyOneArch": "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
@@ -584,7 +592,15 @@ static const Map<String,dynamic> fr = {
   "clinicLocationNotFound": "Emplacement de la clinique introuvable",
   "sendModification": "Envoyer modification",
   "approveOrder": "Approuver commande",
-  "checkPlan": "Vérifier le plan"
+  "checkPlan": "Vérifier le plan",
+  "deleteTreatment": "Supprimer le traitement",
+  "areYouSureWantDeleteTreatment": "Êtes-vous sûr de vouloir supprimer le traitement ?",
+  "pleaseSelectBondDate": "Veuillez sélectionner la date de caution",
+  "save": "Sauvegarder",
+  "deleteAccount": "Supprimer le compte",
+  "areYouSureYouWantToDeleteYourAccount": "Êtes-vous sûr de vouloir supprimer votre compte?",
+  "afterDeleteAccountShowSnackBarText": "Nous avons reçu votre demande de suppression de compte, nous vérifierons votre demande et lancerons la procédure de suppression.",
+  "dataNotFound": "Données introuvables"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }
