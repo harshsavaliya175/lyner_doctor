@@ -556,10 +556,14 @@ class CommentScreen extends StatelessWidget {
                           onPressed: () async {
                             if (controller.commentController.text.isNotEmpty) {
                               context.hideKeyBoard(context);
-                              bool isDone =
-                                  await controller.addTextPatientComments();
-                              if (isDone) {
-                                controller.getPatientCommentsDetails();
+                              if (!(ctrl.isCallCommentApi)) {
+                                bool isDone =
+                                    await controller.addTextPatientComments();
+                                if (isDone) {
+                                  controller.getPatientCommentsDetails();
+                                }
+                              } else {
+                                ctrl.sendModification();
                               }
                             }
                           },

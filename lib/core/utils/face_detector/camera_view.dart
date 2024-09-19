@@ -113,42 +113,41 @@ class _CameraViewState extends State<CameraView> {
                     child: Text(LocaleKeys.changingCameraLens.translateText))
                 : CameraPreview(_controller!),
             if (widget.customPaint != null) widget.customPaint!,
-            if (smileImg.length != 3 && smileImg.length != 4)
-              Align(
-                alignment: Alignment.center,
-                child: Container(
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: MediaQuery.of(context).size.width *
+                    ((smileImg.length == 0) ||
+                            (smileImg.length == 1) ||
+                            (smileImg.length == 2)
+                        ? 0.7
+                        : 0.4),
+                height: MediaQuery.of(context).size.width *
+                    ((smileImg.length == 0) ||
+                            (smileImg.length == 1) ||
+                            (smileImg.length == 2)
+                        ? 0.7
+                        : 0.4),
+                child: image.image(
                   width: MediaQuery.of(context).size.width *
                       ((smileImg.length == 0) ||
                               (smileImg.length == 1) ||
                               (smileImg.length == 2)
-                          ? 0.7
-                          : 0.4),
-                  height: MediaQuery.of(context).size.width *
+                          ? 0.85
+                          : 0.5),
+                  height: MediaQuery.of(context).size.height *
                       ((smileImg.length == 0) ||
                               (smileImg.length == 1) ||
                               (smileImg.length == 2)
-                          ? 0.7
-                          : 0.4),
-                  child: image.image(
-                    width: MediaQuery.of(context).size.width *
-                        ((smileImg.length == 0) ||
-                                (smileImg.length == 1) ||
-                                (smileImg.length == 2)
-                            ? 0.85
-                            : 0.5),
-                    height: MediaQuery.of(context).size.height *
-                        ((smileImg.length == 0) ||
-                                (smileImg.length == 1) ||
-                                (smileImg.length == 2)
-                            ? 0.33
-                            : 0.15),
-                    fit: BoxFit.contain,
-                    color: addPatientController.isClick
-                        ? Colors.green.shade700
-                        : Colors.red.shade700,
-                  ),
+                          ? 0.33
+                          : 0.15),
+                  fit: BoxFit.contain,
+                  color: addPatientController.isClick
+                      ? Colors.green.shade700
+                      : Colors.red.shade700,
                 ),
               ),
+            ),
             _backButton(),
             _captureCamera(),
             //_switchLiveCameraToggle(),

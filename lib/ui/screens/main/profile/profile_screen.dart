@@ -73,12 +73,12 @@ class ProfileScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: !isTablet ? 20 : 26,
                       ),
-                      8.w.space(),
-                      (ctrl.clinicData?.email ?? "").normalText(
-                        color: hintStepColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: !isTablet ? 14 : 20,
-                      ),
+                      // 8.w.space(),
+                      // (ctrl.clinicData?.email ?? "").normalText(
+                      //   color: hintStepColor,
+                      //   fontWeight: FontWeight.w400,
+                      //   fontSize: !isTablet ? 14 : 20,
+                      // ),
                       24.w.space(),
                     ],
                   ),

@@ -23,6 +23,7 @@ import 'package:uuid/uuid.dart';
 
 class PatientsDetailsController extends GetxController {
   bool isShowModificationButton = false;
+  bool isCallCommentApi = false;
   int selectedScreen = 0;
   bool isLoading = false;
   int patientId = 0;
@@ -58,6 +59,7 @@ class PatientsDetailsController extends GetxController {
     isShowModificationButton =
         Get.arguments[0][isShowCheckModificationButtonString] ?? false;
     isShowAddCommentFiled = !(Get.arguments[0][commentString] == "archived");
+    isCallCommentApi = Get.arguments[0][isCallCommentApiString] ?? false;
     getPatientCommentsDetails();
     getPatientInformationDetails();
     commentController.addListener(

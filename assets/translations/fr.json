@@ -265,7 +265,7 @@
   "permissionPermanentlyDeniedPleaseEnableStoragePermissionInSettings": "Autorisation définitivement refusée : veuillez activer l'autorisation de stockage dans les paramètres.",
   "permissionRestrictedStoragePermissionIsRestrictedOnThisDevice": "Autorisation restreinte : l'autorisation de stockage est restreinte sur cet appareil.",
   "withoutThisPermissionAppCanNotDownloadFile": "Sans cette autorisation, l'application ne peut pas télécharger le fichier.",
-  "archive": "Archive",
+  "archive": "Archiver",
   "unArchive": "Désarchiver",
   "panoramic": "Panoramique",
   "cephalometric": "Cephalométrique",

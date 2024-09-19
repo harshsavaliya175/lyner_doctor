@@ -10,18 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85efbc02-22dd-4dfd-870a-f32ff82829aa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/keystore/lyner_pro.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../assets/translations/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/translations/fr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/utils/extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/model/library_list_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/model/library_list_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/face_detector/camera_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/face_detector/camera_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +39,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/imac/.android/avd/Pixel_6a_API_34.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/imac/.android/avd/Pixel_5_API_29.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -44,6 +51,10 @@
         <option value="resourceFile" />
       </list>
     </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/keystore/lyner_pro.jks" />
+    <option name="KEY_ALIAS" value="lynerPro@alias" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -71,6 +82,8 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;BundleExportedModule&quot;: &quot;android.app&quot;,
+    &quot;ExportBundle.BundlePathForandroid.app&quot;: &quot;/Users/imac/Desktop/projects/lyner_doctor/android/app&quot;,
     &quot;ResourceManagerPrefKey.ResourceType&quot;: &quot;MIPMAP&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -85,6 +98,9 @@
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   },
   &quot;keyToStringList&quot;: {
+    &quot;ExportApk.BuildVariants&quot;: [
+      &quot;release&quot;
+    ],
     &quot;kotlin-gradle-user-dirs&quot;: [
       &quot;/Users/imac/.gradle&quot;
     ]
@@ -106,7 +122,6 @@
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />

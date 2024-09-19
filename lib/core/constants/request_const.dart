@@ -141,6 +141,7 @@ const String commentString = "commentString";
 const String isShowCheckModificationButtonString =
     "isShowCheckModificationButton";
 const String reviewModification = "Review Modification";
+const String isCallCommentApiString = "isCallCommentApiString";
 
 bool isTablet = MediaQuery.of(Get.context!).size.width >= 500 ? true : false;
 

@@ -227,6 +227,10 @@ class PatientsScreen extends StatelessWidget {
                                                 (patientData?.patient3DModalLink
                                                         ?.isNotEmpty ??
                                                     false),
+                                            isCallCommentApiString:
+                                                (patientData?.clinicItem ??
+                                                        "") ==
+                                                    reviewModification,
                                           }
                                         ])?.then(
                                       (value) {

@@ -117,6 +117,7 @@ class AddEditLynerConnect extends StatelessWidget {
                     ),
                     15.space(),
                     AppTextField(
+                      readOnly: !(controller.isFromNewPatient),
                       textEditingController: ctrl.emailController,
                       onChanged: (String value) {},
                       validator: (String value) {
