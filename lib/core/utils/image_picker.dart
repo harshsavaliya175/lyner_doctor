@@ -44,6 +44,8 @@ class ImageUploadUtils {
                             context: context, onImageChose: onImageChose);
                         Navigator.pop(context);
                       },
+                    ).paddingOnly(
+                      bottom: 20 + MediaQuery.of(context).padding.bottom,
                     ),
                   ],
                 ),
@@ -135,6 +137,8 @@ class ImageUploadUtils {
                             //     context: context, onImageChose: onImageChose);
                             //Navigator.pop(context);
                           },
+                        ).paddingOnly(
+                          bottom: 20 + MediaQuery.of(context).padding.bottom,
                         ),
                       ],
                     ),
@@ -222,7 +226,8 @@ class ImageUploadUtils {
                           onLogoChose();
                           Navigator.pop(context);
                         },
-                      ),
+                      ).paddingOnly(
+                          bottom: 20 + MediaQuery.of(context).padding.bottom),
                     ],
                   ),
                 ),

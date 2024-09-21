@@ -260,6 +260,7 @@ class CodegenLoader extends AssetLoader{
   "dentalClass": "Dental Class",
   "notes": "Notes",
   "pleaseEnterDateOfBirth": "Please enter Date of Birth",
+  "remark": "Remarks",
   "enterARemark": "Enter a remark",
   "middleMaxillaryIncisor": "Middle Maxillary Incisor",
   "otherRecommendations": "Other Recommendations",
@@ -306,7 +307,8 @@ class CodegenLoader extends AssetLoader{
   "deleteAccount": "Delete Account",
   "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
   "afterDeleteAccountShowSnackBarText": "We received your delete account request, we will verify your request and start delete procedure.",
-  "dataNotFound": "Data Not Found"
+  "dataNotFound": "Data Not Found",
+  "steps": "Steps"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Doctor",
@@ -442,7 +444,7 @@ static const Map<String,dynamic> fr = {
   "draft": "Brouillon",
   "patientsNotFound": "Patients non trouvés",
   "myProfile": "Mon Profil",
-  "financial": "Financier",
+  "financial": "Facturation",
   "editProfile": "Modifier le profil",
   "logOut": "Se déconnecter",
   "changePassword": "Changer le mot de passe",
@@ -549,11 +551,12 @@ static const Map<String,dynamic> fr = {
   "cbctDICOM": "CBCT / DICOM",
   "finishLatter": "Sauvegarder le cas",
   "pleaseSelectAllRequiredPhotos": "Veuillez sélectionner toutes les photos requises",
-  "whereTheSimulationWillBeCarriedOut": "((ou la simulation sera réalisée)",
+  "whereTheSimulationWillBeCarriedOut": "(ou la simulation sera réalisée)",
   "threeDScansOfBothArchesAreNecessaryEvenIfYouChooseToTreatOnlyOneArch": "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
   "dentalClass": "Classe Dentaire",
   "notes": "Remarques",
   "pleaseEnterDateOfBirth": "Veuillez entrer la date de naissance",
+  "remark": "Remarques",
   "enterARemark": "Saisir une remarque",
   "middleMaxillaryIncisor": "Milieu Incisif Maxillaire",
   "otherRecommendations": "Autres Recommandations",
@@ -600,7 +603,8 @@ static const Map<String,dynamic> fr = {
   "deleteAccount": "Supprimer le compte",
   "areYouSureYouWantToDeleteYourAccount": "Êtes-vous sûr de vouloir supprimer votre compte?",
   "afterDeleteAccountShowSnackBarText": "Nous avons reçu votre demande de suppression de compte, nous vérifierons votre demande et lancerons la procédure de suppression.",
-  "dataNotFound": "Données introuvables"
+  "dataNotFound": "Données introuvables",
+  "steps": "Étape"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 
 class CommonStepIndicator extends StatelessWidget {
   final int totalSteps;
@@ -71,7 +73,7 @@ class CommonStepIndicator extends StatelessWidget {
                     ),
                     SizedBox(height: 4), // Space between the circle and number
                     Text(
-                      'Steps ${index + 1}', // Step number
+                      '${LocaleKeys.steps.translateText} ${index + 1}', // Step number
                       style: TextStyle(
                         fontSize: !isTablet ?12:16,
                         fontFamily: Assets.fonts.maax,

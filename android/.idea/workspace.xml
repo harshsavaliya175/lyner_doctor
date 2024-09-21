@@ -10,25 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85efbc02-22dd-4dfd-870a-f32ff82829aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/keystore/lyner_pro.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/pdf_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/lyner_andmin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/lyner_andmin.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/translations/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/translations/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/translations/fr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/utils/face_detector/camera_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/face_detector/camera_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/image_picker.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/image_picker.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/utils/step_indicator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/step_indicator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/codegen_loader.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients/patients_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/patients_details_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/comment_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/library_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/library/video/video_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/library/video/video_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

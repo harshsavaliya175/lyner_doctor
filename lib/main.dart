@@ -38,10 +38,7 @@ void main() async {
   await preferences.putAppDeviceInfo();
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('fr'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('fr')],
       path: 'assets/translations',
       saveLocale: true,
       useOnlyLangCode: true,

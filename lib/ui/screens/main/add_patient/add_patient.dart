@@ -1786,17 +1786,9 @@ Widget prescriptionScreen(AddPatientController ctrl) {
           10.space(),
           treatmentGoals(ctrl),
           techniquesPatient(ctrl),
-          Divider(
-            color: dividerColor,
-            height: 2,
-            thickness: 3,
-          ),
+          Divider(color: dividerColor, height: 2, thickness: 3),
           dentalHistory(ctrl),
-          Divider(
-            color: dividerColor,
-            height: 2,
-            thickness: 3,
-          ),
+          Divider(color: dividerColor, height: 2, thickness: 3),
           12.space(),
           LocaleKeys.dentalClass.translateText
               .appCommonText(
@@ -2659,7 +2651,7 @@ Widget treatmentGoals(AddPatientController ctrl) {
         isError: ctrl.emailError,
         hintText: LocaleKeys.enterARemark.translateText,
         maxLines: !isTablet ? 3 : 5,
-        labelText: LocaleKeys.deliveryAddress.translateText,
+        labelText: LocaleKeys.remark.translateText,
         showPrefixIcon: false,
       ).paddingSymmetric(horizontal: 15),
     ],

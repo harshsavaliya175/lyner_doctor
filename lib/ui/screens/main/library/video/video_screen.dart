@@ -26,10 +26,7 @@ class _VideoScreenState extends State<VideoScreen> {
     if (videoId != null) {
       _youtubeController = YoutubePlayerController(
         initialVideoId: videoId,
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-        ),
+        flags: const YoutubePlayerFlags(autoPlay: false, mute: false),
       );
     } else {
       print("Failed to extract video ID from URL");
@@ -48,15 +45,16 @@ class _VideoScreenState extends State<VideoScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appBgColor,
-        body: GetBuilder<LibraryController>(builder: (ctrl) {
-          double aspectRatio =
-              MediaQuery.of(context).orientation == Orientation.portrait
-                  ? 9 / 16
-                  : 16 / 9;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*  30.space(),
+        body: GetBuilder<LibraryController>(
+          builder: (ctrl) {
+            double aspectRatio =
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 9 / 16
+                    : 16 / 9;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*  30.space(),
               IconButton(
                 onPressed: () {
                   Get.back();
@@ -68,37 +66,36 @@ class _VideoScreenState extends State<VideoScreen> {
                 tooltip: "Back",
               ),*/
 
-              Expanded(
-                child: YoutubePlayer(
-                  thumbnail: Assets.images.imgAppLogo.image(
-                    fit: BoxFit.fill,
-                  ),
-                  controller: _youtubeController,
-                  showVideoProgressIndicator: false,
-                  topActions: [
-                    SafeArea(
-                      child: GestureDetector(
-                        onTap: () {
-                          SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.portraitUp]);
-                          Get.back(); // Navigate back on tap
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                Expanded(
+                  child: YoutubePlayer(
+                    thumbnail: Assets.images.imgAppLogo.image(
+                      fit: BoxFit.fill,
+                    ),
+                    controller: _youtubeController,
+                    showVideoProgressIndicator: false,
+                    topActions: [
+                      SafeArea(
+                        child: GestureDetector(
+                          onTap: () {
+                            SystemChrome.setPreferredOrientations(
+                                [DeviceOrientation.portraitUp]);
+                            Get.back(); // Navigate back on tap
+                          },
+                          child:
+                              const Icon(Icons.arrow_back, color: Colors.white),
                         ),
-                      ),
-                    ).paddingOnly(left: 10),
-                  ],
-                  progressIndicatorColor: Colors.red,
-                  onReady: () {
-                    print('Player is ready.');
-                  },
+                      ).paddingOnly(left: 10),
+                    ],
+                    progressIndicatorColor: Colors.red,
+                    onReady: () {
+                      print('Player is ready.');
+                    },
+                  ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

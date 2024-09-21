@@ -246,6 +246,7 @@ abstract class  LocaleKeys {
   static const dentalClass = 'dentalClass';
   static const notes = 'notes';
   static const pleaseEnterDateOfBirth = 'pleaseEnterDateOfBirth';
+  static const remark = 'remark';
   static const enterARemark = 'enterARemark';
   static const middleMaxillaryIncisor = 'middleMaxillaryIncisor';
   static const otherRecommendations = 'otherRecommendations';
@@ -293,5 +294,6 @@ abstract class  LocaleKeys {
   static const areYouSureYouWantToDeleteYourAccount = 'areYouSureYouWantToDeleteYourAccount';
   static const afterDeleteAccountShowSnackBarText = 'afterDeleteAccountShowSnackBarText';
   static const dataNotFound = 'dataNotFound';
+  static const steps = 'steps';
 
 }

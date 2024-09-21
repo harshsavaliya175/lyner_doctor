@@ -9,6 +9,7 @@ import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/library_list_model.dart';
 import 'package:lynerdoctor/ui/screens/main/library/library_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/library/pdf_view.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
@@ -87,8 +88,11 @@ class LibraryScreen extends StatelessWidget {
                   ).onTap(
                     () {
                       if (libraryData.isYoutube == 0) {
-                        ctrl.loadPdfFromUrl(
-                            "${ApiUrl.lynerLibraryUrl}${libraryData.file}");
+                        // ctrl.loadPdfFromUrl(
+                        //     "${ApiUrl.lynerLibraryUrl}${libraryData.file}");
+                        Get.to(PDFScreen(
+                            path:
+                                "${ApiUrl.lynerLibraryUrl}${libraryData.file}"));
                       } else if (libraryData.isYoutube == 1) {
                         ctrl.loadYoutubeUrl(libraryData.youtubeLink ?? '');
                       }

@@ -132,7 +132,7 @@
   "draft": "Brouillon",
   "patientsNotFound": "Patients non trouvés",
   "myProfile": "Mon Profil",
-  "financial": "Financier",
+  "financial": "Facturation",
   "editProfile": "Modifier le profil",
   "logOut": "Se déconnecter",
   "changePassword": "Changer le mot de passe",
@@ -239,11 +239,12 @@
   "cbctDICOM": "CBCT / DICOM",
   "finishLatter": "Sauvegarder le cas",
   "pleaseSelectAllRequiredPhotos": "Veuillez sélectionner toutes les photos requises",
-  "whereTheSimulationWillBeCarriedOut": "((ou la simulation sera réalisée)",
+  "whereTheSimulationWillBeCarriedOut": "(ou la simulation sera réalisée)",
   "threeDScansOfBothArchesAreNecessaryEvenIfYouChooseToTreatOnlyOneArch": "Les scans 3D des deux arcades sont nécessaires même si vous choisissez de traiter une seule arcade.",
   "dentalClass": "Classe Dentaire",
   "notes": "Remarques",
   "pleaseEnterDateOfBirth": "Veuillez entrer la date de naissance",
+  "remark": "Remarques",
   "enterARemark": "Saisir une remarque",
   "middleMaxillaryIncisor": "Milieu Incisif Maxillaire",
   "otherRecommendations": "Autres Recommandations",
@@ -290,5 +291,6 @@
   "deleteAccount": "Supprimer le compte",
   "areYouSureYouWantToDeleteYourAccount": "Êtes-vous sûr de vouloir supprimer votre compte?",
   "afterDeleteAccountShowSnackBarText": "Nous avons reçu votre demande de suppression de compte, nous vérifierons votre demande et lancerons la procédure de suppression.",
-  "dataNotFound": "Données introuvables"
+  "dataNotFound": "Données introuvables",
+  "steps": "Étape"
 }

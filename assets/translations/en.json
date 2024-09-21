@@ -244,6 +244,7 @@
   "dentalClass": "Dental Class",
   "notes": "Notes",
   "pleaseEnterDateOfBirth": "Please enter Date of Birth",
+  "remark": "Remarks",
   "enterARemark": "Enter a remark",
   "middleMaxillaryIncisor": "Middle Maxillary Incisor",
   "otherRecommendations": "Other Recommendations",
@@ -290,5 +291,6 @@
   "deleteAccount": "Delete Account",
   "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
   "afterDeleteAccountShowSnackBarText": "We received your delete account request, we will verify your request and start delete procedure.",
-  "dataNotFound": "Data Not Found"
+  "dataNotFound": "Data Not Found",
+  "steps": "Steps"
 }

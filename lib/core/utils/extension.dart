@@ -24,8 +24,8 @@ extension MediaQueryValues on BuildContext {
 }
 
 extension AddSpace on num {
-  Gap space() {
-    return Gap(toDouble());
+  Gap space({double? crossAxisExtent}) {
+    return Gap(toDouble(), crossAxisExtent: crossAxisExtent);
   }
 }
 
