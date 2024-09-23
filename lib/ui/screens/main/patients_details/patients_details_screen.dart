@@ -59,7 +59,7 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
         elevation: 0.5,
         rightIcon: Obx(() => ctrl.isShowLink.value
             ? Assets.icons.icTeethWithScreen
-                .svg()
+                .svg(width: !isTablet ? 55 : 45, height: !isTablet ? 55 : 45)
                 .paddingOnly(right: 15)
                 .onClick(
                 () {

@@ -256,38 +256,40 @@ class AddEditLynerConnect extends StatelessWidget {
                         return null;
                       },
                       onTap: () async {
-                        ctrl.pickedDate = await datePickerDialog(
-                          context: Get.context!,
-                          currentTime: ctrl.pickedDate == null
-                              ? ctrl.treatmentStartDateController.text
+                        if (ctrl.isFromNewPatient) {
+                          ctrl.pickedDate = await datePickerDialog(
+                            context: Get.context!,
+                            currentTime: ctrl.pickedDate == null
+                                ? ctrl.treatmentStartDateController.text
+                                        .isNotEmpty
+                                    ? DateFormat(
+                                            "dd/MM/yyyy",
+                                            (preferences.getString(
+                                                    SharedPreference
+                                                        .LANGUAGE_CODE) ??
+                                                'fr'))
+                                        .parse(ctrl
+                                            .treatmentStartDateController.text)
+                                    : null
+                                : ctrl.pickedDate,
+                          );
+                          if (ctrl.pickedDate != null) {
+                            // ctrl.dateText = ctrl.pickedDate;
+                            ctrl.dateTextField = DateFormat(
+                              'dd/MM/yyyy',
+                              (preferences.getString(
+                                              SharedPreference.LANGUAGE_CODE) ??
+                                          '')
                                       .isNotEmpty
-                                  ? DateFormat(
-                                          "dd/MM/yyyy",
-                                          (preferences.getString(
-                                                  SharedPreference
-                                                      .LANGUAGE_CODE) ??
-                                              'fr'))
-                                      .parse(ctrl
-                                          .treatmentStartDateController.text)
-                                  : null
-                              : ctrl.pickedDate,
-                        );
-                        if (ctrl.pickedDate != null) {
-                          // ctrl.dateText = ctrl.pickedDate;
-                          ctrl.dateTextField = DateFormat(
-                            'dd/MM/yyyy',
-                            (preferences.getString(
-                                            SharedPreference.LANGUAGE_CODE) ??
-                                        '')
-                                    .isNotEmpty
-                                ? preferences
-                                    .getString(SharedPreference.LANGUAGE_CODE)
-                                : 'fr',
-                          ).format(ctrl.pickedDate!);
-                          ctrl.treatmentStartDateController.text =
-                              ctrl.dateTextField!;
+                                  ? preferences
+                                      .getString(SharedPreference.LANGUAGE_CODE)
+                                  : 'fr',
+                            ).format(ctrl.pickedDate!);
+                            ctrl.treatmentStartDateController.text =
+                                ctrl.dateTextField!;
+                          }
+                          ctrl.update();
                         }
-                        ctrl.update();
                       },
                       textFieldPadding: EdgeInsets.zero,
                       keyboardType: TextInputType.text,

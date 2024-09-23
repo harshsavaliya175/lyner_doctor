@@ -327,7 +327,7 @@ class _SingleImageClickCameraViewState
     final CameraDescription camera = _cameras[_cameraIndex];
     _controller = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.max,
       enableAudio: false,
       imageFormatGroup: Platform.isAndroid
           ? ImageFormatGroup.nv21
