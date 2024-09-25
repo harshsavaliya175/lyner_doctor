@@ -298,6 +298,79 @@ class AddEditLynerConnect extends StatelessWidget {
                       labelText: LocaleKeys.treatmentStartDate.translateText,
                       showPrefixIcon: false,
                     ),
+                    if (!(controller.isFromNewPatient))
+                      Column(
+                        children: [
+                          15.space(),
+                          AppTextField(
+                            textEditingController:
+                                ctrl.treatmentModificationDateController,
+                            // onChanged: (value) {},
+                            readOnly: true,
+                            showCursor: false,
+                            showPrefixWidget: Assets.icons.icCalendar
+                                .svg(
+                                  height: 15,
+                                  width: 15,
+                                )
+                                .paddingOnly(right: 12, top: 14, bottom: 14),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                ctrl.update();
+                                return LocaleKeys
+                                    .pleaseEnterTreatmentModificationDate
+                                    .translateText;
+                              }
+                              ctrl.update();
+                              return null;
+                            },
+                            onTap: () async {
+                              ctrl.modificationPickedDate =
+                                  await datePickerDialog(
+                                context: Get.context!,
+                                isStartFirstDayIsCurrentDay: true,
+                                currentTime: ctrl.modificationPickedDate == null
+                                    ? ctrl.treatmentModificationDateController
+                                            .text.isNotEmpty
+                                        ? DateFormat(
+                                                "dd/MM/yyyy",
+                                                (preferences.getString(
+                                                        SharedPreference
+                                                            .LANGUAGE_CODE) ??
+                                                    'fr'))
+                                            .parse(ctrl
+                                                .treatmentModificationDateController
+                                                .text)
+                                        : null
+                                    : ctrl.modificationPickedDate,
+                              );
+                              if (ctrl.modificationPickedDate != null) {
+                                // ctrl.dateText = ctrl.pickedDate;
+                                ctrl.modificationDateTextField = DateFormat(
+                                  'dd/MM/yyyy',
+                                  (preferences.getString(SharedPreference
+                                                  .LANGUAGE_CODE) ??
+                                              '')
+                                          .isNotEmpty
+                                      ? preferences.getString(
+                                          SharedPreference.LANGUAGE_CODE)
+                                      : 'fr',
+                                ).format(ctrl.modificationPickedDate!);
+                                ctrl.treatmentModificationDateController.text =
+                                    ctrl.modificationDateTextField!;
+                              }
+                              ctrl.update();
+                            },
+                            textFieldPadding: EdgeInsets.zero,
+                            keyboardType: TextInputType.text,
+                            // isError: ctrl.emailError,
+                            hintText: LocaleKeys.dateField.translateText,
+                            labelText:
+                                LocaleKeys.treatmentStartDate.translateText,
+                            showPrefixIcon: false,
+                          ),
+                        ],
+                      ),
                     100.space(),
                   ],
                 ).paddingSymmetric(horizontal: 15),

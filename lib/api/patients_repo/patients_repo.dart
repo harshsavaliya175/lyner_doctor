@@ -246,6 +246,7 @@ class PatientsRepo {
     required String? alignerStage,
     required String? alignerDay,
     required String? treatmentStartDate,
+    required String? treatmentModificationDate,
   }) async {
     ResponseItem result;
     bool status = true;
@@ -262,6 +263,7 @@ class PatientsRepo {
       "aligner_stage": alignerStage,
       "aligner_day": alignerDay,
       "treatment_start_date": treatmentStartDate,
+      "modification_date": treatmentModificationDate,
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.editLynerConnectDetails,

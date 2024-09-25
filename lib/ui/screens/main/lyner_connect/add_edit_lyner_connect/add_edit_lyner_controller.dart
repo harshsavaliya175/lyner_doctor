@@ -16,6 +16,8 @@ class AddEditLynerController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController treatmentStartDateController = TextEditingController();
+  TextEditingController treatmentModificationDateController =
+      TextEditingController();
   TextEditingController doctorController = TextEditingController();
   TextEditingController alignerDaysController = TextEditingController();
   TextEditingController totalAlignerController = TextEditingController();
@@ -24,6 +26,9 @@ class AddEditLynerController extends GetxController {
   bool isLoading = false;
   DateTime? pickedDate;
   String? dateTextField;
+  DateTime? modificationPickedDate;
+  String? modificationDateTextField;
+
   bool isFromNewPatient = false;
 
   LynerConnectList? lynerConnectListData;
@@ -116,6 +121,17 @@ class AddEditLynerController extends GetxController {
     } else {
       dateTextField = "";
     }
+
+    if (modificationPickedDate != null) {
+      modificationDateTextField = DateFormat(
+        'yyyy-MM-dd',
+        (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '').isNotEmpty
+            ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+            : 'fr',
+      ).format(modificationPickedDate!);
+    } else {
+      modificationDateTextField = "";
+    }
     ResponseItem result = await PatientsRepo.editLynerConnectDetails(
       userId: lynerConnectListData?.userId.toString() ?? '',
       email: emailController.text,
@@ -126,6 +142,7 @@ class AddEditLynerController extends GetxController {
       alignerDay: alignerDaysController.text,
       alignerStage: totalAlignerController.text,
       treatmentStartDate: dateTextField,
+      treatmentModificationDate: modificationDateTextField,
     );
 
     try {

@@ -35,6 +35,18 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
     );
   }
 
+  @override
+  void dispose() {
+    if (Platform.isAndroid) {
+      allowCapturePicture();
+    }
+    super.dispose();
+  }
+
+  Future<void> allowCapturePicture() async {
+    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
   Future<File> createFileOfPdfUrl() async {
     Completer<File> completer = Completer();
     try {

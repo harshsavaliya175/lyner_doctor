@@ -8,11 +8,13 @@ import 'app_button.dart';
 Future datePickerDialog({
   required BuildContext context,
   bool isDateOfBirth = false,
+  bool isStartFirstDayIsCurrentDay = false,
   DateTime? currentTime,
 }) {
   DateTime currentDate = currentTime ?? DateTime.now();
-  DateTime minDate =
-      DateTime(currentDate.year - 200, currentDate.month, currentDate.day);
+  DateTime minDate = isStartFirstDayIsCurrentDay
+      ? DateTime.now()
+      : DateTime(currentDate.year - 200, currentDate.month, currentDate.day);
   // DateTime maxDate = currentDate.add(Duration(days: 15));
 
   return showDatePicker(
