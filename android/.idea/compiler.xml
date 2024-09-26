@@ -3,7 +3,13 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="android.file_picker" target="17" />
+      <module name="android.firebase_core" target="17" />
+      <module name="android.flutter_local_notifications" target="17" />
+      <module name="android.google_mlkit_commons" target="17" />
+      <module name="android.google_mlkit_face_detection" target="17" />
+      <module name="android.open_file" target="17" />
       <module name="android.shared_preferences_android" target="17" />
+      <module name="android.url_launcher_android" target="17" />
       <module name="android.webview_flutter_android" target="17" />
     </bytecodeTargetLevel>
   </component>
