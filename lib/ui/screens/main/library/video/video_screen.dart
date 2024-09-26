@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -31,13 +34,28 @@ class _VideoScreenState extends State<VideoScreen> {
     } else {
       print("Failed to extract video ID from URL");
     }
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        if (Platform.isAndroid) {
+          await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+        }
+      },
+    );
   }
 
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     _youtubeController.dispose();
+    if (Platform.isAndroid) {
+      allowCapturePicture();
+    }
     super.dispose();
+  }
+
+  Future<void> allowCapturePicture() async {
+    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   @override
