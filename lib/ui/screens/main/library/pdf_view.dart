@@ -5,6 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_utils/src/extensions/widget_extensions.dart';
+import 'package:get/instance_manager.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/gen/assets.gen.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PDFScreen extends StatefulWidget {
@@ -78,40 +86,40 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   toolbarHeight: 70,
-      //   centerTitle: false,
-      //   title: Text(
-      //     "${remotePDFpath.isNotEmpty ? (currentPage ?? 0) + 1 : currentPage} / $totalPage",
-      //     textAlign: TextAlign.start,
-      //     style: TextStyle(
-      //       fontFamily: Assets.fonts.maax,
-      //       fontWeight: FontWeight.w700,
-      //       color: Colors.black,
-      //       fontSize: !isTablet ? 20 : 22,
-      //     ),
-      //   ),
-      //   leading: Assets.icons.icBack
-      //       .svg(
-      //         height: 35,
-      //         width: 35,
-      //         fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
-      //       )
-      //       .paddingOnly(
-      //         left: 10,
-      //         top: isTablet ? 22 : 2,
-      //         bottom: isTablet ? 22 : 0,
-      //         right: 10,
-      //       )
-      //       .onClick(() {
-      //     Get.back();
-      //   }),
-      //   backgroundColor: Colors.white,
-      //   shadowColor: Colors.grey[300],
-      //   titleSpacing: 1,
-      //   elevation: 0.5,
-      //   scrolledUnderElevation: 0,
-      // ),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        centerTitle: false,
+        title: Text(
+          LocaleKeys.library.translateText,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontFamily: Assets.fonts.maax,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontSize: !isTablet ? 20 : 22,
+          ),
+        ),
+        leading: Assets.icons.icBack
+            .svg(
+              height: 35,
+              width: 35,
+              fit: !isTablet ? BoxFit.scaleDown : BoxFit.fill,
+            )
+            .paddingOnly(
+              left: 10,
+              top: isTablet ? 22 : 2,
+              bottom: isTablet ? 22 : 0,
+              right: 10,
+            )
+            .onClick(() {
+          Get.back();
+        }),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.grey[300],
+        titleSpacing: 1,
+        elevation: 0.5,
+        scrolledUnderElevation: 0,
+      ),
       body: Stack(
         children: <Widget>[
           if (remotePDFpath.isNotEmpty)
