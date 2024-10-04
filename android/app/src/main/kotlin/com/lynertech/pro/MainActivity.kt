@@ -1,4 +1,4 @@
-package com.lynertech.doctorApp
+package com.lynertech.pro
 
 import io.flutter.embedding.android.FlutterActivity
 
