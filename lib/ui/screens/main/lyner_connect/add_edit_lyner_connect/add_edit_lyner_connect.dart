@@ -365,8 +365,8 @@ class AddEditLynerConnect extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             // isError: ctrl.emailError,
                             hintText: LocaleKeys.dateField.translateText,
-                            labelText:
-                                LocaleKeys.treatmentStartDate.translateText,
+                            labelText: LocaleKeys
+                                .treatmentModificationDate.translateText,
                             showPrefixIcon: false,
                           ),
                         ],
