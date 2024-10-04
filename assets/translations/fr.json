@@ -101,7 +101,7 @@
   "alignerDays": "Nombre de jours par aligneur",
   "caseCom": "Produit :",
   "treatmentStartDateCom": "Date de début du traitement:",
-  "treatmentModificationDateCom": "Date de modification du traitement:",
+  "treatmentModificationDate":"Date de modification du traitement",
   "filter": "Filtrer",
   "treatmentStatus": "Statut du traitement",
   "archived": "Archivé",

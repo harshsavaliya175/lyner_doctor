@@ -103,7 +103,6 @@ abstract class  LocaleKeys {
   static const alignerDays = 'alignerDays';
   static const caseCom = 'caseCom';
   static const treatmentStartDateCom = 'treatmentStartDateCom';
-  static const treatmentModificationDateCom = 'treatmentModificationDateCom';
   static const filter = 'filter';
   static const treatmentStatus = 'treatmentStatus';
   static const archived = 'archived';
@@ -194,6 +193,7 @@ abstract class  LocaleKeys {
   static const no = 'no';
   static const update = 'update';
   static const treatmentStartDate = 'treatmentStartDate';
+  static const treatmentModificationDate = 'treatmentModificationDate';
   static const pleaseEnterTreatmentStartDate = 'pleaseEnterTreatmentStartDate';
   static const pleaseEnterTreatmentModificationDate = 'pleaseEnterTreatmentModificationDate';
   static const changingCameraLens = 'changingCameraLens';
