@@ -4,6 +4,7 @@ import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/doctor_model.dart';
@@ -125,7 +126,11 @@ class _DoctorPatientsAllFilterBottomSheetState
                   });
                 }),
                 12.space(),
-                doctorData(patientsController),
+                preferences.getClinicData()?.type ==
+                        SharedPreference.LOGIN_TYPE_CLINIC
+                    ? doctorData(patientsController)
+                    : Container(),
+                // doctorData(patientsController),
                 12.space(),
                 clinicAddressData(patientsController),
                 40.space(),

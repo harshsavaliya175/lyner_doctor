@@ -297,5 +297,7 @@ abstract class  LocaleKeys {
   static const afterDeleteAccountShowSnackBarText = 'afterDeleteAccountShowSnackBarText';
   static const dataNotFound = 'dataNotFound';
   static const steps = 'steps';
+  static const enterFirstName = 'enterFirstName';
+  static const enterLastName = 'enterLastName';
 
 }

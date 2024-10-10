@@ -15,7 +15,7 @@ class CodegenLoader extends AssetLoader{
   }
 
   static const Map<String,dynamic> en = {
-  "appName": "Lyner Doctor",
+  "appName": "Lyner Pro",
   "register": "Register",
   "logIn": "Log In",
   "registerText": "Create an account to enjoy all the benefits",
@@ -310,10 +310,12 @@ class CodegenLoader extends AssetLoader{
   "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
   "afterDeleteAccountShowSnackBarText": "We received your delete account request, we will verify your request and start delete procedure.",
   "dataNotFound": "Data Not Found",
-  "steps": "Steps"
+  "steps": "Steps",
+  "enterFirstName": "Enter first name",
+  "enterLastName": "Enter last name"
 };
 static const Map<String,dynamic> fr = {
-  "appName": "Lyner Doctor",
+  "appName": "Lyner Pro",
   "register": "S'inscrire",
   "logIn": "Se connecter",
   "registerText": "Créez un compte pour profiter de tous les avantages",
@@ -608,7 +610,9 @@ static const Map<String,dynamic> fr = {
   "areYouSureYouWantToDeleteYourAccount": "Êtes-vous sûr de vouloir supprimer votre compte?",
   "afterDeleteAccountShowSnackBarText": "Nous avons reçu votre demande de suppression de compte, nous vérifierons votre demande et lancerons la procédure de suppression.",
   "dataNotFound": "Données introuvables",
-  "steps": "Étape"
+  "steps": "Étape",
+  "enterFirstName": "Entrez le prénom",
+  "enterLastName": "Entrez le nom de famille"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

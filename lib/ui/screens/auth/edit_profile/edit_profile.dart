@@ -85,8 +85,12 @@ class EditProfile extends StatelessWidget {
                                     shape: BoxShape.circle,
                                   )
                                 : HomeImage.networkImage(
-                                    path: ApiUrl.clinicProfileImagePath +
-                                        '${ctrl.clinicData?.clinicPhoto}',
+                                    path: controller.loginUserType ==
+                                            SharedPreference.LOGIN_TYPE_DOCTOR
+                                        ? ApiUrl.doctorProfileImagePath +
+                                            '${ctrl.clinicData?.clinicPhoto}'
+                                        : ApiUrl.clinicProfileImagePath +
+                                            '${ctrl.clinicData?.clinicPhoto}',
                                     size: !isTablet ? 150 : 200,
                                     shape: BoxShape.circle,
                                     fit: BoxFit.cover,
@@ -116,25 +120,89 @@ class EditProfile extends StatelessWidget {
                     ],
                   ),
                   20.space(),
-                  AppTextField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        ctrl.update();
-                        return LocaleKeys.pleaseEnterClinicName.translateText;
-                      }
-                      ctrl.update();
-                      return null;
-                    },
-                    hintText: LocaleKeys.enterClinicName.translateText,
-                    textEditingController: ctrl.clinicNameController,
-                    labelText: LocaleKeys.nameOfTheClinic.translateText,
-                    showPrefixIcon: false,
-                    keyboardType: TextInputType.text,
-                    isError: ctrl.isClinicError,
-                    onChanged: (String value) {},
-                    readOnly: true,
-                  ),
-                  15.space(),
+                  controller.loginUserType == SharedPreference.LOGIN_TYPE_CLINIC
+                      ? AppTextField(
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              ctrl.update();
+                              return LocaleKeys
+                                  .pleaseEnterClinicName.translateText;
+                            }
+                            ctrl.update();
+                            return null;
+                          },
+                          hintText: LocaleKeys.enterClinicName.translateText,
+                          textEditingController: ctrl.clinicNameController,
+                          labelText: LocaleKeys.nameOfTheClinic.translateText,
+                          showPrefixIcon: false,
+                          keyboardType: TextInputType.text,
+                          isError: ctrl.isClinicError,
+                          onChanged: (String value) {},
+                          readOnly: true,
+                        )
+                      : SizedBox(),
+                  controller.loginUserType == SharedPreference.LOGIN_TYPE_CLINIC
+                      ? 15.space()
+                      : SizedBox(),
+                  controller.loginUserType == SharedPreference.LOGIN_TYPE_DOCTOR
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: AppTextField(
+                                textFieldPadding:
+                                    EdgeInsets.only(left: 15, right: 5),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    ctrl.update();
+                                    return LocaleKeys
+                                        .pleaseEnterFirstName.translateText;
+                                  }
+                                  ctrl.update();
+                                  return null;
+                                },
+                                hintText:
+                                    LocaleKeys.enterFirstName.translateText,
+                                textEditingController: ctrl.firstNameController,
+                                labelText:
+                                    LocaleKeys.enterFirstName.translateText,
+                                showPrefixIcon: false,
+                                keyboardType: TextInputType.text,
+                                isError: ctrl.isClinicError,
+                                onChanged: (String value) {},
+                                readOnly: true,
+                              ),
+                            ),
+                            Expanded(
+                              child: AppTextField(
+                                textFieldPadding:
+                                    EdgeInsets.only(left: 5, right: 15),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    ctrl.update();
+                                    return LocaleKeys
+                                        .pleaseEnterLastName.translateText;
+                                  }
+                                  ctrl.update();
+                                  return null;
+                                },
+                                hintText:
+                                    LocaleKeys.enterLastName.translateText,
+                                textEditingController: ctrl.lastNameController,
+                                labelText:
+                                    LocaleKeys.enterLastName.translateText,
+                                showPrefixIcon: false,
+                                keyboardType: TextInputType.text,
+                                isError: ctrl.isClinicError,
+                                onChanged: (String value) {},
+                                readOnly: true,
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+                  controller.loginUserType == SharedPreference.LOGIN_TYPE_DOCTOR
+                      ? 15.space()
+                      : SizedBox(),
                   AppTextField(
                     validator: (value) {
                       if (value.isEmpty) {

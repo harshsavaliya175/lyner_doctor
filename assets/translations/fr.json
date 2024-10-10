@@ -1,5 +1,5 @@
 {
-  "appName": "Lyner Doctor",
+  "appName": "Lyner Pro",
   "register": "S'inscrire",
   "logIn": "Se connecter",
   "registerText": "Créez un compte pour profiter de tous les avantages",
@@ -294,5 +294,7 @@
   "areYouSureYouWantToDeleteYourAccount": "Êtes-vous sûr de vouloir supprimer votre compte?",
   "afterDeleteAccountShowSnackBarText": "Nous avons reçu votre demande de suppression de compte, nous vérifierons votre demande et lancerons la procédure de suppression.",
   "dataNotFound": "Données introuvables",
-  "steps": "Étape"
+  "steps": "Étape",
+  "enterFirstName": "Entrez le prénom",
+  "enterLastName": "Entrez le nom de famille"
 }

@@ -62,8 +62,12 @@ class ProfileScreen extends StatelessWidget {
                         height: !isTablet ? 120.w : 140.w,
                         width: !isTablet ? 120.w : 140.w,
                         child: HomeImage.networkImage(
-                          path: ApiUrl.clinicProfileImagePath +
-                              '${preferences.getString(SharedPreference.CLINIC_PHOTO)}',
+                          path: preferences.getClinicData()?.type ==
+                                  SharedPreference.LOGIN_TYPE_DOCTOR
+                              ? ApiUrl.doctorProfileImagePath +
+                                  '${preferences.getString(SharedPreference.CLINIC_PHOTO)}'
+                              : ApiUrl.clinicProfileImagePath +
+                                  '${preferences.getString(SharedPreference.CLINIC_PHOTO)}',
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -193,14 +193,15 @@ class AuthRepo {
         data: data, status: status, refreshToken: refreshToken, msg: message);
   }
 
-  static Future<ResponseItem> editProfile({
-    required String fullName,
-    required String email,
-    required String phoneNumber,
-    required int isEmailNotification,
-    required int isMobileNotification,
-    File? profileImage,
-  }) async {
+  static Future<ResponseItem> editProfile(
+      {required String fullName,
+      required String email,
+      required String phoneNumber,
+      required int isEmailNotification,
+      required int isMobileNotification,
+      File? profileImage,
+      String? firstName,
+      String? lastName}) async {
     ResponseItem result;
     bool status = true;
     dynamic data;
@@ -211,6 +212,8 @@ class AuthRepo {
       // "clinic_mobile_number": phoneNumber,
       "is_email_notification": isEmailNotification,
       "is_mobile_notification": isMobileNotification,
+      //"first_name": firstName,
+      //"last_name": lastName,
     };
 
     http.MultipartFile? profileImageFile;

@@ -52,6 +52,9 @@ class SharedPreference {
   static const String CREATE_AT = "CREATE_AT";
   static const clinicData = "clinicData";
   static const String LANGUAGE_CODE = "LANGUAGE_CODE";
+  static const String LOGIN_TYPE_CLINIC = "CLINIC";
+  static const String LOGIN_TYPE_DOCTOR = "DOCTOR";
+  static const String TYPE = "type";
 
   saveClinicItem(ClinicData data) {
     _preferences?.setBool(IS_LOGGED_IN, true);

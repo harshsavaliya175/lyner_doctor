@@ -40,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     receivePort.listen(
       (message) async {
         String id = message[0];
-        String status = message[1];
+        String status = message[1].toString();
         int progress = message[2];
         downloadProgress = progress.toDouble();
         // ctrl.setProgressValue(downloadProgress: downloadProgress);

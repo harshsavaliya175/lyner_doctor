@@ -11,6 +11,8 @@ import 'package:lynerdoctor/model/clinic_model.dart';
 class EditProfileController extends GetxController {
   File? profileImage;
   TextEditingController clinicNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController mobileNumController = TextEditingController();
   GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
@@ -21,12 +23,16 @@ class EditProfileController extends GetxController {
   bool isEmailNotification = false;
   bool isLoading = false;
   ClinicData? clinicData;
+  String? loginUserType = '';
 
   @override
   void onInit() {
     super.onInit();
+    loginUserType = preferences.getClinicData()?.type;
     clinicData = preferences.getClinicData();
     emailAddressController.text = clinicData?.email ?? '';
+    firstNameController.text = clinicData?.doctorData?.firstName ?? '';
+    lastNameController.text = clinicData?.doctorData?.lastName ?? '';
     clinicNameController.text = clinicData?.clinicName ?? '';
     mobileNumController.text = clinicData?.clinicMobileNumber ?? '';
     isEmailNotification = clinicData?.isEmailNotification == 1 ? true : false;
@@ -43,6 +49,8 @@ class EditProfileController extends GetxController {
         isEmailNotification: isEmailNotification ? 1 : 0,
         isMobileNotification: isMobileNotification ? 1 : 0,
         phoneNumber: mobileNumController.text,
+        //firstName: firstNameController.text,
+        //lastName: lastNameController.text,
         profileImage: profileImage);
     isLoading = false;
     try {

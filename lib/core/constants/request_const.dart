@@ -17,6 +17,9 @@ class ApiUrl {
   static const String baseImagePatientPath = "${baseImagePath}patient/";
   static const String imageBasePath = "https://lynertech.com/app_images/";
   static const String clinicProfileImagePath = "${imageBasePath}clinic_photo/";
+  //https://lynertech.com/app_images/doctor_profile/
+  static const String doctorProfileImagePath =
+      "${imageBasePath}doctor_profile/";
   static const String galleryImage = "${imageBasePath}gallery_images/";
   static const String patientImage = "${imageBasePath}patient/";
   static const String patientProfileImage = "${patientImage}patient_profile/";
