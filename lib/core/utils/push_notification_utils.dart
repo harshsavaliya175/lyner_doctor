@@ -44,10 +44,10 @@ class NotificationUtils {
         if (value ?? false) {}
       });
     }
-    notificationConfig();
+    //  notificationConfig();
   }
 
-  void notificationConfig() async {
+  /*void notificationConfig() async {
     NotificationSettings settings =
         await FirebaseMessaging.instance.requestPermission(
       alert: true,
@@ -87,7 +87,7 @@ class NotificationUtils {
       sound: true,
     );
     onMessage();
-  }
+  }*/
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -276,5 +276,43 @@ class NotificationUtils {
         print("PAYLOAD IS NULL");
       }
     }
+  }
+
+  static final _notifications = FlutterLocalNotificationsPlugin();
+
+  static sendDownloadNotification(
+    String title,
+    String body, {
+    bool? sound,
+  }) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      channelId,
+      channelName,
+      playSound: sound ?? false,
+      enableVibration: sound ?? false,
+      color: Colors.black,
+      priority: Priority.max,
+      showProgress: true,
+    );
+
+    DarwinNotificationDetails iosNotificationDetail = DarwinNotificationDetails(
+      presentAlert: sound ?? false,
+      presentSound: sound ?? false,
+      presentBadge: sound ?? false,
+      interruptionLevel: InterruptionLevel.active,
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: iosNotificationDetail,
+    );
+
+    await _notifications.show(
+      0,
+      title,
+      body,
+      notificationDetails,
+    );
   }
 }

@@ -41,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       (message) async {
         String id = message[0];
         String status = message[1].toString();
-        int progress = message[2];
+        int progress = int.tryParse(message[2].toString()) ?? 0;
         downloadProgress = progress.toDouble();
         // ctrl.setProgressValue(downloadProgress: downloadProgress);
 

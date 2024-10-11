@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -18,8 +21,12 @@ import 'package:lynerdoctor/model/comment_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/common_dialog.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../../../core/utils/file_downloader.dart';
+import '../../../../../core/utils/push_notification_utils.dart';
 
 class CommentScreen extends StatelessWidget {
   CommentScreen({super.key});
@@ -188,123 +195,153 @@ class CommentScreen extends StatelessWidget {
                                               )
                                                       .onClick(
                                                 () async {
-                                                  String url = ApiUrl
-                                                          .commentFile +
-                                                      (commentModel?.fileName ??
-                                                          '');
-                                                  Directory? baseStorage;
-                                                  PermissionStatus status =
-                                                      await Permission
-                                                          .notification
-                                                          .request();
-
-                                                  String ext =
-                                                      url.split('.').last;
-                                                  String name = url
-                                                      .split('/')
-                                                      .last
-                                                      .split('.')
-                                                      .first;
-                                                  String fileName =
-                                                      '${name}_${DateTime.now().millisecondsSinceEpoch}.$ext';
-
-                                                  if (status.isGranted) {
-                                                    if (Platform.isIOS) {
-                                                      baseStorage =
-                                                          await getApplicationDocumentsDirectory();
-                                                    } else {
-                                                      baseStorage =
-                                                          await getExternalStorageDirectory();
-                                                    }
-                                                    String? taskId =
-                                                        await FlutterDownloader
-                                                            .enqueue(
-                                                      url: url,
-                                                      savedDir:
-                                                          baseStorage!.path,
-                                                      showNotification: true,
-                                                      openFileFromNotification:
-                                                          true,
-                                                      saveInPublicStorage: true,
-                                                      fileName: fileName,
+                                                  if (Platform.isIOS) {
+                                                    String url = ApiUrl
+                                                            .commentFile +
+                                                        (commentModel
+                                                                ?.fileName ??
+                                                            '');
+                                                    await initDownLoadService();
+                                                    await downloadFile(
+                                                            downLoadUrl: url,
+                                                            fileName: "PDF.pdf")
+                                                        .then(
+                                                      (value) async {
+                                                        if (value != null) {
+                                                          if (Platform.isIOS) {
+                                                            await OpenFile.open(
+                                                                value);
+                                                          } else {
+                                                            await OpenFile.open(
+                                                                value);
+                                                          }
+                                                        } else {}
+                                                      },
                                                     );
+                                                  } else {
+                                                    String url = ApiUrl
+                                                            .commentFile +
+                                                        (commentModel
+                                                                ?.fileName ??
+                                                            '');
+                                                    Directory? baseStorage;
+                                                    PermissionStatus status =
+                                                        await Permission
+                                                            .notification
+                                                            .request();
 
-                                                    downloadTaskId['taskId'] =
-                                                        taskId;
-                                                    downloadTaskId['path'] =
-                                                        '${baseStorage.path}/$fileName';
+                                                    String ext =
+                                                        url.split('.').last;
+                                                    String name = url
+                                                        .split('/')
+                                                        .last
+                                                        .split('.')
+                                                        .first;
+                                                    String fileName =
+                                                        '${name}_${DateTime.now().millisecondsSinceEpoch}.$ext';
 
-                                                    if (taskId != null) {
-                                                      downloadTaskId
-                                                          .putIfAbsent(
-                                                        taskId,
-                                                        () => downloadTaskId[
-                                                            'path'],
+                                                    if (status.isGranted) {
+                                                      if (Platform.isIOS) {
+                                                        baseStorage =
+                                                            await getApplicationDocumentsDirectory();
+                                                      } else {
+                                                        baseStorage =
+                                                            await getExternalStorageDirectory();
+                                                      }
+                                                      String? taskId =
+                                                          await FlutterDownloader
+                                                              .enqueue(
+                                                        url: url,
+                                                        savedDir:
+                                                            baseStorage!.path,
+                                                        showNotification: true,
+                                                        openFileFromNotification:
+                                                            true,
+                                                        saveInPublicStorage:
+                                                            true,
+                                                        fileName: fileName,
+                                                      );
+
+                                                      downloadTaskId['taskId'] =
+                                                          taskId;
+                                                      downloadTaskId['path'] =
+                                                          '${baseStorage.path}/$fileName';
+
+                                                      if (taskId != null) {
+                                                        downloadTaskId
+                                                            .putIfAbsent(
+                                                          taskId,
+                                                          () => downloadTaskId[
+                                                              'path'],
+                                                        );
+                                                      }
+                                                      isDownloadRunning = true;
+                                                      downloadProgress = 0.0;
+                                                    } else if (status
+                                                        .isDenied) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            LocaleKeys
+                                                                .withoutThisPermissionAppCanNotDownloadFile
+                                                                .translateText,
+                                                          ),
+                                                          action:
+                                                              SnackBarAction(
+                                                            label: LocaleKeys
+                                                                .setting
+                                                                .translateText,
+                                                            textColor:
+                                                                Colors.white,
+                                                            onPressed: () {
+                                                              openAppSettings();
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .hideCurrentSnackBar();
+                                                            },
+                                                          ),
+                                                          backgroundColor:
+                                                              primaryBrown,
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                        ),
+                                                      );
+                                                    } else if (status
+                                                        .isPermanentlyDenied) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            LocaleKeys
+                                                                .toAccessThisFeaturePleaseGrantPermissionFromSettings
+                                                                .translateText,
+                                                          ),
+                                                          action:
+                                                              SnackBarAction(
+                                                            label: LocaleKeys
+                                                                .setting
+                                                                .translateText,
+                                                            textColor:
+                                                                Colors.white,
+                                                            onPressed: () {
+                                                              openAppSettings();
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .hideCurrentSnackBar();
+                                                            },
+                                                          ),
+                                                          backgroundColor:
+                                                              primaryBrown,
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                        ),
                                                       );
                                                     }
-                                                    isDownloadRunning = true;
-                                                    downloadProgress = 0.0;
-                                                  } else if (status.isDenied) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          LocaleKeys
-                                                              .withoutThisPermissionAppCanNotDownloadFile
-                                                              .translateText,
-                                                        ),
-                                                        action: SnackBarAction(
-                                                          label: LocaleKeys
-                                                              .setting
-                                                              .translateText,
-                                                          textColor:
-                                                              Colors.white,
-                                                          onPressed: () {
-                                                            openAppSettings();
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .hideCurrentSnackBar();
-                                                          },
-                                                        ),
-                                                        backgroundColor:
-                                                            primaryBrown,
-                                                        behavior:
-                                                            SnackBarBehavior
-                                                                .floating,
-                                                      ),
-                                                    );
-                                                  } else if (status
-                                                      .isPermanentlyDenied) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          LocaleKeys
-                                                              .toAccessThisFeaturePleaseGrantPermissionFromSettings
-                                                              .translateText,
-                                                        ),
-                                                        action: SnackBarAction(
-                                                          label: LocaleKeys
-                                                              .setting
-                                                              .translateText,
-                                                          textColor:
-                                                              Colors.white,
-                                                          onPressed: () {
-                                                            openAppSettings();
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .hideCurrentSnackBar();
-                                                          },
-                                                        ),
-                                                        backgroundColor:
-                                                            primaryBrown,
-                                                        behavior:
-                                                            SnackBarBehavior
-                                                                .floating,
-                                                      ),
-                                                    );
                                                   }
                                                 },
                                               ),
@@ -580,5 +617,71 @@ class CommentScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? _localPath;
+
+  Future initDownLoadService() async {
+    _localPath = await _prepareSaveDir();
+  }
+
+  Future<String?> _prepareSaveDir() async {
+    String path = (await _findLocalPath())!;
+    final savedDir = Directory(path);
+    final hasExisted = savedDir.existsSync();
+    if (!hasExisted) {
+      await savedDir.create();
+    }
+    if (path.substring(path.length - 1) != "/") {
+      return "$path/";
+    }
+    return path;
+  }
+
+  Future<String?> _findLocalPath() async {
+    String? externalStorageDirPath;
+    if (Platform.isAndroid) {
+      try {
+        final directory = await getExternalStorageDirectory();
+        externalStorageDirPath = directory?.path;
+      } catch (e) {
+        final directory = await getExternalStorageDirectory();
+        externalStorageDirPath = directory?.path;
+      }
+    } else if (Platform.isIOS) {
+      externalStorageDirPath =
+          (await getApplicationDocumentsDirectory()).absolute.path;
+    }
+    return externalStorageDirPath;
+  }
+
+  Future<String?> downloadFile({
+    required String downLoadUrl,
+    required String fileName,
+  }) async {
+    ValueNotifier<String> valueNotifier = ValueNotifier("");
+    if (_localPath == null) {
+      return null;
+    }
+    try {
+      File file = File(_localPath! + fileName);
+      valueNotifier.addListener(() {
+        NotificationUtils.sendDownloadNotification(
+          valueNotifier.value != '100' ? "downloading..." : 'download complete',
+          "${valueNotifier.value} / 100%",
+        );
+      });
+
+      await Dio().download(Uri.parse(downLoadUrl).toString(), file.path,
+          onReceiveProgress: (int count, int total) async {
+        var percent = (count / total * 100).toStringAsFixed(0).toString();
+        print('Downloaded: $percent');
+        valueNotifier.value = percent;
+      });
+      return file.path;
+    } catch (e) {
+      print("Error: $e");
+      return null;
+    }
   }
 }
