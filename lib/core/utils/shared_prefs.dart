@@ -40,6 +40,7 @@ class SharedPreference {
   static const String CURRENT_ALIGNER_STAGE = "CURRENT_ALIGNER_STAGE";
   static const String TOTAL_ALIGNER_STAGE = "TOTAL_ALIGNER_STAGE";
   static const String CLINIC_ID = "CLINIC_ID";
+  // static const String DOCTOR_CLINIC_ID = "DOCTOR_CLINIC_ID";
   static const String CLINIC_NAME = "CLINIC_NAME";
   static const String EMAIL = "EMAIL";
   static const String CLINIC_MOBILE_NUMBER = "CLINIC_MOBILE_NUMBER";
@@ -54,11 +55,16 @@ class SharedPreference {
   static const String LANGUAGE_CODE = "LANGUAGE_CODE";
   static const String LOGIN_TYPE_CLINIC = "CLINIC";
   static const String LOGIN_TYPE_DOCTOR = "DOCTOR";
-  static const String TYPE = "type";
+  static const String LOGIN_TYPE = "login_type";
 
   saveClinicItem(ClinicData data) {
     _preferences?.setBool(IS_LOGGED_IN, true);
-    _preferences?.setInt(CLINIC_ID, data.clinicId);
+    _preferences?.setInt(
+        CLINIC_ID,
+        data.type == LOGIN_TYPE_CLINIC
+            ? data.clinicId
+            : data.doctorData?.clinicId ?? 0);
+    //_preferences?.setInt(DOCTOR_CLINIC_ID, data.doctorData?.clinicId ?? 0);
     _preferences?.setString(CLINIC_NAME, data.clinicName);
     _preferences?.setString(EMAIL, data.email);
     _preferences?.setString(CLINIC_MOBILE_NUMBER, data.clinicMobileNumber);
@@ -66,8 +72,10 @@ class SharedPreference {
     _preferences?.setString(CLINIC_PHOTO, data.clinicPhoto);
     _preferences?.setString(AUTH_TOKEN, data.authToken);
     _preferences?.setString(VERIFY_FORGOT_CODE, data.verifyForgotCode);
+    _preferences?.setString(LOGIN_TYPE, data.type);
     _preferences?.setInt(IS_EMAIL_NOTIFICATION, data.isEmailNotification);
     _preferences?.setInt(IS_PHONE_NOTIFICATION, data.isPhoneNotification);
+    _preferences!.setString(clinicData, jsonEncode(data.toJson()));
     _preferences!.setString(clinicData, jsonEncode(data.toJson()));
   }
 

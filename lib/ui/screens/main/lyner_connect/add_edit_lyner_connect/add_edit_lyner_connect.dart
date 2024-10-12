@@ -201,7 +201,7 @@ class AddEditLynerConnect extends StatelessWidget {
                       // isError: ctrl.emailError,
                       hintText: LocaleKeys.enterTotalAligner.translateText,
                       labelText: LocaleKeys.totalAligner.translateText,
-                      showPrefixWidget: Assets.icons.icDown
+                      /*showPrefixWidget: Assets.icons.icDown
                           .svg(
                             colorFilter: ColorFilter.mode(
                               primaryBrown,
@@ -210,7 +210,7 @@ class AddEditLynerConnect extends StatelessWidget {
                             height: 10,
                             width: 10,
                           )
-                          .paddingOnly(left: 15, right: 15),
+                          .paddingOnly(left: 15, right: 15),*/
                       showPrefixIcon: true,
                     ),
                     15.space(),

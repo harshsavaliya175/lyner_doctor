@@ -5,6 +5,7 @@ import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/model/clinic_model.dart';
 
 class ChangePasswordController extends GetxController {
   TextEditingController oldPasswordController = TextEditingController();
@@ -15,7 +16,7 @@ class ChangePasswordController extends GetxController {
   bool oldPasswordError = false;
   bool newPasswordError = false;
   bool confirmPasswordError = false;
-  void onChangeClick() async{
+  void onChangeClick() async {
     isLoading = true;
     ResponseItem result = ResponseItem(data: null, msg: '', status: false);
     result = await AuthRepo.changePassword(
@@ -27,7 +28,10 @@ class ChangePasswordController extends GetxController {
       if (result.status) {
         showAppSnackBar(result.msg);
         preferences.clearUserItem();
-        Get.offAllNamed(Routes.signUpSignInScreen);
+        ClinicData doctorData = ClinicData.fromJson(result.data);
+        preferences.saveClinicItem(doctorData);
+        //Get.offAllNamed(Routes.signUpSignInScreen);
+        Get.back();
       } else {
         isLoading = false;
         showAppSnackBar(result.msg);

@@ -204,7 +204,9 @@ class CommentScreen extends StatelessWidget {
                                                     await initDownLoadService();
                                                     await downloadFile(
                                                             downLoadUrl: url,
-                                                            fileName: "PDF.pdf")
+                                                            fileName: commentModel
+                                                                    ?.fileName ??
+                                                                '')
                                                         .then(
                                                       (value) async {
                                                         if (value != null) {
@@ -667,8 +669,10 @@ class CommentScreen extends StatelessWidget {
       File file = File(_localPath! + fileName);
       valueNotifier.addListener(() {
         NotificationUtils.sendDownloadNotification(
-          valueNotifier.value != '100' ? "downloading..." : 'download complete',
-          "${valueNotifier.value} / 100%",
+          // valueNotifier.value != '100' ? "downloading..." : 'download complete',
+          // "${valueNotifier.value} / 100%",
+          "Download file successful.", // Title
+          "Successfully uploaded", // Content
         );
       });
 

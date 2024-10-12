@@ -571,7 +571,9 @@ class AddPatientController extends GetxController {
       {bool isFromFinishStep = false, String? draftViewPage}) async {
     if (!isFromFinishStep) {
       if (dateOfBirthController.text.isEmpty ||
-          doctorController.text.isEmpty ||
+          (doctorController.text.isEmpty &&
+              preferences.getString(SharedPreference.LOGIN_TYPE) ==
+                  SharedPreference.LOGIN_TYPE_CLINIC) ||
           deliveryAddressController.text.isEmpty ||
           billingAddressController.text.isEmpty) {
         goToStep(1);

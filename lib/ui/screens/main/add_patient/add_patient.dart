@@ -537,37 +537,40 @@ Widget patientInformation(AddPatientController ctrl) {
             ),
             // "Date of Birth".appCommonText(color: blackColor),
             15.space(),
-            AppTextField(
-              textEditingController: ctrl.doctorController,
-              onChanged: (value) {},
-              validator: (value) {
-                if (value.isEmpty) {
-                  ctrl.emailError = true;
-                  ctrl.update();
-                  return LocaleKeys.pleaseSelectDoctor.translateText;
-                }
-                ctrl.update();
-                return null;
-              },
-              readOnly: true,
-              showCursor: false,
-              onTap: () {
-                ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
-                ctrl.update();
-              },
-              textFieldPadding: EdgeInsets.zero,
-              keyboardType: TextInputType.text,
-              // isError: ctrl.emailError,
-              hintText: LocaleKeys.select.translateText,
-              labelText: LocaleKeys.doctor.translateText,
-              showPrefixWidget: Assets.icons.icDown
-                  .svg(
-                    height: 10,
-                    width: 10,
+            preferences.getString(SharedPreference.LOGIN_TYPE) ==
+                    SharedPreference.LOGIN_TYPE_CLINIC
+                ? AppTextField(
+                    textEditingController: ctrl.doctorController,
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        ctrl.emailError = true;
+                        ctrl.update();
+                        return LocaleKeys.pleaseSelectDoctor.translateText;
+                      }
+                      ctrl.update();
+                      return null;
+                    },
+                    readOnly: true,
+                    showCursor: false,
+                    onTap: () {
+                      ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
+                      ctrl.update();
+                    },
+                    textFieldPadding: EdgeInsets.zero,
+                    keyboardType: TextInputType.text,
+                    // isError: ctrl.emailError,
+                    hintText: LocaleKeys.select.translateText,
+                    labelText: LocaleKeys.doctor.translateText,
+                    showPrefixWidget: Assets.icons.icDown
+                        .svg(
+                          height: 10,
+                          width: 10,
+                        )
+                        .paddingOnly(left: 15, right: 15),
+                    showPrefixIcon: true,
                   )
-                  .paddingOnly(left: 15, right: 15),
-              showPrefixIcon: true,
-            ),
+                : Container(),
             // 15.space(),
             Visibility(
               visible: ctrl.showDoctorDropDown,
