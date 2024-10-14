@@ -109,6 +109,7 @@ class GlobalSearchScreen extends StatelessWidget {
                                   Archive? patientData =
                                       ctrl.patientTaskData[index];
                                   return AppPatientCard(
+                                    isUnread: 0,
                                     isDraft: patientData?.isDraft ?? 0,
                                     // isShowBottomWidget: patientData?.isDraft == 1,
                                     isShowBottomWidget: true,
@@ -180,6 +181,7 @@ class GlobalSearchScreen extends StatelessWidget {
                                   Archive? patientData =
                                       ctrl.patientData[index];
                                   return AppPatientCard(
+                                    isUnread: 0,
                                     isDraft: patientData?.isDraft ?? 0,
                                     // isShowBottomWidget: patientData?.isDraft == 1,
                                     isShowBottomWidget: false,
@@ -242,6 +244,7 @@ class GlobalSearchScreen extends StatelessWidget {
                                   Archive? patientData =
                                       ctrl.archiveData[index];
                                   return AppPatientCard(
+                                    isUnread: 0,
                                     isDraft: patientData?.isDraft ?? 0,
                                     // isShowBottomWidget: patientData?.isDraft == 1,
                                     isShowBottomWidget: false,

@@ -198,6 +198,7 @@ class PatientsScreen extends StatelessWidget {
                               PatientResponseData? patientData =
                                   ctrl.patientList[index];
                               return AppPatientCard(
+                                isUnread: patientData?.isUnread ?? 0,
                                 isDraft: patientData?.isDraft ?? 0,
                                 // isShowBottomWidget: patientData?.isDraft == 1,
                                 isShowBottomWidget:

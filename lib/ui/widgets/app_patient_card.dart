@@ -4,11 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
+import 'package:lynerdoctor/core/utils/circle_tab_indicator.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/patient_model.dart';
+import 'package:lynerdoctor/model/patient_resposne_model.dart';
 
 class AppPatientCard extends StatelessWidget {
   const AppPatientCard({
@@ -30,6 +33,7 @@ class AppPatientCard extends StatelessWidget {
     this.isShowDeleteButtonOnBottom = false,
     this.isDraft = 0,
     this.clinicItem = '',
+    required this.isUnread,
   }) : super(key: key);
 
   final bool isEditCard;
@@ -49,6 +53,7 @@ class AppPatientCard extends StatelessWidget {
   final bool isShowDeleteButtonOnBottom;
   final int isDraft;
   final String clinicItem;
+  final int isUnread;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +117,9 @@ class AppPatientCard extends StatelessWidget {
                         },
                       ).paddingOnly(right: 12, bottom: 25)
                     ],
+                    isUnread == 1
+                        ? Assets.icons.icDots.svg().paddingOnly(right: 20)
+                        : SizedBox()
                   ],
                 ),
                 DottedBorder(

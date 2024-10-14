@@ -170,6 +170,7 @@ class PatientTreatmentsScreen extends StatelessWidget {
                         PatientTreatmentModel? patientTreatmentModel =
                             controller.patientTreatmentModelList[index];
                         return AppPatientCard(
+                          isUnread: 0,
                           isShowDeleteButtonOnBottom: true,
                           title1: LocaleKeys.dateCom,
                           title2: LocaleKeys.procedureCom,

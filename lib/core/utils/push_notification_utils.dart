@@ -44,10 +44,10 @@ class NotificationUtils {
         if (value ?? false) {}
       });
     }
-    //  notificationConfig();
+    notificationConfig();
   }
 
-  /*void notificationConfig() async {
+  void notificationConfig() async {
     NotificationSettings settings =
         await FirebaseMessaging.instance.requestPermission(
       alert: true,
@@ -87,7 +87,7 @@ class NotificationUtils {
       sound: true,
     );
     onMessage();
-  }*/
+  }
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
