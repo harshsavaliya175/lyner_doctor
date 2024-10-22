@@ -299,5 +299,11 @@ abstract class  LocaleKeys {
   static const steps = 'steps';
   static const enterFirstName = 'enterFirstName';
   static const enterLastName = 'enterLastName';
+  static const refinement = 'refinement';
+  static const addRefinement = 'addRefinement';
+  static const finisher = 'finisher';
+  static const finishesAndContention = 'finishesAndContention';
+  static const finishingGutters = 'finishingGutters';
+  static const retentionGutters = 'retentionGutters';
 
 }

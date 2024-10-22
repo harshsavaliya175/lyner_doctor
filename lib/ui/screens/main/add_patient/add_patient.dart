@@ -224,7 +224,7 @@ class AddPatientScreen extends StatelessWidget {
                         children: [
                           chooseTheProduct(ctrl),
                           patientInformation(ctrl),
-                          uploadPhotographs(ctrl),
+                          uploadPhotographs(ctrl, false),
                           prescriptionScreen(ctrl),
                         ],
                       ),
@@ -875,7 +875,7 @@ Widget patientInformation(AddPatientController ctrl) {
   );
 }
 
-Widget uploadPhotographs(AddPatientController ctrl) {
+Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
   return Stack(
     children: [
       ListView(
@@ -1547,7 +1547,7 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               )
             ],
           ),
-          5.space(),
+          10.space(),
           Visibility(
             visible: ctrl.isDcomFileLoading,
             child: LinearProgressIndicator(
@@ -1556,6 +1556,124 @@ Widget uploadPhotographs(AddPatientController ctrl) {
               color: primaryBrown,
             ).paddingSymmetric(horizontal: 10),
           ),
+          if (refineScreen) ...{
+            LocaleKeys.arcadeTraiter.translateText.appCommonText(
+              align: TextAlign.start,
+              size: !isTablet ? 24 : 27,
+              maxLine: 2,
+              overflow: TextOverflow.ellipsis,
+              weight: FontWeight.w500,
+              color: Colors.black,
+            ),
+            LocaleKeys.whereTheSimulationWillBeCarriedOut.translateText
+                .appCommonText(
+              align: TextAlign.start,
+              size: !isTablet ? 16 : 19,
+              maxLine: 2,
+              overflow: TextOverflow.ellipsis,
+              weight: FontWeight.w400,
+              color: hintStepColor,
+            ),
+            10.space(),
+            Container(
+              height: !isTablet ? 55 : 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
+                  color: Colors.white,
+                  border: Border.all(color: skyColor)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LocaleKeys.lesDeux.translateText
+                      .appCommonText(
+                        size: !isTablet ? 16 : 19,
+                        weight: FontWeight.w400,
+                        color: Colors.black,
+                      )
+                      .paddingOnly(left: 15),
+                  CustomRadioButton(
+                    value: 1,
+                    groupValue: ctrl.isArcadeTraiter,
+                  ).paddingOnly(right: 13)
+                ],
+              ),
+            ).onClick(() {
+              ctrl.changeArcadeValue(1);
+            }),
+            10.space(),
+            Container(
+              height: !isTablet ? 55 : 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
+                  color: Colors.white,
+                  border: Border.all(color: skyColor)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LocaleKeys.maxillaire.translateText
+                      .appCommonText(
+                        size: !isTablet ? 16 : 19,
+                        weight: FontWeight.w400,
+                        color: Colors.black,
+                      )
+                      .paddingOnly(left: 15),
+                  CustomRadioButton(
+                    value: 2,
+                    groupValue: ctrl.isArcadeTraiter,
+                  ).paddingOnly(right: 13)
+                ],
+              ),
+            ).onClick(() {
+              ctrl.changeArcadeValue(2);
+            }),
+            10.space(),
+            Container(
+              height: !isTablet ? 55 : 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
+                  color: Colors.white,
+                  border: Border.all(color: skyColor)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LocaleKeys.mandibulaire.translateText
+                      .appCommonText(
+                        size: !isTablet ? 16 : 19,
+                        weight: FontWeight.w400,
+                        color: Colors.black,
+                      )
+                      .paddingOnly(left: 15),
+                  CustomRadioButton(
+                    value: 3,
+                    groupValue: ctrl.isArcadeTraiter,
+                  ).paddingOnly(right: 13)
+                ],
+              ),
+            ).onClick(() {
+              ctrl.changeArcadeValue(3);
+            }),
+            AppTextField(
+              textEditingController: ctrl.classesDentalNoteCtrl,
+              onChanged: (value) {},
+              validator: (value) {
+                if (value.isEmpty) {
+                  ctrl.emailError = true;
+                  ctrl.update();
+                  return LocaleKeys.pleaseEnterDateOfBirth.translateText;
+                }
+                ctrl.update();
+                return null;
+              },
+              textFieldPadding: EdgeInsets.zero,
+              keyboardType: TextInputType.text,
+              radius: 20,
+              isError: ctrl.emailError,
+              hintText: LocaleKeys.enterARemark.translateText,
+              maxLines: !isTablet ? 3 : 5,
+              // labelText: LocaleKeys.deliveryAddress.translateText,
+              showPrefixIcon: false,
+            )
+          },
           100.space(),
         ],
       ).paddingSymmetric(horizontal: 15),

@@ -296,5 +296,11 @@
   "dataNotFound": "Data Not Found",
   "steps": "Steps",
   "enterFirstName": "Enter first name",
-  "enterLastName": "Enter last name"
+  "enterLastName": "Enter last name",
+  "refinement": "Refinement",
+  "addRefinement": "Add Refinement",
+  "finisher": "Finisher",
+  "finishesAndContention": "Finishes and contention",
+  "finishingGutters": "Finishing gutters",
+  "retentionGutters": "Retention gutters"
 }

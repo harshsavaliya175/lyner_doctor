@@ -296,5 +296,11 @@
   "dataNotFound": "Données introuvables",
   "steps": "Étape",
   "enterFirstName": "Entrez le prénom",
-  "enterLastName": "Entrez le nom de famille"
+  "enterLastName": "Entrez le nom de famille",
+  "refinement": "Raffinement",
+  "finisher": "Finisseur",
+  "addRefinement": "Ajouter du raffinement",
+  "finishesAndContention": "Finitions et contention",
+  "finishingGutters": "Gouttières de finition",
+  "retentionGutters": "Gouttières de contention"
 }

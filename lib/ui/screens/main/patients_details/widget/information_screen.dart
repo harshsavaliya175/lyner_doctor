@@ -306,6 +306,101 @@ class InformationScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              12.space(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: LocaleKeys.finishesAndContention.translateText
+                        .normalText(
+                      textAlign: TextAlign.start,
+                      fontWeight: FontWeight.w600,
+                      fontSize: !isTablet ? 20 : 24,
+                    ),
+                  ),
+                  /*Expanded(
+                      child: LocaleKeys.finisher.translateText.normalText(
+                    textAlign: TextAlign.start,
+                    fontWeight: FontWeight.w600,
+                    fontSize: !isTablet ? 20 : 24,
+                  )),*/
+                ],
+              ),
+              12.space(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.uploadPhotographsScreen);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: lightBrown,
+                        borderRadius: BorderRadius.all(Radius.circular(13)),
+                        border: Border.all(color: skyColor),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LocaleKeys.finishingGutters.translateText
+                              .normalText(
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w600,
+                                fontSize: !isTablet ? 16 : 20,
+                              )
+                              .paddingOnly(right: 5, left: 5, top: 15),
+                          "0/2"
+                              .normalText(
+                                color: hintColor,
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w600,
+                                fontSize: !isTablet ? 16 : 20,
+                              )
+                              .paddingOnly(
+                                  right: 5, left: 5, top: 10, bottom: 10),
+                        ],
+                      ),
+                    ),
+                  )),
+                  10.space(),
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: lightBrown,
+                        borderRadius: BorderRadius.all(Radius.circular(13)),
+                        border: Border.all(color: skyColor),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LocaleKeys.retentionGutters.translateText
+                              .normalText(
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w600,
+                                fontSize: !isTablet ? 16 : 20,
+                              )
+                              .paddingOnly(right: 5, left: 5, top: 15),
+                          "0/1"
+                              .normalText(
+                                color: hintColor,
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w600,
+                                fontSize: !isTablet ? 16 : 20,
+                              )
+                              .paddingOnly(
+                                  right: 5, left: 5, top: 10, bottom: 10),
+                        ],
+                      ),
+                    ),
+                  ))
+                ],
+              ),
               if (controller
                       .patientDetailsModel?.patient3DModalLink?.isNotEmpty ??
                   false)

@@ -15,6 +15,7 @@ import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_pati
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/treatment_planning_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/upload_photographs/upload_photographs.dart';
 
 class Routes {
   Routes._();
@@ -35,6 +36,7 @@ class Routes {
   static const String faceDetectorView = "/faceDetectorView";
   static const String financialScreen = "/financialScreen";
   static const String globalSearchScreen = "/globalSearchScreen";
+  static const String uploadPhotographsScreen = "/uploadPhotographsScreen";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -62,5 +64,8 @@ class Routes {
         name: Routes.faceDetectorView, page: () => const FaceDetectorView()),
     GetPage(name: Routes.financialScreen, page: () => const FinancialScreen()),
     GetPage(name: Routes.globalSearchScreen, page: () => GlobalSearchScreen()),
+    GetPage(
+        name: Routes.uploadPhotographsScreen,
+        page: () => UploadPhotographsScreen()),
   ];
 }

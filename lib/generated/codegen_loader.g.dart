@@ -312,7 +312,13 @@ class CodegenLoader extends AssetLoader{
   "dataNotFound": "Data Not Found",
   "steps": "Steps",
   "enterFirstName": "Enter first name",
-  "enterLastName": "Enter last name"
+  "enterLastName": "Enter last name",
+  "refinement": "Refinement",
+  "addRefinement": "Add Refinement",
+  "finisher": "Finisher",
+  "finishesAndContention": "Finishes and contention",
+  "finishingGutters": "Finishing gutters",
+  "retentionGutters": "Retention gutters"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -612,7 +618,13 @@ static const Map<String,dynamic> fr = {
   "dataNotFound": "Données introuvables",
   "steps": "Étape",
   "enterFirstName": "Entrez le prénom",
-  "enterLastName": "Entrez le nom de famille"
+  "enterLastName": "Entrez le nom de famille",
+  "refinement": "Raffinement",
+  "finisher": "Finisseur",
+  "addRefinement": "Ajouter du raffinement",
+  "finishesAndContention": "Finitions et contention",
+  "finishingGutters": "Gouttières de finition",
+  "retentionGutters": "Gouttières de contention"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }
