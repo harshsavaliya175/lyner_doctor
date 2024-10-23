@@ -52,6 +52,9 @@ class PatientsDetailsController extends GetxController {
   int selectedScreenIndex = 0;
   double progressValue = 0.0;
   bool isShowAddCommentFiled = true;
+  List<String> clinicBillingList = [];
+  TextEditingController billingAddressController = TextEditingController();
+  bool showBillingDropDown = false;
 
   @override
   void onInit() {
@@ -67,6 +70,10 @@ class PatientsDetailsController extends GetxController {
         update();
       },
     );
+    clinicBillingList.clear();
+    clinicBillingList.add("Beginning of treatment");
+    clinicBillingList.add("Refinement 1");
+    clinicBillingList.add("Refinement 2");
     super.onInit();
   }
 

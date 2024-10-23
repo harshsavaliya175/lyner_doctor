@@ -302,5 +302,7 @@
   "addRefinement": "Ajouter du raffinement",
   "finishesAndContention": "Finitions et contention",
   "finishingGutters": "Gouttières de finition",
-  "retentionGutters": "Gouttières de contention"
+  "retentionGutters": "Gouttières de contention",
+  "pleaseEnterComment": "Veuillez entrer un commentaire",
+  "addComment": "Ajouter un commentaire"
 }

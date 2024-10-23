@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,10 @@ import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
+import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_button.dart';
@@ -31,35 +34,157 @@ class InformationScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 10, bottom: 50),
             children: [
               if (controller.patientDetailsModel?.isDelivered == 0)
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: isTablet ? 60 : 40,
-                    width: isTablet ? 140 : 110,
-                    alignment: Alignment.center,
-                    child: (controller.patientDetailsModel?.isDeleted == 0
-                            ? LocaleKeys.archive.translateText
-                            : LocaleKeys.unArchive.translateText)
-                        .normalText(
-                      fontWeight: FontWeight.w600,
-                      color: primaryBrown,
-                      fontSize: !isTablet ? 16 : 19,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(13),
-                      border: Border.all(color: primaryBrown, width: 1),
-                    ),
-                  ).onClick(
-                    () {
-                      controller.deletePatient(
-                        controller.patientDetailsModel?.patientId.toString() ??
-                            '',
-                        controller.patientDetailsModel?.isDeleted,
-                      );
-                    },
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          AppTextField(
+                            textEditingController:
+                                controller.billingAddressController,
+                            onChanged: (value) {},
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                controller.emailError = true;
+                                controller.update();
+                                return LocaleKeys
+                                    .pleaseSelectBillingAddress.translateText;
+                              }
+                              controller.update();
+                              return null;
+                            },
+                            readOnly: true,
+                            showCursor: false,
+                            onTap: () {
+                              controller.showBillingDropDown =
+                                  !controller.showBillingDropDown;
+                              controller.update();
+                            },
+                            textFieldPadding: EdgeInsets.zero,
+                            keyboardType: TextInputType.text,
+                            // isError: ctrl.emailError,
+                            hintText: LocaleKeys.select.translateText,
+                            showPrefixWidget: Assets.icons.icDown
+                                .svg(
+                                  height: 10,
+                                  width: 10,
+                                )
+                                .paddingOnly(left: 15, right: 15),
+                            showPrefixIcon: true,
+                          ),
+                          Visibility(
+                            visible: controller.showBillingDropDown,
+                            replacement: const SizedBox.shrink(),
+                            child: Container(
+                              // height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: primaryBrown),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                physics: const PageScrollPhysics(),
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        DottedBorder(
+                                  borderType: BorderType.RRect,
+                                  color: primaryBrown,
+                                  padding: EdgeInsets.zero,
+                                  radius: const Radius.circular(35),
+                                  dashPattern: const [5, 5, 5, 5],
+                                  child: Container(),
+                                ),
+                                itemBuilder: (BuildContext builder, int index) {
+                                  String data = controller.clinicBillingList[
+                                      index]; // Display filtered data when search is not empty
+                                  return InkWell(
+                                    onTap: () {
+                                      print("onTap : $index");
+                                      controller.showBillingDropDown =
+                                          !controller.showBillingDropDown;
+                                      controller.billingAddressController.text =
+                                          '${data}';
+                                      //controller.selectedClinicBillingData = data;
+                                      //print(controller.selectedClinicBillingData);
+                                      controller.update();
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: '${data}'.appCommonText(
+                                            color: Colors.black,
+                                            maxLine: 1,
+                                            align: TextAlign.start,
+                                            overflow: TextOverflow.ellipsis,
+                                            weight: FontWeight.w400,
+                                            size: !isTablet ? 15 : 18,
+                                          ),
+                                        ),
+                                        if (controller
+                                            .billingAddressController.text
+                                            .contains('${data}')) ...[
+                                          Assets.icons.icSelectArrow.svg(
+                                              colorFilter: ColorFilter.mode(
+                                            primaryBrown,
+                                            BlendMode.srcIn,
+                                          )),
+                                        ] else ...[
+                                          const SizedBox.shrink(),
+                                        ]
+                                      ],
+                                    ).paddingOnly(
+                                        left: 20,
+                                        right: 20,
+                                        top: 10,
+                                        bottom: 10),
+                                  );
+                                },
+                                itemCount: controller.clinicBillingList.length,
+                              ).paddingOnly(top: 5, bottom: 5),
+                            ).paddingOnly(top: 15),
+                          ),
+                        ])),
+                    10.space(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 12),
+                        height: isTablet ? 60 : 40,
+                        width: isTablet ? 140 : 110,
+                        alignment: Alignment.center,
+                        child: (controller.patientDetailsModel?.isDeleted == 0
+                                ? LocaleKeys.archive.translateText
+                                : LocaleKeys.unArchive.translateText)
+                            .normalText(
+                          fontWeight: FontWeight.w600,
+                          color: primaryBrown,
+                          fontSize: !isTablet ? 16 : 19,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(color: primaryBrown, width: 1),
+                        ),
+                      ).onClick(
+                        () {
+                          controller.deletePatient(
+                            controller.patientDetailsModel?.patientId
+                                    .toString() ??
+                                '',
+                            controller.patientDetailsModel?.isDeleted,
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 ),
+              12.space(),
               LocaleKeys.information.translateText.normalText(
                 fontWeight: FontWeight.w600,
                 fontSize: !isTablet ? 20 : 24,

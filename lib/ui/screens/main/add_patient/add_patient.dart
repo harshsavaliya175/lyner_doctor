@@ -1652,82 +1652,109 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
             ).onClick(() {
               ctrl.changeArcadeValue(3);
             }),
+            10.space(),
+            LocaleKeys.comments.translateText.appCommonText(
+              align: TextAlign.start,
+              size: !isTablet ? 24 : 27,
+              maxLine: 2,
+              overflow: TextOverflow.ellipsis,
+              weight: FontWeight.w500,
+              color: Colors.black,
+            ),
             AppTextField(
-              textEditingController: ctrl.classesDentalNoteCtrl,
+              maxLines: 3,
+              textEditingController: ctrl.lastNameController,
               onChanged: (value) {},
               validator: (value) {
                 if (value.isEmpty) {
-                  ctrl.emailError = true;
+                  ctrl.lastNameError = true;
                   ctrl.update();
-                  return LocaleKeys.pleaseEnterDateOfBirth.translateText;
+                  return LocaleKeys.pleaseEnterComment.translateText;
                 }
                 ctrl.update();
                 return null;
               },
               textFieldPadding: EdgeInsets.zero,
               keyboardType: TextInputType.text,
-              radius: 20,
-              isError: ctrl.emailError,
-              hintText: LocaleKeys.enterARemark.translateText,
-              maxLines: !isTablet ? 3 : 5,
-              // labelText: LocaleKeys.deliveryAddress.translateText,
+              // isError: ctrl.lastNameError,
+              hintText: LocaleKeys.addComment.translateText,
               showPrefixIcon: false,
+            ),
+            30.space(),
+            AppButton(
+              btnHeight: !isTablet ? 55 : 70,
+              text: LocaleKeys.next.translateText,
+              onTap: () {
+                if (ctrl.validateUploadPhotoFiles()) {
+                  ctrl.goToStep(3);
+                } else {
+                  showAppSnackBar(
+                      LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+                }
+              },
+              boxShadow: [],
+              radius: !isTablet ? 25 : 40,
+              fontSize: !isTablet ? 18 : 22,
+              bgColor: primaryBrown,
+              fontColor: Colors.white,
             )
           },
           100.space(),
         ],
       ).paddingSymmetric(horizontal: 15),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: !isTablet ? 80 : 100,
-          width: Get.width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+      if (!refineScreen) ...{
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: !isTablet ? 80 : 100,
+            width: Get.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppBorderButton(
+                    btnHeight: !isTablet ? 55 : 70,
+                    text: LocaleKeys.finishLatter.translateText,
+                    onTap: () {
+                      ctrl.addUpdatePatientDetails(
+                          isFromFinishStep: true,
+                          draftViewPage: "upload_photo_page");
+                    },
+                    // boxShadow: [],
+                    radius: !isTablet ? 25 : 40,
+                    fontSize: !isTablet ? 18 : 22,
+                    borderColor: primaryBrown,
+                    // bgColor: primaryBrown,
+                    fontColor: primaryBrown,
+                  ).paddingOnly(top: 10, right: 5, left: 15),
+                ),
+                Expanded(
+                  child: AppButton(
+                    btnHeight: !isTablet ? 55 : 70,
+                    text: LocaleKeys.next.translateText,
+                    onTap: () {
+                      if (ctrl.validateUploadPhotoFiles()) {
+                        ctrl.goToStep(3);
+                      } else {
+                        showAppSnackBar(LocaleKeys
+                            .pleaseSelectAllRequiredPhotos.translateText);
+                      }
+                    },
+                    boxShadow: [],
+                    radius: !isTablet ? 25 : 40,
+                    fontSize: !isTablet ? 18 : 22,
+                    bgColor: primaryBrown,
+                    fontColor: Colors.white,
+                  ).paddingOnly(top: 10, right: 15, left: 5),
+                ),
+              ],
+            ).paddingOnly(bottom: 10),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: AppBorderButton(
-                  btnHeight: !isTablet ? 55 : 70,
-                  text: LocaleKeys.finishLatter.translateText,
-                  onTap: () {
-                    ctrl.addUpdatePatientDetails(
-                        isFromFinishStep: true,
-                        draftViewPage: "upload_photo_page");
-                  },
-                  // boxShadow: [],
-                  radius: !isTablet ? 25 : 40,
-                  fontSize: !isTablet ? 18 : 22,
-                  borderColor: primaryBrown,
-                  // bgColor: primaryBrown,
-                  fontColor: primaryBrown,
-                ).paddingOnly(top: 10, right: 5, left: 15),
-              ),
-              Expanded(
-                child: AppButton(
-                  btnHeight: !isTablet ? 55 : 70,
-                  text: LocaleKeys.next.translateText,
-                  onTap: () {
-                    if (ctrl.validateUploadPhotoFiles()) {
-                      ctrl.goToStep(3);
-                    } else {
-                      showAppSnackBar(LocaleKeys
-                          .pleaseSelectAllRequiredPhotos.translateText);
-                    }
-                  },
-                  boxShadow: [],
-                  radius: !isTablet ? 25 : 40,
-                  fontSize: !isTablet ? 18 : 22,
-                  bgColor: primaryBrown,
-                  fontColor: Colors.white,
-                ).paddingOnly(top: 10, right: 15, left: 5),
-              ),
-            ],
-          ).paddingOnly(bottom: 10),
         ),
-      ),
+      }
     ],
   );
 }

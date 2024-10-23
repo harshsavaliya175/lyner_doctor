@@ -302,5 +302,7 @@
   "finisher": "Finisher",
   "finishesAndContention": "Finishes and contention",
   "finishingGutters": "Finishing gutters",
-  "retentionGutters": "Retention gutters"
+  "retentionGutters": "Retention gutters",
+  "pleaseEnterComment": "Please enter comment",
+  "addComment": "Add comment"
 }
