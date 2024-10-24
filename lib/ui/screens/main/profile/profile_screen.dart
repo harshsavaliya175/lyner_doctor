@@ -72,7 +72,11 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       16.w.space(),
-                      (ctrl.clinicData?.clinicName ?? "").normalText(
+                      (preferences.getString(SharedPreference.LOGIN_TYPE) ==
+                                  SharedPreference.LOGIN_TYPE_CLINIC
+                              ? ctrl.clinicData?.clinicName
+                              : '${ctrl.clinicData?.doctorData?.firstName} ${ctrl.clinicData?.doctorData?.lastName}')!
+                          .normalText(
                         color: blackColor,
                         fontWeight: FontWeight.w500,
                         fontSize: !isTablet ? 20 : 26,

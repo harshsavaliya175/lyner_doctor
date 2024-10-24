@@ -54,6 +54,7 @@ class PatientsDetailsController extends GetxController {
   bool isShowAddCommentFiled = true;
   List<String> clinicBillingList = [];
   TextEditingController billingAddressController = TextEditingController();
+  String? selectedClinicBillingData;
   bool showBillingDropDown = false;
 
   @override
@@ -74,6 +75,7 @@ class PatientsDetailsController extends GetxController {
     clinicBillingList.add("Beginning of treatment");
     clinicBillingList.add("Refinement 1");
     clinicBillingList.add("Refinement 2");
+    billingAddressController.text = clinicBillingList[0];
     super.onInit();
   }
 

@@ -318,7 +318,9 @@ class CodegenLoader extends AssetLoader{
   "finisher": "Finisher",
   "finishesAndContention": "Finishes and contention",
   "finishingGutters": "Finishing gutters",
-  "retentionGutters": "Retention gutters"
+  "retentionGutters": "Retention gutters",
+  "pleaseEnterComment": "Please enter comment",
+  "addComment": "Add comment"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -624,7 +626,9 @@ static const Map<String,dynamic> fr = {
   "addRefinement": "Ajouter du raffinement",
   "finishesAndContention": "Finitions et contention",
   "finishingGutters": "Gouttières de finition",
-  "retentionGutters": "Gouttières de contention"
+  "retentionGutters": "Gouttières de contention",
+  "pleaseEnterComment": "Veuillez entrer un commentaire",
+  "addComment": "Ajouter un commentaire"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

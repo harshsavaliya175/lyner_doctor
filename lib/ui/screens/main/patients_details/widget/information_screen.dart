@@ -108,8 +108,10 @@ class InformationScreen extends StatelessWidget {
                                           !controller.showBillingDropDown;
                                       controller.billingAddressController.text =
                                           '${data}';
-                                      //controller.selectedClinicBillingData = data;
-                                      //print(controller.selectedClinicBillingData);
+                                      controller.selectedClinicBillingData =
+                                          data;
+                                      print(
+                                          controller.selectedClinicBillingData);
                                       controller.update();
                                     },
                                     child: Row(
@@ -154,9 +156,9 @@ class InformationScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Container(
-                        margin: EdgeInsets.only(top: 12),
-                        height: isTablet ? 60 : 40,
-                        width: isTablet ? 140 : 110,
+                        margin: EdgeInsets.only(top: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        height: isTablet ? 70 : 52,
                         alignment: Alignment.center,
                         child: (controller.patientDetailsModel?.isDeleted == 0
                                 ? LocaleKeys.archive.translateText
@@ -168,7 +170,7 @@ class InformationScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(13),
+                          borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: primaryBrown, width: 1),
                         ),
                       ).onClick(
