@@ -62,6 +62,7 @@ class MethodNames {
   static const String getProductList = "getProductList";
   static const String getPatientInformationDetails =
       "getPatientInformationDetails";
+  static const String getPatientRefinementImage = "getPatientRefinementImage";
   static const String getPatientPrescriptionDetails =
       "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";
@@ -75,6 +76,8 @@ class MethodNames {
   static const String addNewPatientStep1Step2 = "addNewPatientStep1Step2";
   static const String updatePatientDetails = "updatePatientDetails";
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
+  static const String editPatientRefinementDetails =
+      "editPatientRefinementDetails";
   static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
   static const String getLibraryList = "getLibraryList";
@@ -163,3 +166,6 @@ void downloadCallback(String id, int status, int progress) {
       IsolateNameServer.lookupPortByName('downloader_send_port');
   send?.send([id, status, progress]);
 }
+
+//const String patientId = "patient_id";
+const String isRefinementString = "isRefinement";

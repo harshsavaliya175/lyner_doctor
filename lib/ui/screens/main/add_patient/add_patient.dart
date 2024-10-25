@@ -916,7 +916,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgProfile.path,
                 title: LocaleKeys.profile.translateText,
-                urlImage: ctrl.patientData?.patientPhoto?.gauche ?? '',
+                urlImage: refineScreen
+                    ? ctrl.refinementData?.profile ?? ''
+                    : ctrl.patientData?.patientPhoto?.gauche ?? '',
                 urlPath: "patient_gauche",
                 fileImage: ctrl.profileImageFile ?? File(''),
                 onTap: () {
@@ -927,8 +929,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.profileImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_gauche', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_gauche', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_gauche', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -938,7 +945,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgFace.path,
                 title: LocaleKeys.face.translateText,
-                urlImage: ctrl.patientData?.patientPhoto?.face ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.face ?? ''
+                    : ctrl.patientData?.patientPhoto?.face ?? '',
                 urlPath: "patient_face",
                 fileImage: ctrl.faceImageFile ?? File(''),
                 onTap: () {
@@ -949,8 +958,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.faceImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_face', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_face', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_face', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -960,7 +974,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgSmile.path,
                 title: LocaleKeys.smile.translateText,
-                urlImage: ctrl.patientData?.patientPhoto?.sourire ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.smile ?? ''
+                    : ctrl.patientData?.patientPhoto?.sourire ?? '',
                 urlPath: "patient_sourire",
                 fileImage: ctrl.smileImageFile ?? File(''),
                 onTap: () {
@@ -971,8 +987,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.smileImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_sourire', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_sourire', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_sourire', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -988,7 +1009,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
                 title: LocaleKeys.intraMax.translateText,
-                urlImage: ctrl.patientData?.patientPhoto?.interMax ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.intraMax ?? ''
+                    : ctrl.patientData?.patientPhoto?.interMax ?? '',
                 urlPath: "patient_intra_max",
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
                 onTap: () {
@@ -999,8 +1022,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMaxImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_intra_max', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_intra_max', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_intra_max', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -1065,7 +1093,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
                 title: LocaleKeys.intraMand.translateText,
-                urlImage: ctrl.patientData?.patientPhoto?.interMandi ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.intraMand ?? ''
+                    : ctrl.patientData?.patientPhoto?.interMandi ?? '',
                 urlPath: "patient_intra_gauche",
                 fileImage: ctrl.intraMandImageFile ?? File(''),
                 onTap: () {
@@ -1076,8 +1106,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMandImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_intra_gauche', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_intra_gauche', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_intra_gauche', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -1103,7 +1138,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgInterRight.path,
                 urlPath: "patient_intra_droite",
-                urlImage: ctrl.patientData?.patientPhoto?.interDroite ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.interRight ?? ''
+                    : ctrl.patientData?.patientPhoto?.interDroite ?? '',
                 fileImage: ctrl.intraRightImageFile ?? File(''),
                 title: LocaleKeys.intraRight.translateText,
                 onTap: () {
@@ -1114,8 +1151,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraRightImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_intra_droite', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_intra_droite', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_intra_droite', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -1123,7 +1165,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               ),
               10.space(),
               photoCardWidget(
-                urlImage: ctrl.patientData?.patientPhoto?.interFace ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.interFace ?? ''
+                    : ctrl.patientData?.patientPhoto?.interFace ?? '',
                 fileImage: ctrl.intraFaceImageFile ?? File(''),
                 urlPath: "patient_inter_face",
                 image: Assets.images.imgInterFace.path,
@@ -1136,8 +1180,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraFaceImageFile = file!;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_inter_face', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_inter_face', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_inter_face', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -1145,7 +1194,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               ),
               10.space(),
               photoCardWidget(
-                urlImage: ctrl.patientData?.patientPhoto?.interGauche ?? '',
+                urlImage: refineScreen == true
+                    ? ctrl.refinementData?.interLeft ?? ''
+                    : ctrl.patientData?.patientPhoto?.interGauche ?? '',
                 fileImage: ctrl.intraLeftImageFile ?? File(''),
                 urlPath: "patient_inter_gauche",
                 image: Assets.images.imgInterLeft.path,
@@ -1158,8 +1209,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraLeftImageFile = file;
-                      ctrl.uploadPatientSingleImage(
-                          paramName: 'patient_inter_gauche', file: file);
+                      if (refineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                            paramName: 'patient_inter_gauche', file: file);
+                      } else {
+                        ctrl.uploadPatientSingleImage(
+                            paramName: 'patient_inter_gauche', file: file);
+                      }
                       ctrl.update();
                     },
                   );
@@ -1196,8 +1252,14 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.radiosFirstImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_panoramique', file: file);
+                        if (refineScreen) {
+                          ctrl.editPatientRefinementDetails(
+                              paramName: 'patient_panoramique', file: file);
+                        } else {
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'patient_panoramique', file: file);
+                        }
+                        //ctrl.uploadPatientSingleImage(paramName: 'patient_panoramique', file: file);
                         ctrl.update();
                       },
                     );
@@ -1212,9 +1274,15 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(10),
                         )
-                      : (ctrl.patientData?.patientPhoto?.paramiqueRadio == "" ||
-                              ctrl.patientData?.patientPhoto?.paramiqueRadio ==
-                                  null)
+                      : (refineScreen
+                              ? (ctrl.refinementData?.panRadio == "" ||
+                                  ctrl.refinementData?.panRadio == null)
+                              : (ctrl.patientData?.patientPhoto
+                                          ?.paramiqueRadio ==
+                                      "" ||
+                                  ctrl.patientData?.patientPhoto
+                                          ?.paramiqueRadio ==
+                                      null))
                           ? HomeImage.assetImage(
                               path: Assets.images.imgTab.path,
                               height: !isTablet ? 135 : 230,
@@ -1223,8 +1291,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               // fit: BoxFit.cover,
                             )
                           : HomeImage.networkImage(
-                              path:
-                                  "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
+                              path: refineScreen == true
+                                  ? "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.refinementData?.panRadio}" ??
+                                      ''
+                                  : "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}" ??
+                                      '',
                               height: !isTablet ? 121 : 215,
                               width: !isTablet ? 200 : 230,
                               shape: BoxShape.rectangle,
@@ -1242,8 +1313,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.radiosSecondImageFile = file!;
-                        ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_cephalometrique', file: file);
+                        if (refineScreen) {
+                          ctrl.editPatientRefinementDetails(
+                              paramName: 'patient_cephalometrique', file: file);
+                        } else {
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'patient_cephalometrique', file: file);
+                        }
                         ctrl.update();
                       },
                     );
@@ -1258,9 +1334,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(10),
                         )
-                      : (ctrl.patientData?.patientPhoto?.cephalRadio == "" ||
-                              ctrl.patientData?.patientPhoto?.cephalRadio ==
-                                  null)
+                      : (refineScreen
+                              ? (ctrl.refinementData?.cephalRadio == "" ||
+                                  ctrl.refinementData?.cephalRadio == null)
+                              : (ctrl.patientData?.patientPhoto?.cephalRadio ==
+                                      "" ||
+                                  ctrl.patientData?.patientPhoto?.cephalRadio ==
+                                      null))
                           ? HomeImage.assetImage(
                               path: Assets.images.imgTab.path,
                               height: !isTablet ? 135 : 230,
@@ -1269,8 +1349,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               // fit: BoxFit.cover,
                             )
                           : HomeImage.networkImage(
-                              path:
-                                  "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
+                              path: refineScreen == true
+                                  ? "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.refinementData?.cephalRadio}"
+                                  : "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
                               height: !isTablet ? 121 : 215,
                               width: !isTablet ? 200 : 230,
                               shape: BoxShape.rectangle,
@@ -1663,7 +1744,7 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
             ),
             AppTextField(
               maxLines: 3,
-              textEditingController: ctrl.lastNameController,
+              textEditingController: ctrl.commentController,
               onChanged: (value) {},
               validator: (value) {
                 if (value.isEmpty) {
@@ -1683,10 +1764,10 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
             30.space(),
             AppButton(
               btnHeight: !isTablet ? 55 : 70,
-              text: LocaleKeys.next.translateText,
+              text: LocaleKeys.submit.translateText,
               onTap: () {
                 if (ctrl.validateUploadPhotoFiles()) {
-                  ctrl.goToStep(3);
+                  ctrl.editPatientRefinementDetails();
                 } else {
                   showAppSnackBar(
                       LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);

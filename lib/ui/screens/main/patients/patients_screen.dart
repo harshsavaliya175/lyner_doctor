@@ -241,7 +241,11 @@ class PatientsScreen extends StatelessWidget {
                                     );
                                   } else {
                                     Get.toNamed(Routes.addPatientScreen,
-                                        arguments: patientData?.patientId);
+                                        arguments: {
+                                          patientIdString:
+                                              patientData?.patientId,
+                                          isRefinementString: false,
+                                        });
                                   }
                                 },
                                 patientImagePath:

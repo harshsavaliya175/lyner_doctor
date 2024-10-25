@@ -145,8 +145,14 @@ class GlobalSearchScreen extends StatelessWidget {
                                           },
                                         );
                                       } else {
-                                        Get.toNamed(Routes.addPatientScreen,
-                                            arguments: patientData?.patientId);
+                                        Get.toNamed(
+                                          Routes.addPatientScreen,
+                                          arguments: {
+                                            patientIdString:
+                                                patientData?.patientId,
+                                            isRefinementString: false,
+                                          },
+                                        );
                                       }
                                     },
                                     patientImagePath:

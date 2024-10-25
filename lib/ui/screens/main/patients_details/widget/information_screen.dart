@@ -460,7 +460,15 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                       child: GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.uploadPhotographsScreen);
+                      Get.toNamed(
+                        Routes.uploadPhotographsScreen,
+                        arguments: {
+                          patientIdString:
+                              controller.patientDetailsModel?.patientId,
+                          isRefinementString: true,
+                        },
+                        // arguments: controller.patientDetailsModel?.patientId,
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(

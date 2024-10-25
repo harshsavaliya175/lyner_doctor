@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
@@ -18,6 +19,7 @@ import 'package:lynerdoctor/model/doctor_model.dart';
 import 'package:lynerdoctor/model/patient_model.dart';
 import 'package:lynerdoctor/model/prescription_model.dart';
 import 'package:lynerdoctor/model/productListModel.dart';
+import 'package:lynerdoctor/model/refinement_model.dart';
 import 'package:lynerdoctor/model/selection_item.dart';
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
 import 'package:uuid/uuid.dart';
@@ -36,6 +38,7 @@ class AddPatientController extends GetxController {
   GlobalKey<FormState> patientInformationFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController doctorController = TextEditingController();
@@ -91,42 +94,59 @@ class AddPatientController extends GetxController {
   bool showBillingDropDown = false;
   bool showDeliveryDropDown = false;
   PatientData? patientData;
+  RefinementData? refinementData;
   TextEditingController patientTechniquesDetailsNote = TextEditingController();
 
   var patientId;
 
   String dicomFileName = LocaleKeys.uploadDICOMFile.translateText;
 
+  bool isRefinement = false;
+
   @override
   Future<void> onInit() async {
     super.onInit();
     pageController = PageController(initialPage: currentStep);
-    patientId = Get.arguments;
+    if (Get.arguments != null) {
+      isRefinement = Get.arguments[isRefinementString];
+      patientId = Get.arguments[patientIdString];
+    }
+    print("isRefinement : $isRefinement");
+    print("patientId : $patientId");
+    //patientId = Get.arguments;
     if (patientId != null) {
       isLoading = true;
-      await getPatientInformationDetails();
-      if (patientData?.patientPhoto?.dcomFileName != null &&
-          patientData!.patientPhoto!.dcomFileName!.isNotEmpty) {
-        dicomFileName =
-            getFileName(patientData!.patientPhoto!.dcomFileName, 20);
+      if (isRefinement) {
+        await getPatientRefinementImage();
+        if (refinementData != null) {
+          dicomFileName = getFileName(refinementData?.dicomFileName, 20);
+        }
+      } else {
+        await getPatientInformationDetails();
+        if (patientData?.patientPhoto?.dcomFileName != null &&
+            patientData!.patientPhoto!.dcomFileName!.isNotEmpty) {
+          dicomFileName =
+              getFileName(patientData!.patientPhoto!.dcomFileName, 20);
+        }
+        if (patientData?.draftViewPage == "patient_info_page") {
+          isLoading = true;
+          await goToStep(1);
+        } else if (patientData?.draftViewPage == "upload_photo_page") {
+          isLoading = true;
+          await goToStep(2);
+        } else if (patientData?.draftViewPage == "patient_prescription_page") {
+          isLoading = true;
+          await goToStep(3);
+        }
+        await getPatientPrescriptionDetails();
       }
-      if (patientData?.draftViewPage == "patient_info_page") {
-        isLoading = true;
-        await goToStep(1);
-      } else if (patientData?.draftViewPage == "upload_photo_page") {
-        isLoading = true;
-        await goToStep(2);
-      } else if (patientData?.draftViewPage == "patient_prescription_page") {
-        isLoading = true;
-        await goToStep(3);
-      }
-      await getPatientPrescriptionDetails();
     }
-
-    await fetchProducts();
-    getDoctorList();
-    getClinicLocationList();
-    getClinicBillingList();
+    if (!isRefinement) {
+      await fetchProducts();
+      getDoctorList();
+      getClinicLocationList();
+      getClinicBillingList();
+    }
   }
 
   @override
@@ -612,6 +632,34 @@ class AddPatientController extends GetxController {
     update();
   }
 
+  Future<void> editPatientRefinementDetails(
+      {File? file, String? paramName}) async {
+    isLoading = false;
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "is_3shape": isUploadStl ? 1 : 0,
+      "arcade_option": arcadeTratierText,
+      "arcade_comment": commentController.text,
+    };
+    ResponseItem result = await AddPatientRepo.editPatientRefinementDetails(
+        file: file,
+        paramName: paramName,
+        patientId: patientId.toString(),
+        params: params);
+    isLoading = false;
+    try {
+      if (result.status) {
+        // showAppSnackBar(result.msg);
+        isLoading = false;
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
   Future<void> uploadPatientMultipleImage({
     required List<File> files,
   }) async {
@@ -819,6 +867,94 @@ class AddPatientController extends GetxController {
           isUploadStl = patientData?.patientPhoto?.is3Shape == 0 ? true : false;
           print(isUploadStl);
           isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> getPatientRefinementImage() async {
+    ResponseItem result =
+        await AddPatientRepo.getPatientRefinementImage(patientId);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          RefinementModel patientModel =
+              RefinementModel.fromJson(result.toJson());
+          refinementData = patientModel.data;
+          /*selectedProduct = ProductListData(
+            toothCaseId: patientData?.toothCase?.toothCaseId?.toInt() ?? 0,
+            caseDesc: patientData?.toothCase?.caseDesc?.toString() ?? "",
+            caseName: patientData?.toothCase?.caseName?.toString() ?? "",
+            casePrice: patientData?.toothCase?.casePrice?.toString() ?? '',
+            caseSteps: patientData?.toothCase?.caseSteps?.toString() ?? '',
+          );
+          if (selectedProduct != null) {
+            isSelectedProductPlan = true;
+          }*/
+          //firstNameController.text = patientData?.firstName ?? '';
+          //lastNameController.text = patientData?.lastName ?? '';
+          //emailController.text = patientData?.email ?? '';
+          /*if (patientData?.dateOfBirth != null) {
+            dateTextField = DateFormat(
+              'dd/MM/yyyy',
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '')
+                      .isNotEmpty
+                  ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+                  : 'fr',
+            ).format(patientData!.dateOfBirth!);
+            dateOfBirthController.text = dateTextField!;
+          } else {
+            dateOfBirthController.text = '';
+          }*/
+          /*selectedClinicDeliveryData = ClinicLocation(
+              clinicLocationId: patientData?.clinicLoc?.clinicLocationId ?? 0,
+              clinicId: patientData?.clinicLoc?.clinicId ?? 0,
+              contactName: patientData?.clinicLoc?.contactName ?? "",
+              contactNumber: patientData?.clinicLoc?.contactNumber ?? "",
+              address: patientData?.clinicLoc?.address ?? "",
+              latitude: patientData?.clinicLoc?.latitude ?? "",
+              longitude: patientData?.clinicLoc?.longitude ?? "");
+          deliveryAddressController.text = selectedClinicDeliveryData?.address ?? '';*/
+          /*selectedClinicBillingData = ClinicBillingData(
+            clinicBillingId: patientData?.clinicBill?.clinicBillingId ?? 0,
+            clinicId: patientData?.clinicBill?.clinicId ?? 0,
+            billingName: patientData?.clinicBill?.billingName ?? "",
+            billingAddress: patientData?.clinicBill?.billingAddress ?? "",
+            billingLatitude: patientData?.clinicBill?.billingLatitude ?? "",
+            billingLongitude: patientData?.clinicBill?.billingLongitude ?? "",
+            billingMail: patientData?.clinicBill?.billingMail ?? "",
+            billingVat: patientData?.clinicBill?.billingVat ?? "",
+          );
+          billingAddressController.text = selectedClinicBillingData?.billingAddress ?? '';*/
+          /*selectedDoctorData = DoctorData(
+            doctorId: patientData?.doctor?.doctorId ?? 0,
+            doctorUniqueId: patientData?.doctor?.doctorUniqueId ?? "",
+            firstName: patientData?.doctor?.firstName ?? "",
+            lastName: patientData?.doctor?.lastName ?? "",
+            email: patientData?.doctor?.email ?? "",
+            mobileNumber: patientData?.doctor?.mobileNumber ?? "",
+            doctorProfile: patientData?.doctor?.doctorProfile ?? "",
+            country: patientData?.doctor?.country ?? "",
+            language: patientData?.doctor?.language ?? "",
+            clinicId: patientData?.doctor?.clinicId ?? 0,
+          );
+          doctorController.text = (selectedDoctorData?.firstName ?? '') +
+              (selectedDoctorData?.lastName ?? '');*/
+          lastNameController.text = refinementData?.arcadeComment ?? '';
+          upperJawImageFileTextCtrl.text =
+              refinementData?.upperJawStlFile ?? '';
+          lowerJawImageFileTextCtrl.text =
+              refinementData?.lowerJawStlFile ?? '';
+          isUploadStl = refinementData?.is3Shape == 0 ? true : false;
+          print(isUploadStl);
+          isLoading = false;
+          update();
         }
       } else {
         isLoading = false;
@@ -1094,6 +1230,7 @@ class AddPatientController extends GetxController {
           totalChunks: '$totalChunks',
           uploadId: uploadId,
           patientId: patientId.toString(),
+          isForRefinements: isRefinement ? 1 : 0,
         );
         if (!result.status) {
           // Handle failure

@@ -307,5 +307,6 @@ abstract class  LocaleKeys {
   static const retentionGutters = 'retentionGutters';
   static const pleaseEnterComment = 'pleaseEnterComment';
   static const addComment = 'addComment';
+  static const submit = 'submit';
 
 }
