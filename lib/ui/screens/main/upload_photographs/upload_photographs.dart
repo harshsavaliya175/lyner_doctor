@@ -12,6 +12,8 @@ import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.d
 class UploadPhotographsScreen extends StatelessWidget {
   UploadPhotographsScreen({super.key});
 
+  AddPatientController ctrl = Get.find<AddPatientController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -86,7 +86,7 @@ class AddPatientRepo {
 
     final Map<String, int> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
-      RequestParam.service: MethodNames.getPatientInformationDetails,
+      RequestParam.service: MethodNames.getPatientRefinementImage,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;

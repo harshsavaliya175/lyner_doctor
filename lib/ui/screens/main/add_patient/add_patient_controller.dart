@@ -946,7 +946,9 @@ class AddPatientController extends GetxController {
           );
           doctorController.text = (selectedDoctorData?.firstName ?? '') +
               (selectedDoctorData?.lastName ?? '');*/
-          lastNameController.text = refinementData?.arcadeComment ?? '';
+          /// ARCADE
+          getArcadeTraiter(patientModel.data.arcadeOption);
+          commentController.text = refinementData?.arcadeComment ?? '';
           upperJawImageFileTextCtrl.text =
               refinementData?.upperJawStlFile ?? '';
           lowerJawImageFileTextCtrl.text =
@@ -977,7 +979,7 @@ class AddPatientController extends GetxController {
           print(prescriptionModel.data);
 
           /// ARCADE
-          getArcadeTraiter(prescriptionModel.data);
+          getArcadeTraiter(prescriptionModel.data?.arcadeToBeTreated ?? '');
 
           /// OBJECT TREATMENT
           getObjectTreatement(prescriptionModel.data);
@@ -1035,15 +1037,14 @@ class AddPatientController extends GetxController {
     }
   }
 
-  void getArcadeTraiter(PrescriptionData? data) {
-    if (data?.arcadeToBeTreated == LocaleKeys.lesDeux.translateText) {
+  void getArcadeTraiter(String data) {
+    if (data == LocaleKeys.lesDeux.translateText) {
       isArcadeTraiter = 1;
       arcadeTratierText = LocaleKeys.lesDeux.translateText;
-    } else if (data?.arcadeToBeTreated == LocaleKeys.maxillaire.translateText) {
+    } else if (data == LocaleKeys.maxillaire.translateText) {
       isArcadeTraiter = 2;
       arcadeTratierText = LocaleKeys.maxillaire.translateText;
-    } else if (data?.arcadeToBeTreated ==
-        LocaleKeys.mandibulaire.translateText) {
+    } else if (data == LocaleKeys.mandibulaire.translateText) {
       isArcadeTraiter = 3;
       arcadeTratierText = LocaleKeys.mandibulaire.translateText;
     } else {

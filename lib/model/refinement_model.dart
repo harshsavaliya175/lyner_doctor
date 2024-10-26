@@ -20,7 +20,7 @@ class RefinementModel {
   factory RefinementModel.fromJson(Map<String, dynamic> json) =>
       RefinementModel(
         data: RefinementData.fromJson(json["data"]),
-        status: json["status"],
+        status: json["status"] == true ? 1 : 0,
         msg: json["msg"],
       );
 
@@ -81,7 +81,7 @@ class RefinementData {
   });
 
   factory RefinementData.fromJson(Map<String, dynamic> json) => RefinementData(
-        patientRefinementId: json["patient_refinement_id"],
+        patientRefinementId: json["patient_refinement_id"] ?? "",
         patientId: json["patient_id"],
         refinementNumber: json["refinement_number"],
         profile: json["profile"],
