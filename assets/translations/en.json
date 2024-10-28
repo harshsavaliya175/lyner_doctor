@@ -305,5 +305,7 @@
   "retentionGutters": "Retention gutters",
   "pleaseEnterComment": "Please enter comment",
   "addComment": "Add comment",
-  "submit": "Submit"
+  "submit": "Submit",
+  "pleaseSelectArcadeTraiter": "Please select arcade a traiter"
+
 }

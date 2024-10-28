@@ -308,5 +308,6 @@ abstract class  LocaleKeys {
   static const pleaseEnterComment = 'pleaseEnterComment';
   static const addComment = 'addComment';
   static const submit = 'submit';
+  static const pleaseSelectArcadeTraiter = 'pleaseSelectArcadeTraiter';
 
 }

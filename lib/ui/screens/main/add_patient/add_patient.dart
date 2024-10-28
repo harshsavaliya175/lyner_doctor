@@ -1466,8 +1466,14 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               ctrl.upperJawImageFile != null
                                   ? ctrl.upperJawImageFile!.path.split('/').last
                                   : '';
-                          ctrl.uploadPatientSingleImage(
-                              paramName: 'upper_jaw_stl_file', file: file);
+                          if (refineScreen) {
+                            ctrl.editPatientRefinementDetails(
+                                paramName: 'upper_jaw_stl_file', file: file);
+                          } else {
+                            ctrl.uploadPatientSingleImage(
+                                paramName: 'upper_jaw_stl_file', file: file);
+                          }
+                          //ctrl.uploadPatientSingleImage(paramName: 'upper_jaw_stl_file', file: file);
                           ctrl.update();
                         });
                   },
@@ -1526,8 +1532,14 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               ctrl.lowerJawImageFile != null
                                   ? ctrl.lowerJawImageFile!.path.split('/').last
                                   : '';
-                          ctrl.uploadPatientSingleImage(
-                              paramName: 'lower_jaw_stl_file', file: file);
+                          //ctrl.uploadPatientSingleImage(paramName: 'lower_jaw_stl_file', file: file);
+                          if (refineScreen) {
+                            ctrl.editPatientRefinementDetails(
+                                paramName: 'lower_jaw_stl_file', file: file);
+                          } else {
+                            ctrl.uploadPatientSingleImage(
+                                paramName: 'lower_jaw_stl_file', file: file);
+                          }
                           ctrl.update();
                         });
                   },
@@ -1600,7 +1612,7 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                             ctrl.getFileName(ctrl.dicomFile?.path, 15);
                       }
                       ctrl.update();
-                      ctrl.uploadDicomFile(file, ctrl.patientData?.patientId);
+                      ctrl.uploadDicomFile(file, refineScreen);
                       print('Chosen file path: ${file.path}');
                     },
                   );
@@ -1766,12 +1778,12 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               btnHeight: !isTablet ? 55 : 70,
               text: LocaleKeys.submit.translateText,
               onTap: () {
-                if (ctrl.validateUploadPhotoFiles()) {
-                  ctrl.editPatientRefinementDetails();
-                } else {
+                if (ctrl.validateUploadPhotoRefinementFiles()) {
+                  ctrl.editPatientRefinementDetails(isBack: true);
+                } /*else {
                   showAppSnackBar(
                       LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
-                }
+                }*/
               },
               boxShadow: [],
               radius: !isTablet ? 25 : 40,

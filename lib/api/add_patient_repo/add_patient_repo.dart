@@ -452,7 +452,7 @@ class AddPatientRepo {
       "chunkIndex": chunkIndex,
       "totalChunks": totalChunks,
       "extension": extension,
-      "is_for_refinements": extension,
+      "is_for_refinements": isForRefinements,
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.uploadPatientDcomFile,

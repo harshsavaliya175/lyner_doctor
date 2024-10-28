@@ -305,5 +305,6 @@
   "retentionGutters": "Gouttières de contention",
   "pleaseEnterComment": "Veuillez entrer un commentaire",
   "addComment": "Ajouter un commentaire",
-  "submit": "Soumettre"
+  "submit": "Soumettre",
+  "pleaseSelectArcadeTraiter": "Veuillez sélectionner arcade à traiter"
 }

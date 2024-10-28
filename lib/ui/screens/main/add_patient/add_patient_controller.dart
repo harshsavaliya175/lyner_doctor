@@ -12,6 +12,7 @@ import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/generated/codegen_loader.g.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_billing_model.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
@@ -220,6 +221,89 @@ class AddPatientController extends GetxController {
       if (lowerJawImageFile == null &&
           (patientData?.patientPhoto?.lowerJawStlFile == null ||
               patientData?.patientPhoto?.lowerJawStlFile == '')) return false;
+    }
+    return true;
+  }
+
+  bool validateUploadPhotoRefinementFiles() {
+    if (profileImageFile == null &&
+        (refinementData?.profile == null || refinementData?.profile == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (faceImageFile == null &&
+        (refinementData?.face == null || refinementData?.face == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (smileImageFile == null &&
+        (refinementData?.smile == null || refinementData?.smile == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (intraMaxImageFile == null &&
+        (refinementData?.intraMax == null || refinementData?.intraMax == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (intraMandImageFile == null &&
+        (refinementData?.intraMand == null ||
+            refinementData?.intraMand == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (intraRightImageFile == null &&
+        (refinementData?.interRight == null ||
+            refinementData?.interRight == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (intraLeftImageFile == null &&
+        (refinementData?.interLeft == null ||
+            refinementData?.interLeft == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (intraFaceImageFile == null &&
+        (refinementData?.face == null || refinementData?.face == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    // if (radiosFirstImageFile == null &&
+    //     (patientData?.patientPhoto?.paramiqueRadio == null ||
+    //         patientData?.patientPhoto?.paramiqueRadio == '')) return false;
+    // if (radiosSecondImageFile == null &&
+    //     (patientData?.patientPhoto?.cephalRadio == null ||
+    //         patientData?.patientPhoto?.cephalRadio == '')) return false;
+    if (isUploadStl) {
+      if (upperJawImageFile == null &&
+          (refinementData?.upperJawStlFile == null ||
+              refinementData?.upperJawStlFile == '')) {
+        showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+        return false;
+      }
+      if (lowerJawImageFile == null &&
+          (refinementData?.lowerJawStlFile == null ||
+              refinementData?.lowerJawStlFile == '')) {
+        showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+        return false;
+      }
+    }
+    if (dicomFile == null &&
+        (refinementData?.dicomFileName == null ||
+            refinementData?.dicomFileName == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+      return false;
+    }
+    if (isArcadeTraiter == 0 &&
+        (refinementData?.arcadeOption == null ||
+            refinementData?.arcadeOption == '')) {
+      showAppSnackBar(LocaleKeys.pleaseSelectArcadeTraiter.translateText);
+      return false;
+    }
+    if (commentController.text == "" || commentController.text.isEmpty) {
+      showAppSnackBar(LocaleKeys.pleaseEnterComment.translateText);
+      return false;
     }
     return true;
   }
@@ -633,11 +717,11 @@ class AddPatientController extends GetxController {
   }
 
   Future<void> editPatientRefinementDetails(
-      {File? file, String? paramName}) async {
+      {File? file, String? paramName, bool? isBack}) async {
     isLoading = false;
     final Map<String, dynamic> params = {
       "patient_id": patientId,
-      "is_3shape": isUploadStl ? 1 : 0,
+      "is_3shape": !isUploadStl ? 1 : 0,
       "arcade_option": arcadeTratierText,
       "arcade_comment": commentController.text,
     };
@@ -651,6 +735,9 @@ class AddPatientController extends GetxController {
       if (result.status) {
         // showAppSnackBar(result.msg);
         isLoading = false;
+        if (isBack != null && isBack) {
+          Get.back();
+        }
       } else {
         isLoading = false;
       }
@@ -864,7 +951,7 @@ class AddPatientController extends GetxController {
               patientData?.patientPhoto?.upperJawStlFile ?? '';
           lowerJawImageFileTextCtrl.text =
               patientData?.patientPhoto?.lowerJawStlFile ?? '';
-          isUploadStl = patientData?.patientPhoto?.is3Shape == 0 ? true : false;
+          isUploadStl = patientData?.patientPhoto?.is3Shape == 1 ? true : false;
           print(isUploadStl);
           isLoading = false;
         }
@@ -953,7 +1040,9 @@ class AddPatientController extends GetxController {
               refinementData?.upperJawStlFile ?? '';
           lowerJawImageFileTextCtrl.text =
               refinementData?.lowerJawStlFile ?? '';
-          isUploadStl = refinementData?.is3Shape == 0 ? true : false;
+          isUploadStl = refinementData?.is3Shape == 1
+              ? true
+              : false; //!isUploadStl ? 1 : 0
           print(isUploadStl);
           isLoading = false;
           update();
@@ -1188,7 +1277,7 @@ class AddPatientController extends GetxController {
     uploadId = null; // Reset uploadId for next upload
     update();
   }*/
-  Future<void> uploadDicomFile(File file, var patientId) async {
+  Future<void> uploadDicomFile(File file, bool refineScreen) async {
     isDcomFileLoading = true;
     uploadProgress = 0.0;
     update();
@@ -1230,7 +1319,7 @@ class AddPatientController extends GetxController {
           extension: fileExtension,
           totalChunks: '$totalChunks',
           uploadId: uploadId,
-          patientId: patientId.toString(),
+          patientId: patientData?.patientId.toString() ?? patientId.toString(),
           isForRefinements: isRefinement ? 1 : 0,
         );
         if (!result.status) {
