@@ -309,5 +309,6 @@ abstract class  LocaleKeys {
   static const addComment = 'addComment';
   static const submit = 'submit';
   static const pleaseSelectArcadeTraiter = 'pleaseSelectArcadeTraiter';
+  static const beginningOfTreatment = 'beginningOfTreatment';
 
 }

@@ -306,5 +306,6 @@
   "pleaseEnterComment": "Veuillez entrer un commentaire",
   "addComment": "Ajouter un commentaire",
   "submit": "Soumettre",
-  "pleaseSelectArcadeTraiter": "Veuillez sélectionner arcade à traiter"
+  "pleaseSelectArcadeTraiter": "Veuillez sélectionner arcade à traiter",
+  "beginningOfTreatment": "Debut du traitement"
 }

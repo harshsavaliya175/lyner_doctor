@@ -52,10 +52,11 @@ class PatientsDetailsController extends GetxController {
   int selectedScreenIndex = 0;
   double progressValue = 0.0;
   bool isShowAddCommentFiled = true;
-  List<String> clinicBillingList = [];
-  TextEditingController billingAddressController = TextEditingController();
-  String? selectedClinicBillingData;
-  bool showBillingDropDown = false;
+  List<String> refinementList = [];
+  TextEditingController refinementController = TextEditingController();
+  RefinementList? selectedRefinementData;
+  bool showRefinementDropDown = false;
+  int selectedRefinementDropDownIndex = -1;
 
   @override
   void onInit() {
@@ -65,17 +66,14 @@ class PatientsDetailsController extends GetxController {
     isShowAddCommentFiled = !(Get.arguments[0][commentString] == "archived");
     isCallCommentApi = Get.arguments[0][isCallCommentApiString] ?? false;
     getPatientCommentsDetails();
+    clearRefinementList();
     getPatientInformationDetails();
     commentController.addListener(
       () {
         update();
       },
     );
-    clinicBillingList.clear();
-    clinicBillingList.add("Beginning of treatment");
-    clinicBillingList.add("Refinement 1");
-    clinicBillingList.add("Refinement 2");
-    billingAddressController.text = clinicBillingList[0];
+
     super.onInit();
   }
 
@@ -101,6 +99,7 @@ class PatientsDetailsController extends GetxController {
           patientDetailsModel = PatientDetailsModel.fromJson(result.data);
           isShowLink.value =
               patientDetailsModel?.patient3DModalLink?.isNotEmpty ?? false;
+          addRefinementDropDownList();
           isLoading = false;
         }
       } else {
@@ -110,6 +109,34 @@ class PatientsDetailsController extends GetxController {
       isLoading = false;
     }
     update();
+  }
+
+  String getPatientAndRefinementPath(
+      String patientImagePath, String refinementImagePath) {
+    if (selectedRefinementDropDownIndex == -1) {
+      return "${patientImagePath}";
+    } else {
+      return "${refinementImagePath}";
+    }
+  }
+
+  void addRefinementDropDownList() {
+    clearRefinementList();
+    if (patientDetailsModel?.toothCase != null &&
+        patientDetailsModel?.toothCase!.totalRefinement != null &&
+        patientDetailsModel?.toothCase!.totalRefinement != 0) {
+      for (int i = 1;
+          i <= patientDetailsModel!.toothCase!.totalRefinement;
+          i++) {
+        refinementList.add(LocaleKeys.refinement.translateText + " $i");
+      }
+    }
+  }
+
+  void clearRefinementList() {
+    refinementList.clear();
+    refinementList.add(LocaleKeys.beginningOfTreatment.translateText);
+    refinementController.text = refinementList[0];
   }
 
   getPatientTreatmentsDetails() async {

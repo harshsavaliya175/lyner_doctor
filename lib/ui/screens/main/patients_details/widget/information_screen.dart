@@ -44,7 +44,7 @@ class InformationScreen extends StatelessWidget {
                             children: [
                           AppTextField(
                             textEditingController:
-                                controller.billingAddressController,
+                                controller.refinementController,
                             onChanged: (value) {},
                             validator: (value) {
                               if (value.isEmpty) {
@@ -59,8 +59,8 @@ class InformationScreen extends StatelessWidget {
                             readOnly: true,
                             showCursor: false,
                             onTap: () {
-                              controller.showBillingDropDown =
-                                  !controller.showBillingDropDown;
+                              controller.showRefinementDropDown =
+                                  !controller.showRefinementDropDown;
                               controller.update();
                             },
                             textFieldPadding: EdgeInsets.zero,
@@ -76,7 +76,7 @@ class InformationScreen extends StatelessWidget {
                             showPrefixIcon: true,
                           ),
                           Visibility(
-                            visible: controller.showBillingDropDown,
+                            visible: controller.showRefinementDropDown,
                             replacement: const SizedBox.shrink(),
                             child: Container(
                               // height: 50,
@@ -99,19 +99,29 @@ class InformationScreen extends StatelessWidget {
                                   child: Container(),
                                 ),
                                 itemBuilder: (BuildContext builder, int index) {
-                                  String data = controller.clinicBillingList[
+                                  String data = controller.refinementList[
                                       index]; // Display filtered data when search is not empty
                                   return InkWell(
                                     onTap: () {
                                       print("onTap : $index");
-                                      controller.showBillingDropDown =
-                                          !controller.showBillingDropDown;
-                                      controller.billingAddressController.text =
+                                      controller.showRefinementDropDown =
+                                          !controller.showRefinementDropDown;
+                                      controller.refinementController.text =
                                           '${data}';
-                                      controller.selectedClinicBillingData =
-                                          data;
-                                      print(
-                                          controller.selectedClinicBillingData);
+
+                                      print(controller.selectedRefinementData);
+                                      controller
+                                              .selectedRefinementDropDownIndex =
+                                          index == 0 ? -1 : index - 1;
+                                      controller
+                                          .selectedRefinementData = controller
+                                                  .selectedRefinementDropDownIndex ==
+                                              -1
+                                          ? null
+                                          : controller.patientDetailsModel!
+                                                  .refinementList![
+                                              controller
+                                                  .selectedRefinementDropDownIndex];
                                       controller.update();
                                     },
                                     child: Row(
@@ -128,8 +138,7 @@ class InformationScreen extends StatelessWidget {
                                             size: !isTablet ? 15 : 18,
                                           ),
                                         ),
-                                        if (controller
-                                            .billingAddressController.text
+                                        if (controller.refinementController.text
                                             .contains('${data}')) ...[
                                           Assets.icons.icSelectArrow.svg(
                                               colorFilter: ColorFilter.mode(
@@ -147,7 +156,7 @@ class InformationScreen extends StatelessWidget {
                                         bottom: 10),
                                   );
                                 },
-                                itemCount: controller.clinicBillingList.length,
+                                itemCount: controller.refinementList.length,
                               ).paddingOnly(top: 5, bottom: 5),
                             ).paddingOnly(top: 15),
                           ),
@@ -666,8 +675,12 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.profile.translateText,
-                      imagePath: ApiUrl.patientGauche +
-                          "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                      //
+                      imagePath: controller.getPatientAndRefinementPath(
+                          ApiUrl.patientGauche +
+                              "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                          ApiUrl.patientGauche +
+                              "${controller.selectedRefinementData?.profile ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -675,8 +688,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.face.translateText,
-                      imagePath: ApiUrl.patientFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                      imagePath: /*ApiUrl.patientFace +
+                          "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientFace +
+                                  "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                              ApiUrl.patientFace +
+                                  "${controller.selectedRefinementData?.face ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -684,8 +702,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.smile.translateText,
-                      imagePath: ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                      imagePath: /*ApiUrl.patientSourire +
+                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientSourire +
+                                  "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                              ApiUrl.patientSourire +
+                                  "${controller.selectedRefinementData?.smile ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -697,8 +720,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.intraMax.translateText,
-                      imagePath: ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                      imagePath: /*ApiUrl.patientSourire +
+                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientSourire +
+                                  "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
+                              ApiUrl.patientSourire +
+                                  "${controller.selectedRefinementData?.intraMax ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -708,8 +736,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.intraMand.translateText,
-                      imagePath: ApiUrl.patientInterMandi +
-                          "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                      imagePath: /*ApiUrl.patientInterMandi +
+                          "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientInterMandi +
+                                  "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                              ApiUrl.patientInterMandi +
+                                  "${controller.selectedRefinementData?.intraMand ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -721,8 +754,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.intraRight.translateText,
-                      imagePath: ApiUrl.patientInterGauche +
-                          "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                      imagePath: /*ApiUrl.patientInterGauche +
+                          "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientInterGauche +
+                                  "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                              ApiUrl.patientInterGauche +
+                                  "${controller.selectedRefinementData?.interRight ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -730,8 +768,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.intraFace.translateText,
-                      imagePath: ApiUrl.patientInterFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                      imagePath: /*ApiUrl.patientInterFace +
+                          "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientInterFace +
+                                  "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                              ApiUrl.patientInterFace +
+                                  "${controller.selectedRefinementData?.interFace ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -739,8 +782,13 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: photoWithTitle(
                       title: LocaleKeys.intraLeft.translateText,
-                      imagePath: ApiUrl.patientIntraDroite +
-                          "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                      imagePath: /*ApiUrl.patientIntraDroite +
+                          "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientIntraDroite +
+                                  "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                              ApiUrl.patientIntraDroite +
+                                  "${controller.selectedRefinementData?.interLeft ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
                   ),
@@ -774,8 +822,13 @@ class InformationScreen extends StatelessWidget {
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
-                      imagePath: ApiUrl.patientPanoramique +
-                          "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                      imagePath: /*ApiUrl.patientPanoramique +
+                          "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientPanoramique +
+                                  "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                              ApiUrl.patientIntraDroite +
+                                  "${controller.selectedRefinementData?.panRadio ?? ""}"),
                     ),
                   ),
                   isTablet ? 50.space() : 16.space(),
@@ -785,8 +838,13 @@ class InformationScreen extends StatelessWidget {
                       photoHeight: isTablet ? 180 : 125,
                       radiosHeight: 180,
                       photoWidth: Get.width,
-                      imagePath: ApiUrl.patientCephalometrique +
-                          "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                      imagePath: /*ApiUrl.patientCephalometrique +
+                          "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}"*/
+                          controller.getPatientAndRefinementPath(
+                              ApiUrl.patientPanoramique +
+                                  "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                              ApiUrl.patientIntraDroite +
+                                  "${controller.selectedRefinementData?.cephalRadio ?? ""}"),
                     ),
                   ),
                 ],
@@ -797,161 +855,30 @@ class InformationScreen extends StatelessWidget {
                 fontSize: !isTablet ? 20 : 24,
               ),
               12.space(),
-              (controller.patientDetailsModel?.patientPhoto?.is3Shape == 1)
-                  ? Container(
-                      padding: EdgeInsets.all(!isTablet ? 15 : 20),
-                      decoration: BoxDecoration(
-                        color: primaryBrown.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(
-                          color: primaryBrown,
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: LocaleKeys.postedBy3shape.translateText
-                                .normalText(
-                              fontWeight: FontWeight.w500,
-                              color: primaryBrown,
-                              fontSize: !isTablet ? 16 : 19,
-                            ),
-                          ),
-                          Assets.icons.icTeethWithScreen.svg(
-                            height: !isTablet ? 28 : 34,
-                            width: !isTablet ? 28 : 34,
-                          ),
-                        ],
-                      ),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LocaleKeys.upperJawStlFile.translateText.appCommonText(
-                          size: !isTablet ? 14 : 18,
-                          weight: FontWeight.w400,
-                          align: TextAlign.start,
-                        ),
-                        6.space(),
-                        Container(
-                          padding: EdgeInsets.all(!isTablet ? 8 : 12),
-                          decoration: BoxDecoration(
-                            color: primaryBrown.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(
-                              color: primaryBrown,
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child:
-                                    "${controller.patientDetailsModel?.patientPhoto?.upperJawStlFile ?? "-"}"
-                                        .normalText(
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryBrown,
-                                  fontSize: !isTablet ? 16 : 19,
-                                ),
-                              ),
-                              AppDownloadButton(
-                                url: ApiUrl.upperJawStlFile +
-                                    (controller.patientDetailsModel
-                                            ?.patientPhoto?.upperJawStlFile ??
-                                        ''),
-                              ),
-                            ],
-                          ),
-                        ).onClick(
-                          () {},
-                        ),
-                        12.space(),
-                        LocaleKeys.lowerJawStlFile.translateText.appCommonText(
-                          size: !isTablet ? 14 : 18,
-                          weight: FontWeight.w400,
-                          align: TextAlign.start,
-                        ),
-                        6.space(),
-                        Container(
-                          padding: EdgeInsets.all(!isTablet ? 8 : 12),
-                          decoration: BoxDecoration(
-                            color: primaryBrown.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(
-                              color: primaryBrown,
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child:
-                                    "${controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile ?? "-"}"
-                                        .normalText(
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryBrown,
-                                  fontSize: !isTablet ? 16 : 19,
-                                ),
-                              ),
-                              AppDownloadButton(
-                                url: ApiUrl.lowerJawStlFile +
-                                    (controller.patientDetailsModel
-                                            ?.patientPhoto?.lowerJawStlFile ??
-                                        ''),
-                              ),
-                            ],
-                          ),
-                        ).onClick(
-                          () {
-                            // controller.downloadFile(ApiUrl.lowerJawStlFile+controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile);
-                          },
-                        ),
-                      ],
-                    ),
+              (controller.selectedRefinementDropDownIndex == -1)
+                  ? (controller.patientDetailsModel?.patientPhoto?.is3Shape ==
+                          1)
+                      ? stlFile()
+                      : upperAndLowerJaw(controller)
+                  : (controller.selectedRefinementData?.is3Shape == 1)
+                      ? stlFile()
+                      : upperAndLowerJaw(controller),
+              /*(controller.patientDetailsModel?.patientPhoto?.is3Shape == 1)
+                  ? stlFile()
+                  : upperAndLowerJaw(controller),*/
               20.space(),
-              if (controller.patientDetailsModel?.patientPhoto?.dcomFileName
+
+              /*if (controller.patientDetailsModel?.patientPhoto?.dcomFileName
                       ?.isNotEmpty ??
-                  false)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LocaleKeys.dicomFile.translateText.normalText(
-                      fontWeight: FontWeight.w600,
-                      fontSize: !isTablet ? 20 : 24,
-                    ),
-                    12.space(),
-                    Container(
-                      padding: EdgeInsets.all(!isTablet ? 8 : 12),
-                      decoration: BoxDecoration(
-                        color: primaryBrown.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(
-                          color: primaryBrown,
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: controller.patientDetailsModel!.patientPhoto!
-                                .dcomFileName!
-                                .normalText(
-                              fontWeight: FontWeight.w500,
-                              color: primaryBrown,
-                              fontSize: !isTablet ? 16 : 19,
-                            ),
-                          ),
-                          AppDownloadButton(
-                            url: ApiUrl.dicomFile +
-                                controller.patientDetailsModel!.patientPhoto!
-                                    .dcomFileName!,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  false)*/
+              (controller.selectedRefinementDropDownIndex == -1)
+                  ? (controller.patientDetailsModel?.patientPhoto?.dcomFileName
+                              ?.isNotEmpty ??
+                          false)
+                      ? dicomFile(controller
+                          .patientDetailsModel!.patientPhoto!.dcomFileName!)
+                      : SizedBox.shrink()
+                  : dicomFile(controller.selectedRefinementData!.dicomFileName),
               20.space(),
               AppButton(
                 text: LocaleKeys.downloadAll.translateText,
@@ -1118,6 +1045,160 @@ class InformationScreen extends StatelessWidget {
           fontWeight: FontWeight.w500,
           color: blackColor,
           fontSize: !isTablet ? 16 : 19,
+        ),
+      ],
+    );
+  }
+
+  Widget stlFile() {
+    return Container(
+      padding: EdgeInsets.all(!isTablet ? 15 : 20),
+      decoration: BoxDecoration(
+        color: primaryBrown.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(
+          color: primaryBrown,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: LocaleKeys.postedBy3shape.translateText.normalText(
+              fontWeight: FontWeight.w500,
+              color: primaryBrown,
+              fontSize: !isTablet ? 16 : 19,
+            ),
+          ),
+          Assets.icons.icTeethWithScreen.svg(
+            height: !isTablet ? 28 : 34,
+            width: !isTablet ? 28 : 34,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget upperAndLowerJaw(PatientsDetailsController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LocaleKeys.upperJawStlFile.translateText.appCommonText(
+          size: !isTablet ? 14 : 18,
+          weight: FontWeight.w400,
+          align: TextAlign.start,
+        ),
+        6.space(),
+        Container(
+          padding: EdgeInsets.all(!isTablet ? 8 : 12),
+          decoration: BoxDecoration(
+            color: primaryBrown.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: primaryBrown,
+              width: 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child:
+                    "${controller.patientDetailsModel?.patientPhoto?.upperJawStlFile ?? "-"}"
+                        .normalText(
+                  fontWeight: FontWeight.w500,
+                  color: primaryBrown,
+                  fontSize: !isTablet ? 16 : 19,
+                ),
+              ),
+              AppDownloadButton(
+                url: ApiUrl.upperJawStlFile +
+                    (controller.patientDetailsModel?.patientPhoto
+                            ?.upperJawStlFile ??
+                        ''),
+              ),
+            ],
+          ),
+        ).onClick(
+          () {},
+        ),
+        12.space(),
+        LocaleKeys.lowerJawStlFile.translateText.appCommonText(
+          size: !isTablet ? 14 : 18,
+          weight: FontWeight.w400,
+          align: TextAlign.start,
+        ),
+        6.space(),
+        Container(
+          padding: EdgeInsets.all(!isTablet ? 8 : 12),
+          decoration: BoxDecoration(
+            color: primaryBrown.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: primaryBrown,
+              width: 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child:
+                    "${controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile ?? "-"}"
+                        .normalText(
+                  fontWeight: FontWeight.w500,
+                  color: primaryBrown,
+                  fontSize: !isTablet ? 16 : 19,
+                ),
+              ),
+              AppDownloadButton(
+                url: ApiUrl.lowerJawStlFile +
+                    (controller.patientDetailsModel?.patientPhoto
+                            ?.lowerJawStlFile ??
+                        ''),
+              ),
+            ],
+          ),
+        ).onClick(
+          () {
+            // controller.downloadFile(ApiUrl.lowerJawStlFile+controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget dicomFile(String dcomFileName) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LocaleKeys.dicomFile.translateText.normalText(
+          fontWeight: FontWeight.w600,
+          fontSize: !isTablet ? 20 : 24,
+        ),
+        12.space(),
+        Container(
+          padding: EdgeInsets.all(!isTablet ? 8 : 12),
+          decoration: BoxDecoration(
+            color: primaryBrown.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: primaryBrown,
+              width: 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: dcomFileName.normalText(
+                  fontWeight: FontWeight.w500,
+                  color: primaryBrown,
+                  fontSize: !isTablet ? 16 : 19,
+                ),
+              ),
+              AppDownloadButton(
+                url: ApiUrl.dicomFile + dcomFileName,
+              ),
+            ],
+          ),
         ),
       ],
     );

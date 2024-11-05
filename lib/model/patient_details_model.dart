@@ -86,6 +86,7 @@ class PatientDetailsModel {
   final ToothCase? toothCase;
   final ClinicBill? clinicBill;
   final ClinicLoc? clinicLoc;
+  final List<RefinementList>? refinementList;
 
   PatientDetailsModel({
     this.patientId,
@@ -130,51 +131,52 @@ class PatientDetailsModel {
     this.toothCase,
     this.clinicBill,
     this.clinicLoc,
+    this.refinementList,
   });
 
-  PatientDetailsModel copyWith({
-    int? patientId,
-    String? patientUniqueId,
-    String? firstName,
-    String? lastName,
-    dynamic email,
-    DateTime? dateOfBirth,
-    String? patientProfile,
-    DateTime? bondDate,
-    String? patient3DModalLink,
-    String? linkPassword,
-    String? addPlanCount,
-    String? clinicItem,
-    String? adminItem,
-    int? toothCaseId,
-    int? doctorId,
-    int? clinicId,
-    int? clinicLocationId,
-    int? clinicBillingId,
-    dynamic technicianId,
-    DateTime? technicianStartDate,
-    int? adminNewCase,
-    int? technicianNewCase,
-    int? adminTask,
-    int? adminPatient,
-    int? clinicTask,
-    int? clinicPatient,
-    int? isApproved,
-    int? isProduction,
-    int? isDelivered,
-    int? isVirtual,
-    dynamic trackingId,
-    int? isDraft,
-    int? isDeleted,
-    dynamic draftViewPage,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    Doctor? doctor,
-    PatientPhoto? patientPhoto,
-    ToothCase? toothCase,
-    ClinicBill? clinicBill,
-    ClinicLoc? clinicLoc,
-  }) =>
+  PatientDetailsModel copyWith(
+          {int? patientId,
+          String? patientUniqueId,
+          String? firstName,
+          String? lastName,
+          dynamic email,
+          DateTime? dateOfBirth,
+          String? patientProfile,
+          DateTime? bondDate,
+          String? patient3DModalLink,
+          String? linkPassword,
+          String? addPlanCount,
+          String? clinicItem,
+          String? adminItem,
+          int? toothCaseId,
+          int? doctorId,
+          int? clinicId,
+          int? clinicLocationId,
+          int? clinicBillingId,
+          dynamic technicianId,
+          DateTime? technicianStartDate,
+          int? adminNewCase,
+          int? technicianNewCase,
+          int? adminTask,
+          int? adminPatient,
+          int? clinicTask,
+          int? clinicPatient,
+          int? isApproved,
+          int? isProduction,
+          int? isDelivered,
+          int? isVirtual,
+          dynamic trackingId,
+          int? isDraft,
+          int? isDeleted,
+          dynamic draftViewPage,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          Doctor? doctor,
+          PatientPhoto? patientPhoto,
+          ToothCase? toothCase,
+          ClinicBill? clinicBill,
+          ClinicLoc? clinicLoc,
+          List<RefinementList>? refinementList}) =>
       PatientDetailsModel(
         patientId: patientId ?? this.patientId,
         patientUniqueId: patientUniqueId ?? this.patientUniqueId,
@@ -217,6 +219,7 @@ class PatientDetailsModel {
         toothCase: toothCase ?? this.toothCase,
         clinicBill: clinicBill ?? this.clinicBill,
         clinicLoc: clinicLoc ?? this.clinicLoc,
+        refinementList: refinementList ?? this.refinementList,
       );
 
   factory PatientDetailsModel.fromRawJson(String str) =>
@@ -286,6 +289,10 @@ class PatientDetailsModel {
         clinicLoc: json["clinic_loc"] == null
             ? null
             : ClinicLoc.fromJson(json["clinic_loc"]),
+        refinementList: json["refinement_list"] == null
+            ? []
+            : List<RefinementList>.from(
+                json["refinement_list"].map((x) => RefinementList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -333,6 +340,8 @@ class PatientDetailsModel {
         "tooth_case": toothCase?.toJson(),
         "clinic_bill": clinicBill?.toJson(),
         "clinic_loc": clinicLoc?.toJson(),
+        "refinement_list":
+            List<dynamic>.from(refinementList!.map((x) => x.toJson())),
       };
 }
 
@@ -758,47 +767,27 @@ class PatientPhoto {
 }
 
 class ToothCase {
-  final int? toothCaseId;
-  final String? caseName;
-  final String? casePrice;
-  final String? caseDesc;
-  final String? caseSteps;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  int toothCaseId;
+  String caseName;
+  String casePrice;
+  String caseDesc;
+  String caseSteps;
+  int isDeleted;
+  int totalRefinement;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   ToothCase({
-    this.toothCaseId,
-    this.caseName,
-    this.casePrice,
-    this.caseDesc,
-    this.caseSteps,
-    this.createdAt,
-    this.updatedAt,
+    required this.toothCaseId,
+    required this.caseName,
+    required this.casePrice,
+    required this.caseDesc,
+    required this.caseSteps,
+    required this.isDeleted,
+    required this.totalRefinement,
+    required this.createdAt,
+    required this.updatedAt,
   });
-
-  ToothCase copyWith({
-    int? toothCaseId,
-    String? caseName,
-    String? casePrice,
-    String? caseDesc,
-    String? caseSteps,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      ToothCase(
-        toothCaseId: toothCaseId ?? this.toothCaseId,
-        caseName: caseName ?? this.caseName,
-        casePrice: casePrice ?? this.casePrice,
-        caseDesc: caseDesc ?? this.caseDesc,
-        caseSteps: caseSteps ?? this.caseSteps,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory ToothCase.fromRawJson(String str) =>
-      ToothCase.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory ToothCase.fromJson(Map<String, dynamic> json) => ToothCase(
         toothCaseId: json["tooth_case_id"],
@@ -806,12 +795,10 @@ class ToothCase {
         casePrice: json["case_price"],
         caseDesc: json["case_desc"],
         caseSteps: json["case_steps"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        isDeleted: json["is_deleted"],
+        totalRefinement: json["total_refinement"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -820,7 +807,164 @@ class ToothCase {
         "case_price": casePrice,
         "case_desc": caseDesc,
         "case_steps": caseSteps,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "is_deleted": isDeleted,
+        "total_refinement": totalRefinement,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
+}
+
+class RefinementList {
+  int patientRefinementId;
+  int patientId;
+  dynamic refinementNumber;
+  String profile;
+  String face;
+  dynamic smile;
+  String intraMax;
+  String intraMand;
+  String interRight;
+  String interFace;
+  String interLeft;
+  String panRadio;
+  String cephalRadio;
+  String dicomFileName;
+  String upperJawStlFile;
+  String lowerJawStlFile;
+  int is3Shape;
+  String arcadeOption;
+  String arcadeComment;
+  dynamic refineGuideline;
+  int isDraft;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  RefinementList({
+    required this.patientRefinementId,
+    required this.patientId,
+    required this.refinementNumber,
+    required this.profile,
+    required this.face,
+    required this.smile,
+    required this.intraMax,
+    required this.intraMand,
+    required this.interRight,
+    required this.interFace,
+    required this.interLeft,
+    required this.panRadio,
+    required this.cephalRadio,
+    required this.dicomFileName,
+    required this.upperJawStlFile,
+    required this.lowerJawStlFile,
+    required this.is3Shape,
+    required this.arcadeOption,
+    required this.arcadeComment,
+    required this.refineGuideline,
+    required this.isDraft,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  RefinementList copyWith({
+    int? patientRefinementId,
+    int? patientId,
+    dynamic refinementNumber,
+    String? profile,
+    String? face,
+    dynamic smile,
+    String? intraMax,
+    String? intraMand,
+    String? interRight,
+    String? interFace,
+    String? interLeft,
+    String? panRadio,
+    String? cephalRadio,
+    String? dicomFileName,
+    String? upperJawStlFile,
+    String? lowerJawStlFile,
+    int? is3Shape,
+    String? arcadeOption,
+    String? arcadeComment,
+    dynamic refineGuideline,
+    int? isDraft,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) =>
+      RefinementList(
+        patientRefinementId: patientRefinementId ?? this.patientRefinementId,
+        patientId: patientId ?? this.patientId,
+        refinementNumber: refinementNumber ?? this.refinementNumber,
+        profile: profile ?? this.profile,
+        face: face ?? this.face,
+        smile: smile ?? this.smile,
+        intraMax: intraMax ?? this.intraMax,
+        intraMand: intraMand ?? this.intraMand,
+        interRight: interRight ?? this.interRight,
+        interFace: interFace ?? this.interFace,
+        interLeft: interLeft ?? this.interLeft,
+        panRadio: panRadio ?? this.panRadio,
+        cephalRadio: cephalRadio ?? this.cephalRadio,
+        dicomFileName: dicomFileName ?? this.dicomFileName,
+        upperJawStlFile: upperJawStlFile ?? this.upperJawStlFile,
+        lowerJawStlFile: lowerJawStlFile ?? this.lowerJawStlFile,
+        is3Shape: is3Shape ?? this.is3Shape,
+        arcadeOption: arcadeOption ?? this.arcadeOption,
+        arcadeComment: arcadeComment ?? this.arcadeComment,
+        refineGuideline: refineGuideline ?? this.refineGuideline,
+        isDraft: isDraft ?? this.isDraft,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+
+  factory RefinementList.fromJson(Map<String, dynamic> json) => RefinementList(
+        patientRefinementId: json["patient_refinement_id"] ?? 0,
+        patientId: json["patient_id"] ?? 0,
+        refinementNumber: json["refinement_number"] ?? 0,
+        profile: json["profile"] ?? "",
+        face: json["face"] ?? "",
+        smile: json["smile"] ?? "",
+        intraMax: json["intra_max"] ?? "",
+        intraMand: json["intra_mand"] ?? "",
+        interRight: json["inter_right"] ?? "",
+        interFace: json["inter_face"] ?? "",
+        interLeft: json["inter_left"] ?? "",
+        panRadio: json["pan_radio"] ?? "",
+        cephalRadio: json["cephal_radio"] ?? "",
+        dicomFileName: json["dicom_file_name"] ?? "",
+        upperJawStlFile: json["upper_jaw_stl_file"] ?? "",
+        lowerJawStlFile: json["lower_jaw_stl_file"] ?? "",
+        is3Shape: json["is_3shape"] ?? 0,
+        arcadeOption: json["arcade_option"] ?? "",
+        arcadeComment: json["arcade_comment"] ?? "",
+        refineGuideline: json["refine_guideline"] ?? "",
+        isDraft: json["is_draft"] ?? 0,
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "patient_refinement_id": patientRefinementId,
+        "patient_id": patientId,
+        "refinement_number": refinementNumber,
+        "profile": profile,
+        "face": face,
+        "smile": smile,
+        "intra_max": intraMax,
+        "intra_mand": intraMand,
+        "inter_right": interRight,
+        "inter_face": interFace,
+        "inter_left": interLeft,
+        "pan_radio": panRadio,
+        "cephal_radio": cephalRadio,
+        "dicom_file_name": dicomFileName,
+        "upper_jaw_stl_file": upperJawStlFile,
+        "lower_jaw_stl_file": lowerJawStlFile,
+        "is_3shape": is3Shape,
+        "arcade_option": arcadeOption,
+        "arcade_comment": arcadeComment,
+        "refine_guideline": refineGuideline,
+        "is_draft": isDraft,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }
