@@ -1774,22 +1774,59 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               showPrefixIcon: false,
             ),
             30.space(),
-            AppButton(
+            /*AppButton(
               btnHeight: !isTablet ? 55 : 70,
               text: LocaleKeys.submit.translateText,
               onTap: () {
                 if (ctrl.validateUploadPhotoRefinementFiles()) {
                   ctrl.editPatientRefinementDetails(isBack: true);
-                } /*else {
+                } */ /*else {
                   showAppSnackBar(
                       LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
-                }*/
+                }*/ /*
               },
               boxShadow: [],
               radius: !isTablet ? 25 : 40,
               fontSize: !isTablet ? 18 : 22,
               bgColor: primaryBrown,
               fontColor: Colors.white,
+            )*/
+
+            Row(
+              children: [
+                Expanded(
+                  child: AppBorderButton(
+                    btnHeight: !isTablet ? 55 : 70,
+                    text: LocaleKeys.finishLatter.translateText,
+                    onTap: () {
+                      ctrl.editPatientRefinementDetails(
+                          isBack: true, isDraft: 1);
+                    },
+                    // boxShadow: [],
+                    radius: !isTablet ? 25 : 40,
+                    fontSize: !isTablet ? 18 : 22,
+                    borderColor: primaryBrown,
+                    // bgColor: primaryBrown,
+                    fontColor: primaryBrown,
+                  ).paddingOnly(top: 10, right: 5),
+                ),
+                Expanded(
+                  child: AppButton(
+                    btnHeight: !isTablet ? 55 : 70,
+                    text: LocaleKeys.submit.translateText,
+                    onTap: () {
+                      if (ctrl.validateUploadPhotoRefinementFiles()) {
+                        ctrl.editPatientRefinementDetails(isBack: true);
+                      }
+                    },
+                    boxShadow: [],
+                    radius: !isTablet ? 25 : 40,
+                    fontSize: !isTablet ? 18 : 22,
+                    bgColor: primaryBrown,
+                    fontColor: Colors.white,
+                  ).paddingOnly(top: 10, left: 5),
+                ),
+              ],
             )
           },
           100.space(),

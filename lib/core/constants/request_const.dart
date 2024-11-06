@@ -144,6 +144,7 @@ const int LIMIT = 10;
 const USER_TYPE = "user";
 const String patientIdString = "patientId";
 const String commentString = "commentString";
+const String refinementIdString = "refinementIdString";
 const String isShowCheckModificationButtonString =
     "isShowCheckModificationButton";
 const String reviewModification = "Review Modification";

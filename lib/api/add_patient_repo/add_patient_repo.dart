@@ -78,13 +78,17 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
-  static Future<ResponseItem> getPatientRefinementImage(int patientId) async {
+  static Future<ResponseItem> getPatientRefinementImage(
+      int patientId, int refinementNumber) async {
     ResponseItem result;
     bool status = true;
     dynamic data;
     String msg = "";
 
-    final Map<String, int> params = {"patient_id": patientId};
+    final Map<String, int> params = {
+      "patient_id": patientId,
+      "refinement_number": refinementNumber,
+    };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getPatientRefinementImage,
       RequestParam.showError: SHOW_ERROR,
@@ -419,6 +423,7 @@ class AddPatientRepo {
     required String? totalChunks,
     required String? extension,
     required int? isForRefinements,
+    int? refinementNumber,
   }) async {
     ResponseItem result;
     bool status = true;
@@ -453,6 +458,7 @@ class AddPatientRepo {
       "totalChunks": totalChunks,
       "extension": extension,
       "is_for_refinements": isForRefinements,
+      if (isForRefinements == 1) "refinement_number": refinementNumber,
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.uploadPatientDcomFile,

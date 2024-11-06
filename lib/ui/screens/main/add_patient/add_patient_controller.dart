@@ -98,7 +98,7 @@ class AddPatientController extends GetxController {
   RefinementData? refinementData;
   TextEditingController patientTechniquesDetailsNote = TextEditingController();
 
-  var patientId;
+  var patientId, refinementNumber;
 
   String dicomFileName = LocaleKeys.uploadDICOMFile.translateText;
 
@@ -111,9 +111,11 @@ class AddPatientController extends GetxController {
     if (Get.arguments != null) {
       isRefinement = Get.arguments[isRefinementString];
       patientId = Get.arguments[patientIdString];
+      refinementNumber = Get.arguments[refinementIdString];
     }
     print("isRefinement : $isRefinement");
     print("patientId : $patientId");
+    print("refinement_number : $refinementNumber");
     //patientId = Get.arguments;
     if (patientId != null) {
       isLoading = true;
@@ -717,14 +719,18 @@ class AddPatientController extends GetxController {
   }
 
   Future<void> editPatientRefinementDetails(
-      {File? file, String? paramName, bool? isBack}) async {
+      {File? file, String? paramName, bool? isBack, int isDraft = 0}) async {
     isLoading = false;
     final Map<String, dynamic> params = {
       "patient_id": patientId,
       "is_3shape": !isUploadStl ? 1 : 0,
-      "arcade_option": arcadeTratierText,
-      "arcade_comment": commentController.text,
+      "arcade_option": arcadeTratierText ?? '',
+      "arcade_comment": commentController.text ?? '',
+      "refinement_number": refinementNumber,
+      "is_draft": isDraft,
+      "refine_guideline": commentController.text ?? ''
     };
+
     ResponseItem result = await AddPatientRepo.editPatientRefinementDetails(
         file: file,
         paramName: paramName,
@@ -965,8 +971,8 @@ class AddPatientController extends GetxController {
   }
 
   Future<void> getPatientRefinementImage() async {
-    ResponseItem result =
-        await AddPatientRepo.getPatientRefinementImage(patientId);
+    ResponseItem result = await AddPatientRepo.getPatientRefinementImage(
+        patientId, refinementNumber);
     isLoading = false;
     try {
       if (result.status) {
@@ -1321,6 +1327,7 @@ class AddPatientController extends GetxController {
           uploadId: uploadId,
           patientId: patientData?.patientId.toString() ?? patientId.toString(),
           isForRefinements: isRefinement ? 1 : 0,
+          refinementNumber: refinementNumber,
         );
         if (!result.status) {
           // Handle failure
