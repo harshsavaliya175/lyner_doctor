@@ -369,6 +369,60 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> uploadRefinementMultipleImage({
+    required List<File> imageList,
+    required String? patientId,
+    var refinementNumber,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "is_draft": 1,
+      "refinement_number": refinementNumber,
+    };
+
+    List<http.MultipartFile> faceImg = [];
+    List<String> keys = [
+      "patient_gauche",
+      "patient_face",
+      "patient_sourire",
+      "patient_intra_max",
+      "patient_inter_gauche",
+      "patient_intra_droite",
+      "patient_inter_face",
+      "patient_intra_gauche",
+    ];
+
+    for (int i = 0; i < imageList.length; i++) {
+      File compressedFile = imageList[i];
+      List<String> mimeType = lookupMimeType(compressedFile.path)!.split("/");
+      http.MultipartFile plantImage = http.MultipartFile.fromBytes(
+        keys[i],
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      faceImg.add(plantImage);
+    }
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.editPatientRefinementDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result =
+        await BaseApiHelper.uploadFile(requestUrl, null, faceImg, params, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   /*static Future<ResponseItem> uploadPatientDcomFile({
     required File? file,
     required String? patientId,

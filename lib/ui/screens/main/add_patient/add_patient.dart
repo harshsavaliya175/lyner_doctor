@@ -931,10 +931,15 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.profileImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_gauche', file: file);
+                          paramName: 'patient_gauche',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_gauche', file: file);
+                          paramName: 'patient_gauche',
+                          file: file,
+                        );
                       }
                       ctrl.update();
                     },
@@ -960,7 +965,7 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.faceImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_face', file: file);
+                            paramName: 'patient_face', file: file, isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_face', file: file);
@@ -989,7 +994,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.smileImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_sourire', file: file);
+                            paramName: 'patient_sourire',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_sourire', file: file);
@@ -1024,7 +1031,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraMaxImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_intra_max', file: file);
+                            paramName: 'patient_intra_max',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_intra_max', file: file);
@@ -1081,7 +1090,14 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           ctrl.intraRightImageFile = ctrl.smileImg[5];
                           ctrl.intraFaceImageFile = ctrl.smileImg[6];
                           ctrl.intraLeftImageFile = ctrl.smileImg[7];
-                          ctrl.uploadPatientMultipleImage(files: ctrl.smileImg);
+                          if (refineScreen) {
+                            ctrl.uploadRefinementMultipleImage(
+                                files: ctrl.smileImg);
+                          } else {
+                            ctrl.uploadPatientMultipleImage(
+                                files: ctrl.smileImg);
+                          }
+
                           ctrl.update();
                         }
                       },

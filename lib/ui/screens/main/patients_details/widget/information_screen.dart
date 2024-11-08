@@ -13,7 +13,6 @@ import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_button.dart';
@@ -116,8 +115,9 @@ class InformationScreen extends StatelessWidget {
                                           controller.patientDetailsModel!
                                                   .refinementList !=
                                               null &&
-                                          controller.patientDetailsModel!
-                                              .refinementList!.isNotEmpty) {
+                                          (controller.patientDetailsModel!
+                                                  .refinementList?.isNotEmpty ??
+                                              false)) {
                                         controller
                                             .selectedRefinementData = controller
                                                     .selectedRefinementDropDownIndex ==

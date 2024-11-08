@@ -2,7 +2,7 @@
 app_settings=/Users/imac/.pub-cache/hosted/pub.dev/app_settings-5.1.1/
 camera=/Users/imac/.pub-cache/hosted/pub.dev/camera-0.11.0+2/
 camera_android_camerax=/Users/imac/.pub-cache/hosted/pub.dev/camera_android_camerax-0.6.10/
-camera_avfoundation=/Users/imac/.pub-cache/hosted/pub.dev/camera_avfoundation-0.9.17+4/
+camera_avfoundation=/Users/imac/.pub-cache/hosted/pub.dev/camera_avfoundation-0.9.17+5/
 camera_web=/Users/imac/.pub-cache/hosted/pub.dev/camera_web-0.3.5/
 device_info=/Users/imac/.pub-cache/hosted/pub.dev/device_info-2.0.3/
 file_picker=/Users/imac/.pub-cache/hosted/pub.dev/file_picker-8.1.3/
@@ -69,5 +69,5 @@ sqflite=/Users/imac/.pub-cache/hosted/pub.dev/sqflite-2.4.0/
 sqflite_android=/Users/imac/.pub-cache/hosted/pub.dev/sqflite_android-2.4.0/
 sqflite_darwin=/Users/imac/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.1-1/
 webview_flutter=/Users/imac/.pub-cache/hosted/pub.dev/webview_flutter-4.10.0/
-webview_flutter_android=/Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_android-4.0.0/
-webview_flutter_wkwebview=/Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.16.0/
+webview_flutter_android=/Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_android-4.0.1/
+webview_flutter_wkwebview=/Users/imac/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.16.1/

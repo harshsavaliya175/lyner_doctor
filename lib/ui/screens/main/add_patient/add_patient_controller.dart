@@ -12,7 +12,6 @@ import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
-import 'package:lynerdoctor/generated/codegen_loader.g.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/model/clinic_billing_model.dart';
 import 'package:lynerdoctor/model/clinic_location_model.dart';
@@ -718,24 +717,29 @@ class AddPatientController extends GetxController {
     update();
   }
 
-  Future<void> editPatientRefinementDetails(
-      {File? file, String? paramName, bool? isBack, int isDraft = 0}) async {
+  Future<void> editPatientRefinementDetails({
+    File? file,
+    String? paramName,
+    bool? isBack,
+    int isDraft = 0,
+  }) async {
     isLoading = false;
     final Map<String, dynamic> params = {
       "patient_id": patientId,
       "is_3shape": !isUploadStl ? 1 : 0,
-      "arcade_option": arcadeTratierText ?? '',
-      "arcade_comment": commentController.text ?? '',
+      "arcade_option": arcadeTratierText,
+      "arcade_comment": commentController.text,
       "refinement_number": refinementNumber,
       "is_draft": isDraft,
-      "refine_guideline": commentController.text ?? ''
+      "refine_guideline": commentController.text,
     };
 
     ResponseItem result = await AddPatientRepo.editPatientRefinementDetails(
-        file: file,
-        paramName: paramName,
-        patientId: patientId.toString(),
-        params: params);
+      file: file,
+      paramName: paramName,
+      patientId: patientId.toString(),
+      params: params,
+    );
     isLoading = false;
     try {
       if (result.status) {
@@ -744,6 +748,29 @@ class AddPatientController extends GetxController {
         if (isBack != null && isBack) {
           Get.back();
         }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> uploadRefinementMultipleImage({
+    required List<File> files,
+  }) async {
+    isLoading = false;
+    ResponseItem result = await AddPatientRepo.uploadRefinementMultipleImage(
+      imageList: files,
+      patientId: patientId.toString(),
+      refinementNumber: refinementNumber,
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        // showAppSnackBar(result.msg);
+        isLoading = false;
       } else {
         isLoading = false;
       }
@@ -1039,6 +1066,7 @@ class AddPatientController extends GetxController {
           );
           doctorController.text = (selectedDoctorData?.firstName ?? '') +
               (selectedDoctorData?.lastName ?? '');*/
+
           /// ARCADE
           getArcadeTraiter(patientModel.data.arcadeOption);
           commentController.text = refinementData?.arcadeComment ?? '';
