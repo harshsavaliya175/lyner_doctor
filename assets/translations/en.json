@@ -307,6 +307,10 @@
   "addComment": "Add comment",
   "submit": "Submit",
   "pleaseSelectArcadeTraiter": "Please select arcade a traiter",
-  "beginningOfTreatment": "Beginning of treatment"
-
+  "beginningOfTreatment": "Beginning of treatment",
+  "caseValidation": "Case Validation",
+  "confirmationText": "By confirming, your case will go into production and will be invoiced.",
+  "wouldYouLikeToContinue": "Would you like to continue?",
+  "back":"Back",
+  "continueText":"Continue"
 }

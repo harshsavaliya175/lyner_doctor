@@ -323,7 +323,12 @@ class CodegenLoader extends AssetLoader{
   "addComment": "Add comment",
   "submit": "Submit",
   "pleaseSelectArcadeTraiter": "Please select arcade a traiter",
-  "beginningOfTreatment": "Beginning of treatment"
+  "beginningOfTreatment": "Beginning of treatment",
+  "caseValidation": "Case Validation",
+  "confirmationText": "By confirming, your case will go into production and will be invoiced.",
+  "wouldYouLikeToContinue": "Would you like to continue?",
+  "back": "Back",
+  "continueText": "Continue"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -634,7 +639,12 @@ static const Map<String,dynamic> fr = {
   "addComment": "Ajouter un commentaire",
   "submit": "Soumettre",
   "pleaseSelectArcadeTraiter": "Veuillez sélectionner arcade à traiter",
-  "beginningOfTreatment": "Debut du traitement"
+  "beginningOfTreatment": "Debut du traitement",
+  "caseValidation": "Validation du dossier",
+  "confirmationText": "En confirmant, votre dossier passera en production et sera facturé.",
+  "wouldYouLikeToContinue": "Souhaitez-vous continuer ?",
+  "back": "Retour",
+  "continueText": "Continuer"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

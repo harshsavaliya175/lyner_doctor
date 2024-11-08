@@ -1124,7 +1124,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraMandImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_intra_gauche', file: file);
+                            paramName: 'patient_intra_gauche',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_intra_gauche', file: file);
@@ -1169,7 +1171,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraRightImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_intra_droite', file: file);
+                            paramName: 'patient_intra_droite',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_intra_droite', file: file);
@@ -1198,7 +1202,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraFaceImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_inter_face', file: file);
+                            paramName: 'patient_inter_face',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_inter_face', file: file);
@@ -1227,7 +1233,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraLeftImageFile = file;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_inter_gauche', file: file);
+                            paramName: 'patient_inter_gauche',
+                            file: file,
+                            isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_inter_gauche', file: file);
@@ -1270,7 +1278,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                         ctrl.radiosFirstImageFile = file!;
                         if (refineScreen) {
                           ctrl.editPatientRefinementDetails(
-                              paramName: 'patient_panoramique', file: file);
+                              paramName: 'patient_panoramique',
+                              file: file,
+                              isDraft: 1);
                         } else {
                           ctrl.uploadPatientSingleImage(
                               paramName: 'patient_panoramique', file: file);
@@ -1331,7 +1341,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                         ctrl.radiosSecondImageFile = file!;
                         if (refineScreen) {
                           ctrl.editPatientRefinementDetails(
-                              paramName: 'patient_cephalometrique', file: file);
+                              paramName: 'patient_cephalometrique',
+                              file: file,
+                              isDraft: 1);
                         } else {
                           ctrl.uploadPatientSingleImage(
                               paramName: 'patient_cephalometrique', file: file);

@@ -57,6 +57,7 @@ class PatientsDetailsController extends GetxController {
   RefinementList? selectedRefinementData;
   bool showRefinementDropDown = false;
   int selectedRefinementDropDownIndex = -1;
+  int finishingGutters = 0;
 
   @override
   void onInit() {
@@ -121,7 +122,18 @@ class PatientsDetailsController extends GetxController {
   }
 
   void addRefinementDropDownList() {
+    finishingGutters = 0;
     clearRefinementList();
+    if (patientDetailsModel?.refinementList?.isNotEmpty ?? false) {
+      patientDetailsModel!.refinementList!.forEach(
+        (element) {
+          if (element.isDraft == 0) {
+            finishingGutters += 1;
+          }
+        },
+      );
+    }
+
     if (patientDetailsModel?.toothCase != null &&
         patientDetailsModel?.toothCase!.totalRefinement != null &&
         patientDetailsModel?.toothCase!.totalRefinement != 0) {

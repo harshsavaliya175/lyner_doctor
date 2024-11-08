@@ -119,14 +119,33 @@ class InformationScreen extends StatelessWidget {
                                                   .refinementList?.isNotEmpty ??
                                               false)) {
                                         controller
-                                            .selectedRefinementData = controller
+                                            .selectedRefinementData = (controller
                                                     .selectedRefinementDropDownIndex ==
                                                 -1
                                             ? null
-                                            : controller.patientDetailsModel!
-                                                    .refinementList?[
-                                                controller
-                                                    .selectedRefinementDropDownIndex];
+                                            : (controller
+                                                        .selectedRefinementDropDownIndex <=
+                                                    (controller
+                                                            .patientDetailsModel!
+                                                            .refinementList!
+                                                            .length -
+                                                        1))
+                                                ? controller
+                                                        .patientDetailsModel!
+                                                        .refinementList![
+                                                    controller
+                                                        .selectedRefinementDropDownIndex]
+                                                : null);
+                                        print(
+                                            "--> ${controller.selectedRefinementData}");
+
+                                        // controller
+                                        //     .selectedRefinementData =
+                                        // controller.selectedRefinementDropDownIndex == -1
+                                        //     ? null
+                                        //     : (controller.selectedRefinementDropDownIndex == (controller.patientDetailsModel?.refinementList?.length ?? 0) + 1) ? controller.patientDetailsModel?.refinementList?[
+                                        // controller
+                                        //     .selectedRefinementDropDownIndex]:null;
                                       }
                                       controller.update();
                                     },
@@ -475,34 +494,45 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                       child: GestureDetector(
                     onTap: () {
-                      if (controller.patientDetailsModel?.toothCase
-                              ?.totalRefinement !=
-                          0) {
-                        var refinementNumber = 0;
-                        if (controller.patientDetailsModel?.refinementList
-                                ?.isNotEmpty ??
-                            false) {
-                          for (int i = 0;
-                              i <
-                                  controller.patientDetailsModel!
-                                      .refinementList!.length;
-                              i++) {
-                            if (controller.patientDetailsModel!
-                                    .refinementList![i].isDraft ==
-                                1) {
-                              refinementNumber = controller.patientDetailsModel!
-                                  .refinementList![i].refinementNumber;
-                              break;
-                            }
-                          }
+                      if ((controller.patientDetailsModel?.toothCase
+                                  ?.totalRefinement ??
+                              0) >
+                          controller.finishingGutters) {
+                        if (controller.patientDetailsModel?.toothCase
+                                ?.totalRefinement !=
+                            0) {
+                          // int refinementNumber = 0;
+                          //
+                          // if (controller.patientDetailsModel?.refinementList
+                          //         ?.isNotEmpty ??
+                          //     false) {
+                          //   for (int i = 0;
+                          //       i <
+                          //           controller.patientDetailsModel!
+                          //               .refinementList!.length;
+                          //       i++) {
+                          //     if (controller.patientDetailsModel!
+                          //             .refinementList![i].isDraft ==
+                          //         1) {
+                          //       refinementNumber = controller
+                          //           .patientDetailsModel!
+                          //           .refinementList![i]
+                          //           .refinementNumber;
+                          //       break;
+                          //     }
+                          //   }
+                          // }
+                          Get.toNamed(
+                            Routes.uploadPhotographsScreen,
+                            arguments: {
+                              patientIdString:
+                                  controller.patientDetailsModel?.patientId,
+                              isRefinementString: true,
+                              refinementIdString:
+                                  controller.finishingGutters + 1,
+                            },
+                          );
                         }
-                        Get.toNamed(Routes.uploadPhotographsScreen, arguments: {
-                          patientIdString:
-                              controller.patientDetailsModel?.patientId,
-                          isRefinementString: true,
-                          refinementIdString:
-                              refinementNumber == 0 ? 1 : refinementNumber,
-                        });
                       }
                     },
                     child: Container(
@@ -522,7 +552,8 @@ class InformationScreen extends StatelessWidget {
                                 fontSize: !isTablet ? 16 : 20,
                               )
                               .paddingOnly(right: 5, left: 5, top: 15),
-                          "0/${controller.patientDetailsModel?.toothCase?.totalRefinement ?? 0}"
+                          // controller.patientDetailsModel!=null && (controller.patientDetailsModel?.refinementList?.isNotEmpty??false)
+                          "${controller.finishingGutters}/${controller.patientDetailsModel?.toothCase?.totalRefinement ?? 0}"
                               .normalText(
                                 color: hintColor,
                                 textAlign: TextAlign.center,

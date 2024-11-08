@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
@@ -13,6 +11,7 @@ import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/image_picker.dart';
+import 'package:lynerdoctor/core/utils/push_notification_utils.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -25,14 +24,111 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../../../core/utils/file_downloader.dart';
-import '../../../../../core/utils/push_notification_utils.dart';
-
 class CommentScreen extends StatelessWidget {
   CommentScreen({super.key});
 
   final PatientsDetailsController controller =
       Get.put(PatientsDetailsController());
+
+  void showConfirmationDialog(
+      BuildContext context, PatientsDetailsController ctrl) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+          titlePadding: EdgeInsets.zero,
+          actionsPadding: EdgeInsets.zero,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          content: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: LocaleKeys.caseValidation.translateText
+                      .normalText(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      )
+                      .center,
+                ),
+                Divider(color: Colors.grey, height: 0),
+                20.space(),
+                LocaleKeys.confirmationText.translateText
+                    .normalText(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      textAlign: TextAlign.center,
+                    )
+                    .paddingSymmetric(horizontal: 16),
+                20.space(),
+                LocaleKeys.wouldYouLikeToContinue.translateText
+                    .normalText(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      textAlign: TextAlign.center,
+                    )
+                    .paddingSymmetric(horizontal: 16)
+                    .center,
+                20.space(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        btnHeight: !isTablet ? 55 : 60,
+                        text: LocaleKeys.back.translateText,
+                        fontColor: Colors.red,
+                        onTap: () {
+                          Get.back();
+                        },
+                        bgColor: Colors.white,
+                        buttonBorderColor: primaryBrown,
+                      ),
+                    ),
+                    20.space(),
+                    Expanded(
+                      child: AppButton(
+                        btnHeight: !isTablet ? 55 : 60,
+                        text: LocaleKeys.continueText.translateText,
+                        fontColor: Colors.white,
+                        onTap: () async {
+                          if (ctrl.bondDateController.text.trim().isNotEmpty) {
+                            Get.back();
+                            ctrl.approveOrder(context);
+                          } else {
+                            showAppSnackBar(
+                                LocaleKeys.pleaseSelectBondDate.translateText);
+                          }
+                        },
+                        bgColor: primaryBrown,
+                      ),
+                    ),
+                  ],
+                ).paddingSymmetric(horizontal: 20),
+                20.space(),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -509,7 +605,9 @@ class CommentScreen extends StatelessWidget {
                                                       .trim()
                                                       .isNotEmpty) {
                                                     Get.back();
-                                                    ctrl.approveOrder(context);
+                                                    showConfirmationDialog(
+                                                        context, ctrl);
+                                                    // ctrl.approveOrder(context);
                                                   } else {
                                                     showAppSnackBar(LocaleKeys
                                                         .pleaseSelectBondDate

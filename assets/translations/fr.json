@@ -307,5 +307,10 @@
   "addComment": "Ajouter un commentaire",
   "submit": "Soumettre",
   "pleaseSelectArcadeTraiter": "Veuillez sélectionner arcade à traiter",
-  "beginningOfTreatment": "Debut du traitement"
+  "beginningOfTreatment": "Debut du traitement",
+  "caseValidation": "Validation du dossier",
+  "confirmationText": "En confirmant, votre dossier passera en production et sera facturé.",
+  "wouldYouLikeToContinue": "Souhaitez-vous continuer ?",
+  "back": "Retour",
+  "continueText": "Continuer"
 }
