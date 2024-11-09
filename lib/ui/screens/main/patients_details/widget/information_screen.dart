@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -705,24 +706,44 @@ class InformationScreen extends StatelessWidget {
                   ),
                   10.space(),
                   AppDownloadTextButton(
-                    downloadUrls: [
-                      ApiUrl.patientGauche +
-                          "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
-                      ApiUrl.patientFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
-                      ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
-                      ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
-                      ApiUrl.patientInterMandi +
-                          "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
-                      ApiUrl.patientInterGauche +
-                          "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
-                      ApiUrl.patientInterFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
-                      ApiUrl.patientIntraDroite +
-                          "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
-                    ],
+                    downloadUrls:
+                        controller.selectedRefinementDropDownIndex == -1
+                            ? [
+                                ApiUrl.patientGauche +
+                                    "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                                ApiUrl.patientFace +
+                                    "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                                ApiUrl.patientSourire +
+                                    "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                                ApiUrl.patientIntraMax +
+                                    "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                                ApiUrl.patientInterMandi +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                                ApiUrl.patientInterGauche +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                                ApiUrl.patientInterFace +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                                ApiUrl.patientIntraDroite +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                              ]
+                            : [
+                                ApiUrl.patientGauche +
+                                    "${controller.selectedRefinementData?.profile ?? ""}",
+                                ApiUrl.patientFace +
+                                    "${controller.selectedRefinementData?.face ?? ""}",
+                                ApiUrl.patientSourire +
+                                    "${controller.selectedRefinementData?.smile ?? ""}",
+                                ApiUrl.patientIntraMax +
+                                    "${controller.selectedRefinementData?.intraMax ?? ""}",
+                                ApiUrl.patientInterMandi +
+                                    "${controller.selectedRefinementData?.intraMand ?? ""}",
+                                ApiUrl.patientInterGauche +
+                                    "${controller.selectedRefinementData?.interRight ?? ""}",
+                                ApiUrl.patientInterFace +
+                                    "${controller.selectedRefinementData?.interFace ?? ""}",
+                                ApiUrl.patientIntraDroite +
+                                    "${controller.selectedRefinementData?.interLeft ?? ""}",
+                              ],
                   ),
                 ],
               ),
@@ -780,9 +801,9 @@ class InformationScreen extends StatelessWidget {
                       imagePath: /*ApiUrl.patientSourire +
                           "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
                           controller.getPatientAndRefinementPath(
-                              ApiUrl.patientSourire +
+                              ApiUrl.patientIntraMax +
                                   "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
-                              ApiUrl.patientSourire +
+                              ApiUrl.patientIntraMax +
                                   "${controller.selectedRefinementData?.intraMax ?? ""}"),
                       radiosHeight: isTablet ? 120 : null,
                     ),
@@ -861,12 +882,20 @@ class InformationScreen extends StatelessWidget {
                   ),
                   10.space(),
                   AppDownloadTextButton(
-                    downloadUrls: [
-                      ApiUrl.patientPanoramique +
-                          "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
-                      ApiUrl.patientCephalometrique +
-                          "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
-                    ],
+                    downloadUrls:
+                        controller.selectedRefinementDropDownIndex == 0
+                            ? [
+                                ApiUrl.patientPanoramique +
+                                    "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                                ApiUrl.patientCephalometrique +
+                                    "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                              ]
+                            : [
+                                ApiUrl.patientPanoramique +
+                                    "${controller.selectedRefinementData?.panRadio ?? ""}",
+                                ApiUrl.patientCephalometrique +
+                                    "${controller.selectedRefinementData?.cephalRadio ?? ""}",
+                              ],
                   ),
                 ],
               ),
@@ -884,7 +913,7 @@ class InformationScreen extends StatelessWidget {
                           controller.getPatientAndRefinementPath(
                               ApiUrl.patientPanoramique +
                                   "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
-                              ApiUrl.patientIntraDroite +
+                              ApiUrl.patientPanoramique +
                                   "${controller.selectedRefinementData?.panRadio ?? ""}"),
                     ),
                   ),
@@ -898,9 +927,9 @@ class InformationScreen extends StatelessWidget {
                       imagePath: /*ApiUrl.patientCephalometrique +
                           "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}"*/
                           controller.getPatientAndRefinementPath(
-                              ApiUrl.patientPanoramique +
+                              ApiUrl.patientCephalometrique +
                                   "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
-                              ApiUrl.patientIntraDroite +
+                              ApiUrl.patientCephalometrique +
                                   "${controller.selectedRefinementData?.cephalRadio ?? ""}"),
                     ),
                   ),
@@ -916,10 +945,27 @@ class InformationScreen extends StatelessWidget {
                   ? (controller.patientDetailsModel?.patientPhoto?.is3Shape ==
                           1)
                       ? stlFile()
-                      : upperAndLowerJaw(controller)
+                      : ((controller.patientDetailsModel?.patientPhoto
+                                          ?.upperJawStlFile ??
+                                      '') ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.upperJawStlFile ??
+                                      '') ==
+                                  "")
+                          ? stlFile()
+                          : upperAndLowerJaw(controller)
                   : (controller.selectedRefinementData?.is3Shape == 1)
                       ? stlFile()
-                      : upperAndLowerJaw(controller),
+                      : ((controller.selectedRefinementData?.upperJawStlFile ??
+                                      '') ==
+                                  "" &&
+                              (controller.selectedRefinementData
+                                          ?.upperJawStlFile ??
+                                      '') ==
+                                  "")
+                          ? stlFile()
+                          : upperAndLowerJaw(controller),
               /*(controller.patientDetailsModel?.patientPhoto?.is3Shape == 1)
                   ? stlFile()
                   : upperAndLowerJaw(controller),*/
@@ -935,9 +981,95 @@ class InformationScreen extends StatelessWidget {
                       ? dicomFile(controller
                           .patientDetailsModel!.patientPhoto!.dcomFileName!)
                       : SizedBox.shrink()
-                  : dicomFile(
-                      controller.selectedRefinementData?.dicomFileName ?? ""),
+                  : ((controller.selectedRefinementData?.dicomFileName ?? "")
+                          .isNotEmpty)
+                      ? dicomFile(
+                          controller.selectedRefinementData?.dicomFileName ??
+                              "")
+                      : SizedBox.shrink(),
               20.space(),
+              if (controller.selectedRefinementDropDownIndex != -1) ...[
+                LocaleKeys.arcadeTraiter.translateText.appCommonText(
+                  align: TextAlign.start,
+                  size: !isTablet ? 24 : 27,
+                  maxLine: 2,
+                  overflow: TextOverflow.ellipsis,
+                  weight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                LocaleKeys.whereTheSimulationWillBeCarriedOut.translateText
+                    .appCommonText(
+                  align: TextAlign.start,
+                  size: !isTablet ? 16 : 19,
+                  maxLine: 2,
+                  overflow: TextOverflow.ellipsis,
+                  weight: FontWeight.w400,
+                  color: hintStepColor,
+                ),
+                10.space(),
+                Container(
+                  height: !isTablet ? 55 : 70,
+                  alignment: AlignmentDirectional.centerStart,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(!isTablet ? 25 : 40),
+                    color: Colors.white,
+                    border: Border.all(color: skyColor),
+                  ),
+                  child: ((controller.selectedRefinementData?.arcadeOption ==
+                                  "Both" ||
+                              controller.selectedRefinementData?.arcadeOption ==
+                                  "Les deux")
+                          ? LocaleKeys.lesDeux.translateText
+                          : (controller.selectedRefinementData?.arcadeOption ==
+                                      "Maxillary" ||
+                                  controller.selectedRefinementData
+                                          ?.arcadeOption ==
+                                      "Maxillaire")
+                              ? LocaleKeys.maxillaire.translateText
+                              : (controller.selectedRefinementData
+                                              ?.arcadeOption ==
+                                          "Mandibular" ||
+                                      controller.selectedRefinementData
+                                              ?.arcadeOption ==
+                                          "Mandibulaire")
+                                  ? LocaleKeys.mandibulaire.translateText
+                                  : "-")
+                      .appCommonText(
+                        size: !isTablet ? 16 : 19,
+                        weight: FontWeight.w400,
+                        color: Colors.black,
+                      )
+                      .paddingOnly(left: 15),
+                ),
+                10.space(),
+                LocaleKeys.comments.translateText.appCommonText(
+                  align: TextAlign.start,
+                  size: !isTablet ? 24 : 27,
+                  maxLine: 2,
+                  overflow: TextOverflow.ellipsis,
+                  weight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                AppTextField(
+                  maxLines: 3,
+                  // textEditingController: controller.commentController,
+                  readOnly: true,
+                  onChanged: (String value) {},
+                  validator: (String value) {},
+                  textFieldPadding: EdgeInsets.zero,
+                  keyboardType: TextInputType.text,
+                  hintText:
+                      "${controller.selectedRefinementData?.arcadeComment ?? "-"}",
+                  hintTextStyle: TextStyle(
+                    fontSize: !isTablet ? 15 : 18,
+                    color: blackColor,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'maax-medium-medium',
+                  ),
+                  showPrefixIcon: false,
+                ),
+                30.space(),
+              ],
               AppButton(
                 text: LocaleKeys.downloadAll.translateText,
                 radius: 100,
@@ -1084,6 +1216,7 @@ class InformationScreen extends StatelessWidget {
     required String imagePath,
     // AssetGenImage? assetImage,
   }) {
+    log("---> $imagePath  <---");
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1161,7 +1294,7 @@ class InformationScreen extends StatelessWidget {
             children: [
               Expanded(
                 child:
-                    "${controller.patientDetailsModel?.patientPhoto?.upperJawStlFile ?? "-"}"
+                    "${controller.selectedRefinementDropDownIndex == -1 ? controller.patientDetailsModel?.patientPhoto?.upperJawStlFile : controller.selectedRefinementData?.upperJawStlFile}"
                         .normalText(
                   fontWeight: FontWeight.w500,
                   color: primaryBrown,
@@ -1170,9 +1303,10 @@ class InformationScreen extends StatelessWidget {
               ),
               AppDownloadButton(
                 url: ApiUrl.upperJawStlFile +
-                    (controller.patientDetailsModel?.patientPhoto
-                            ?.upperJawStlFile ??
-                        ''),
+                    (controller.selectedRefinementDropDownIndex == -1
+                        ? controller
+                            .patientDetailsModel?.patientPhoto?.upperJawStlFile
+                        : controller.selectedRefinementData?.upperJawStlFile),
               ),
             ],
           ),
@@ -1200,7 +1334,7 @@ class InformationScreen extends StatelessWidget {
             children: [
               Expanded(
                 child:
-                    "${controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile ?? "-"}"
+                    "${controller.selectedRefinementDropDownIndex == -1 ? controller.patientDetailsModel?.patientPhoto?.lowerJawStlFile : controller.selectedRefinementData?.lowerJawStlFile}"
                         .normalText(
                   fontWeight: FontWeight.w500,
                   color: primaryBrown,
@@ -1209,9 +1343,10 @@ class InformationScreen extends StatelessWidget {
               ),
               AppDownloadButton(
                 url: ApiUrl.lowerJawStlFile +
-                    (controller.patientDetailsModel?.patientPhoto
-                            ?.lowerJawStlFile ??
-                        ''),
+                    (controller.selectedRefinementDropDownIndex == -1
+                        ? controller
+                            .patientDetailsModel?.patientPhoto?.lowerJawStlFile
+                        : controller.selectedRefinementData?.lowerJawStlFile),
               ),
             ],
           ),
