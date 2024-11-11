@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="android.open_file" target="17" />
       <module name="android.url_launcher_android" target="17" />
+      <module name="io.flutter.plugins.webviewflutter.android.webview_flutter_android" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

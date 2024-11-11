@@ -1155,10 +1155,10 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
             children: [
               photoCardWidget(
                 image: Assets.images.imgInterRight.path,
-                urlPath: "patient_intra_droite",
+                urlPath: "patient_inter_gauche",
                 urlImage: refineScreen == true
                     ? ctrl.refinementData?.interRight ?? ''
-                    : ctrl.patientData?.patientPhoto?.interDroite ?? '',
+                    : ctrl.patientData?.patientPhoto?.interGauche ?? '',
                 fileImage: ctrl.intraRightImageFile ?? File(''),
                 title: LocaleKeys.intraRight.translateText,
                 onTap: () {
@@ -1171,12 +1171,12 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraRightImageFile = file!;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_intra_droite',
+                            paramName: 'patient_inter_gauche',
                             file: file,
                             isDraft: 1);
                       } else {
                         ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_intra_droite', file: file);
+                            paramName: 'patient_inter_gauche', file: file);
                       }
                       ctrl.update();
                     },
@@ -1218,9 +1218,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 urlImage: refineScreen == true
                     ? ctrl.refinementData?.interLeft ?? ''
-                    : ctrl.patientData?.patientPhoto?.interGauche ?? '',
+                    : ctrl.patientData?.patientPhoto?.interDroite ?? '',
                 fileImage: ctrl.intraLeftImageFile ?? File(''),
-                urlPath: "patient_inter_gauche",
+                urlPath: "patient_intra_droite",
                 image: Assets.images.imgInterLeft.path,
                 title: LocaleKeys.intraLeft.translateText,
                 onTap: () {
@@ -1233,12 +1233,15 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       ctrl.intraLeftImageFile = file;
                       if (refineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_inter_gauche',
-                            file: file,
-                            isDraft: 1);
+                          paramName: 'patient_intra_droite',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_inter_gauche', file: file);
+                          paramName: 'patient_intra_droite',
+                          file: file,
+                        );
                       }
                       ctrl.update();
                     },

@@ -11,16 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="85efbc02-22dd-4dfd-870a-f32ff82829aa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/api/add_patient_repo/add_patient_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/api/add_patient_repo/add_patient_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/constants/request_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/model/refinement_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/model/refinement_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/add_patient/add_patient_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/ui/screens/main/patients_details/widget/information_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +27,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/imac/.android/avd/Pixel_3a_API_33.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/imac/.android/avd/Pixel_8_Pro_API_34.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -115,6 +111,9 @@
   &quot;keyToStringList&quot;: {
     &quot;ExportApk.BuildVariants&quot;: [
       &quot;release&quot;
+    ],
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/imac/.gradle&quot;
     ]
   }
 }</component>
@@ -132,8 +131,6 @@
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
-      <option name="RESTORE_ENABLED" value="false" />
-      <option name="RESTORE_FILE" value="" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />

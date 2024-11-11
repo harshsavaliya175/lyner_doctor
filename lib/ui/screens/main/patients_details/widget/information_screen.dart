@@ -705,10 +705,35 @@ class InformationScreen extends StatelessWidget {
                     fontSize: !isTablet ? 20 : 24,
                   ),
                   10.space(),
-                  AppDownloadTextButton(
-                    downloadUrls:
-                        controller.selectedRefinementDropDownIndex == -1
-                            ? [
+                  controller.selectedRefinementDropDownIndex == -1
+                      ? ((controller.patientDetailsModel?.patientPhoto?.gauche ?? "") == "" &&
+                              (controller.patientDetailsModel?.patientPhoto?.face ?? "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto?.sourire ?? "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.interMax ??
+                                      "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.interMandi ??
+                                      "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.interGauche ??
+                                      "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.interFace ??
+                                      "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.interDroite ??
+                                      "") ==
+                                  "")
+                          ? SizedBox.shrink()
+                          : AppDownloadTextButton(
+                              downloadUrls: [
                                 ApiUrl.patientGauche +
                                     "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
                                 ApiUrl.patientFace +
@@ -716,7 +741,7 @@ class InformationScreen extends StatelessWidget {
                                 ApiUrl.patientSourire +
                                     "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
                                 ApiUrl.patientIntraMax +
-                                    "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                                    "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
                                 ApiUrl.patientInterMandi +
                                     "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
                                 ApiUrl.patientInterGauche +
@@ -725,8 +750,33 @@ class InformationScreen extends StatelessWidget {
                                     "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
                                 ApiUrl.patientIntraDroite +
                                     "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
-                              ]
-                            : [
+                              ],
+                            )
+                      : ((controller.selectedRefinementData?.profile ?? "") == "" &&
+                              (controller.selectedRefinementData?.face ?? "") ==
+                                  "" &&
+                              (controller.selectedRefinementData?.smile ?? "") ==
+                                  "" &&
+                              (controller.selectedRefinementData?.intraMax ??
+                                      "") ==
+                                  "" &&
+                              (controller
+                                          .selectedRefinementData?.intraMand ??
+                                      "") ==
+                                  "" &&
+                              (controller
+                                          .selectedRefinementData?.interRight ??
+                                      "") ==
+                                  "" &&
+                              (controller.selectedRefinementData?.interFace ??
+                                      "") ==
+                                  "" &&
+                              (controller.selectedRefinementData?.interLeft ??
+                                      "") ==
+                                  "")
+                          ? SizedBox.shrink()
+                          : AppDownloadTextButton(
+                              downloadUrls: [
                                 ApiUrl.patientGauche +
                                     "${controller.selectedRefinementData?.profile ?? ""}",
                                 ApiUrl.patientFace +
@@ -744,7 +794,7 @@ class InformationScreen extends StatelessWidget {
                                 ApiUrl.patientIntraDroite +
                                     "${controller.selectedRefinementData?.interLeft ?? ""}",
                               ],
-                  ),
+                            ),
                 ],
               ),
               12.space(),
@@ -881,22 +931,36 @@ class InformationScreen extends StatelessWidget {
                     fontSize: !isTablet ? 20 : 24,
                   ),
                   10.space(),
-                  AppDownloadTextButton(
-                    downloadUrls:
-                        controller.selectedRefinementDropDownIndex == 0
-                            ? [
-                                ApiUrl.patientPanoramique +
-                                    "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
-                                ApiUrl.patientCephalometrique +
-                                    "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
-                              ]
-                            : [
+                  (controller.selectedRefinementDropDownIndex == -1)
+                      ? ((controller.patientDetailsModel?.patientPhoto
+                                          ?.paramiqueRadio ??
+                                      "") ==
+                                  "" &&
+                              (controller.patientDetailsModel?.patientPhoto
+                                          ?.cephalRadio ??
+                                      "") ==
+                                  "")
+                          ? SizedBox.shrink()
+                          : AppDownloadTextButton(downloadUrls: [
+                              ApiUrl.patientPanoramique +
+                                  "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                              ApiUrl.patientCephalometrique +
+                                  "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                            ])
+                      : ((controller.selectedRefinementData?.panRadio ?? "") ==
+                                  "" &&
+                              (controller.selectedRefinementData?.cephalRadio ??
+                                      "") ==
+                                  "")
+                          ? SizedBox.shrink()
+                          : AppDownloadTextButton(
+                              downloadUrls: [
                                 ApiUrl.patientPanoramique +
                                     "${controller.selectedRefinementData?.panRadio ?? ""}",
                                 ApiUrl.patientCephalometrique +
                                     "${controller.selectedRefinementData?.cephalRadio ?? ""}",
                               ],
-                  ),
+                            ),
                 ],
               ),
               12.space(),
@@ -1076,44 +1140,97 @@ class InformationScreen extends StatelessWidget {
                 btnHeight: !isTablet ? 55 : 70,
                 fontColor: Colors.white,
                 onTap: () {
-                  List downloadUrls = [
-                    ApiUrl.patientGauche +
-                        "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
-                    ApiUrl.patientFace +
-                        "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
-                    ApiUrl.patientSourire +
-                        "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
-                    ApiUrl.patientSourire +
-                        "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
-                    ApiUrl.patientInterMandi +
-                        "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
-                    ApiUrl.patientInterGauche +
-                        "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
-                    ApiUrl.patientInterFace +
-                        "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
-                    ApiUrl.patientIntraDroite +
-                        "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
-                    if (controller
-                            .patientDetailsModel?.patientPhoto?.is3Shape ==
-                        0)
-                      ApiUrl.upperJawStlFile +
-                          (controller.patientDetailsModel?.patientPhoto
-                                  ?.upperJawStlFile ??
-                              ''),
-                    if (controller
-                            .patientDetailsModel?.patientPhoto?.is3Shape ==
-                        0)
-                      ApiUrl.lowerJawStlFile +
-                          (controller.patientDetailsModel?.patientPhoto
-                                  ?.lowerJawStlFile ??
-                              ''),
-                    if (controller.patientDetailsModel?.patientPhoto
-                            ?.dcomFileName?.isNotEmpty ??
-                        false)
-                      ApiUrl.dicomFile +
-                          controller
-                              .patientDetailsModel!.patientPhoto!.dcomFileName!,
-                  ];
+                  List downloadUrls = controller
+                              .selectedRefinementDropDownIndex ==
+                          -1
+                      ? [
+                          ApiUrl.patientGauche +
+                              "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                          ApiUrl.patientFace +
+                              "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                          ApiUrl.patientSourire +
+                              "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                          ApiUrl.patientSourire +
+                              "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                          ApiUrl.patientInterMandi +
+                              "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                          ApiUrl.patientInterGauche +
+                              "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                          ApiUrl.patientInterFace +
+                              "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                          ApiUrl.patientIntraDroite +
+                              "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                          ApiUrl.patientPanoramique +
+                              "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                          ApiUrl.patientCephalometrique +
+                              "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                          if (controller.patientDetailsModel?.patientPhoto
+                                  ?.is3Shape ==
+                              0)
+                            ApiUrl.upperJawStlFile +
+                                (controller.patientDetailsModel?.patientPhoto
+                                        ?.upperJawStlFile ??
+                                    ''),
+                          if (controller.patientDetailsModel?.patientPhoto
+                                  ?.is3Shape ==
+                              0)
+                            ApiUrl.lowerJawStlFile +
+                                (controller.patientDetailsModel?.patientPhoto
+                                        ?.lowerJawStlFile ??
+                                    ''),
+                          ApiUrl.patientCephalometrique +
+                              "${controller.patientDetailsModel?.patientPhoto?.cephalRadio ?? ""}",
+                          ApiUrl.patientPanoramique +
+                              "${controller.patientDetailsModel?.patientPhoto?.paramiqueRadio ?? ""}",
+                          if (controller.patientDetailsModel?.patientPhoto
+                                  ?.dcomFileName?.isNotEmpty ??
+                              false)
+                            ApiUrl.dicomFile +
+                                controller.patientDetailsModel!.patientPhoto!
+                                    .dcomFileName!,
+                        ]
+                      : [
+                          ApiUrl.patientGauche +
+                              "${controller.selectedRefinementData?.profile ?? ""}",
+                          ApiUrl.patientFace +
+                              "${controller.selectedRefinementData?.face ?? ""}",
+                          ApiUrl.patientSourire +
+                              "${controller.selectedRefinementData?.smile ?? ""}",
+                          ApiUrl.patientIntraMax +
+                              "${controller.selectedRefinementData?.intraMax ?? ""}",
+                          ApiUrl.patientInterMandi +
+                              "${controller.selectedRefinementData?.intraMand ?? ""}",
+                          ApiUrl.patientInterGauche +
+                              "${controller.selectedRefinementData?.interRight ?? ""}",
+                          ApiUrl.patientInterFace +
+                              "${controller.selectedRefinementData?.interFace ?? ""}",
+                          ApiUrl.patientIntraDroite +
+                              "${controller.selectedRefinementData?.interLeft ?? ""}",
+                          if (controller.selectedRefinementData?.is3Shape == 0)
+                            ApiUrl.upperJawStlFile +
+                                (controller.selectedRefinementData
+                                        ?.upperJawStlFile ??
+                                    ''),
+                          if (controller.selectedRefinementData?.is3Shape == 0)
+                            ApiUrl.lowerJawStlFile +
+                                (controller.selectedRefinementData
+                                        ?.lowerJawStlFile ??
+                                    ''),
+                          ApiUrl.patientCephalometrique +
+                              "${controller.selectedRefinementData?.cephalRadio ?? ""}",
+                          ApiUrl.patientPanoramique +
+                              "${controller.selectedRefinementData?.panRadio ?? ""}",
+                          ApiUrl.dicomFile +
+                              (controller
+                                      .selectedRefinementData?.dicomFileName ??
+                                  ""),
+                          if (controller.selectedRefinementData?.dicomFileName
+                                  .isNotEmpty ??
+                              false)
+                            ApiUrl.dicomFile +
+                                (controller
+                                    .selectedRefinementData!.dicomFileName),
+                        ];
                   downloadUrls.forEach(
                     (url) async {
                       Directory? baseStorage;

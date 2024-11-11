@@ -337,10 +337,10 @@ class AddPatientRepo {
       "patient_face",
       "patient_sourire",
       "patient_intra_max",
-      "patient_inter_gauche",
-      "patient_intra_droite",
-      "patient_inter_face",
       "patient_intra_gauche",
+      "patient_inter_gauche",
+      "patient_inter_face",
+      "patient_intra_droite",
     ];
 
     for (int i = 0; i < imageList.length; i++) {
@@ -391,10 +391,10 @@ class AddPatientRepo {
       "patient_face",
       "patient_sourire",
       "patient_intra_max",
-      "patient_inter_gauche",
-      "patient_intra_droite",
-      "patient_inter_face",
       "patient_intra_gauche",
+      "patient_inter_gauche",
+      "patient_inter_face",
+      "patient_intra_droite",
     ];
 
     for (int i = 0; i < imageList.length; i++) {

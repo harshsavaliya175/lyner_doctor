@@ -290,12 +290,12 @@ class AddPatientController extends GetxController {
         return false;
       }
     }
-    if (dicomFile == null &&
-        (refinementData?.dicomFileName == null ||
-            refinementData?.dicomFileName == '')) {
-      showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
-      return false;
-    }
+    // if (dicomFile == null &&
+    //     (refinementData?.dicomFileName == null ||
+    //         refinementData?.dicomFileName == '')) {
+    //   showAppSnackBar(LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
+    //   return false;
+    // }
     if (isArcadeTraiter == 0 &&
         (refinementData?.arcadeOption == null ||
             refinementData?.arcadeOption == '')) {
