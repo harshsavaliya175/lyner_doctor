@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 extension MediaQueryValues on BuildContext {
   hideKeyBoard(BuildContext context) {
@@ -42,6 +44,23 @@ extension StringExtension on String {
     return this.tr(
       args: [args1],
     );
+  }
+
+  void launchUrlFun() async {
+    await launchUrl(Uri.parse(this));
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(Uri.parse(url));
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
+  }
+}
+
+extension ExtOnDynamic on dynamic {
+  get debugPrint {
+    if (kDebugMode) {
+      print("--->(@) ${this.toString()}");
+    }
   }
 }
 

@@ -196,7 +196,7 @@ class DevisScreen extends StatelessWidget {
                         return null;
                       },
                       textFieldPadding: EdgeInsets.zero,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.emailAddress,
                       // isError: ctrl.emailError,
                       hintText: LocaleKeys.enterPatientEmail.translateText,
                       labelText: LocaleKeys.patientEmail.translateText,
@@ -212,6 +212,8 @@ class DevisScreen extends StatelessWidget {
                           ctrl.update();
                           return LocaleKeys
                               .pleaseEnterTotalAmount.translateText;
+                        } else {
+                          try {} catch (e) {}
                         }
                         ctrl.update();
                         return null;

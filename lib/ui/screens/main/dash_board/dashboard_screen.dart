@@ -51,8 +51,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           await NotificationUtil.showProgressBarNotification(
             11, // Notification ID
-            "Download file successful.", // Title
-            "Successfully uploaded", // Content
+            "Download file successful.",
+            "Successfully uploaded",
             100, // Current progress
             100, // Max progress
           ).then((value) async {

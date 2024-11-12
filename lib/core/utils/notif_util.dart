@@ -85,6 +85,43 @@ class NotificationUtil {
     // });
   }
 
+  static sendDownloadNotification(
+    String title,
+    String body, {
+    bool? sound,
+  }) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      "freeme_channel",
+      "FreeMe",
+      playSound: sound ?? false,
+      enableVibration: sound ?? false,
+      channelAction: AndroidNotificationChannelAction.values.first,
+      color: Colors.black,
+      priority: Priority.max,
+      showProgress: true,
+    );
+
+    DarwinNotificationDetails iosNotificationDetail = DarwinNotificationDetails(
+      presentAlert: sound ?? false,
+      presentSound: sound ?? false,
+      presentBadge: sound ?? false,
+      interruptionLevel: InterruptionLevel.active,
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: iosNotificationDetail,
+    );
+
+    await _localNotifications.show(
+      0,
+      title,
+      body,
+      notificationDetails,
+    );
+  }
+
   static Future<void> initializeBGNotifications() async {
     _localNotifications.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
@@ -122,7 +159,8 @@ class NotificationUtil {
       progress: progress,
       autoCancel: true,
       playSound: false,
-      enableVibration: false,);
+      enableVibration: false,
+    );
     final NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
