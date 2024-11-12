@@ -164,6 +164,44 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> devisExport({
+    required String firstName,
+    required String lastName,
+    required String dateOfBirth,
+    required String email,
+    required String totalAmount,
+    required String numberOfSemester,
+    required String contentionPrice,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "first_name": firstName,
+      "last_name": lastName,
+      "date_of_birth": dateOfBirth,
+      "email": email,
+      "total_amount": double.parse(totalAmount),
+      "num_of_semester": double.parse(numberOfSemester),
+      "contention_price": double.parse(contentionPrice),
+    };
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.exportEstimateQuotesPdf,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> addUpdatePatientDetails({
     required int toothCaseId,
     required int patientId,

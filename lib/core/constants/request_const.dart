@@ -15,6 +15,8 @@ class ApiUrl {
       "${IS_LIVE ? API_LIVE_URL : API_DEV_URL}Service.php?";
   static const String baseImagePath = "https://lynertech.com/app_images/";
   static const String baseImagePatientPath = "${baseImagePath}patient/";
+  static const String estimateQuotesPdf =
+      "${baseImagePath}estimate_quotes_pdf/";
   static const String imageBasePath = "https://lynertech.com/app_images/";
   static const String clinicProfileImagePath = "${imageBasePath}clinic_photo/";
   //https://lynertech.com/app_images/doctor_profile/
@@ -63,6 +65,7 @@ class MethodNames {
   static const String getPatientInformationDetails =
       "getPatientInformationDetails";
   static const String getPatientRefinementImage = "getPatientRefinementImage";
+  static const String exportEstimateQuotesPdf = "exportEstimateQuotesPdf";
   static const String getPatientPrescriptionDetails =
       "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";

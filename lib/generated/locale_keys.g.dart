@@ -11,6 +11,8 @@ abstract class  LocaleKeys {
   static const password = 'password';
   static const enterPassword = 'enterPassword';
   static const addNewPatient = 'addNewPatient';
+  static const newPatient = 'newPatient';
+  static const devis = 'devis';
   static const chooseTheProduct = 'chooseTheProduct';
   static const selected = 'selected';
   static const notSelected = 'notSelected';
@@ -19,6 +21,15 @@ abstract class  LocaleKeys {
   static const enterName = 'enterName';
   static const firstName = 'firstName';
   static const lastName = 'lastName';
+  static const patientFirstName = 'patientFirstName';
+  static const patientLastName = 'patientLastName';
+  static const patientEmail = 'patientEmail';
+  static const totalAmount = 'totalAmount';
+  static const numberOfSemester = 'numberOfSemester';
+  static const contentionPrice = 'contentionPrice';
+  static const enterContentionPrice = 'enterContentionPrice';
+  static const enterAmount = 'enterAmount';
+  static const enterPatientEmail = 'enterPatientEmail';
   static const enterEmailAddress = 'enterEmailAddress';
   static const emailAddress = 'emailAddress';
   static const dateField = 'dateField';
@@ -231,6 +242,9 @@ abstract class  LocaleKeys {
   static const pleaseSelectDoctor = 'pleaseSelectDoctor';
   static const pleaseSelectBillingAddress = 'pleaseSelectBillingAddress';
   static const pleaseSelectDeliveryAddress = 'pleaseSelectDeliveryAddress';
+  static const pleaseSelectNumberOfSemester = 'pleaseSelectNumberOfSemester';
+  static const pleaseEnterTotalAmount = 'pleaseEnterTotalAmount';
+  static const pleaseEnterContentionPrice = 'pleaseEnterContentionPrice';
   static const jpgAndHeifFormat = 'jpgAndHeifFormat';
   static const radios = 'radios';
   static const stlFiles = 'stlFiles';
@@ -315,5 +329,6 @@ abstract class  LocaleKeys {
   static const wouldYouLikeToContinue = 'wouldYouLikeToContinue';
   static const back = 'back';
   static const continueText = 'continueText';
+  static const export = 'export';
 
 }

@@ -8,6 +8,7 @@ import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/splash/splash_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/devis/devis_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/financial/financial_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/global_search/global_search_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/add_edit_lyner_connect/add_edit_lyner_connect.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String treatmentPlanning = "/treatmentPlanning";
   static const String dashboardScreen = "/dashboardScreen";
   static const String addPatientScreen = "/addPatientScreen";
+  static const String devisScreen = "/devisScreen";
   static const String changePasswordScreen = "/changePasswordScreen";
   static const String editProfile = "/editProfile";
   static const String addLynerConnect = "/addLynerConnect";
@@ -49,6 +51,7 @@ class Routes {
         name: Routes.changePasswordScreen, page: () => ChangePasswordScreen()),
     GetPage(name: Routes.dashboardScreen, page: () => DashboardScreen()),
     GetPage(name: Routes.addPatientScreen, page: () => AddPatientScreen()),
+    GetPage(name: Routes.devisScreen, page: () => DevisScreen()),
     GetPage(name: Routes.editProfile, page: () => EditProfile()),
     GetPage(name: Routes.addLynerConnect, page: () => AddNewPatient()),
     GetPage(

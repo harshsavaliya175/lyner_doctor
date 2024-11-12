@@ -296,59 +296,60 @@ class ProfileScreen extends StatelessWidget {
       }),
     );
   }
+}
 
-  Widget profileScreenItem({
-    SvgGenImage? leadingIcon,
-    Widget? leading,
-    Color leadingIconColor = blackColor,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: Colors.white,
+Widget profileScreenItem({
+  SvgGenImage? leadingIcon,
+  Widget? leading,
+  Color leadingIconColor = blackColor,
+  Color? titleColor,
+  required String title,
+  required VoidCallback onTap,
+}) {
+  return Material(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(100),
+    child: InkWell(
+      onTap: () {
+        onTap();
+      },
       borderRadius: BorderRadius.circular(100),
-      child: InkWell(
-        onTap: () {
-          onTap();
-        },
-        borderRadius: BorderRadius.circular(100),
-        child: Container(
-          width: Get.width,
-          height: !isTablet ? 60.w : 70.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: skyColor, width: 1),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              20.space(),
-              leading ??
-                  leadingIcon!.svg(
-                    height: !isTablet ? 24 : 30,
-                    width: !isTablet ? 24 : 30,
-                    colorFilter:
-                        ColorFilter.mode(leadingIconColor, BlendMode.srcIn),
-                  ),
-              12.space(),
-              Expanded(
-                child: title.translateText.normalText(
-                  color: leadingIconColor,
-                  fontSize: !isTablet ? 16 : 20,
-                  fontWeight: FontWeight.w400,
+      child: Container(
+        width: Get.width,
+        height: !isTablet ? 60.w : 70.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(color: skyColor, width: 1),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            20.space(),
+            leading ??
+                leadingIcon!.svg(
+                  height: !isTablet ? 24 : 30,
+                  width: !isTablet ? 24 : 30,
+                  colorFilter:
+                      ColorFilter.mode(leadingIconColor, BlendMode.srcIn),
                 ),
+            12.space(),
+            Expanded(
+              child: title.translateText.normalText(
+                color: titleColor ?? leadingIconColor,
+                fontSize: !isTablet ? 16 : 20,
+                fontWeight: FontWeight.w400,
               ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: primaryBrown,
-                size: !isTablet ? 20 : 24,
-              ),
-              20.space(),
-            ],
-          ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: primaryBrown,
+              size: !isTablet ? 20 : 24,
+            ),
+            20.space(),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

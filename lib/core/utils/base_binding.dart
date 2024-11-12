@@ -5,6 +5,7 @@ import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_contro
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/devis/devis_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/financial/financial_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/global_search/global_search_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/library/library_controller.dart';
@@ -19,6 +20,7 @@ class BaseBindings extends Bindings {
     Get.lazyPut(() => ForgotPasswordController(), fenix: true);
     Get.lazyPut(() => ResetPasswordController(), fenix: true);
     Get.lazyPut(() => AddPatientController(), fenix: true);
+    Get.lazyPut(() => DevisController(), fenix: true);
     Get.lazyPut(() => DashboardController(), fenix: true);
     Get.lazyPut(() => PatientsController(), fenix: true);
     Get.lazyPut(() => LynerConnectController(), fenix: true);
