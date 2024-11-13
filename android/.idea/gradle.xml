@@ -7,9 +7,9 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/../../../flutter/packages/flutter_tools/gradle" name="gradle">
+              <build path="$USER_HOME$/Documents/flutter_versions/flutter_3_24_0/flutter/packages/flutter_tools/gradle" name="gradle">
                 <projects>
-                  <project path="$PROJECT_DIR$/../../../flutter/packages/flutter_tools/gradle" />
+                  <project path="$USER_HOME$/Documents/flutter_versions/flutter_3_24_0/flutter/packages/flutter_tools/gradle" />
                 </projects>
               </build>
             </builds>
@@ -43,10 +43,11 @@
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-12.0.13/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.3.3/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/sqflite_android-2.4.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.14/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-4.0.1/android" />
+            <option value="$USER_HOME$/Documents/flutter_versions/flutter_3_24_0/flutter/packages/flutter_tools/gradle" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/../../../flutter/packages/flutter_tools/gradle" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

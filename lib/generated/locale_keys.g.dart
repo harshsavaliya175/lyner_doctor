@@ -330,5 +330,6 @@ abstract class  LocaleKeys {
   static const back = 'back';
   static const continueText = 'continueText';
   static const export = 'export';
+  static const fileHasNotDownloaded = 'fileHasNotDownloaded';
 
 }

@@ -94,6 +94,7 @@ class NotificationUtil {
         AndroidNotificationDetails(
       "freeme_channel",
       "FreeMe",
+      icon: '@drawable/ic_notification',
       playSound: sound ?? false,
       enableVibration: sound ?? false,
       channelAction: AndroidNotificationChannelAction.values.first,
@@ -140,8 +141,13 @@ class NotificationUtil {
     await _localNotifications.initialize(initializationSettings);
   }
 
-  static Future<void> showProgressBarNotification(int id, String title,
-      String content, int progress, int maxProgress) async {
+  static Future<void> showProgressBarNotification(
+    int id,
+    String title,
+    String content,
+    int progress,
+    int maxProgress,
+  ) async {
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails();
 
@@ -150,6 +156,7 @@ class NotificationUtil {
       channelId,
       channelName,
       channelDescription: channelDesc,
+      icon: '@drawable/ic_notification',
       channelShowBadge: false,
       importance: Importance.high,
       priority: Priority.high,
@@ -162,8 +169,9 @@ class NotificationUtil {
       enableVibration: false,
     );
     final NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
     await _localNotifications.show(
       id,
       title,

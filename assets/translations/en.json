@@ -328,5 +328,6 @@
   "wouldYouLikeToContinue": "Would you like to continue?",
   "back":"Back",
   "continueText":"Continue",
-  "export":"Export"
+  "export":"Export",
+  "fileHasNotDownloaded":"File has not downloaded"
 }

@@ -343,7 +343,8 @@ class CodegenLoader extends AssetLoader{
   "wouldYouLikeToContinue": "Would you like to continue?",
   "back": "Back",
   "continueText": "Continue",
-  "export": "Export"
+  "export": "Export",
+  "fileHasNotDownloaded": "File has not downloaded"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -674,7 +675,8 @@ static const Map<String,dynamic> fr = {
   "wouldYouLikeToContinue": "Souhaitez-vous continuer ?",
   "back": "Retour",
   "continueText": "Continuer",
-  "export": "Exporter"
+  "export": "Exporter",
+  "fileHasNotDownloaded": "File has not downloaded"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

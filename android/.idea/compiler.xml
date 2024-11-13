@@ -2,21 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="android.camera_android_camerax" target="17" />
-      <module name="android.file_picker" target="17" />
-      <module name="android.flutter_inappwebview_android" target="17" />
-      <module name="android.flutter_local_notifications" target="17" />
-      <module name="android.flutter_pdfview" target="17" />
-      <module name="android.flutter_plugin_android_lifecycle" target="17" />
-      <module name="android.image_picker_android" target="17" />
       <module name="android.open_file" target="17" />
-      <module name="android.open_file_android" target="17" />
-      <module name="android.path_provider_android" target="17" />
-      <module name="android.permission_handler_android" target="17" />
-      <module name="android.shared_preferences_android" target="17" />
       <module name="android.sqflite" target="17" />
-      <module name="android.url_launcher_android" target="17" />
-      <module name="android.webview_flutter_android" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

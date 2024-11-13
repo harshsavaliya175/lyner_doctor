@@ -7,9 +7,12 @@ import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
+import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../../../../generated/locale_keys.g.dart';
 
 class DevisController extends GetxController {
   bool firstNameError = false;
@@ -52,108 +55,17 @@ class DevisController extends GetxController {
           await initDownLoadService();
           await downloadFile(downLoadUrl: url).then(
             (String? value) async {
-              value.debugPrint;
-              if (Platform.isIOS) {
-                await OpenFile.open(value);
+              if (value != null && await File(value).exists()) {
+                if (Platform.isIOS) {
+                  await OpenFile.open(value);
+                } else {
+                  await OpenFile.open(value);
+                }
               } else {
-                await OpenFile.open(value);
+                showAppSnackBar(LocaleKeys.fileHasNotDownloaded.translateText);
               }
             },
           );
-
-          // Future.delayed(
-          //   Duration.zero,
-          //   () async {
-          //     if (await canLaunchUrl(Uri.parse(url))) {
-          //       await launchUrl(Uri.parse(url));
-          //     } else {
-          //       throw 'Could not launch $url';
-          //     }
-          //   },
-          // );
-          // controller.setProgressValue(showDialogProgress: true);
-          ///
-          // Directory? baseStorage;
-          // PermissionStatus status = await Permission.notification.request();
-          //
-          // String ext = url.split('.').last;
-          // String name = url.split('/').last.split('.').first;
-          // String fileName =
-          //     '${name}_${DateTime.now().millisecondsSinceEpoch}.$ext';
-          //
-          // if (status.isGranted) {
-          //   if (Platform.isIOS) {
-          //     baseStorage = await getApplicationDocumentsDirectory();
-          //   } else {
-          //     baseStorage = await getExternalStorageDirectory();
-          //   }
-          //   String? taskId = await FlutterDownloader.enqueue(
-          //     url: url,
-          //     savedDir: baseStorage!.path,
-          //     showNotification: true,
-          //     openFileFromNotification: true,
-          //     saveInPublicStorage: true,
-          //     fileName: fileName,
-          //   );
-          //
-          //   downloadTaskId['taskId'] = taskId;
-          //   downloadTaskId['path'] = '${baseStorage.path}/$fileName';
-          //   if (taskId != null) {
-          //     downloadTaskId.putIfAbsent(
-          //       taskId,
-          //       () => downloadTaskId['path'],
-          //     );
-          //   }
-          //   isDownloadRunning = true;
-          //   downloadProgress = 0.0;
-          // } else if (status.isDenied) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: Text(
-          //         LocaleKeys
-          //             .withoutThisPermissionAppCanNotDownloadFile.translateText,
-          //       ),
-          //       action: SnackBarAction(
-          //         label: LocaleKeys.setting.translateText,
-          //         textColor: Colors.white,
-          //         onPressed: () {
-          //           openAppSettings();
-          //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //         },
-          //       ),
-          //       backgroundColor: primaryBrown,
-          //       behavior: SnackBarBehavior.floating,
-          //     ),
-          //   );
-          // } else if (status.isPermanentlyDenied) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: Text(
-          //         LocaleKeys
-          //             .toAccessThisFeaturePleaseGrantPermissionFromSettings
-          //             .translateText,
-          //       ),
-          //       action: SnackBarAction(
-          //         label: LocaleKeys.setting.translateText,
-          //         textColor: Colors.white,
-          //         onPressed: () {
-          //           openAppSettings();
-          //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //         },
-          //       ),
-          //       backgroundColor: primaryBrown,
-          //       behavior: SnackBarBehavior.floating,
-          //     ),
-          //   );
-          // }
-          //
-          // if (Platform.isIOS) {
-          //   await OpenFile.open(value);
-          // } else {
-          //   await OpenFile.open(value);
-          // }
-          //
-          // // await OpenFile.open('${baseStorage?.path}/$fileName');
           isLoading = false;
         }
       } else {
@@ -190,7 +102,6 @@ class DevisController extends GetxController {
           "${valueNotifier.value} / 100%",
         );
       });
-
       await Dio().download(
         Uri.parse(downLoadUrl).toString(),
         file.path,
@@ -208,22 +119,18 @@ class DevisController extends GetxController {
 
   Future<String?> _prepareSaveDir() async {
     String path = "";
-
-    _findLocalPath().then(
-      (String? value) async {
-        path = value ?? '';
-        if (value != null) {
-          final savedDir = Directory(path);
-          final hasExisted = savedDir.existsSync();
-          if (!hasExisted) {
-            await savedDir.create();
-          }
-          if (path.substring(path.length - 1) != "/") {
-            return "$path/";
-          }
-        }
-      },
-    );
+    var value = await _findLocalPath();
+    path = value ?? '';
+    if (value != null) {
+      final savedDir = Directory(path);
+      final hasExisted = savedDir.existsSync();
+      if (!hasExisted) {
+        await savedDir.create();
+      }
+      if (path.substring(path.length - 1) != "/") {
+        return "$path/";
+      }
+    }
     return path;
   }
 

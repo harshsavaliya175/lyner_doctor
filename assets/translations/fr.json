@@ -327,5 +327,6 @@
   "wouldYouLikeToContinue": "Souhaitez-vous continuer ?",
   "back": "Retour",
   "continueText": "Continuer",
-  "export":"Exporter"
+  "export":"Exporter",
+  "fileHasNotDownloaded":"File has not downloaded"
 }
