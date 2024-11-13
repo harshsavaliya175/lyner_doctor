@@ -49,15 +49,15 @@ class DevisController extends GetxController {
         if (result.data != null) {
           String url = "${ApiUrl.estimateQuotesPdf}${result.data}";
           Get.back();
-          await initDownLoadService().then(
-            (value) async {
-              await downloadFile(downLoadUrl: url).then((value) async {
-                if (Platform.isIOS) {
-                  await OpenFile.open(value);
-                } else {
-                  await OpenFile.open(value);
-                }
-              });
+          await initDownLoadService();
+          await downloadFile(downLoadUrl: url).then(
+            (String? value) async {
+              value.debugPrint;
+              if (Platform.isIOS) {
+                await OpenFile.open(value);
+              } else {
+                await OpenFile.open(value);
+              }
             },
           );
 

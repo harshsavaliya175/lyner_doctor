@@ -86,7 +86,7 @@ dependencies:
   percent_indicator: ^4.2.3
 
   # for get path
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
 
   #localization
   easy_localization: ^3.0.7
