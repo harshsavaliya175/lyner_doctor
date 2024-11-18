@@ -14,8 +14,8 @@ import 'package:lynerdoctor/ui/widgets/app_bar.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
-class AddNewPatient extends StatelessWidget {
-  AddNewPatient({super.key});
+class AddLynerConnectPatient extends StatelessWidget {
+  AddLynerConnectPatient({super.key});
 
   final AddNewPatientController controller = Get.put(AddNewPatientController());
 

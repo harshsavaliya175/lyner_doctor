@@ -10,6 +10,7 @@ import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:lynerdoctor/ui/screens/main/devis/devis_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
@@ -203,6 +204,111 @@ class DevisScreen extends StatelessWidget {
                       showPrefixIcon: false,
                     ),
                     15.space(),
+                    preferences.getString(SharedPreference.LOGIN_TYPE) ==
+                            SharedPreference.LOGIN_TYPE_CLINIC
+                        ? AppTextField(
+                            textEditingController: ctrl.doctorController,
+                            onChanged: (value) {},
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                ctrl.emailError = true;
+                                ctrl.update();
+                                return LocaleKeys
+                                    .pleaseSelectDoctor.translateText;
+                              }
+                              ctrl.update();
+                              return null;
+                            },
+                            readOnly: true,
+                            showCursor: false,
+                            onTap: () {
+                              ctrl.showDoctorDropDown =
+                                  !ctrl.showDoctorDropDown;
+                              ctrl.update();
+                            },
+                            textFieldPadding: EdgeInsets.zero,
+                            keyboardType: TextInputType.text,
+                            // isError: ctrl.emailError,
+                            hintText: LocaleKeys.select.translateText,
+                            labelText: LocaleKeys.doctor.translateText,
+                            showPrefixWidget: Assets.icons.icDown
+                                .svg(
+                                  height: 10,
+                                  width: 10,
+                                )
+                                .paddingOnly(left: 15, right: 15),
+                            showPrefixIcon: true,
+                          ).paddingOnly(bottom: 15)
+                        : Container(),
+                    Visibility(
+                      visible: ctrl.showDoctorDropDown,
+                      replacement: const SizedBox.shrink(),
+                      child: Container(
+                        // height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: primaryBrown),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const PageScrollPhysics(),
+                          separatorBuilder: (BuildContext context, int index) =>
+                              DottedBorder(
+                                borderType: BorderType.RRect,
+                                color: primaryBrown,
+                                padding: EdgeInsets.zero,
+                                radius: const Radius.circular(35),
+                                dashPattern: const [5, 5, 5, 5],
+                                child: Container(),
+                              ),
+                          itemBuilder: (BuildContext builder, int index) {
+                            DoctorData? data = ctrl.doctorDataList[
+                            index]; // Display filtered data when search is not empty
+                            return InkWell(
+                              onTap: () {
+                                print("onTap : $index");
+                                ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
+                                ctrl.doctorController.text =
+                                '${data?.firstName} ${data?.lastName}';
+                                ctrl.selectedDoctorData = data;
+                                print(ctrl.selectedDoctorData);
+                                ctrl.update();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: '${data?.firstName} ${data?.lastName}'
+                                        .appCommonText(
+                                      color: Colors.black,
+                                      maxLine: 1,
+                                      align: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      weight: FontWeight.w400,
+                                      size: !isTablet ? 15 : 18,
+                                    ),
+                                  ),
+                                  if (ctrl.doctorController.text.contains(
+                                      '${data?.firstName} ${data?.lastName}')) ...[
+                                    Assets.icons.icSelectArrow.svg(
+                                      colorFilter: ColorFilter.mode(
+                                        primaryBrown,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ] else ...[
+                                    const SizedBox.shrink(),
+                                  ]
+                                ],
+                              ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
+                            );
+                          },
+                          itemCount: ctrl.doctorDataList.length,
+                        ).paddingOnly(top: 5, bottom: 5),
+                      ).paddingOnly( bottom: 15),
+                    ),
+
                     AppTextField(
                       textEditingController: ctrl.totalAmountController,
                       onChanged: (String value) {},
@@ -225,6 +331,7 @@ class DevisScreen extends StatelessWidget {
                       labelText: LocaleKeys.totalAmount.translateText,
                       showPrefixIcon: false,
                     ),
+
                     15.space(),
                     AppTextField(
                       textEditingController: ctrl.numberOfSemesterController,

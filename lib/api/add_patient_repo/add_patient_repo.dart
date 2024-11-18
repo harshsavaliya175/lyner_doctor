@@ -172,6 +172,7 @@ class AddPatientRepo {
     required String totalAmount,
     required String numberOfSemester,
     required String contentionPrice,
+    required int doctorId,
   }) async {
     ResponseItem result;
     bool status = true;
@@ -186,6 +187,7 @@ class AddPatientRepo {
       "total_amount": double.parse(totalAmount),
       "num_of_semester": double.parse(numberOfSemester),
       "contention_price": double.parse(contentionPrice),
+      "doctor_id":doctorId
     };
 
     final Map<String, String> queryParameters = {

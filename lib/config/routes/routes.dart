@@ -53,7 +53,7 @@ class Routes {
     GetPage(name: Routes.addPatientScreen, page: () => AddPatientScreen()),
     GetPage(name: Routes.devisScreen, page: () => DevisScreen()),
     GetPage(name: Routes.editProfile, page: () => EditProfile()),
-    GetPage(name: Routes.addLynerConnect, page: () => AddNewPatient()),
+    GetPage(name: Routes.addLynerConnect, page: () => AddLynerConnectPatient()),
     GetPage(
         name: Routes.lynerConnectDetails, page: () => LynerConnectDetails()),
     GetPage(

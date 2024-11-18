@@ -4,17 +4,33 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
+import 'package:lynerdoctor/api/patients_repo/patients_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/notif_util.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../generated/locale_keys.g.dart';
 
 class DevisController extends GetxController {
+
+  @override
+  void onInit() {
+
+    if(preferences.getString(SharedPreference.LOGIN_TYPE) ==
+        SharedPreference.LOGIN_TYPE_CLINIC){
+      getDoctorList();
+    }
+
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   bool firstNameError = false;
   bool lastNameError = false;
   bool emailError = false;
@@ -23,10 +39,14 @@ class DevisController extends GetxController {
   bool connectionError = false;
   bool isLoading = false;
   bool showNumberOfSemesterDropDown = false;
+
+  bool showDoctorDropDown = false;
   String? dateTextField;
   String? selectedNumberOfSemester;
   DateTime? pickedDate;
   List numberOfSemester = ["1", "2", "3", "4", "5", "6"];
+  List<DoctorData?> doctorDataList = [];
+  DoctorData? selectedDoctorData;
   GlobalKey<FormState> patientInformationFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -36,19 +56,23 @@ class DevisController extends GetxController {
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController numberOfSemesterController = TextEditingController();
 
+  TextEditingController doctorController = TextEditingController();
+
   void getLynerConnectList(BuildContext context) async {
     isLoading = true;
     ResponseItem result = await AddPatientRepo.devisExport(
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
-      dateOfBirth: dateOfBirthController.text.trim(),
+      dateOfBirth: dateOfBirthController.text.trim().replaceAll("/", "-"),
       email: emailController.text.trim(),
       totalAmount: totalAmountController.text.trim(),
       numberOfSemester: numberOfSemesterController.text.trim(),
       contentionPrice: contentionPriceController.text.trim(),
+      doctorId: selectedDoctorData!.doctorId,
     );
     try {
       if (result.status) {
+
         if (result.data != null) {
           String url = "${ApiUrl.estimateQuotesPdf}${result.data}";
           Get.back();
@@ -149,5 +173,32 @@ class DevisController extends GetxController {
           (await getApplicationDocumentsDirectory()).absolute.path;
     }
     return externalStorageDirPath;
+  }
+
+
+  getDoctorList() async {
+    doctorDataList.clear();
+    isLoading = true;
+    ResponseItem result = await PatientsRepo.getDoctorListByClinicId(
+        clinicId: preferences.getInt(SharedPreference.CLINIC_ID) ?? 0);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          result.data.forEach(
+                (dynamic e) {
+              DoctorData doctorData = DoctorData.fromJson(e);
+              doctorDataList.add(doctorData);
+            },
+          );
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
   }
 }
