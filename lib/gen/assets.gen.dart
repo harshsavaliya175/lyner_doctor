@@ -108,6 +108,9 @@ class $AssetsIconsGen {
   SvgGenImage get icEditProfile =>
       const SvgGenImage('assets/icons/ic_edit_profile.svg');
 
+  /// File path: assets/icons/ic_eye.svg
+  SvgGenImage get icEye => const SvgGenImage('assets/icons/ic_eye.svg');
+
   /// File path: assets/icons/ic_file.svg
   SvgGenImage get icFile => const SvgGenImage('assets/icons/ic_file.svg');
 
@@ -198,6 +201,10 @@ class $AssetsIconsGen {
   SvgGenImage get icVideoFile =>
       const SvgGenImage('assets/icons/ic_videoFile.svg');
 
+  /// File path: assets/icons/ic_word_file.svg
+  SvgGenImage get icWordFile =>
+      const SvgGenImage('assets/icons/ic_word_file.svg');
+
   /// File path: assets/icons/ic_zip.svg
   SvgGenImage get icZip => const SvgGenImage('assets/icons/ic_zip.svg');
 
@@ -229,6 +236,7 @@ class $AssetsIconsGen {
         icDotsMenu,
         icDown,
         icEditProfile,
+        icEye,
         icFile,
         icFilter,
         icFinancial,
@@ -256,6 +264,7 @@ class $AssetsIconsGen {
         icTeethWithScreen,
         icUser,
         icVideoFile,
+        icWordFile,
         icZip,
         lock,
         openEye,

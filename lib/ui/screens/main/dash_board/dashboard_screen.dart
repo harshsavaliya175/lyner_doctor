@@ -7,6 +7,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -31,6 +32,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     registerIsolateProgress();
     super.initState();
   }
+
+
+
 
   Future<void> registerIsolateProgress() async {
     IsolateNameServer.registerPortWithName(
@@ -95,6 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     IsolateNameServer.removePortNameMapping('downloader_send_port');
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -174,10 +179,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.showAppBottomSheet(
-            contentWidget: AddNewPatientBottomSheet(),
-          );
-          // Get.toNamed(Routes.addPatientScreen, arguments: null);
+          // context.showAppBottomSheet(
+          //   contentWidget: AddNewPatientBottomSheet(),
+          // );
+             Get.toNamed(Routes.addPatientScreen, arguments: null);
         },
         child: Icon(Icons.add, size: 40, color: whiteColor),
         heroTag: Object(),

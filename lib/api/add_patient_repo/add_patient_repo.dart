@@ -204,6 +204,27 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> getEstimateQuotesData() async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getEstimateQuotesData,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.getRequest(requestUrl,
+        isPassAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> addUpdatePatientDetails({
     required int toothCaseId,
     required int patientId,

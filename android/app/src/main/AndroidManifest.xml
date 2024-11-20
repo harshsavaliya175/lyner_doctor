@@ -11,6 +11,8 @@
         android:label="Lyner Pro"
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true"
+        android:enableOnBackInvokedCallback="true"
+
         android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity

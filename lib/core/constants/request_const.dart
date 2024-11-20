@@ -66,6 +66,7 @@ class MethodNames {
       "getPatientInformationDetails";
   static const String getPatientRefinementImage = "getPatientRefinementImage";
   static const String exportEstimateQuotesPdf = "exportEstimateQuotesPdf";
+  static const String getEstimateQuotesData = "getEstimateQuotesData";
   static const String getPatientPrescriptionDetails =
       "getPatientPrescriptionDetails";
   static const String getClinicBillingAddresList = "getClinicBillingAddresList";

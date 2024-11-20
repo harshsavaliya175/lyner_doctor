@@ -101,6 +101,14 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 16.space(),
                 profileScreenItem(
+                  leadingIcon: Assets.icons.icDevis,
+                  title:LocaleKeys.devis,
+                  onTap: () {
+                    Get.toNamed(Routes.reportListScreen, arguments: null);
+                  },
+                ),
+                16.space(),
+                profileScreenItem(
                   leadingIcon: Assets.icons.icEditProfile,
                   title: LocaleKeys.editProfile,
                   onTap: () {

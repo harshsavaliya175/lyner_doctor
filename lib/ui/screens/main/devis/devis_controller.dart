@@ -12,20 +12,24 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/model/clinic_model.dart';
+import 'package:lynerdoctor/model/reports_estimation.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../generated/locale_keys.g.dart';
 
 class DevisController extends GetxController {
-
   @override
   void onInit() {
-
-    if(preferences.getString(SharedPreference.LOGIN_TYPE) ==
-        SharedPreference.LOGIN_TYPE_CLINIC){
+    getEstimateQuotesData();
+    if (preferences.getString(SharedPreference.LOGIN_TYPE) ==
+        SharedPreference.LOGIN_TYPE_CLINIC) {
       getDoctorList();
+
+    }else{
+      clinicData = preferences.getClinicData();
     }
+
 
     // TODO: implement onInit
     super.onInit();
@@ -46,7 +50,9 @@ class DevisController extends GetxController {
   DateTime? pickedDate;
   List numberOfSemester = ["1", "2", "3", "4", "5", "6"];
   List<DoctorData?> doctorDataList = [];
+  List<EstimateQuotesData?> getEstimationReportList = [];
   DoctorData? selectedDoctorData;
+  ClinicData? clinicData;
   GlobalKey<FormState> patientInformationFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -68,12 +74,12 @@ class DevisController extends GetxController {
       totalAmount: totalAmountController.text.trim(),
       numberOfSemester: numberOfSemesterController.text.trim(),
       contentionPrice: contentionPriceController.text.trim(),
-      doctorId: selectedDoctorData!.doctorId,
+      doctorId: selectedDoctorData != null ? selectedDoctorData!.doctorId : clinicData!.doctorData!.doctorId,
     );
     try {
       if (result.status) {
-
         if (result.data != null) {
+          getEstimateQuotesData();
           String url = "${ApiUrl.estimateQuotesPdf}${result.data}";
           Get.back();
           await initDownLoadService();
@@ -99,6 +105,53 @@ class DevisController extends GetxController {
       isLoading = false;
     }
     update();
+  }
+
+  getEstimateQuotesData() async {
+    isLoading = true;
+    ResponseItem result = await AddPatientRepo.getEstimateQuotesData();
+    try {
+      if (result.status) {
+        GetEstimateQuotesData res =
+            GetEstimateQuotesData.fromJson(result.toJson());
+        // List<EstimateQuotesData>.from(json["data"]!.map((x) => EstimateQuotesData.fromJson(x))),
+
+        if (res.data != null) {
+          getEstimationReportList = res.data ?? [];
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  onShowTap(String data) async {
+    String url = "${ApiUrl.estimateQuotesPdf}${data}";
+    isLoading = true;
+    try {
+      await initDownLoadService();
+      await downloadFile(downLoadUrl: url).then(
+        (String? value) async {
+          if (value != null && await File(value).exists()) {
+            if (Platform.isIOS) {
+              await OpenFile.open(value);
+            } else {
+              await OpenFile.open(value);
+            }
+          } else {
+            showAppSnackBar(LocaleKeys.fileHasNotDownloaded.translateText);
+          }
+        },
+      );
+    } catch (e) {
+      print("Error in Showing Report");
+      isLoading = false;
+    }
+    isLoading = false;
   }
 
   String? _localPath;
@@ -175,7 +228,6 @@ class DevisController extends GetxController {
     return externalStorageDirPath;
   }
 
-
   getDoctorList() async {
     doctorDataList.clear();
     isLoading = true;
@@ -186,7 +238,7 @@ class DevisController extends GetxController {
       if (result.status) {
         if (result.data != null) {
           result.data.forEach(
-                (dynamic e) {
+            (dynamic e) {
               DoctorData doctorData = DoctorData.fromJson(e);
               doctorDataList.add(doctorData);
             },
