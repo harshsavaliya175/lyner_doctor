@@ -87,6 +87,7 @@ class PatientDetailsModel {
   final ClinicBill? clinicBill;
   final ClinicLoc? clinicLoc;
   final List<RefinementList>? refinementList;
+  final RefinementList? containment;
 
   PatientDetailsModel({
     this.patientId,
@@ -132,51 +133,54 @@ class PatientDetailsModel {
     this.clinicBill,
     this.clinicLoc,
     this.refinementList,
+    this.containment,
   });
 
-  PatientDetailsModel copyWith(
-          {int? patientId,
-          String? patientUniqueId,
-          String? firstName,
-          String? lastName,
-          dynamic email,
-          DateTime? dateOfBirth,
-          String? patientProfile,
-          DateTime? bondDate,
-          String? patient3DModalLink,
-          String? linkPassword,
-          String? addPlanCount,
-          String? clinicItem,
-          String? adminItem,
-          int? toothCaseId,
-          int? doctorId,
-          int? clinicId,
-          int? clinicLocationId,
-          int? clinicBillingId,
-          dynamic technicianId,
-          DateTime? technicianStartDate,
-          int? adminNewCase,
-          int? technicianNewCase,
-          int? adminTask,
-          int? adminPatient,
-          int? clinicTask,
-          int? clinicPatient,
-          int? isApproved,
-          int? isProduction,
-          int? isDelivered,
-          int? isVirtual,
-          dynamic trackingId,
-          int? isDraft,
-          int? isDeleted,
-          dynamic draftViewPage,
-          DateTime? createdAt,
-          DateTime? updatedAt,
-          Doctor? doctor,
-          PatientPhoto? patientPhoto,
-          ToothCase? toothCase,
-          ClinicBill? clinicBill,
-          ClinicLoc? clinicLoc,
-          List<RefinementList>? refinementList}) =>
+  PatientDetailsModel copyWith({
+    int? patientId,
+    String? patientUniqueId,
+    String? firstName,
+    String? lastName,
+    dynamic email,
+    DateTime? dateOfBirth,
+    String? patientProfile,
+    DateTime? bondDate,
+    String? patient3DModalLink,
+    String? linkPassword,
+    String? addPlanCount,
+    String? clinicItem,
+    String? adminItem,
+    int? toothCaseId,
+    int? doctorId,
+    int? clinicId,
+    int? clinicLocationId,
+    int? clinicBillingId,
+    dynamic technicianId,
+    DateTime? technicianStartDate,
+    int? adminNewCase,
+    int? technicianNewCase,
+    int? adminTask,
+    int? adminPatient,
+    int? clinicTask,
+    int? clinicPatient,
+    int? isApproved,
+    int? isProduction,
+    int? isDelivered,
+    int? isVirtual,
+    dynamic trackingId,
+    int? isDraft,
+    int? isDeleted,
+    dynamic draftViewPage,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Doctor? doctor,
+    PatientPhoto? patientPhoto,
+    ToothCase? toothCase,
+    ClinicBill? clinicBill,
+    ClinicLoc? clinicLoc,
+    List<RefinementList>? refinementList,
+    RefinementList? containment,
+  }) =>
       PatientDetailsModel(
         patientId: patientId ?? this.patientId,
         patientUniqueId: patientUniqueId ?? this.patientUniqueId,
@@ -220,6 +224,7 @@ class PatientDetailsModel {
         clinicBill: clinicBill ?? this.clinicBill,
         clinicLoc: clinicLoc ?? this.clinicLoc,
         refinementList: refinementList ?? this.refinementList,
+        containment: containment ?? this.containment,
       );
 
   factory PatientDetailsModel.fromRawJson(String str) =>
@@ -289,6 +294,9 @@ class PatientDetailsModel {
         clinicLoc: json["clinic_loc"] == null
             ? null
             : ClinicLoc.fromJson(json["clinic_loc"]),
+        containment: json["patient_containment"] == null
+            ? null
+            : RefinementList.fromJson(json["patient_containment"]),
         refinementList: json["refinement_list"] == null
             ? []
             : List<RefinementList>.from(
@@ -340,6 +348,7 @@ class PatientDetailsModel {
         "tooth_case": toothCase?.toJson(),
         "clinic_bill": clinicBill?.toJson(),
         "clinic_loc": clinicLoc?.toJson(),
+        "patient_containment": containment?.toJson(),
         "refinement_list":
             List<dynamic>.from(refinementList!.map((x) => x.toJson())),
       };

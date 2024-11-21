@@ -147,6 +147,13 @@ class InformationScreen extends StatelessWidget {
                                         //     : (controller.selectedRefinementDropDownIndex == (controller.patientDetailsModel?.refinementList?.length ?? 0) + 1) ? controller.patientDetailsModel?.refinementList?[
                                         // controller
                                         //     .selectedRefinementDropDownIndex]:null;
+                                      } else {
+                                        if (index == 1) {
+                                          controller.selectedRefinementData =
+                                              controller.patientDetailsModel
+                                                      ?.containment ??
+                                                  null;
+                                        }
                                       }
                                       controller.update();
                                     },
@@ -493,84 +500,122 @@ class InformationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      if ((controller.patientDetailsModel?.toothCase
-                                  ?.totalRefinement ??
-                              0) >
-                          controller.finishingGutters) {
-                        if (controller.patientDetailsModel?.toothCase
-                                ?.totalRefinement !=
-                            0) {
-                          // int refinementNumber = 0;
-                          //
-                          // if (controller.patientDetailsModel?.refinementList
-                          //         ?.isNotEmpty ??
-                          //     false) {
-                          //   for (int i = 0;
-                          //       i <
-                          //           controller.patientDetailsModel!
-                          //               .refinementList!.length;
-                          //       i++) {
-                          //     if (controller.patientDetailsModel!
-                          //             .refinementList![i].isDraft ==
-                          //         1) {
-                          //       refinementNumber = controller
-                          //           .patientDetailsModel!
-                          //           .refinementList![i]
-                          //           .refinementNumber;
-                          //       break;
-                          //     }
-                          //   }
-                          // }
-                          Get.toNamed(
-                            Routes.uploadPhotographsScreen,
-                            arguments: {
-                              patientIdString:
-                                  controller.patientDetailsModel?.patientId,
-                              isRefinementString: true,
-                              refinementIdString:
-                                  controller.finishingGutters + 1,
-                            },
-                          );
+                    child: GestureDetector(
+                      onTap: () {
+                        if ((controller.patientDetailsModel?.toothCase
+                                    ?.totalRefinement ??
+                                0) >
+                            controller.finishingGutters) {
+                          if (controller.patientDetailsModel?.toothCase
+                                  ?.totalRefinement !=
+                              0) {
+                            // int refinementNumber = 0;
+                            //
+                            // if (controller.patientDetailsModel?.refinementList
+                            //         ?.isNotEmpty ??
+                            //     false) {
+                            //   for (int i = 0;
+                            //       i <
+                            //           controller.patientDetailsModel!
+                            //               .refinementList!.length;
+                            //       i++) {
+                            //     if (controller.patientDetailsModel!
+                            //             .refinementList![i].isDraft ==
+                            //         1) {
+                            //       refinementNumber = controller
+                            //           .patientDetailsModel!
+                            //           .refinementList![i]
+                            //           .refinementNumber;
+                            //       break;
+                            //     }
+                            //   }
+                            // }
+                            Get.toNamed(
+                              Routes.uploadPhotographsScreen,
+                              arguments: {
+                                patientIdString:
+                                    controller.patientDetailsModel?.patientId,
+                                isRefinementString: true,
+                                isRetentionString: false,
+                                refinementIdString:
+                                    controller.finishingGutters + 1,
+                              },
+                            );
+                          }
                         }
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: lightBrown,
-                        borderRadius: BorderRadius.all(Radius.circular(13)),
-                        border: Border.all(color: skyColor),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          LocaleKeys.finishingGutters.translateText
-                              .normalText(
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w600,
-                                fontSize: !isTablet ? 16 : 20,
-                              )
-                              .paddingOnly(right: 5, left: 5, top: 15),
-                          // controller.patientDetailsModel!=null && (controller.patientDetailsModel?.refinementList?.isNotEmpty??false)
-                          "${controller.finishingGutters}/${controller.patientDetailsModel?.toothCase?.totalRefinement ?? 0}"
-                              .normalText(
-                                color: hintColor,
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w600,
-                                fontSize: !isTablet ? 16 : 20,
-                              )
-                              .paddingOnly(
-                                  right: 5, left: 5, top: 10, bottom: 10),
-                        ],
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: lightBrown,
+                          borderRadius: BorderRadius.all(Radius.circular(13)),
+                          border: Border.all(color: skyColor),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            LocaleKeys.finishingGutters.translateText
+                                .normalText(
+                                  textAlign: TextAlign.center,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: !isTablet ? 16 : 20,
+                                )
+                                .paddingOnly(right: 5, left: 5, top: 15),
+                            // controller.patientDetailsModel!=null && (controller.patientDetailsModel?.refinementList?.isNotEmpty??false)
+                            "${controller.finishingGutters}/${controller.patientDetailsModel?.toothCase?.totalRefinement ?? 0}"
+                                .normalText(
+                                  color: hintColor,
+                                  textAlign: TextAlign.center,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: !isTablet ? 16 : 20,
+                                )
+                                .paddingOnly(
+                                    right: 5, left: 5, top: 10, bottom: 10),
+                          ],
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                   10.space(),
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      if ((controller
+                              .patientDetailsModel?.containment?.isDraft !=
+                          0)) {
+                        // int refinementNumber = 0;
+                        //
+                        // if (controller.patientDetailsModel?.refinementList
+                        //         ?.isNotEmpty ??
+                        //     false) {
+                        //   for (int i = 0;
+                        //       i <
+                        //           controller.patientDetailsModel!
+                        //               .refinementList!.length;
+                        //       i++) {
+                        //     if (controller.patientDetailsModel!
+                        //             .refinementList![i].isDraft ==
+                        //         1) {
+                        //       refinementNumber = controller
+                        //           .patientDetailsModel!
+                        //           .refinementList![i]
+                        //           .refinementNumber;
+                        //       break;
+                        //     }
+                        //   }
+                        // }
+                        Get.toNamed(
+                          Routes.uploadPhotographsScreen,
+                          arguments: {
+                            patientIdString:
+                                controller.patientDetailsModel?.patientId,
+                            isRefinementString: false,
+                            isRetentionString: true,
+                            refinementIdString: controller.finishingGutters + 1,
+                          },
+                        );
+                      }
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: lightBrown,
@@ -588,7 +633,7 @@ class InformationScreen extends StatelessWidget {
                                 fontSize: !isTablet ? 16 : 20,
                               )
                               .paddingOnly(right: 5, left: 5, top: 15),
-                          "0/0"
+                          "${controller.patientDetailsModel?.containment?.isDraft == 0 ? 1 : 0}/1"
                               .normalText(
                                 color: hintColor,
                                 textAlign: TextAlign.center,

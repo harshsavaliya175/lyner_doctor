@@ -148,6 +148,7 @@ class PatientsDetailsController extends GetxController {
   void clearRefinementList() {
     refinementList.clear();
     refinementList.add(LocaleKeys.beginningOfTreatment.translateText);
+    refinementList.add("Patient Containment");
     refinementController.text = refinementList[0];
   }
 

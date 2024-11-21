@@ -95,6 +95,7 @@ class AddPatientController extends GetxController {
   bool showDeliveryDropDown = false;
   PatientData? patientData;
   RefinementData? refinementData;
+  RefinementData? retentionData;
   TextEditingController patientTechniquesDetailsNote = TextEditingController();
 
   var patientId, refinementNumber;
@@ -102,6 +103,7 @@ class AddPatientController extends GetxController {
   String dicomFileName = LocaleKeys.uploadDICOMFile.translateText;
 
   bool isRefinement = false;
+  bool isRetention = false;
 
   @override
   Future<void> onInit() async {
@@ -109,10 +111,12 @@ class AddPatientController extends GetxController {
     pageController = PageController(initialPage: currentStep);
     if (Get.arguments != null) {
       isRefinement = Get.arguments[isRefinementString];
+      isRetention = Get.arguments[isRetentionString] ?? false;
       patientId = Get.arguments[patientIdString];
       refinementNumber = Get.arguments[refinementIdString];
     }
     print("isRefinement : $isRefinement");
+    print("isRetention : $isRetention");
     print("patientId : $patientId");
     print("refinement_number : $refinementNumber");
     //patientId = Get.arguments;
@@ -122,6 +126,11 @@ class AddPatientController extends GetxController {
         await getPatientRefinementImage();
         if (refinementData != null) {
           dicomFileName = getFileName(refinementData?.dicomFileName, 20);
+        }
+      } else if (isRetention) {
+        await getPatientRetentionImage();
+        if (retentionData != null) {
+          dicomFileName = getFileName(retentionData?.dicomFileName, 20);
         }
       } else {
         await getPatientInformationDetails();
@@ -143,7 +152,7 @@ class AddPatientController extends GetxController {
         await getPatientPrescriptionDetails();
       }
     }
-    if (!isRefinement) {
+    if (!isRefinement && !isRetention) {
       await fetchProducts();
       getDoctorList();
       getClinicLocationList();
@@ -757,6 +766,45 @@ class AddPatientController extends GetxController {
     update();
   }
 
+  Future<void> editPatientRetentionDetails({
+    File? file,
+    String? paramName,
+    bool? isBack,
+    int isDraft = 0,
+  }) async {
+    isLoading = false;
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "is_3shape": !isUploadStl ? 1 : 0,
+      "arcade_option": arcadeTratierText,
+      "arcade_comment": commentController.text,
+      "is_draft": isDraft,
+      "containment_guideline": commentController.text,
+    };
+
+    ResponseItem result = await AddPatientRepo.editPatientContainmentDetails(
+      file: file,
+      paramName: paramName,
+      patientId: patientId.toString(),
+      params: params,
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        // showAppSnackBar(result.msg);
+        isLoading = false;
+        if (isBack != null && isBack) {
+          Get.back();
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
   Future<void> uploadRefinementMultipleImage({
     required List<File> files,
   }) async {
@@ -765,6 +813,28 @@ class AddPatientController extends GetxController {
       imageList: files,
       patientId: patientId.toString(),
       refinementNumber: refinementNumber,
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        // showAppSnackBar(result.msg);
+        isLoading = false;
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> uploadRetentionMultipleImage({
+    required List<File> files,
+  }) async {
+    isLoading = false;
+    ResponseItem result = await AddPatientRepo.uploadRetentionMultipleImage(
+      imageList: files,
+      patientId: patientId.toString(),
     );
     isLoading = false;
     try {
@@ -1007,65 +1077,6 @@ class AddPatientController extends GetxController {
           RefinementModel patientModel =
               RefinementModel.fromJson(result.toJson());
           refinementData = patientModel.data;
-          /*selectedProduct = ProductListData(
-            toothCaseId: patientData?.toothCase?.toothCaseId?.toInt() ?? 0,
-            caseDesc: patientData?.toothCase?.caseDesc?.toString() ?? "",
-            caseName: patientData?.toothCase?.caseName?.toString() ?? "",
-            casePrice: patientData?.toothCase?.casePrice?.toString() ?? '',
-            caseSteps: patientData?.toothCase?.caseSteps?.toString() ?? '',
-          );
-          if (selectedProduct != null) {
-            isSelectedProductPlan = true;
-          }*/
-          //firstNameController.text = patientData?.firstName ?? '';
-          //lastNameController.text = patientData?.lastName ?? '';
-          //emailController.text = patientData?.email ?? '';
-          /*if (patientData?.dateOfBirth != null) {
-            dateTextField = DateFormat(
-              'dd/MM/yyyy',
-              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '')
-                      .isNotEmpty
-                  ? preferences.getString(SharedPreference.LANGUAGE_CODE)
-                  : 'fr',
-            ).format(patientData!.dateOfBirth!);
-            dateOfBirthController.text = dateTextField!;
-          } else {
-            dateOfBirthController.text = '';
-          }*/
-          /*selectedClinicDeliveryData = ClinicLocation(
-              clinicLocationId: patientData?.clinicLoc?.clinicLocationId ?? 0,
-              clinicId: patientData?.clinicLoc?.clinicId ?? 0,
-              contactName: patientData?.clinicLoc?.contactName ?? "",
-              contactNumber: patientData?.clinicLoc?.contactNumber ?? "",
-              address: patientData?.clinicLoc?.address ?? "",
-              latitude: patientData?.clinicLoc?.latitude ?? "",
-              longitude: patientData?.clinicLoc?.longitude ?? "");
-          deliveryAddressController.text = selectedClinicDeliveryData?.address ?? '';*/
-          /*selectedClinicBillingData = ClinicBillingData(
-            clinicBillingId: patientData?.clinicBill?.clinicBillingId ?? 0,
-            clinicId: patientData?.clinicBill?.clinicId ?? 0,
-            billingName: patientData?.clinicBill?.billingName ?? "",
-            billingAddress: patientData?.clinicBill?.billingAddress ?? "",
-            billingLatitude: patientData?.clinicBill?.billingLatitude ?? "",
-            billingLongitude: patientData?.clinicBill?.billingLongitude ?? "",
-            billingMail: patientData?.clinicBill?.billingMail ?? "",
-            billingVat: patientData?.clinicBill?.billingVat ?? "",
-          );
-          billingAddressController.text = selectedClinicBillingData?.billingAddress ?? '';*/
-          /*selectedDoctorData = DoctorData(
-            doctorId: patientData?.doctor?.doctorId ?? 0,
-            doctorUniqueId: patientData?.doctor?.doctorUniqueId ?? "",
-            firstName: patientData?.doctor?.firstName ?? "",
-            lastName: patientData?.doctor?.lastName ?? "",
-            email: patientData?.doctor?.email ?? "",
-            mobileNumber: patientData?.doctor?.mobileNumber ?? "",
-            doctorProfile: patientData?.doctor?.doctorProfile ?? "",
-            country: patientData?.doctor?.country ?? "",
-            language: patientData?.doctor?.language ?? "",
-            clinicId: patientData?.doctor?.clinicId ?? 0,
-          );
-          doctorController.text = (selectedDoctorData?.firstName ?? '') +
-              (selectedDoctorData?.lastName ?? '');*/
 
           /// ARCADE
           getArcadeTraiter(patientModel.data.arcadeOption);
@@ -1075,6 +1086,38 @@ class AddPatientController extends GetxController {
           lowerJawImageFileTextCtrl.text =
               refinementData?.lowerJawStlFile ?? '';
           isUploadStl = refinementData?.is3Shape == 1
+              ? true
+              : false; //!isUploadStl ? 1 : 0
+          print(isUploadStl);
+          isLoading = false;
+          update();
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> getPatientRetentionImage() async {
+    ResponseItem result =
+        await AddPatientRepo.getPatientRetentionImage(patientId);
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          RefinementModel patientModel =
+              RefinementModel.fromJson(result.toJson());
+          retentionData = patientModel.data;
+
+          /// ARCADE
+          getArcadeTraiter(patientModel.data.arcadeOption);
+          commentController.text = retentionData?.arcadeComment ?? '';
+          upperJawImageFileTextCtrl.text = retentionData?.upperJawStlFile ?? '';
+          lowerJawImageFileTextCtrl.text = retentionData?.lowerJawStlFile ?? '';
+          isUploadStl = retentionData?.is3Shape == 1
               ? true
               : false; //!isUploadStl ? 1 : 0
           print(isUploadStl);
@@ -1311,7 +1354,7 @@ class AddPatientController extends GetxController {
     uploadId = null; // Reset uploadId for next upload
     update();
   }*/
-  Future<void> uploadDicomFile(File file, bool refineScreen) async {
+  Future<void> uploadDicomFile(File file, String forWhat) async {
     isDcomFileLoading = true;
     uploadProgress = 0.0;
     update();
@@ -1354,7 +1397,8 @@ class AddPatientController extends GetxController {
           totalChunks: '$totalChunks',
           uploadId: uploadId,
           patientId: patientData?.patientId.toString() ?? patientId.toString(),
-          isForRefinements: isRefinement ? 1 : 0,
+          forWhat: forWhat,
+          // isForRefinements: isRefinement ? 1 : 0,
           refinementNumber: refinementNumber,
         );
         if (!result.status) {

@@ -224,7 +224,11 @@ class AddPatientScreen extends StatelessWidget {
                         children: [
                           chooseTheProduct(ctrl),
                           patientInformation(ctrl),
-                          uploadPhotographs(ctrl, false),
+                          uploadPhotographs(
+                            ctrl: ctrl,
+                            isRefineScreen: false,
+                            isRetentionScreen: false,
+                          ),
                           prescriptionScreen(ctrl),
                         ],
                       ),
@@ -875,7 +879,11 @@ Widget patientInformation(AddPatientController ctrl) {
   );
 }
 
-Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
+Widget uploadPhotographs({
+  required AddPatientController ctrl,
+  required bool isRetentionScreen,
+  required bool isRefineScreen,
+}) {
   return Stack(
     children: [
       ListView(
@@ -916,9 +924,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgProfile.path,
                 title: LocaleKeys.profile.translateText,
-                urlImage: refineScreen
-                    ? ctrl.refinementData?.profile ?? ''
-                    : ctrl.patientData?.patientPhoto?.gauche ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.profile ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.profile ?? '')
+                        : (ctrl.patientData?.patientPhoto?.gauche ?? ''),
                 urlPath: "patient_gauche",
                 fileImage: ctrl.profileImageFile ?? File(''),
                 onTap: () {
@@ -929,8 +939,14 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.profileImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_gauche',
+                          file: file,
+                          isDraft: 1,
+                        );
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRetentionDetails(
                           paramName: 'patient_gauche',
                           file: file,
                           isDraft: 1,
@@ -950,9 +966,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgFace.path,
                 title: LocaleKeys.face.translateText,
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.face ?? ''
-                    : ctrl.patientData?.patientPhoto?.face ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.face ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.face ?? '')
+                        : (ctrl.patientData?.patientPhoto?.face ?? ''),
                 urlPath: "patient_face",
                 fileImage: ctrl.faceImageFile ?? File(''),
                 onTap: () {
@@ -963,9 +981,18 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.faceImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_face', file: file, isDraft: 1);
+                          paramName: 'patient_face',
+                          file: file,
+                          isDraft: 1,
+                        );
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_face',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_face', file: file);
@@ -979,9 +1006,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgSmile.path,
                 title: LocaleKeys.smile.translateText,
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.smile ?? ''
-                    : ctrl.patientData?.patientPhoto?.sourire ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.smile ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.smile ?? '')
+                        : (ctrl.patientData?.patientPhoto?.sourire ?? ''),
                 urlPath: "patient_sourire",
                 fileImage: ctrl.smileImageFile ?? File(''),
                 onTap: () {
@@ -992,11 +1021,18 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.smileImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
-                            paramName: 'patient_sourire',
-                            file: file,
-                            isDraft: 1);
+                          paramName: 'patient_sourire',
+                          file: file,
+                          isDraft: 1,
+                        );
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_sourire',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_sourire', file: file);
@@ -1016,9 +1052,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgIntraMax.path,
                 title: LocaleKeys.intraMax.translateText,
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.intraMax ?? ''
-                    : ctrl.patientData?.patientPhoto?.interMax ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.intraMax ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.intraMax ?? '')
+                        : (ctrl.patientData?.patientPhoto?.interMax ?? ''),
                 urlPath: "patient_intra_max",
                 fileImage: ctrl.intraMaxImageFile ?? File(''),
                 onTap: () {
@@ -1029,11 +1067,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMaxImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
                             paramName: 'patient_intra_max',
                             file: file,
                             isDraft: 1);
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_intra_max',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_intra_max', file: file);
@@ -1090,8 +1134,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           ctrl.intraRightImageFile = ctrl.smileImg[5];
                           ctrl.intraFaceImageFile = ctrl.smileImg[6];
                           ctrl.intraLeftImageFile = ctrl.smileImg[7];
-                          if (refineScreen) {
+                          if (isRefineScreen) {
                             ctrl.uploadRefinementMultipleImage(
+                                files: ctrl.smileImg);
+                          } else if (isRetentionScreen) {
+                            ctrl.uploadRetentionMultipleImage(
                                 files: ctrl.smileImg);
                           } else {
                             ctrl.uploadPatientMultipleImage(
@@ -1109,9 +1156,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgIntraMand.path,
                 title: LocaleKeys.intraMand.translateText,
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.intraMand ?? ''
-                    : ctrl.patientData?.patientPhoto?.interMandi ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.intraMand ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.intraMand ?? '')
+                        : (ctrl.patientData?.patientPhoto?.interMandi ?? ''),
                 urlPath: "patient_intra_gauche",
                 fileImage: ctrl.intraMandImageFile ?? File(''),
                 onTap: () {
@@ -1122,11 +1171,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraMandImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
                             paramName: 'patient_intra_gauche',
                             file: file,
                             isDraft: 1);
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_intra_gauche',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_intra_gauche', file: file);
@@ -1156,9 +1211,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               photoCardWidget(
                 image: Assets.images.imgInterRight.path,
                 urlPath: "patient_inter_gauche",
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.interRight ?? ''
-                    : ctrl.patientData?.patientPhoto?.interGauche ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.interRight ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.interRight ?? '')
+                        : (ctrl.patientData?.patientPhoto?.interGauche ?? ''),
                 fileImage: ctrl.intraRightImageFile ?? File(''),
                 title: LocaleKeys.intraRight.translateText,
                 onTap: () {
@@ -1169,11 +1226,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraRightImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
                             paramName: 'patient_inter_gauche',
                             file: file,
                             isDraft: 1);
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_inter_gauche',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_inter_gauche', file: file);
@@ -1185,9 +1248,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               ),
               10.space(),
               photoCardWidget(
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.interFace ?? ''
-                    : ctrl.patientData?.patientPhoto?.interFace ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.interFace ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.interFace ?? '')
+                        : (ctrl.patientData?.patientPhoto?.interFace ?? ''),
                 fileImage: ctrl.intraFaceImageFile ?? File(''),
                 urlPath: "patient_inter_face",
                 image: Assets.images.imgInterFace.path,
@@ -1200,11 +1265,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File? file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraFaceImageFile = file!;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
                         ctrl.editPatientRefinementDetails(
                             paramName: 'patient_inter_face',
                             file: file,
                             isDraft: 1);
+                      } else if (isRetentionScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_inter_face',
+                          file: file,
+                          isDraft: 1,
+                        );
                       } else {
                         ctrl.uploadPatientSingleImage(
                             paramName: 'patient_inter_face', file: file);
@@ -1216,9 +1287,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               ),
               10.space(),
               photoCardWidget(
-                urlImage: refineScreen == true
-                    ? ctrl.refinementData?.interLeft ?? ''
-                    : ctrl.patientData?.patientPhoto?.interDroite ?? '',
+                urlImage: isRefineScreen
+                    ? (ctrl.refinementData?.interLeft ?? '')
+                    : isRetentionScreen
+                        ? (ctrl.retentionData?.interLeft ?? '')
+                        : (ctrl.patientData?.patientPhoto?.interDroite ?? ''),
                 fileImage: ctrl.intraLeftImageFile ?? File(''),
                 urlPath: "patient_intra_droite",
                 image: Assets.images.imgInterLeft.path,
@@ -1231,7 +1304,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     onImageChose: (File file) async {
                       // ctrl.cuisinePhoto?[0] =(file!);
                       ctrl.intraLeftImageFile = file;
-                      if (refineScreen) {
+                      if (isRefineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          paramName: 'patient_intra_droite',
+                          file: file,
+                          isDraft: 1,
+                        );
+                      } else if (isRetentionScreen) {
                         ctrl.editPatientRefinementDetails(
                           paramName: 'patient_intra_droite',
                           file: file,
@@ -1279,11 +1358,18 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.radiosFirstImageFile = file!;
-                        if (refineScreen) {
+                        if (isRefineScreen) {
                           ctrl.editPatientRefinementDetails(
-                              paramName: 'patient_panoramique',
-                              file: file,
-                              isDraft: 1);
+                            paramName: 'patient_panoramique',
+                            file: file,
+                            isDraft: 1,
+                          );
+                        } else if (isRetentionScreen) {
+                          ctrl.editPatientRetentionDetails(
+                            paramName: 'patient_panoramique',
+                            file: file,
+                            isDraft: 1,
+                          );
                         } else {
                           ctrl.uploadPatientSingleImage(
                               paramName: 'patient_panoramique', file: file);
@@ -1303,15 +1389,18 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(10),
                         )
-                      : (refineScreen
+                      : (isRefineScreen
                               ? (ctrl.refinementData?.panRadio == "" ||
                                   ctrl.refinementData?.panRadio == null)
-                              : (ctrl.patientData?.patientPhoto
-                                          ?.paramiqueRadio ==
-                                      "" ||
-                                  ctrl.patientData?.patientPhoto
-                                          ?.paramiqueRadio ==
-                                      null))
+                              : (isRetentionScreen)
+                                  ? (ctrl.retentionData?.panRadio == "" ||
+                                      ctrl.retentionData?.panRadio == null)
+                                  : (ctrl.patientData?.patientPhoto
+                                              ?.paramiqueRadio ==
+                                          "" ||
+                                      ctrl.patientData?.patientPhoto
+                                              ?.paramiqueRadio ==
+                                          null))
                           ? HomeImage.assetImage(
                               path: Assets.images.imgTab.path,
                               height: !isTablet ? 135 : 230,
@@ -1320,11 +1409,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               // fit: BoxFit.cover,
                             )
                           : HomeImage.networkImage(
-                              path: refineScreen == true
-                                  ? "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.refinementData?.panRadio}" ??
-                                      ''
-                                  : "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}" ??
-                                      '',
+                              path: isRefineScreen
+                                  ? "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.refinementData?.panRadio}"
+                                  : isRetentionScreen
+                                      ? "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.retentionData?.panRadio}"
+                                      : "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.patientData?.patientPhoto?.paramiqueRadio}",
                               height: !isTablet ? 121 : 215,
                               width: !isTablet ? 200 : 230,
                               shape: BoxShape.rectangle,
@@ -1342,11 +1431,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       onImageChose: (File? file) async {
                         // ctrl.cuisinePhoto?[0] =(file!);
                         ctrl.radiosSecondImageFile = file!;
-                        if (refineScreen) {
+                        if (isRefineScreen) {
                           ctrl.editPatientRefinementDetails(
                               paramName: 'patient_cephalometrique',
                               file: file,
                               isDraft: 1);
+                        } else if (isRetentionScreen) {
+                          ctrl.editPatientRetentionDetails(
+                            paramName: 'patient_cephalometrique',
+                            file: file,
+                            isDraft: 1,
+                          );
                         } else {
                           ctrl.uploadPatientSingleImage(
                               paramName: 'patient_cephalometrique', file: file);
@@ -1365,13 +1460,18 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(10),
                         )
-                      : (refineScreen
+                      : (isRefineScreen
                               ? (ctrl.refinementData?.cephalRadio == "" ||
                                   ctrl.refinementData?.cephalRadio == null)
-                              : (ctrl.patientData?.patientPhoto?.cephalRadio ==
-                                      "" ||
-                                  ctrl.patientData?.patientPhoto?.cephalRadio ==
-                                      null))
+                              : (isRetentionScreen)
+                                  ? (ctrl.retentionData?.cephalRadio == "" ||
+                                      ctrl.retentionData?.cephalRadio == null)
+                                  : (ctrl.patientData?.patientPhoto
+                                              ?.cephalRadio ==
+                                          "" ||
+                                      ctrl.patientData?.patientPhoto
+                                              ?.cephalRadio ==
+                                          null))
                           ? HomeImage.assetImage(
                               path: Assets.images.imgTab.path,
                               height: !isTablet ? 135 : 230,
@@ -1380,9 +1480,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                               // fit: BoxFit.cover,
                             )
                           : HomeImage.networkImage(
-                              path: refineScreen == true
+                              path: isRefineScreen
                                   ? "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.refinementData?.cephalRadio}"
-                                  : "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
+                                  : isRetentionScreen
+                                      ? "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.retentionData?.cephalRadio}"
+                                      : "${ApiUrl.baseImagePatientPath}patient_cephalometrique/${ctrl.patientData?.patientPhoto?.cephalRadio}",
                               height: !isTablet ? 121 : 215,
                               width: !isTablet ? 200 : 230,
                               shape: BoxShape.rectangle,
@@ -1489,24 +1591,28 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                   showCursor: false,
                   onTap: () {
                     imageUploadUtils.pickStlFileFormStorage(
-                        context: Get.context!,
-                        onFileChose: (File? file) async {
-                          // ctrl.cuisinePhoto?[0] =(file!);
-                          ctrl.upperJawImageFile = file!;
-                          ctrl.upperJawImageFileTextCtrl.text =
-                              ctrl.upperJawImageFile != null
-                                  ? ctrl.upperJawImageFile!.path.split('/').last
-                                  : '';
-                          if (refineScreen) {
-                            ctrl.editPatientRefinementDetails(
-                                paramName: 'upper_jaw_stl_file', file: file);
-                          } else {
-                            ctrl.uploadPatientSingleImage(
-                                paramName: 'upper_jaw_stl_file', file: file);
-                          }
-                          //ctrl.uploadPatientSingleImage(paramName: 'upper_jaw_stl_file', file: file);
-                          ctrl.update();
-                        });
+                      context: Get.context!,
+                      onFileChose: (File? file) async {
+                        // ctrl.cuisinePhoto?[0] =(file!);
+                        ctrl.upperJawImageFile = file!;
+                        ctrl.upperJawImageFileTextCtrl.text =
+                            ctrl.upperJawImageFile != null
+                                ? ctrl.upperJawImageFile!.path.split('/').last
+                                : '';
+                        if (isRefineScreen) {
+                          ctrl.editPatientRefinementDetails(
+                              paramName: 'upper_jaw_stl_file', file: file);
+                        } else if (isRetentionScreen) {
+                          ctrl.editPatientRetentionDetails(
+                              paramName: 'upper_jaw_stl_file', file: file);
+                        } else {
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'upper_jaw_stl_file', file: file);
+                        }
+                        //ctrl.uploadPatientSingleImage(paramName: 'upper_jaw_stl_file', file: file);
+                        ctrl.update();
+                      },
+                    );
                   },
                   // isError: ctrl.lastNameError,
                   prefixIcon: Container(
@@ -1555,24 +1661,28 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                   showCursor: false,
                   onTap: () {
                     imageUploadUtils.pickStlFileFormStorage(
-                        context: Get.context!,
-                        onFileChose: (File? file) async {
-                          // ctrl.cuisinePhoto?[0] =(file!);
-                          ctrl.lowerJawImageFile = file!;
-                          ctrl.lowerJawImageFileTextCtrl.text =
-                              ctrl.lowerJawImageFile != null
-                                  ? ctrl.lowerJawImageFile!.path.split('/').last
-                                  : '';
-                          //ctrl.uploadPatientSingleImage(paramName: 'lower_jaw_stl_file', file: file);
-                          if (refineScreen) {
-                            ctrl.editPatientRefinementDetails(
-                                paramName: 'lower_jaw_stl_file', file: file);
-                          } else {
-                            ctrl.uploadPatientSingleImage(
-                                paramName: 'lower_jaw_stl_file', file: file);
-                          }
-                          ctrl.update();
-                        });
+                      context: Get.context!,
+                      onFileChose: (File? file) async {
+                        // ctrl.cuisinePhoto?[0] =(file!);
+                        ctrl.lowerJawImageFile = file!;
+                        ctrl.lowerJawImageFileTextCtrl.text =
+                            ctrl.lowerJawImageFile != null
+                                ? ctrl.lowerJawImageFile!.path.split('/').last
+                                : '';
+                        //ctrl.uploadPatientSingleImage(paramName: 'lower_jaw_stl_file', file: file);
+                        if (isRefineScreen) {
+                          ctrl.editPatientRefinementDetails(
+                              paramName: 'lower_jaw_stl_file', file: file);
+                        } else if (isRetentionScreen) {
+                          ctrl.editPatientRetentionDetails(
+                              paramName: 'lower_jaw_stl_file', file: file);
+                        } else {
+                          ctrl.uploadPatientSingleImage(
+                              paramName: 'lower_jaw_stl_file', file: file);
+                        }
+                        ctrl.update();
+                      },
+                    );
                   },
                   prefixIcon: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -1625,9 +1735,10 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                       Assets.icons.icDocument.svg(height: !isTablet ? 23 : 30),
                       10.space(),
                       ctrl.dicomFileName.appCommonText(
-                          size: !isTablet ? 16 : 20,
-                          weight: FontWeight.w400,
-                          color: primaryBrown),
+                        size: !isTablet ? 16 : 20,
+                        weight: FontWeight.w400,
+                        color: primaryBrown,
+                      ),
                     ],
                   ),
                 ),
@@ -1643,7 +1754,13 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                             ctrl.getFileName(ctrl.dicomFile?.path, 15);
                       }
                       ctrl.update();
-                      ctrl.uploadDicomFile(file, refineScreen);
+                      if (isRefineScreen) {
+                        ctrl.uploadDicomFile(file, "refinement");
+                      } else if (isRetentionScreen) {
+                        ctrl.uploadDicomFile(file, "containment");
+                      } else {
+                        ctrl.uploadDicomFile(file, "patient");
+                      }
                       print('Chosen file path: ${file.path}');
                     },
                   );
@@ -1680,7 +1797,7 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               color: primaryBrown,
             ).paddingSymmetric(horizontal: 10),
           ),
-          if (refineScreen) ...{
+          if (isRefineScreen || isRetentionScreen) ...{
             LocaleKeys.arcadeTraiter.translateText.appCommonText(
               align: TextAlign.start,
               size: !isTablet ? 24 : 27,
@@ -1811,10 +1928,12 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
               onTap: () {
                 if (ctrl.validateUploadPhotoRefinementFiles()) {
                   ctrl.editPatientRefinementDetails(isBack: true);
-                } */ /*else {
+                } */
+            /*else {
                   showAppSnackBar(
                       LocaleKeys.pleaseSelectAllRequiredPhotos.translateText);
-                }*/ /*
+                }*/
+            /*
               },
               boxShadow: [],
               radius: !isTablet ? 25 : 40,
@@ -1830,8 +1949,17 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     btnHeight: !isTablet ? 55 : 70,
                     text: LocaleKeys.finishLatter.translateText,
                     onTap: () {
-                      ctrl.editPatientRefinementDetails(
-                          isBack: true, isDraft: 1);
+                      if (isRefineScreen) {
+                        ctrl.editPatientRefinementDetails(
+                          isBack: true,
+                          isDraft: 1,
+                        );
+                      } else {
+                        ctrl.editPatientRetentionDetails(
+                          isBack: true,
+                          isDraft: 1,
+                        );
+                      }
                     },
                     // boxShadow: [],
                     radius: !isTablet ? 25 : 40,
@@ -1847,7 +1975,11 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     text: LocaleKeys.submit.translateText,
                     onTap: () {
                       if (ctrl.validateUploadPhotoRefinementFiles()) {
-                        ctrl.editPatientRefinementDetails(isBack: true);
+                        if (isRefineScreen) {
+                          ctrl.editPatientRefinementDetails(isBack: true);
+                        } else {
+                          ctrl.editPatientRetentionDetails(isBack: true);
+                        }
                       }
                     },
                     boxShadow: [],
@@ -1863,7 +1995,7 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
           100.space(),
         ],
       ).paddingSymmetric(horizontal: 15),
-      if (!refineScreen) ...{
+      if (!isRefineScreen && !isRetentionScreen) ...{
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
@@ -1881,8 +2013,9 @@ Widget uploadPhotographs(AddPatientController ctrl, bool refineScreen) {
                     text: LocaleKeys.finishLatter.translateText,
                     onTap: () {
                       ctrl.addUpdatePatientDetails(
-                          isFromFinishStep: true,
-                          draftViewPage: "upload_photo_page");
+                        isFromFinishStep: true,
+                        draftViewPage: "upload_photo_page",
+                      );
                     },
                     // boxShadow: [],
                     radius: !isTablet ? 25 : 40,

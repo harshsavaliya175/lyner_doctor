@@ -65,6 +65,7 @@ class MethodNames {
   static const String getPatientInformationDetails =
       "getPatientInformationDetails";
   static const String getPatientRefinementImage = "getPatientRefinementImage";
+  static const String getPatientContainmentImage = "getPatientContainmentImage";
   static const String exportEstimateQuotesPdf = "exportEstimateQuotesPdf";
   static const String getEstimateQuotesData = "getEstimateQuotesData";
   static const String getPatientPrescriptionDetails =
@@ -82,6 +83,8 @@ class MethodNames {
   static const String uploadPatientSingleImage = "uploadPatientSingleImage";
   static const String editPatientRefinementDetails =
       "editPatientRefinementDetails";
+  static const String editPatientContainmentDetails =
+      "editPatientContainmentDetails";
   static const String uploadPatientDcomFile = "uploadPatientDcomFile";
   static const String getClinicLocationList = "getClinicLocationList";
   static const String getLibraryList = "getLibraryList";
@@ -174,3 +177,4 @@ void downloadCallback(String id, int status, int progress) {
 
 //const String patientId = "patient_id";
 const String isRefinementString = "isRefinement";
+const String isRetentionString = "isRetention";

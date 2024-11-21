@@ -103,6 +103,27 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> getPatientRetentionImage(int patientId) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, int> params = {"patient_id": patientId};
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.getPatientContainmentImage,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.postRequest(requestUrl, params,
+        passAuthToken: true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   static Future<ResponseItem> getPatientPrescriptionDetails(
       int patientId) async {
     ResponseItem result;
@@ -187,7 +208,7 @@ class AddPatientRepo {
       "total_amount": double.parse(totalAmount),
       "num_of_semester": double.parse(numberOfSemester),
       "contention_price": double.parse(contentionPrice),
-      "doctor_id":doctorId
+      "doctor_id": doctorId
     };
 
     final Map<String, String> queryParameters = {
@@ -210,15 +231,13 @@ class AddPatientRepo {
     dynamic data;
     String msg = "";
 
-
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.getEstimateQuotesData,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;
     String requestUrl = ApiUrl.baseUrl + queryString;
-    result = await BaseApiHelper.getRequest(requestUrl,
-        isPassAuthToken: true);
+    result = await BaseApiHelper.getRequest(requestUrl, isPassAuthToken: true);
     status = result.status;
     data = result.data;
     msg = result.msg;
@@ -322,9 +341,7 @@ class AddPatientRepo {
       );
       imageFile = images;
     }
-    final Map<String, dynamic> params = {
-      "patient_id": patientId,
-    };
+    final Map<String, dynamic> params = {"patient_id": patientId};
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.uploadPatientSingleImage,
       RequestParam.showError: SHOW_ERROR,
@@ -367,6 +384,46 @@ class AddPatientRepo {
     };*/
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.editPatientRefinementDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result = await BaseApiHelper.uploadFile(
+        requestUrl, imageFile, null, params!, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
+  static Future<ResponseItem> editPatientContainmentDetails({
+    required File? file,
+    required String? paramName,
+    required String? patientId,
+    required Map<String, dynamic>? params,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+    http.MultipartFile? imageFile;
+    if (file != null) {
+      File compressedFile = file;
+      final List<String> mimeType =
+          lookupMimeType(compressedFile.path)!.split("/");
+      final images = http.MultipartFile.fromBytes(
+        "$paramName",
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      imageFile = images;
+    }
+    /*final Map<String, dynamic> params = {
+      "patient_id": patientId,
+    };*/
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.editPatientContainmentDetails,
       RequestParam.showError: SHOW_ERROR,
     };
     String queryString = Uri(queryParameters: queryParameters).query;
@@ -484,6 +541,58 @@ class AddPatientRepo {
     return ResponseItem(data: data, msg: msg, status: status);
   }
 
+  static Future<ResponseItem> uploadRetentionMultipleImage({
+    required List<File> imageList,
+    required String? patientId,
+  }) async {
+    ResponseItem result;
+    bool status = true;
+    dynamic data;
+    String msg = "";
+
+    final Map<String, dynamic> params = {
+      "patient_id": patientId,
+      "is_draft": 1,
+    };
+
+    List<http.MultipartFile> faceImg = [];
+    List<String> keys = [
+      "patient_gauche",
+      "patient_face",
+      "patient_sourire",
+      "patient_intra_max",
+      "patient_intra_gauche",
+      "patient_inter_gauche",
+      "patient_inter_face",
+      "patient_intra_droite",
+    ];
+
+    for (int i = 0; i < imageList.length; i++) {
+      File compressedFile = imageList[i];
+      List<String> mimeType = lookupMimeType(compressedFile.path)!.split("/");
+      http.MultipartFile plantImage = http.MultipartFile.fromBytes(
+        keys[i],
+        compressedFile.readAsBytesSync(),
+        filename: compressedFile.path.split("/").last,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      faceImg.add(plantImage);
+    }
+
+    final Map<String, String> queryParameters = {
+      RequestParam.service: MethodNames.editPatientContainmentDetails,
+      RequestParam.showError: SHOW_ERROR,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+    String requestUrl = ApiUrl.baseUrl + queryString;
+    result =
+        await BaseApiHelper.uploadFile(requestUrl, null, faceImg, params, true);
+    status = result.status;
+    data = result.data;
+    msg = result.msg;
+    return ResponseItem(data: data, msg: msg, status: status);
+  }
+
   /*static Future<ResponseItem> uploadPatientDcomFile({
     required File? file,
     required String? patientId,
@@ -537,7 +646,8 @@ class AddPatientRepo {
     required String? chunkIndex,
     required String? totalChunks,
     required String? extension,
-    required int? isForRefinements,
+    // required int? isForRefinements,
+    required String forWhat,
     int? refinementNumber,
   }) async {
     ResponseItem result;
@@ -572,8 +682,9 @@ class AddPatientRepo {
       "chunkIndex": chunkIndex,
       "totalChunks": totalChunks,
       "extension": extension,
-      "is_for_refinements": isForRefinements,
-      if (isForRefinements == 1) "refinement_number": refinementNumber,
+      "for_what": forWhat,
+      // "is_for_refinements": isForRefinements,
+      if (forWhat == "refinement") "refinement_number": refinementNumber,
     };
     final Map<String, String> queryParameters = {
       RequestParam.service: MethodNames.uploadPatientDcomFile,
