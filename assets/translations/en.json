@@ -329,5 +329,20 @@
   "back":"Back",
   "continueText":"Continue",
   "export":"Export",
-  "fileHasNotDownloaded":"File has not downloaded"
+  "fileHasNotDownloaded":"File has not downloaded",
+  "createAEstimate":"Create a estimate",
+  "pleaseEnterPatientSocialSecurityNumber":"Please enter patient social security number",
+  "enterPatientSocialSecurityNumber":"Enter patient social security number",
+  "patientSocialSecurityNumber":"Patient social security number",
+  "pleaseEnterComplementaryOrganizationNumber":"Please enter complementary organization number",
+  "enterComplementaryOrganizationNumber":"Enter complementary organization number",
+  "complementaryOrganizationNumber":"Complementary organization number",
+  "pleaseEnterContractorMemberNumber":"Please enter contractor member number",
+  "enterContractorMemberNumber":"Enter contractor member number",
+  "contractorMemberNumber":"Contractor member number",
+  "pleaseEnterFileReference":"Please enter file reference",
+  "enterFileReference":"Enter file reference",
+  "fileReference":"File reference",
+  "pleaseSelectAddress":"Please select address",
+  "address":"Address"
 }

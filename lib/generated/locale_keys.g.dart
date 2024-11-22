@@ -331,5 +331,20 @@ abstract class  LocaleKeys {
   static const continueText = 'continueText';
   static const export = 'export';
   static const fileHasNotDownloaded = 'fileHasNotDownloaded';
+  static const createAEstimate = 'createAEstimate';
+  static const pleaseEnterPatientSocialSecurityNumber = 'pleaseEnterPatientSocialSecurityNumber';
+  static const enterPatientSocialSecurityNumber = 'enterPatientSocialSecurityNumber';
+  static const patientSocialSecurityNumber = 'patientSocialSecurityNumber';
+  static const pleaseEnterComplementaryOrganizationNumber = 'pleaseEnterComplementaryOrganizationNumber';
+  static const enterComplementaryOrganizationNumber = 'enterComplementaryOrganizationNumber';
+  static const complementaryOrganizationNumber = 'complementaryOrganizationNumber';
+  static const pleaseEnterContractorMemberNumber = 'pleaseEnterContractorMemberNumber';
+  static const enterContractorMemberNumber = 'enterContractorMemberNumber';
+  static const contractorMemberNumber = 'contractorMemberNumber';
+  static const pleaseEnterFileReference = 'pleaseEnterFileReference';
+  static const enterFileReference = 'enterFileReference';
+  static const fileReference = 'fileReference';
+  static const pleaseSelectAddress = 'pleaseSelectAddress';
+  static const address = 'address';
 
 }

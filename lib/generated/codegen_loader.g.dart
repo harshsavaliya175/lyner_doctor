@@ -344,7 +344,22 @@ class CodegenLoader extends AssetLoader{
   "back": "Back",
   "continueText": "Continue",
   "export": "Export",
-  "fileHasNotDownloaded": "File has not downloaded"
+  "fileHasNotDownloaded": "File has not downloaded",
+  "createAEstimate": "Create a estimate",
+  "pleaseEnterPatientSocialSecurityNumber": "Please enter patient social security number",
+  "enterPatientSocialSecurityNumber": "Enter patient social security number",
+  "patientSocialSecurityNumber": "Patient social security number",
+  "pleaseEnterComplementaryOrganizationNumber": "Please enter complementary organization number",
+  "enterComplementaryOrganizationNumber": "Enter complementary organization number",
+  "complementaryOrganizationNumber": "Complementary organization number",
+  "pleaseEnterContractorMemberNumber": "Please enter contractor member number",
+  "enterContractorMemberNumber": "Enter contractor member number",
+  "contractorMemberNumber": "Contractor member number",
+  "pleaseEnterFileReference": "Please enter file reference",
+  "enterFileReference": "Enter file reference",
+  "fileReference": "File reference",
+  "pleaseSelectAddress": "Please select address",
+  "address": "Address"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -370,7 +385,7 @@ static const Map<String,dynamic> fr = {
   "patientFirstName": "Prénom du patient",
   "patientLastName": "Nom du patient",
   "patientEmail": "Courriel du patient",
-  "totalAmount": " Montant Global",
+  "totalAmount": "Montant Global",
   "numberOfSemester": "Nombre de semestres",
   "contentionPrice": "Prix de la contention",
   "enterContentionPrice": "Entrer le prix du concours",
@@ -676,7 +691,22 @@ static const Map<String,dynamic> fr = {
   "back": "Retour",
   "continueText": "Continuer",
   "export": "Exporter",
-  "fileHasNotDownloaded": "File has not downloaded"
+  "fileHasNotDownloaded": "File has not downloaded",
+  "createAEstimate": "Créer un devis",
+  "pleaseEnterPatientSocialSecurityNumber": "Veuillez entrer le numéro de sécurité sociale du patient",
+  "enterPatientSocialSecurityNumber": "Entrez le numéro de sécurité sociale du patient",
+  "patientSocialSecurityNumber": "Numéro de sécurité sociale du patient",
+  "pleaseEnterComplementaryOrganizationNumber": "Veuillez entrer le numéro de l'organisation complémentaire",
+  "enterComplementaryOrganizationNumber": "Entrez le numéro de l'organisation complémentaire",
+  "complementaryOrganizationNumber": "Numéro de l'organisation complémentaire",
+  "pleaseEnterContractorMemberNumber": "Veuillez entrer le numéro d'adhérent du contractant",
+  "enterContractorMemberNumber": "Entrez le numéro d'adhérent du contractant",
+  "contractorMemberNumber": "Numéro d'adhérent du contractant",
+  "pleaseEnterFileReference": "Veuillez entrer la référence du dossier",
+  "enterFileReference": "Entrez la référence du dossier",
+  "fileReference": "Référence du dossier",
+  "pleaseSelectAddress": "Veuillez sélectionner une adresse",
+  "address": "Adresse"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

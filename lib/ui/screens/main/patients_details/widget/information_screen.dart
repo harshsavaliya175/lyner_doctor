@@ -147,13 +147,12 @@ class InformationScreen extends StatelessWidget {
                                         //     : (controller.selectedRefinementDropDownIndex == (controller.patientDetailsModel?.refinementList?.length ?? 0) + 1) ? controller.patientDetailsModel?.refinementList?[
                                         // controller
                                         //     .selectedRefinementDropDownIndex]:null;
-                                      } else {
-                                        if (index == 1) {
-                                          controller.selectedRefinementData =
-                                              controller.patientDetailsModel
-                                                      ?.containment ??
-                                                  null;
-                                        }
+                                      }
+                                      if (index == 1) {
+                                        controller.selectedRefinementData =
+                                            controller.patientDetailsModel
+                                                    ?.containment ??
+                                                null;
                                       }
                                       controller.update();
                                     },
@@ -183,10 +182,11 @@ class InformationScreen extends StatelessWidget {
                                         ]
                                       ],
                                     ).paddingOnly(
-                                        left: 20,
-                                        right: 20,
-                                        top: 10,
-                                        bottom: 10),
+                                      left: 20,
+                                      right: 20,
+                                      top: 10,
+                                      bottom: 10,
+                                    ),
                                   );
                                 },
                                 itemCount: controller.refinementList.length,
@@ -540,6 +540,10 @@ class InformationScreen extends StatelessWidget {
                                 refinementIdString:
                                     controller.finishingGutters + 1,
                               },
+                            )?.then(
+                              (value) {
+                                controller.getPatientInformationDetails();
+                              },
                             );
                           }
                         }
@@ -583,27 +587,6 @@ class InformationScreen extends StatelessWidget {
                       if ((controller
                               .patientDetailsModel?.containment?.isDraft !=
                           0)) {
-                        // int refinementNumber = 0;
-                        //
-                        // if (controller.patientDetailsModel?.refinementList
-                        //         ?.isNotEmpty ??
-                        //     false) {
-                        //   for (int i = 0;
-                        //       i <
-                        //           controller.patientDetailsModel!
-                        //               .refinementList!.length;
-                        //       i++) {
-                        //     if (controller.patientDetailsModel!
-                        //             .refinementList![i].isDraft ==
-                        //         1) {
-                        //       refinementNumber = controller
-                        //           .patientDetailsModel!
-                        //           .refinementList![i]
-                        //           .refinementNumber;
-                        //       break;
-                        //     }
-                        //   }
-                        // }
                         Get.toNamed(
                           Routes.uploadPhotographsScreen,
                           arguments: {
@@ -612,6 +595,10 @@ class InformationScreen extends StatelessWidget {
                             isRefinementString: false,
                             isRetentionString: true,
                             refinementIdString: controller.finishingGutters + 1,
+                          },
+                        )?.then(
+                          (value) {
+                            controller.getPatientInformationDetails();
                           },
                         );
                       }

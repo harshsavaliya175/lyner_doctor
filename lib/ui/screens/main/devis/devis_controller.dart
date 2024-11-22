@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -11,12 +12,12 @@ import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:lynerdoctor/core/utils/shared_prefs.dart';
+import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/clinic_location_model.dart';
 import 'package:lynerdoctor/model/clinic_model.dart';
 import 'package:lynerdoctor/model/reports_estimation.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../../../generated/locale_keys.g.dart';
 
 class DevisController extends GetxController {
   @override
@@ -25,13 +26,10 @@ class DevisController extends GetxController {
     if (preferences.getString(SharedPreference.LOGIN_TYPE) ==
         SharedPreference.LOGIN_TYPE_CLINIC) {
       getDoctorList();
-
-    }else{
+      getClinicLocationList();
+    } else {
       clinicData = preferences.getClinicData();
     }
-
-
-    // TODO: implement onInit
     super.onInit();
   }
 
@@ -41,15 +39,23 @@ class DevisController extends GetxController {
   bool totalAmountError = false;
   bool numberOfSemesterError = false;
   bool connectionError = false;
+  bool patientSocialSecurityNumberError = false;
+  bool complementaryOrganizationNumberError = false;
+  bool contractorMemberNumberError = false;
+  bool fileReferenceError = false;
+  bool addressError = false;
   bool isLoading = false;
   bool showNumberOfSemesterDropDown = false;
+  bool addressDropDown = false;
 
   bool showDoctorDropDown = false;
   String? dateTextField;
   String? selectedNumberOfSemester;
+  String? address;
   DateTime? pickedDate;
   List numberOfSemester = ["1", "2", "3", "4", "5", "6"];
   List<DoctorData?> doctorDataList = [];
+  List<ClinicLocation?> clinicLocationList = [];
   List<EstimateQuotesData?> getEstimationReportList = [];
   DoctorData? selectedDoctorData;
   ClinicData? clinicData;
@@ -61,8 +67,14 @@ class DevisController extends GetxController {
   TextEditingController contentionPriceController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController numberOfSemesterController = TextEditingController();
-
   TextEditingController doctorController = TextEditingController();
+  TextEditingController patientSocialSecurityNumber = TextEditingController();
+  TextEditingController complementaryOrganizationNumber =
+      TextEditingController();
+  TextEditingController contractorMemberNumberController =
+      TextEditingController();
+  TextEditingController fileReferenceController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   void getLynerConnectList(BuildContext context) async {
     isLoading = true;
@@ -74,7 +86,15 @@ class DevisController extends GetxController {
       totalAmount: totalAmountController.text.trim(),
       numberOfSemester: numberOfSemesterController.text.trim(),
       contentionPrice: contentionPriceController.text.trim(),
-      doctorId: selectedDoctorData != null ? selectedDoctorData!.doctorId : clinicData!.doctorData!.doctorId,
+      address: addressController.text.trim(),
+      complementaryOrganizationName:
+          complementaryOrganizationNumber.text.trim(),
+      contractOrMemberNumber: contractorMemberNumberController.text.trim(),
+      fileReference: fileReferenceController.text.trim(),
+      patientSocialSecurityNumber: patientSocialSecurityNumber.text.trim(),
+      doctorId: selectedDoctorData != null
+          ? selectedDoctorData!.doctorId
+          : clinicData!.doctorData!.doctorId,
     );
     try {
       if (result.status) {
@@ -107,6 +127,27 @@ class DevisController extends GetxController {
     update();
   }
 
+  getClinicLocationList() async {
+    clinicLocationList.clear();
+    ResponseItem result = await PatientsRepo.getClinicLocationList(
+        clinicId: preferences.getInt(SharedPreference.CLINIC_ID) ?? 0);
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          result.data.forEach(
+            (dynamic e) {
+              ClinicLocation clinicLocation = ClinicLocation.fromJson(e);
+              clinicLocationList.add(clinicLocation);
+            },
+          );
+        }
+      }
+    } catch (e) {
+      log('error --> $e');
+    }
+    update();
+  }
+
   getEstimateQuotesData() async {
     isLoading = true;
     ResponseItem result = await AddPatientRepo.getEstimateQuotesData();
@@ -115,7 +156,6 @@ class DevisController extends GetxController {
         GetEstimateQuotesData res =
             GetEstimateQuotesData.fromJson(result.toJson());
         // List<EstimateQuotesData>.from(json["data"]!.map((x) => EstimateQuotesData.fromJson(x))),
-
         if (res.data != null) {
           getEstimationReportList = res.data ?? [];
           isLoading = false;

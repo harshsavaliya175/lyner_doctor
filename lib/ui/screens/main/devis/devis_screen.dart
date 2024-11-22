@@ -255,32 +255,35 @@ class DevisScreen extends StatelessWidget {
                           physics: const PageScrollPhysics(),
                           separatorBuilder: (BuildContext context, int index) =>
                               DottedBorder(
-                                borderType: BorderType.RRect,
-                                color: primaryBrown,
-                                padding: EdgeInsets.zero,
-                                radius: const Radius.circular(35),
-                                dashPattern: const [5, 5, 5, 5],
-                                child: Container(),
-                              ),
+                            borderType: BorderType.RRect,
+                            color: primaryBrown,
+                            padding: EdgeInsets.zero,
+                            radius: const Radius.circular(35),
+                            dashPattern: const [5, 5, 5, 5],
+                            child: Container(),
+                          ),
                           itemBuilder: (BuildContext builder, int index) {
                             DoctorData? data = ctrl.doctorDataList[
-                            index]; // Display filtered data when search is not empty
+                                index]; // Display filtered data when search is not empty
                             return InkWell(
                               onTap: () {
                                 print("onTap : $index");
-                                ctrl.showDoctorDropDown = !ctrl.showDoctorDropDown;
+                                ctrl.showDoctorDropDown =
+                                    !ctrl.showDoctorDropDown;
                                 ctrl.doctorController.text =
-                                '${data?.firstName} ${data?.lastName}';
+                                    '${data?.firstName} ${data?.lastName}';
                                 ctrl.selectedDoctorData = data;
                                 print(ctrl.selectedDoctorData);
                                 ctrl.update();
                               },
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
-                                    child: '${data?.firstName} ${data?.lastName}'
-                                        .appCommonText(
+                                    child:
+                                        '${data?.firstName} ${data?.lastName}'
+                                            .appCommonText(
                                       color: Colors.black,
                                       maxLine: 1,
                                       align: TextAlign.start,
@@ -301,14 +304,14 @@ class DevisScreen extends StatelessWidget {
                                     const SizedBox.shrink(),
                                   ]
                                 ],
-                              ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
+                              ).paddingOnly(
+                                  left: 20, right: 20, top: 10, bottom: 10),
                             );
                           },
                           itemCount: ctrl.doctorDataList.length,
                         ).paddingOnly(top: 5, bottom: 5),
-                      ).paddingOnly( bottom: 15),
+                      ).paddingOnly(bottom: 15),
                     ),
-
                     AppTextField(
                       textEditingController: ctrl.totalAmountController,
                       onChanged: (String value) {},
@@ -331,7 +334,6 @@ class DevisScreen extends StatelessWidget {
                       labelText: LocaleKeys.totalAmount.translateText,
                       showPrefixIcon: false,
                     ),
-
                     15.space(),
                     AppTextField(
                       textEditingController: ctrl.numberOfSemesterController,
@@ -455,6 +457,193 @@ class DevisScreen extends StatelessWidget {
                       labelText: LocaleKeys.contentionPrice.translateText,
                       showPrefixIcon: false,
                     ),
+                    15.space(),
+                    AppTextField(
+                      textEditingController: ctrl.patientSocialSecurityNumber,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          ctrl.patientSocialSecurityNumberError = true;
+                          ctrl.update();
+                          return LocaleKeys
+                              .pleaseEnterPatientSocialSecurityNumber
+                              .translateText;
+                          return "Please enter patient social security number";
+                        }
+                        ctrl.update();
+                        return null;
+                      },
+                      textFieldPadding: EdgeInsets.zero,
+                      keyboardType: TextInputType.number,
+                      hintText: LocaleKeys
+                          .enterPatientSocialSecurityNumber.translateText,
+                      labelText:
+                          LocaleKeys.patientSocialSecurityNumber.translateText,
+                      showPrefixIcon: false,
+                    ),
+                    15.space(),
+                    AppTextField(
+                      textEditingController:
+                          ctrl.complementaryOrganizationNumber,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          ctrl.complementaryOrganizationNumberError = true;
+                          ctrl.update();
+                          return LocaleKeys
+                              .pleaseEnterComplementaryOrganizationNumber
+                              .translateText;
+                        }
+                        ctrl.update();
+                        return null;
+                      },
+                      textFieldPadding: EdgeInsets.zero,
+                      keyboardType: TextInputType.number,
+                      // isError: ctrl.emailError,
+                      hintText: LocaleKeys
+                          .enterComplementaryOrganizationNumber.translateText,
+                      labelText: LocaleKeys
+                          .complementaryOrganizationNumber.translateText,
+                      showPrefixIcon: false,
+                    ),
+                    15.space(),
+                    AppTextField(
+                      textEditingController:
+                          ctrl.contractorMemberNumberController,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          ctrl.contractorMemberNumberError = true;
+                          ctrl.update();
+                          return LocaleKeys
+                              .pleaseEnterContractorMemberNumber.translateText;
+                        }
+                        ctrl.update();
+                        return null;
+                      },
+                      textFieldPadding: EdgeInsets.zero,
+                      keyboardType: TextInputType.number,
+                      // isError: ctrl.emailError,
+                      hintText:
+                          LocaleKeys.enterContractorMemberNumber.translateText,
+                      labelText:
+                          LocaleKeys.contractorMemberNumber.translateText,
+                      showPrefixIcon: false,
+                    ),
+                    15.space(),
+                    AppTextField(
+                      textEditingController: ctrl.fileReferenceController,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          ctrl.fileReferenceError = true;
+                          ctrl.update();
+                          return LocaleKeys
+                              .pleaseEnterFileReference.translateText;
+                        }
+                        ctrl.update();
+                        return null;
+                      },
+                      textFieldPadding: EdgeInsets.zero,
+                      keyboardType: TextInputType.number,
+                      hintText: LocaleKeys.enterFileReference.translateText,
+                      labelText: LocaleKeys.fileReference.translateText,
+                      showPrefixIcon: false,
+                    ),
+                    15.space(),
+                    AppTextField(
+                      textEditingController: ctrl.addressController,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          ctrl.addressError = true;
+                          ctrl.update();
+                          return LocaleKeys.pleaseSelectAddress.translateText;
+                        }
+                        ctrl.update();
+                        return null;
+                      },
+                      textFieldPadding: EdgeInsets.zero,
+                      keyboardType: TextInputType.text,
+                      hintText: LocaleKeys.select.translateText,
+                      labelText: LocaleKeys.address.translateText,
+                      showPrefixWidget: Assets.icons.icDown
+                          .svg(height: 10, width: 10)
+                          .paddingOnly(left: 15, right: 15),
+                      onTap: () {
+                        ctrl.addressDropDown = !ctrl.addressDropDown;
+                        ctrl.update();
+                      },
+                      readOnly: true,
+                      showPrefixIcon: false,
+                    ),
+                    Visibility(
+                      visible: ctrl.addressDropDown,
+                      replacement: const SizedBox.shrink(),
+                      child: Container(
+                        // height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: primaryBrown),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const PageScrollPhysics(),
+                          separatorBuilder: (BuildContext context, int index) =>
+                              DottedBorder(
+                            borderType: BorderType.RRect,
+                            color: primaryBrown,
+                            padding: EdgeInsets.zero,
+                            radius: const Radius.circular(35),
+                            dashPattern: const [5, 5, 5, 5],
+                            child: Container(),
+                          ),
+                          itemBuilder: (BuildContext builder, int index) {
+                            String data =
+                                ctrl.clinicLocationList[index]?.address ?? "";
+                            return InkWell(
+                              onTap: () {
+                                print("onTap : $index");
+                                ctrl.addressDropDown = !ctrl.addressDropDown;
+                                ctrl.addressController.text = '${data}';
+                                ctrl.address = data;
+                                print(ctrl.address);
+                                ctrl.update();
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: '${data}'.appCommonText(
+                                      color: Colors.black,
+                                      maxLine: 1,
+                                      align: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      weight: FontWeight.w400,
+                                      size: !isTablet ? 15 : 18,
+                                    ),
+                                  ),
+                                  if (ctrl.addressController.text
+                                      .contains('${data}')) ...[
+                                    Assets.icons.icSelectArrow.svg(
+                                        colorFilter: ColorFilter.mode(
+                                      primaryBrown,
+                                      BlendMode.srcIn,
+                                    )),
+                                  ] else ...[
+                                    const SizedBox.shrink(),
+                                  ]
+                                ],
+                              ).paddingOnly(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                            );
+                          },
+                          itemCount: ctrl.clinicLocationList.length,
+                        ).paddingOnly(top: 5, bottom: 5),
+                      ).paddingOnly(top: 15),
+                    ),
                     20.space(),
                   ],
                 ),
@@ -476,7 +665,6 @@ class DevisScreen extends StatelessWidget {
                       if (ctrl.patientInformationFormKey.currentState!
                           .validate()) {
                         FocusScope.of(Get.context!).unfocus();
-
                         ctrl.getLynerConnectList(context);
                       }
                     },

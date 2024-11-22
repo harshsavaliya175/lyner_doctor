@@ -328,5 +328,20 @@
   "back": "Retour",
   "continueText": "Continuer",
   "export":"Exporter",
-  "fileHasNotDownloaded":"File has not downloaded"
+  "fileHasNotDownloaded":"File has not downloaded",
+  "createAEstimate":"Créer un devis",
+  "pleaseEnterPatientSocialSecurityNumber": "Veuillez entrer le numéro de sécurité sociale du patient",
+  "enterPatientSocialSecurityNumber": "Entrez le numéro de sécurité sociale du patient",
+  "patientSocialSecurityNumber": "Numéro de sécurité sociale du patient",
+  "pleaseEnterComplementaryOrganizationNumber": "Veuillez entrer le numéro de l'organisation complémentaire",
+  "enterComplementaryOrganizationNumber": "Entrez le numéro de l'organisation complémentaire",
+  "complementaryOrganizationNumber": "Numéro de l'organisation complémentaire",
+  "pleaseEnterContractorMemberNumber": "Veuillez entrer le numéro d'adhérent du contractant",
+  "enterContractorMemberNumber": "Entrez le numéro d'adhérent du contractant",
+  "contractorMemberNumber": "Numéro d'adhérent du contractant",
+  "pleaseEnterFileReference": "Veuillez entrer la référence du dossier",
+  "enterFileReference": "Entrez la référence du dossier",
+  "fileReference": "Référence du dossier",
+  "pleaseSelectAddress": "Veuillez sélectionner une adresse",
+  "address": "Adresse"
 }
