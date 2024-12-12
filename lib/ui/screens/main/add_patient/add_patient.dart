@@ -2060,6 +2060,7 @@ Widget photoCardWidget({
   required String urlPath,
   required File? fileImage,
   required GestureTapCallback onTap,
+  double? fontSize,
 }) {
   return Expanded(
     child: Column(
@@ -2089,18 +2090,20 @@ Widget photoCardWidget({
                     radius: BorderRadius.circular(15),
                     width: !isTablet ? 123 : 200,
                   ).onClick(onTap),
-        5.space(),
+        // 5.space(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             title.appCommonText(
-                size: !isTablet ? 16 : 20,
+                size: fontSize == null ? (!isTablet ? 16 : 20) : fontSize,
                 weight: FontWeight.w300,
                 color: hintStepColor),
             " *"
                 .appCommonText(
-                    size: 16, weight: FontWeight.w500, color: Colors.red)
+                    size: fontSize ?? 16,
+                    weight: FontWeight.w500,
+                    color: Colors.red)
                 .paddingOnly(bottom: 5),
           ],
         )

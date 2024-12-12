@@ -73,9 +73,10 @@ class CommonStepIndicator extends StatelessWidget {
                     ),
                     SizedBox(height: 4), // Space between the circle and number
                     Text(
-                      '${LocaleKeys.steps.translateText} ${index + 1}', // Step number
+                      '${LocaleKeys.steps.translateText} ${index + 1}',
+                      // Step number
                       style: TextStyle(
-                        fontSize: !isTablet ?12:16,
+                        fontSize: !isTablet ? 12 : 16,
                         fontFamily: Assets.fonts.maax,
                         fontWeight: FontWeight.normal,
                         color: isActive || isCompleted

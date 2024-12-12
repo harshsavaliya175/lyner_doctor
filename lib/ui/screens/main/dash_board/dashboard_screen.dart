@@ -10,13 +10,11 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
-import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/notif_util.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/patients/patients_controller.dart';
-import 'package:lynerdoctor/ui/widgets/add_new_patient_bottom_sheet.dart';
 import 'package:lynerdoctor/ui/widgets/bottom_bar_item.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -32,9 +30,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     registerIsolateProgress();
     super.initState();
   }
-
-
-
 
   Future<void> registerIsolateProgress() async {
     IsolateNameServer.registerPortWithName(
@@ -100,7 +95,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,14 +154,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                   ),
                 ),
+                // Expanded(
+                //   child: BottomBarItem(
+                //     currentIndex: ctrl.currentIndex,
+                //     itemIcon: Assets.icons.icProfile,
+                //     itemIndex: 3,
+                //     itemText: LocaleKeys.profile,
+                //     onTap: () {
+                //       ctrl.changeData(currentIdx: 3);
+                //     },
+                //   ),
+                // ),
                 Expanded(
                   child: BottomBarItem(
                     currentIndex: ctrl.currentIndex,
-                    itemIcon: Assets.icons.icProfile,
+                    itemIcon: Assets.icons.icPatients,
                     itemIndex: 3,
-                    itemText: LocaleKeys.profile,
+                    itemText: LocaleKeys.caseSelection,
                     onTap: () {
                       ctrl.changeData(currentIdx: 3);
+                      // Get.find<PatientsController>()
+                      //     .getClinicListBySearchOrFilter();
                     },
                   ),
                 ),
@@ -182,7 +189,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // context.showAppBottomSheet(
           //   contentWidget: AddNewPatientBottomSheet(),
           // );
-             Get.toNamed(Routes.addPatientScreen, arguments: null);
+          Get.toNamed(Routes.addPatientScreen, arguments: null);
         },
         child: Icon(Icons.add, size: 40, color: whiteColor),
         heroTag: Object(),

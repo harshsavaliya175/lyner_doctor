@@ -359,7 +359,15 @@ class CodegenLoader extends AssetLoader{
   "enterFileReference": "Enter file reference",
   "fileReference": "File reference",
   "pleaseSelectAddress": "Please select address",
-  "address": "Address"
+  "address": "Address",
+  "caseSelection": "Case Selection",
+  "patientRequestText": "Patient request",
+  "enterPatientRequestText": "Enter patient request",
+  "pleaseEnterPatientRequest": "Please enter patient request.",
+  "treatmentGoal": "Treatment goal",
+  "enterTreatmentGoal": "Enter treatment goal",
+  "pleaseEnterTreatmentGoal": "Please enter treatment goal.",
+  "photographAndStlFiles": "Photographs and STL files"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -706,7 +714,15 @@ static const Map<String,dynamic> fr = {
   "enterFileReference": "Entrez la référence du dossier",
   "fileReference": "Référence du dossier",
   "pleaseSelectAddress": "Veuillez sélectionner une adresse",
-  "address": "Adresse"
+  "address": "Adresse",
+  "caseSelection": "Sélection de cas",
+  "patientRequestText": "Demande du patient",
+  "enterPatientRequestText": "Saisir la demande du patient",
+  "pleaseEnterPatientRequest": "Veuillez saisir la demande du patient.",
+  "treatmentGoal": "Objectif du traitement",
+  "enterTreatmentGoal": "Saisir l'objectif du traitement",
+  "pleaseEnterTreatmentGoal": "Veuillez saisir l'objectif du traitement.",
+  "photographAndStlFiles": "Photographies et fichiers STL"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

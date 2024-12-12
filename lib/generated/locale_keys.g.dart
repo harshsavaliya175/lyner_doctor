@@ -346,5 +346,13 @@ abstract class  LocaleKeys {
   static const fileReference = 'fileReference';
   static const pleaseSelectAddress = 'pleaseSelectAddress';
   static const address = 'address';
+  static const caseSelection = 'caseSelection';
+  static const patientRequestText = 'patientRequestText';
+  static const enterPatientRequestText = 'enterPatientRequestText';
+  static const pleaseEnterPatientRequest = 'pleaseEnterPatientRequest';
+  static const treatmentGoal = 'treatmentGoal';
+  static const enterTreatmentGoal = 'enterTreatmentGoal';
+  static const pleaseEnterTreatmentGoal = 'pleaseEnterTreatmentGoal';
+  static const photographAndStlFiles = 'photographAndStlFiles';
 
 }

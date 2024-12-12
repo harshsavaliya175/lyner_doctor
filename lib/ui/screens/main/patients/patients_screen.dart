@@ -99,6 +99,14 @@ class PatientsScreen extends StatelessWidget {
               Get.toNamed(Routes.globalSearchScreen);
             },
           ),
+          IconButton(
+            icon: Assets.icons.icProfile.svg(
+              colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+            ),
+            onPressed: () {
+              Get.toNamed(Routes.profileScreen);
+            },
+          ),
           10.space(),
         ],
       ),

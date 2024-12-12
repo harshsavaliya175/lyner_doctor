@@ -3,7 +3,9 @@ import 'package:lynerdoctor/ui/screens/auth/change_password/change_password_cont
 import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_controller.dart';
 import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_controller.dart';
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/add_case_selection/add_case_selection_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient_controller.dart';
+import 'package:lynerdoctor/ui/screens/main/case_selection/case_selection_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/devis/devis_controller.dart';
 import 'package:lynerdoctor/ui/screens/main/financial/financial_controller.dart';
@@ -29,5 +31,7 @@ class BaseBindings extends Bindings {
     Get.lazyPut(() => ChangePasswordController(), fenix: true);
     Get.lazyPut(() => FinancialController(), fenix: true);
     Get.lazyPut(() => GlobalSearchController(), fenix: true);
+    Get.lazyPut(() => CaseSelectionController(), fenix: true);
+    Get.lazyPut(() => AddCaseSelectionController(), fenix: true);
   }
 }

@@ -344,5 +344,13 @@
   "enterFileReference":"Enter file reference",
   "fileReference":"File reference",
   "pleaseSelectAddress":"Please select address",
-  "address":"Address"
+  "address":"Address",
+  "caseSelection":"Case Selection",
+  "patientRequestText":"Patient request",
+  "enterPatientRequestText":"Enter patient request",
+  "pleaseEnterPatientRequest":"Please enter patient request.",
+  "treatmentGoal":"Treatment goal",
+  "enterTreatmentGoal":"Enter treatment goal",
+  "pleaseEnterTreatmentGoal":"Please enter treatment goal.",
+  "photographAndStlFiles":"Photographs and STL files"
 }

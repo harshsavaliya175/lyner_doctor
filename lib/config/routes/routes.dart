@@ -6,6 +6,7 @@ import 'package:lynerdoctor/ui/screens/auth/forgot_password/forgot_password_scre
 import 'package:lynerdoctor/ui/screens/auth/reset_password/reset_password_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/splash/splash_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/add_case_selection/add_case_selection.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/devis/devis_screen.dart';
@@ -17,6 +18,7 @@ import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_add_pati
 import 'package:lynerdoctor/ui/screens/main/lyner_connect/lyner_connect_details/lyner_connect_details.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/treatment_planning_screen.dart';
+import 'package:lynerdoctor/ui/screens/main/profile/profile_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/upload_photographs/upload_photographs.dart';
 
 class Routes {
@@ -41,6 +43,8 @@ class Routes {
   static const String financialScreen = "/financialScreen";
   static const String globalSearchScreen = "/globalSearchScreen";
   static const String uploadPhotographsScreen = "/uploadPhotographsScreen";
+  static const String addCaseSelection = "/addCaseSelection";
+  static const String profileScreen = "/profileScreen";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -73,5 +77,9 @@ class Routes {
     GetPage(
         name: Routes.uploadPhotographsScreen,
         page: () => UploadPhotographsScreen()),
+    GetPage(
+        name: Routes.addCaseSelection,
+        page: () => const AddCaseSelectionScreen()),
+    GetPage(name: Routes.profileScreen, page: () => ProfileScreen()),
   ];
 }
