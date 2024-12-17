@@ -7,8 +7,8 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
 import 'package:lynerdoctor/ui/screens/main/add_case_selection/add_case_selection_controller.dart';
-import 'package:lynerdoctor/ui/screens/main/add_case_selection/patient_information.dart';
-import 'package:lynerdoctor/ui/screens/main/add_case_selection/patient_photography.dart';
+import 'package:lynerdoctor/ui/screens/main/add_case_selection/widget/patient_information.dart';
+import 'package:lynerdoctor/ui/screens/main/add_case_selection/widget/patient_photography.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
 
 class AddCaseSelectionScreen extends StatelessWidget {
@@ -120,7 +120,9 @@ class AddCaseSelectionScreen extends StatelessWidget {
                           Container(
                             width: (!isTablet ? 120 : 150),
                             height: 2.0,
-                            color: primaryBrown,
+                            color: ctrl.currentStep == 0
+                                ? darkSkyColor
+                                : primaryBrown,
                           ).paddingOnly(top: 15),
                           GestureDetector(
                             onTap: () {
@@ -138,7 +140,9 @@ class AddCaseSelectionScreen extends StatelessWidget {
                                   padding: EdgeInsets.all(3),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: darkSkyColor,
+                                      color: ctrl.currentStep == 0
+                                          ? darkSkyColor
+                                          : primaryBrown,
                                       width: 1,
                                     ),
                                     shape: BoxShape.circle,
@@ -148,7 +152,9 @@ class AddCaseSelectionScreen extends StatelessWidget {
                                     width: !isTablet ? 20 : 25,
                                     height: !isTablet ? 20 : 25,
                                     decoration: BoxDecoration(
-                                      color: primaryBrown,
+                                      color: ctrl.currentStep == 0
+                                          ? darkSkyColor
+                                          : primaryBrown,
                                       shape: BoxShape.circle,
                                     ),
                                   ),

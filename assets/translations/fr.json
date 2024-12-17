@@ -354,5 +354,6 @@
   "treatmentGoal": "Objectif du traitement",
   "enterTreatmentGoal": "Saisir l'objectif du traitement",
   "pleaseEnterTreatmentGoal": "Veuillez saisir l'objectif du traitement.",
-  "photographAndStlFiles":"Photographies et fichiers STL"
+  "photographAndStlFiles":"Photographies et fichiers STL",
+  "caseNotFound": "Cas non trouvé"
 }

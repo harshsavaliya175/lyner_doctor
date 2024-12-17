@@ -99,7 +99,8 @@ class PatientsDetailsController extends GetxController {
         if (result.data != null) {
           patientDetailsModel = PatientDetailsModel.fromJson(result.data);
           isShowLink.value =
-              patientDetailsModel?.patient3DModalLink?.isNotEmpty ?? false;
+              patientDetailsModel?.latestPatient3dModalLink?.isNotEmpty ??
+                  false;
           addRefinementDropDownList();
           isLoading = false;
         }

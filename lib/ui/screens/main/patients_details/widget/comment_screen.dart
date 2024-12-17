@@ -153,11 +153,11 @@ class CommentScreen extends StatelessWidget {
                       fontSize: !isTablet ? 20 : 24,
                     ),
                     if (controller
-                            .patientDetailsModel?.linkPassword?.isNotEmpty ??
+                            .patientDetailsModel?.latestPassword?.isNotEmpty ??
                         false)
                       Row(
                         children: [
-                          controller.patientDetailsModel!.linkPassword!
+                          controller.patientDetailsModel!.latestPassword!
                               .normalText(
                             fontWeight: FontWeight.w500,
                             fontSize: !isTablet ? 16 : 19,
@@ -168,7 +168,7 @@ class CommentScreen extends StatelessWidget {
                               Clipboard.setData(
                                 ClipboardData(
                                   text: controller
-                                      .patientDetailsModel!.linkPassword!,
+                                      .patientDetailsModel!.latestPassword!,
                                 ),
                               );
                               showAppSnackBar(

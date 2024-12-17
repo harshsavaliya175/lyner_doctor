@@ -8,6 +8,7 @@ import 'package:lynerdoctor/ui/screens/auth/sign_up/signUp_logIn_screen.dart';
 import 'package:lynerdoctor/ui/screens/auth/splash/splash_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/add_case_selection/add_case_selection.dart';
 import 'package:lynerdoctor/ui/screens/main/add_patient/add_patient.dart';
+import 'package:lynerdoctor/ui/screens/main/case_details/case_details_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/dash_board/dashboard_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/devis/devis_screen.dart';
 import 'package:lynerdoctor/ui/screens/main/devis/report_list_screen.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const String uploadPhotographsScreen = "/uploadPhotographsScreen";
   static const String addCaseSelection = "/addCaseSelection";
   static const String profileScreen = "/profileScreen";
+  static const String caseDetailsScreen = "/caseDetailsScreen";
 
   static List<GetPage> pages = [
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
@@ -81,5 +83,6 @@ class Routes {
         name: Routes.addCaseSelection,
         page: () => const AddCaseSelectionScreen()),
     GetPage(name: Routes.profileScreen, page: () => ProfileScreen()),
+    GetPage(name: Routes.caseDetailsScreen, page: () => CaseDetailsScreen()),
   ];
 }

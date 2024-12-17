@@ -123,34 +123,48 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     currentIndex: ctrl.currentIndex,
                     itemIcon: Assets.icons.icPatients,
                     itemIndex: 0,
-                    itemText: LocaleKeys.patients,
+                    itemText: LocaleKeys.caseSelection,
                     onTap: () {
                       ctrl.changeData(currentIdx: 0);
+                      // Get.find<PatientsController>()
+                      //     .getClinicListBySearchOrFilter();
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: BottomBarItem(
+                    currentIndex: ctrl.currentIndex,
+                    itemIcon: Assets.icons.icPatients,
+                    itemIndex: 1,
+                    itemText: LocaleKeys.patients,
+                    onTap: () {
+                      ctrl.changeData(currentIdx: 1);
                       Get.find<PatientsController>()
                           .getClinicListBySearchOrFilter();
                     },
                   ),
                 ),
-                Expanded(
-                  child: BottomBarItem(
-                    currentIndex: ctrl.currentIndex,
-                    itemIcon: Assets.icons.icLynerConnect,
-                    itemIndex: 1,
-                    itemText: LocaleKeys.lynerConnect,
-                    onTap: () {
-                      ctrl.changeData(currentIdx: 1);
-                    },
-                  ),
-                ),
+
                 Expanded(child: SizedBox()),
                 Expanded(
                   child: BottomBarItem(
                     currentIndex: ctrl.currentIndex,
-                    itemIcon: Assets.icons.icLibrary,
+                    itemIcon: Assets.icons.icLynerConnect,
                     itemIndex: 2,
-                    itemText: LocaleKeys.library,
+                    itemText: LocaleKeys.lynerConnect,
                     onTap: () {
                       ctrl.changeData(currentIdx: 2);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: BottomBarItem(
+                    currentIndex: ctrl.currentIndex,
+                    itemIcon: Assets.icons.icLibrary,
+                    itemIndex: 3,
+                    itemText: LocaleKeys.library,
+                    onTap: () {
+                      ctrl.changeData(currentIdx: 3);
                     },
                   ),
                 ),
@@ -165,37 +179,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //     },
                 //   ),
                 // ),
-                Expanded(
-                  child: BottomBarItem(
-                    currentIndex: ctrl.currentIndex,
-                    itemIcon: Assets.icons.icPatients,
-                    itemIndex: 3,
-                    itemText: LocaleKeys.caseSelection,
-                    onTap: () {
-                      ctrl.changeData(currentIdx: 3);
-                      // Get.find<PatientsController>()
-                      //     .getClinicListBySearchOrFilter();
-                    },
-                  ),
-                ),
               ],
             ),
           );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // context.showAppBottomSheet(
-          //   contentWidget: AddNewPatientBottomSheet(),
-          // );
-          Get.toNamed(Routes.addPatientScreen, arguments: null);
-        },
-        child: Icon(Icons.add, size: 40, color: whiteColor),
-        heroTag: Object(),
-        shape: CircleBorder(),
-        backgroundColor: primaryBrown,
-      ),
+      floatingActionButton:
+          GetBuilder<DashboardController>(builder: (DashboardController ctrl) {
+        return FloatingActionButton(
+          onPressed: () {
+            // context.showAppBottomSheet(
+            //   contentWidget: AddNewPatientBottomSheet(),
+            // );
+            if (ctrl.currentIndex == 0) {
+              Get.toNamed(Routes.addCaseSelection);
+            } else {
+              Get.toNamed(Routes.addPatientScreen, arguments: null);
+            }
+          },
+          child: Icon(Icons.add, size: 40, color: whiteColor),
+          heroTag: Object(),
+          shape: CircleBorder(),
+          backgroundColor: primaryBrown,
+        );
+      }),
     );
   }
 }

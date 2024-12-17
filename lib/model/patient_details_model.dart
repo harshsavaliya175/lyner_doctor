@@ -77,8 +77,13 @@ class PatientDetailsModel {
   final int? adminArchive;
   final int? isDeleted;
   final dynamic trackingId;
+  final dynamic noteLink;
   final int? isDraft;
   final dynamic draftViewPage;
+  final String? latestPatient3dModalLink;
+  final String? latestPassword;
+  final String? stage;
+  final String? refinementStage;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final Doctor? doctor;
@@ -122,9 +127,14 @@ class PatientDetailsModel {
     this.isDelivered,
     this.isVirtual,
     this.trackingId,
+    this.noteLink,
     this.isDeleted,
     this.isDraft,
     this.draftViewPage,
+    this.latestPatient3dModalLink,
+    this.latestPassword,
+    this.stage,
+    this.refinementStage,
     this.createdAt,
     this.updatedAt,
     this.doctor,
@@ -141,7 +151,7 @@ class PatientDetailsModel {
     String? patientUniqueId,
     String? firstName,
     String? lastName,
-    dynamic email,
+    String? email,
     DateTime? dateOfBirth,
     String? patientProfile,
     DateTime? bondDate,
@@ -155,7 +165,7 @@ class PatientDetailsModel {
     int? clinicId,
     int? clinicLocationId,
     int? clinicBillingId,
-    dynamic technicianId,
+    int? technicianId,
     DateTime? technicianStartDate,
     int? adminNewCase,
     int? technicianNewCase,
@@ -168,9 +178,14 @@ class PatientDetailsModel {
     int? isDelivered,
     int? isVirtual,
     dynamic trackingId,
+    dynamic noteLink,
     int? isDraft,
     int? isDeleted,
     dynamic draftViewPage,
+    String? latestPatient3dModalLink,
+    String? latestPassword,
+    String? stage,
+    String? refinementStage,
     DateTime? createdAt,
     DateTime? updatedAt,
     Doctor? doctor,
@@ -214,8 +229,14 @@ class PatientDetailsModel {
         isDelivered: isDelivered ?? this.isDelivered,
         isVirtual: isVirtual ?? this.isVirtual,
         trackingId: trackingId ?? this.trackingId,
+        noteLink: noteLink ?? this.noteLink,
         isDraft: isDraft ?? this.isDraft,
         draftViewPage: draftViewPage ?? this.draftViewPage,
+        latestPatient3dModalLink:
+            latestPatient3dModalLink ?? this.latestPatient3dModalLink,
+        latestPassword: latestPassword ?? this.latestPassword,
+        stage: stage ?? this.stage,
+        refinementStage: refinementStage ?? this.refinementStage,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         doctor: doctor ?? this.doctor,
@@ -272,9 +293,14 @@ class PatientDetailsModel {
         isDelivered: json["is_delivered"],
         isVirtual: json["is_virtual"],
         trackingId: json["tracking_id"],
+        noteLink: json["note_link"],
         isDraft: json["is_draft"],
         isDeleted: json["is_deleted"],
         draftViewPage: json["draft_view_page"],
+        latestPatient3dModalLink: json["latest_patient_3d_modal_link"],
+        latestPassword: json["latest_password"],
+        stage: json["stage"],
+        refinementStage: json["refine_stage_no"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -338,9 +364,14 @@ class PatientDetailsModel {
         "is_delivered": isDelivered,
         "is_virtual": isVirtual,
         "tracking_id": trackingId,
+        "note_link": noteLink,
         "is_draft": isDraft,
         "is_deleted": isDeleted,
         "draft_view_page": draftViewPage,
+        "latest_patient_3d_modal_link": latestPatient3dModalLink,
+        "latest_password": latestPassword,
+        "stage": stage,
+        "refine_stage_no": refinementStage,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "doctor": doctor?.toJson(),

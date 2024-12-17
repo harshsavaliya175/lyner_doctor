@@ -134,6 +134,7 @@ class CodegenLoader extends AssetLoader{
   "apply": "Apply",
   "all": "All",
   "clinic": "Clinic",
+  "doctorName": "Doctor’s name",
   "recommandeLyner": "Recommended by Lyner",
   "iprStripping": "IPR (stripping)",
   "taquets": "Cleats",
@@ -369,7 +370,8 @@ class CodegenLoader extends AssetLoader{
   "treatmentGoal": "Treatment goal",
   "enterTreatmentGoal": "Enter treatment goal",
   "pleaseEnterTreatmentGoal": "Please enter treatment goal.",
-  "photographAndStlFiles": "Photographs and STL files"
+  "photographAndStlFiles": "Photographs and STL files",
+  "caseNotFound": "Case not found"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -543,6 +545,7 @@ static const Map<String,dynamic> fr = {
   "lyner_ortho": "Lyner Ortho",
   "patientDetails": "Détails du patient",
   "comments": "Commentaires",
+  "doctorName": "Nom du médecin",
   "pleaseNoteYourComments": "Veuillez noter vos commentaires",
   "lyner": "Lyner",
   "information": "Information",
@@ -726,7 +729,8 @@ static const Map<String,dynamic> fr = {
   "treatmentGoal": "Objectif du traitement",
   "enterTreatmentGoal": "Saisir l'objectif du traitement",
   "pleaseEnterTreatmentGoal": "Veuillez saisir l'objectif du traitement.",
-  "photographAndStlFiles": "Photographies et fichiers STL"
+  "photographAndStlFiles": "Photographies et fichiers STL",
+  "caseNotFound": "Cas non trouvé"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

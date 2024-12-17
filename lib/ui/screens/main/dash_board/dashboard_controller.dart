@@ -8,11 +8,11 @@ class DashboardController extends GetxController {
   int currentIndex = 0;
 
   List screen = [
+    CaseSelectionScreen(),
     PatientsScreen(),
     LynerConnectScreen(),
     LibraryScreen(),
     // ProfileScreen(),
-    CaseSelectionScreen(),
   ];
 
   void changeData({int? currentIdx}) {

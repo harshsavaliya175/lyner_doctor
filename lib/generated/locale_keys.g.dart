@@ -120,6 +120,7 @@ abstract class  LocaleKeys {
   static const apply = 'apply';
   static const all = 'all';
   static const clinic = 'clinic';
+  static const doctorName = 'doctorName';
   static const recommandeLyner = 'recommandeLyner';
   static const iprStripping = 'iprStripping';
   static const taquets = 'taquets';
@@ -356,5 +357,6 @@ abstract class  LocaleKeys {
   static const enterTreatmentGoal = 'enterTreatmentGoal';
   static const pleaseEnterTreatmentGoal = 'pleaseEnterTreatmentGoal';
   static const photographAndStlFiles = 'photographAndStlFiles';
+  static const caseNotFound = 'caseNotFound';
 
 }

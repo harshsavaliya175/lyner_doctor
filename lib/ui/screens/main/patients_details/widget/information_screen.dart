@@ -39,14 +39,14 @@ class InformationScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           AppTextField(
                             textEditingController:
                                 controller.refinementController,
-                            onChanged: (value) {},
-                            validator: (value) {
+                            onChanged: (String value) {},
+                            validator: (String value) {
                               if (value.isEmpty) {
                                 controller.emailError = true;
                                 controller.update();
@@ -88,6 +88,7 @@ class InformationScreen extends StatelessWidget {
                               child: ListView.separated(
                                 shrinkWrap: true,
                                 physics: const PageScrollPhysics(),
+                                itemCount: controller.refinementList.length,
                                 separatorBuilder:
                                     (BuildContext context, int index) =>
                                         DottedBorder(
@@ -99,8 +100,8 @@ class InformationScreen extends StatelessWidget {
                                   child: Container(),
                                 ),
                                 itemBuilder: (BuildContext builder, int index) {
-                                  String data = controller.refinementList[
-                                      index]; // Display filtered data when search is not empty
+                                  String data =
+                                      controller.refinementList[index];
                                   return InkWell(
                                     onTap: () {
                                       print("onTap : $index");
@@ -189,11 +190,12 @@ class InformationScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                itemCount: controller.refinementList.length,
                               ).paddingOnly(top: 5, bottom: 5),
                             ).paddingOnly(top: 15),
                           ),
-                        ])),
+                        ],
+                      ),
+                    ),
                     10.space(),
                     Align(
                       alignment: Alignment.centerRight,

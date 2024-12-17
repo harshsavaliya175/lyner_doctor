@@ -41,10 +41,6 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
             fontSize: 20,
           ),
         ),
-
-
-
-
         backgroundColor: Colors.white,
         leading: Assets.icons.icBack
             .svg(

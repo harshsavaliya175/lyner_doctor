@@ -355,5 +355,6 @@
   "treatmentGoal":"Treatment goal",
   "enterTreatmentGoal":"Enter treatment goal",
   "pleaseEnterTreatmentGoal":"Please enter treatment goal.",
-  "photographAndStlFiles":"Photographs and STL files"
+  "photographAndStlFiles":"Photographs and STL files",
+  "caseNotFound":"Case not found"
 }
