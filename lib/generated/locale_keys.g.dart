@@ -168,6 +168,8 @@ abstract class  LocaleKeys {
   static const alignementEsthetiqueCorrection = 'alignementEsthetiqueCorrection';
   static const pleaseSelectAnyPatient = 'pleaseSelectAnyPatient';
   static const patientDetails = 'patientDetails';
+  static const view3DSimulation = 'view3DSimulation';
+  static const lyner_ortho = 'lyner_ortho';
   static const comments = 'comments';
   static const pleaseNoteYourComments = 'pleaseNoteYourComments';
   static const lyner = 'lyner';

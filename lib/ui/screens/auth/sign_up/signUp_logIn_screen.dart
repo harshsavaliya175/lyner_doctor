@@ -156,6 +156,7 @@ class SignUpSignInScreen extends StatelessWidget {
           ),
           prefixIcon: Assets.icons.lock,
         ),
+
         10.space(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
