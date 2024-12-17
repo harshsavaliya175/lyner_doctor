@@ -148,7 +148,7 @@ class CommentScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    LocaleKeys.comments.translateText.normalText(
+                    LocaleKeys.lyner_ortho.translateText.normalText(
                       fontWeight: FontWeight.w600,
                       fontSize: !isTablet ? 20 : 24,
                     ),

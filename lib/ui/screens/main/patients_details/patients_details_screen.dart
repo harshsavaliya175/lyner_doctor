@@ -33,7 +33,7 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
       appBar: appbarWithIcons(
         centerTitle: false,
         title: Text(
-          LocaleKeys.patientDetails.translateText,
+          LocaleKeys.view3DSimulation.translateText,
           style: TextStyle(
             fontFamily: Assets.fonts.maax,
             fontWeight: FontWeight.w700,
@@ -41,6 +41,10 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
             fontSize: 20,
           ),
         ),
+
+
+
+
         backgroundColor: Colors.white,
         leading: Assets.icons.icBack
             .svg(
