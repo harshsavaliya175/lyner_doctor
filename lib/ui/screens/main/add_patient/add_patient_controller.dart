@@ -709,9 +709,10 @@ class AddPatientController extends GetxController {
   Future<void> uploadPatientSingleImage({File? file, String? paramName}) async {
     isLoading = false;
     ResponseItem result = await AddPatientRepo.uploadPatientSingleImage(
-        file: file,
-        paramName: paramName,
-        patientId: patientData?.patientId.toString());
+      file: file,
+      paramName: paramName,
+      patientId: patientData?.patientId.toString(),
+    );
     isLoading = false;
     try {
       if (result.status) {

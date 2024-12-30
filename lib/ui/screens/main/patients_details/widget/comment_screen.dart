@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -24,11 +25,44 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CommentScreen extends StatelessWidget {
+class CommentScreen extends StatefulWidget {
   CommentScreen({super.key});
 
+  @override
+  State<CommentScreen> createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
+  final ScrollController scrollController = ScrollController();
   final PatientsDetailsController controller =
       Get.put(PatientsDetailsController());
+
+  @override
+  void initState() {
+    super.initState();
+    // Scroll to the bottom after a short delay to ensure the UI is rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToBottom();
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollToBottom() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 
   void showConfirmationDialog(
       BuildContext context, PatientsDetailsController ctrl) {
@@ -68,7 +102,7 @@ class CommentScreen extends StatelessWidget {
                 ),
                 Divider(color: Colors.grey, height: 0),
                 20.space(),
-                LocaleKeys.confirmationText.translateText
+                ("Veuillez prendre connaissance des conditions suivantes")
                     .normalText(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -77,7 +111,7 @@ class CommentScreen extends StatelessWidget {
                     )
                     .paddingSymmetric(horizontal: 16),
                 20.space(),
-                LocaleKeys.wouldYouLikeToContinue.translateText
+                ("J’autorise Lyner Technology, conformément aux lois et réglementations en vigueur, à traiter ces informations. En outre, je consens à obtenir un formulaire de consentement du patient signé avant la soumission, qui autorise Lyner Technology à gérer et à traiter les informations du cas.Je comprends et j’accepte que le plan de traitement 3D fourni par Lyner Technology est conçu conformément aux informations que j’ai fournies. J’ai toujours le droit d’approuver le plan de traitement 3D et j’assume l’entière responsabilité du résultat final du traitement.")
                     .normalText(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -86,6 +120,30 @@ class CommentScreen extends StatelessWidget {
                     )
                     .paddingSymmetric(horizontal: 16)
                     .center,
+                20.space(),
+                Row(
+                  children: [
+                    GetBuilder<PatientsDetailsController>(
+                        builder: (PatientsDetailsController ctrl) {
+                      return Checkbox(
+                        value: ctrl.isCheck,
+                        onChanged: (bool? value) {
+                          ctrl.isCheck = !ctrl.isCheck;
+                          ctrl.update();
+                        },
+                      );
+                    }),
+                    Expanded(
+                        child:
+                            ("J’ai obtenu le formulaire de consentement du patient pour ce cas.")
+                                .normalText(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      textAlign: TextAlign.center,
+                    )),
+                  ],
+                ),
                 20.space(),
                 Row(
                   children: [
@@ -109,8 +167,13 @@ class CommentScreen extends StatelessWidget {
                         fontColor: Colors.white,
                         onTap: () async {
                           if (ctrl.bondDateController.text.trim().isNotEmpty) {
-                            Get.back();
-                            ctrl.approveOrder(context);
+                            if (ctrl.isCheck) {
+                              Get.back();
+                              ctrl.approveOrder(context);
+                            } else {
+                              showAppSnackBar(
+                                  LocaleKeys.pleaseCheckTheBox.translateText);
+                            }
                           } else {
                             showAppSnackBar(
                                 LocaleKeys.pleaseSelectBondDate.translateText);
@@ -140,6 +203,7 @@ class CommentScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: GetBuilder<PatientsDetailsController>(
           builder: (PatientsDetailsController ctrl) {
+            scrollToBottom();
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,9 +226,10 @@ class CommentScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: !isTablet ? 16 : 19,
                           ),
-                          5.space(),
-                          IconButton(
-                            onPressed: () {
+                          if (isTablet) 5.space(),
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
                               Clipboard.setData(
                                 ClipboardData(
                                   text: controller
@@ -174,14 +239,34 @@ class CommentScreen extends StatelessWidget {
                               showAppSnackBar(
                                   LocaleKeys.password_copied.translateText);
                             },
-                            icon: Icon(
-                              Icons.copy,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Icon(
+                                Icons.copy,
+                              ),
                             ),
                           ),
                         ],
                       ),
                   ],
                 ),
+                if (controller
+                        .patientDetailsModel?.latestPassword?.isNotEmpty ??
+                    false)
+                  Row(
+                    children: [
+                      Spacer(),
+                      Icon(Icons.info_outline, size: 14),
+                      2.space(),
+                      (LocaleKeys.clickOnItToCopyThePassword.translateText)
+                          .normalText(
+                        fontSize: !isTablet ? 10 : 12,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.end,
+                      ),
+                    ],
+                  ),
                 controller.commentModelList.isEmpty
                     ? Expanded(
                         child: Container(
@@ -196,6 +281,8 @@ class CommentScreen extends StatelessWidget {
                       )
                     : Expanded(
                         child: ListView.separated(
+                          reverse: true,
+                          // controller: scrollController,
                           itemCount: controller.commentModelList.length,
                           padding: EdgeInsets.only(top: 5, bottom: 50),
                           separatorBuilder: (BuildContext context, int index) =>
@@ -246,7 +333,7 @@ class CommentScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       ((commentModel?.sentByClinic == 1)
-                                              ? LocaleKeys.clinic
+                                              ? "${commentModel?.docFirstName ?? ""} ${commentModel?.docLastName ?? ""}"
                                               : LocaleKeys.lyner)
                                           .translateText
                                           .normalText(
@@ -446,6 +533,81 @@ class CommentScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
+                                  6.space(),
+                                  (commentModel?.sentByClinic == 0)
+                                      ? (commentModel?.planLink?.isNotEmpty ??
+                                              false)
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        child:
+                                                            ("Plan ${commentModel?.planNumber ?? ""}")
+                                                                .normalText(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: !isTablet
+                                                              ? 14
+                                                              : 16,
+                                                          color: Colors.blue,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                        ),
+                                                        onTap: () {
+                                                          Get.toNamed(
+                                                            Routes
+                                                                .treatmentPlanning,
+                                                            arguments: {
+                                                              link: commentModel
+                                                                      ?.planLink ??
+                                                                  "",
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.lock,
+                                                            size: !isTablet
+                                                                ? 16
+                                                                : 20,
+                                                          ),
+                                                          Expanded(
+                                                            child:
+                                                                ("${commentModel?.linkPassword ?? ""}")
+                                                                    .normalText(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize:
+                                                                  !isTablet
+                                                                      ? 14
+                                                                      : 16,
+                                                              color: blackColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          : SizedBox()
+                                      : SizedBox()
                                 ],
                               ),
                             );
@@ -458,7 +620,7 @@ class CommentScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AppButton(
-                          btnHeight: !isTablet ? 45 : 50,
+                          btnHeight: !isTablet ? 40 : 45,
                           fontSize: 16,
                           text: LocaleKeys.sendModification.translateText,
                           fontColor: controller.commentController.text
@@ -481,7 +643,7 @@ class CommentScreen extends StatelessWidget {
                       5.space(),
                       Expanded(
                         child: AppButton(
-                          btnHeight: !isTablet ? 45 : 50,
+                          btnHeight: !isTablet ? 40 : 45,
                           fontSize: 16,
                           text: LocaleKeys.approveOrder.translateText,
                           onTap: () {
@@ -542,9 +704,8 @@ class CommentScreen extends StatelessWidget {
                                           },
                                           onTap: () async {
                                             ctrl.bondDate =
-                                                await datePickerDialog(
-                                              context: Get.context!,
-                                              isDateOfBirth: false,
+                                                await bondingDatePickerDialog(
+                                              context: context,
                                               currentTime: ctrl.bondDate == null
                                                   ? ctrl.bondDateController.text
                                                           .isNotEmpty
@@ -565,6 +726,30 @@ class CommentScreen extends StatelessWidget {
                                                       : null
                                                   : ctrl.bondDate,
                                             );
+                                            // ctrl.bondDate =
+                                            //     await datePickerDialog(
+                                            //   context: Get.context!,
+                                            //   isDateOfBirth: false,
+                                            //   currentTime: ctrl.bondDate == null
+                                            //       ? ctrl.bondDateController.text
+                                            //               .isNotEmpty
+                                            //           ? DateFormat(
+                                            //               "dd/MM/yyyy",
+                                            //               (preferences.getString(
+                                            //                               SharedPreference
+                                            //                                   .LANGUAGE_CODE) ??
+                                            //                           '')
+                                            //                       .isNotEmpty
+                                            //                   ? preferences.getString(
+                                            //                       SharedPreference
+                                            //                           .LANGUAGE_CODE)
+                                            //                   : 'fr',
+                                            //             ).parse(ctrl
+                                            //               .bondDateController
+                                            //               .text)
+                                            //           : null
+                                            //       : ctrl.bondDate,
+                                            // );
                                             if (ctrl.bondDate != null) {
                                               ctrl.bondDateController.text =
                                                   DateFormat(
@@ -587,7 +772,8 @@ class CommentScreen extends StatelessWidget {
                                           // isError: ctrl.emailError,
                                           hintText: LocaleKeys
                                               .dateField.translateText,
-                                          labelText: "Bond Date",
+                                          labelText: LocaleKeys
+                                              .bondingDate.translateText,
                                           showPrefixIcon: false,
                                         ).paddingSymmetric(horizontal: 20),
                                         20.space(),
@@ -646,7 +832,7 @@ class CommentScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ).paddingOnly(top: 10),
+                  ).paddingOnly(top: 5),
                 ),
                 if (ctrl.isShowAddCommentFiled)
                   Row(
@@ -710,7 +896,7 @@ class CommentScreen extends StatelessWidget {
                         ).paddingOnly(left: 12),
                       ),
                     ],
-                  ).paddingOnly(top: 10, bottom: 10),
+                  ).paddingOnly(top: 5, bottom: 15),
               ],
             );
           },

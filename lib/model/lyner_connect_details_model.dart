@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-LynerConnectDetailsModel lynerConnectDetailsModelFromJson(String str) => LynerConnectDetailsModel.fromJson(json.decode(str));
+LynerConnectDetailsModel lynerConnectDetailsModelFromJson(String str) =>
+    LynerConnectDetailsModel.fromJson(json.decode(str));
 
-String lynerConnectDetailsModelToJson(LynerConnectDetailsModel data) => json.encode(data.toJson());
+String lynerConnectDetailsModelToJson(LynerConnectDetailsModel data) =>
+    json.encode(data.toJson());
 
 class LynerConnectDetailsModel {
   LynerConnectDetailsData? data;
@@ -19,17 +21,20 @@ class LynerConnectDetailsModel {
     this.msg,
   });
 
-  factory LynerConnectDetailsModel.fromJson(Map<String, dynamic> json) => LynerConnectDetailsModel(
-    data: json["data"] == null ? null : LynerConnectDetailsData.fromJson(json["data"]),
-    status: json["status"]==1,
-    msg: json["msg"],
-  );
+  factory LynerConnectDetailsModel.fromJson(Map<String, dynamic> json) =>
+      LynerConnectDetailsModel(
+        data: json["data"] == null
+            ? null
+            : LynerConnectDetailsData.fromJson(json["data"]),
+        status: json["status"] == 1,
+        msg: json["msg"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "status": status,
-    "msg": msg,
-  };
+        "data": data?.toJson(),
+        "status": status,
+        "msg": msg,
+      };
 }
 
 class LynerConnectDetailsData {
@@ -87,61 +92,71 @@ class LynerConnectDetailsData {
     this.gallery,
   });
 
-  factory LynerConnectDetailsData.fromJson(Map<String, dynamic> json) => LynerConnectDetailsData(
-    userId: json["user_id"],
-    doctorId: json["doctor_id"],
-    patientId: json["patient_id"],
-    clinicId: json["clinic_id"],
-    userToken: json["user_token"],
-    doctorUniqId: json["doctor_uniq_id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    email: json["email"],
-    userProfilePhoto: json["user_profile_photo"],
-    phoneNo: json["phone_no"],
-    emailVerifiedAt: json["email_verified_at"] == null ? null : DateTime.parse(json["email_verified_at"]),
-    referenceCode: json["reference_code"],
-    alignerStage: json["aligner_stage"],
-    currentAlignerStage: json["current_aligner_stage"],
-    alignerDay: json["aligner_day"],
-    treatmentStartDate: json["treatment_start_date"] == null ? null : DateTime.parse(json["treatment_start_date"]),
-    authToken: json["auth_token"],
-    devicePushToken: json["device_push_token"],
-    deviceType: json["device_type"],
-    verifyForgotCode: json["verify_forgot_code"],
-    timeZone: json["time_zone"],
-    isLoggedOut: json["is_logged_out"],
-    isBlock: json["is_block"],
-    gallery: json["gallery"] == null ? [] : List<Gallery>.from(json["gallery"]!.map((x) => Gallery.fromJson(x))),
-  );
+  factory LynerConnectDetailsData.fromJson(Map<String, dynamic> json) =>
+      LynerConnectDetailsData(
+        userId: json["user_id"],
+        doctorId: json["doctor_id"],
+        patientId: json["patient_id"],
+        clinicId: json["clinic_id"],
+        userToken: json["user_token"],
+        doctorUniqId: json["doctor_uniq_id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        userProfilePhoto: json["user_profile_photo"],
+        phoneNo: json["phone_no"],
+        emailVerifiedAt: json["email_verified_at"] == null
+            ? null
+            : DateTime.parse(json["email_verified_at"]),
+        referenceCode: json["reference_code"],
+        alignerStage: json["aligner_stage"],
+        currentAlignerStage: json["current_aligner_stage"],
+        alignerDay: json["aligner_day"],
+        treatmentStartDate: json["treatment_start_date"] == null
+            ? null
+            : DateTime.parse(json["treatment_start_date"]),
+        authToken: json["auth_token"],
+        devicePushToken: json["device_push_token"],
+        deviceType: json["device_type"],
+        verifyForgotCode: json["verify_forgot_code"],
+        timeZone: json["time_zone"],
+        isLoggedOut: json["is_logged_out"],
+        isBlock: json["is_block"],
+        gallery: json["gallery"] == null
+            ? []
+            : List<Gallery>.from(
+                json["gallery"]!.map((x) => Gallery.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "user_id": userId,
-    "doctor_id": doctorId,
-    "patient_id": patientId,
-    "clinic_id": clinicId,
-    "user_token": userToken,
-    "doctor_uniq_id": doctorUniqId,
-    "first_name": firstName,
-    "last_name": lastName,
-    "email": email,
-    "user_profile_photo": userProfilePhoto,
-    "phone_no": phoneNo,
-    "email_verified_at": emailVerifiedAt?.toIso8601String(),
-    "reference_code": referenceCode,
-    "aligner_stage": alignerStage,
-    "current_aligner_stage": currentAlignerStage,
-    "aligner_day": alignerDay,
-    "treatment_start_date": treatmentStartDate?.toIso8601String(),
-    "auth_token": authToken,
-    "device_push_token": devicePushToken,
-    "device_type": deviceType,
-    "verify_forgot_code": verifyForgotCode,
-    "time_zone": timeZone,
-    "is_logged_out": isLoggedOut,
-    "is_block": isBlock,
-    "gallery": gallery == null ? [] : List<dynamic>.from(gallery!.map((x) => x.toJson())),
-  };
+        "user_id": userId,
+        "doctor_id": doctorId,
+        "patient_id": patientId,
+        "clinic_id": clinicId,
+        "user_token": userToken,
+        "doctor_uniq_id": doctorUniqId,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "user_profile_photo": userProfilePhoto,
+        "phone_no": phoneNo,
+        "email_verified_at": emailVerifiedAt?.toIso8601String(),
+        "reference_code": referenceCode,
+        "aligner_stage": alignerStage,
+        "current_aligner_stage": currentAlignerStage,
+        "aligner_day": alignerDay,
+        "treatment_start_date": treatmentStartDate?.toIso8601String(),
+        "auth_token": authToken,
+        "device_push_token": devicePushToken,
+        "device_type": deviceType,
+        "verify_forgot_code": verifyForgotCode,
+        "time_zone": timeZone,
+        "is_logged_out": isLoggedOut,
+        "is_block": isBlock,
+        "gallery": gallery == null
+            ? []
+            : List<dynamic>.from(gallery!.map((x) => x.toJson())),
+      };
 }
 
 class Gallery {
@@ -170,28 +185,31 @@ class Gallery {
   });
 
   factory Gallery.fromJson(Map<String, dynamic> json) => Gallery(
-    smileGalleryId: json["smile_gallery_id"],
-    userId: json["user_id"],
-    alignerStage: json["aligner_stage"],
-    stageCompletedDate: json["stage_completed_date"] == null ? null : DateTime.parse(json["stage_completed_date"]),
-    straightWithLyner: json["straight_with_lyner"],
-    leftWithLyner: json["left_with_lyner"],
-    rightWithLyner: json["right_with_lyner"],
-    straight: json["straight"],
-    left: json["left"],
-    right: json["right"],
-  );
+        smileGalleryId: json["smile_gallery_id"],
+        userId: json["user_id"],
+        alignerStage: json["aligner_stage"],
+        stageCompletedDate: json["stage_completed_date"] == null
+            ? null
+            : DateTime.parse(json["stage_completed_date"]),
+        straightWithLyner: json["straight_with_lyner"],
+        leftWithLyner: json["left_with_lyner"],
+        rightWithLyner: json["right_with_lyner"],
+        straight: json["straight"],
+        left: json["left"],
+        right: json["right"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "smile_gallery_id": smileGalleryId,
-    "user_id": userId,
-    "aligner_stage": alignerStage,
-    "stage_completed_date": "${stageCompletedDate!.year.toString().padLeft(4, '0')}-${stageCompletedDate!.month.toString().padLeft(2, '0')}-${stageCompletedDate!.day.toString().padLeft(2, '0')}",
-    "straight_with_lyner": straightWithLyner,
-    "left_with_lyner": leftWithLyner,
-    "right_with_lyner": rightWithLyner,
-    "straight": straight,
-    "left": left,
-    "right": right,
-  };
+        "smile_gallery_id": smileGalleryId,
+        "user_id": userId,
+        "aligner_stage": alignerStage,
+        "stage_completed_date":
+            "${stageCompletedDate!.year.toString().padLeft(4, '0')}-${stageCompletedDate!.month.toString().padLeft(2, '0')}-${stageCompletedDate!.day.toString().padLeft(2, '0')}",
+        "straight_with_lyner": straightWithLyner,
+        "left_with_lyner": leftWithLyner,
+        "right_with_lyner": rightWithLyner,
+        "straight": straight,
+        "left": left,
+        "right": right,
+      };
 }

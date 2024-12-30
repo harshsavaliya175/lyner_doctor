@@ -4,9 +4,13 @@
 
 import 'dart:convert';
 
-LynerConnectPatientListModel lynerConnectPatientListModelFromJson(String str) => LynerConnectPatientListModel.fromJson(json.decode(str));
+import 'package:lynerdoctor/core/utils/extension.dart';
 
-String lynerConnectPatientListModelToJson(LynerConnectPatientListModel data) => json.encode(data.toJson());
+LynerConnectPatientListModel lynerConnectPatientListModelFromJson(String str) =>
+    LynerConnectPatientListModel.fromJson(json.decode(str));
+
+String lynerConnectPatientListModelToJson(LynerConnectPatientListModel data) =>
+    json.encode(data.toJson());
 
 class LynerConnectPatientListModel {
   List<LynerPatientListData>? data;
@@ -19,17 +23,23 @@ class LynerConnectPatientListModel {
     this.msg,
   });
 
-  factory LynerConnectPatientListModel.fromJson(Map<String, dynamic> json) => LynerConnectPatientListModel(
-    data: json["data"] == null ? [] : List<LynerPatientListData>.from(json["data"]!.map((x) => LynerPatientListData.fromJson(x))),
-    status: json["status"]==1,
-    msg: json["msg"],
-  );
+  factory LynerConnectPatientListModel.fromJson(Map<String, dynamic> json) =>
+      LynerConnectPatientListModel(
+        data: json["data"] == null
+            ? []
+            : List<LynerPatientListData>.from(
+                json["data"]!.map((x) => LynerPatientListData.fromJson(x))),
+        status: json["status"] == 1,
+        msg: json["msg"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "status": status,
-    "msg": msg,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "status": status,
+        "msg": msg,
+      };
 }
 
 class LynerPatientListData {
@@ -107,79 +117,93 @@ class LynerPatientListData {
     this.updatedAt,
   });
 
-  factory LynerPatientListData.fromJson(Map<String, dynamic> json) => LynerPatientListData(
-    patientId: json["patient_id"],
-    patientUniqueId: json["patient_unique_id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    email: json["email"],
-    dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
-    patientProfile: json["patient_profile"],
-    bondDate: json["bond_date"] == null ? null : DateTime.parse(json["bond_date"]),
-    patient3DModalLink: json["patient_3d_modal_link"],
-    linkPassword: json["link_password"],
-    addPlanCount: json["add_plan_count"],
-    clinicItem: json["clinic_item"],
-    adminItem: json["admin_item"],
-    toothCaseId: json["tooth_case_id"],
-    doctorId: json["doctor_id"],
-    clinicId: json["clinic_id"],
-    clinicLocationId: json["clinic_location_id"],
-    clinicBillingId: json["clinic_billing_id"],
-    technicianId: json["technician_id"],
-    technicianStartDate: json["technician_start_date"] == null ? null : DateTime.parse(json["technician_start_date"]),
-    adminNewCase: json["admin_new_case"],
-    technicianNewCase: json["technician_new_case"],
-    adminTask: json["admin_task"],
-    adminPatient: json["admin_patient"],
-    clinicTask: json["clinic_task"],
-    clinicPatient: json["clinic_patient"],
-    isApproved: json["is_approved"],
-    isProduction: json["is_production"],
-    isDelivered: json["is_delivered"],
-    isVirtual: json["is_virtual"],
-    trackingId: json["tracking_id"],
-    isDraft: json["is_draft"],
-    draftViewPage: json["draft_view_page"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
+  factory LynerPatientListData.fromJson(Map<String, dynamic> json) =>
+      LynerPatientListData(
+        patientId: json["patient_id"],
+        patientUniqueId: json["patient_unique_id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        dateOfBirth: json["date_of_birth"] == null
+            ? null
+            : DateTime.parse(json["date_of_birth"]),
+        patientProfile: json["patient_profile"],
+        bondDate: json["bond_date"] == null
+            ? null
+            : DateTime.parse(json["bond_date"]),
+        patient3DModalLink: json["patient_3d_modal_link"],
+        linkPassword: json["link_password"],
+        addPlanCount: json["add_plan_count"],
+        clinicItem: json["clinic_item"],
+        adminItem: json["admin_item"],
+        toothCaseId: json["tooth_case_id"],
+        doctorId: json["doctor_id"],
+        clinicId: json["clinic_id"],
+        clinicLocationId: json["clinic_location_id"],
+        clinicBillingId: json["clinic_billing_id"],
+        technicianId: json["technician_id"],
+        technicianStartDate: json["technician_start_date"] == null
+            ? null
+            : DateTime.parse(json["technician_start_date"]),
+        adminNewCase: json["admin_new_case"],
+        technicianNewCase: json["technician_new_case"],
+        adminTask: json["admin_task"],
+        adminPatient: json["admin_patient"],
+        clinicTask: json["clinic_task"],
+        clinicPatient: json["clinic_patient"],
+        isApproved: json["is_approved"],
+        isProduction: json["is_production"],
+        isDelivered: json["is_delivered"],
+        isVirtual: json["is_virtual"],
+        trackingId: json["tracking_id"],
+        isDraft: json["is_draft"],
+        draftViewPage: json["draft_view_page"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "patient_id": patientId,
-    "patient_unique_id": patientUniqueId,
-    "first_name": firstName,
-    "last_name": lastName,
-    "email": email,
-    "date_of_birth": "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
-    "patient_profile": patientProfile,
-    "bond_date": "${bondDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
-    "patient_3d_modal_link": patient3DModalLink,
-    "link_password": linkPassword,
-    "add_plan_count": addPlanCount,
-    "clinic_item": clinicItem,
-    "admin_item": adminItem,
-    "tooth_case_id": toothCaseId,
-    "doctor_id": doctorId,
-    "clinic_id": clinicId,
-    "clinic_location_id": clinicLocationId,
-    "clinic_billing_id": clinicBillingId,
-    "technician_id": technicianId,
-    "technician_start_date": "${technicianStartDate!.year.toString().padLeft(4, '0')}-${technicianStartDate!.month.toString().padLeft(2, '0')}-${technicianStartDate!.day.toString().padLeft(2, '0')}",
-    "admin_new_case": adminNewCase,
-    "technician_new_case": technicianNewCase,
-    "admin_task": adminTask,
-    "admin_patient": adminPatient,
-    "clinic_task": clinicTask,
-    "clinic_patient": clinicPatient,
-    "is_approved": isApproved,
-    "is_production": isProduction,
-    "is_delivered": isDelivered,
-    "is_virtual": isVirtual,
-    "tracking_id": trackingId,
-    "is_draft": isDraft,
-    "draft_view_page": draftViewPage,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "patient_id": patientId,
+        "patient_unique_id": patientUniqueId,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "date_of_birth":
+            "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
+        "patient_profile": patientProfile,
+        "bond_date":
+            "${bondDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
+        "patient_3d_modal_link": patient3DModalLink,
+        "link_password": linkPassword,
+        "add_plan_count": addPlanCount,
+        "clinic_item": clinicItem,
+        "admin_item": adminItem,
+        "tooth_case_id": toothCaseId,
+        "doctor_id": doctorId,
+        "clinic_id": clinicId,
+        "clinic_location_id": clinicLocationId,
+        "clinic_billing_id": clinicBillingId,
+        "technician_id": technicianId,
+        "technician_start_date":
+            "${technicianStartDate!.year.toString().padLeft(4, '0')}-${technicianStartDate!.month.toString().padLeft(2, '0')}-${technicianStartDate!.day.toString().padLeft(2, '0')}",
+        "admin_new_case": adminNewCase,
+        "technician_new_case": technicianNewCase,
+        "admin_task": adminTask,
+        "admin_patient": adminPatient,
+        "clinic_task": clinicTask,
+        "clinic_patient": clinicPatient,
+        "is_approved": isApproved,
+        "is_production": isProduction,
+        "is_delivered": isDelivered,
+        "is_virtual": isVirtual,
+        "tracking_id": trackingId,
+        "is_draft": isDraft,
+        "draft_view_page": draftViewPage,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }

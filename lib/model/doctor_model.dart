@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 class DoctorResponseModel {
   final List<DoctorData> doctorData;
   final int status;
@@ -53,7 +55,8 @@ class DoctorData {
   final dynamic country;
   final String language;
   final int clinicId;
-
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   DoctorData({
     required this.doctorId,
@@ -66,7 +69,8 @@ class DoctorData {
     required this.country,
     required this.language,
     required this.clinicId,
-
+    this.createdAt,
+    this.updatedAt,
   });
 
   DoctorData copyWith({
@@ -94,7 +98,8 @@ class DoctorData {
         country: country ?? this.country,
         language: language ?? this.language,
         clinicId: clinicId ?? this.clinicId,
-
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
 
   factory DoctorData.fromRawJson(String str) =>
@@ -113,7 +118,12 @@ class DoctorData {
         country: json["country"],
         language: json["language"],
         clinicId: json["clinic_id"],
-
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -127,5 +137,7 @@ class DoctorData {
         "country": country,
         "language": language,
         "clinic_id": clinicId,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

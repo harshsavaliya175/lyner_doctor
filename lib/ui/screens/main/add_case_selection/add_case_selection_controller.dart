@@ -1,23 +1,31 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lynerdoctor/api/add_patient_repo/add_patient_repo.dart';
+import 'package:lynerdoctor/api/case_repo/case_repo.dart';
 import 'package:lynerdoctor/api/response_item_model.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
+import 'package:lynerdoctor/core/utils/shared_prefs.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/case_model.dart';
 import 'package:uuid/uuid.dart';
 
 class AddCaseSelectionController extends GetxController {
   int currentStep = 0;
   bool isLoading = false;
   bool isStepOneComplete = false;
-
+  List<File> smileImg = [];
+  File? profileImageFile;
+  File? faceImageFile;
+  File? smileImageFile;
   File? intraRightImageFile;
   File? intraLeftImageFile;
+  File? intraMaxImageFile;
+  File? intraMandImageFile;
   File? intraFaceImageFile;
-  File? faceImageFile;
   File? radiosFirstImageFile;
   File? radiosSecondImageFile;
   TextEditingController upperJawImageFileTextCtrl = TextEditingController();
@@ -35,15 +43,31 @@ class AddCaseSelectionController extends GetxController {
   String? dateTextField;
   GlobalKey<FormState> patientInformationFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController patientRequestController = TextEditingController();
   TextEditingController treatmentGoalController = TextEditingController();
-  Map<int, bool> stepErrors = <int, bool>{};
+
+  CaseModel? caseModel;
+  int? caseId;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    if (Get.arguments != null) {
+      caseId = Get.arguments[caseIdString];
+    }
+
+    print("--------------- Case Id : $caseId");
+
+    if (caseId != null) {
+      isLoading = true;
+      await getPatientInformationDetails();
+      if (caseModel?.photos?.dcomFileName != null &&
+          caseModel!.photos!.dcomFileName!.isNotEmpty) {
+        dicomFileName = getFileName(caseModel!.photos!.dcomFileName, 20);
+      }
+    }
   }
 
   void changeData({bool? isStepOneComplete, int? step}) {
@@ -60,14 +84,168 @@ class AddCaseSelectionController extends GetxController {
         : filePath;
   }
 
-  Future<void> uploadPatientSingleImage({File? file, String? paramName}) async {
+  Future<void> getPatientInformationDetails() async {
+    ResponseItem result = await AddCaseRepo.getCaseSelection(id: caseId ?? 0);
     isLoading = false;
-    ResponseItem result = await AddPatientRepo.uploadPatientSingleImage(
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          CaseSelectionModel caseSelectionModel =
+              CaseSelectionModel.fromJson(result.toJson());
+          caseModel = caseSelectionModel.caseModel;
+          firstNameController.text = caseModel?.firstName ?? '';
+          lastNameController.text = caseModel?.lastName ?? '';
+          patientRequestController.text = caseModel?.patientRequest ?? "";
+          treatmentGoalController.text = caseModel?.treatmentObjectives ?? "";
+          if (caseModel?.dateOfBirth != null) {
+            dateTextField = DateFormat(
+              'dd/MM/yyyy',
+              (preferences.getString(SharedPreference.LANGUAGE_CODE) ?? '')
+                      .isNotEmpty
+                  ? preferences.getString(SharedPreference.LANGUAGE_CODE)
+                  : 'fr',
+            ).format(caseModel!.dateOfBirth!);
+            dateOfBirthController.text = dateTextField!;
+          } else {
+            dateOfBirthController.text = '';
+          }
+
+          upperJawImageFileTextCtrl.text =
+              caseModel?.photos?.upperJawStlFile ?? '';
+          lowerJawImageFileTextCtrl.text =
+              caseModel?.photos?.lowerJawStlFile ?? '';
+          print(isUploadStl);
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> addCaseInformation() async {
+    isLoading = true;
+    ResponseItem result = await AddCaseRepo.addCase(
+      dateOfBirth: dateOfBirthController.text.trim(),
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      patientRequest: patientRequestController.text.trim(),
+      treatmentGoal: treatmentGoalController.text.trim(),
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          CaseSelectionModel caseData =
+              CaseSelectionModel.fromJson(result.toJson());
+          caseModel = caseData.caseModel;
+          caseId = caseModel!.id;
+          print(caseModel);
+          showAppSnackBar(
+              LocaleKeys.addPatientRecordSuccessfully.translateText);
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> editCaseInformation({
+    int isDraft = 1,
+    bool? isBack,
+  }) async {
+    isLoading = true;
+    ResponseItem result = await AddCaseRepo.editCase(
+      id: caseId.toString(),
+      dateOfBirth: dateOfBirthController.text.trim(),
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      patientRequest: patientRequestController.text.trim(),
+      treatmentGoal: treatmentGoalController.text.trim(),
+      isDraft: isDraft,
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        if (result.data != null) {
+          CaseSelectionModel caseData =
+              CaseSelectionModel.fromJson(result.toJson());
+          caseModel = caseData.caseModel;
+          caseId = caseModel!.id;
+          print(caseModel);
+          if (isBack != null && isBack) {
+            Get.back();
+          }
+          // showAppSnackBar(
+          //     LocaleKeys.addPatientRecordSuccessfully.translateText);
+          isLoading = false;
+        }
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  bool validateUploadPhotoFiles() {
+    if (profileImageFile == null &&
+        (caseModel?.photos?.gauche == null || caseModel?.photos?.gauche == ''))
+      return false;
+    if (faceImageFile == null &&
+        (caseModel?.photos?.face == null || caseModel?.photos?.face == ''))
+      return false;
+    if (smileImageFile == null &&
+        (caseModel?.photos?.sourire == null ||
+            caseModel?.photos?.sourire == '')) return false;
+    if (intraMaxImageFile == null &&
+        (caseModel?.photos?.interMax == null ||
+            caseModel?.photos?.interMax == '')) return false;
+    if (intraMandImageFile == null &&
+        (caseModel?.photos?.interMandi == null ||
+            caseModel?.photos?.interMandi == '')) return false;
+    if (intraRightImageFile == null &&
+        (caseModel?.photos?.interDroite == null ||
+            caseModel?.photos?.interDroite == '')) return false;
+    if (intraLeftImageFile == null &&
+        (caseModel?.photos?.interGauche == null ||
+            caseModel?.photos?.interGauche == '')) return false;
+    if (intraFaceImageFile == null &&
+        (caseModel?.photos?.interFace == null ||
+            caseModel?.photos?.interFace == '')) return false;
+    if (isUploadStl) {
+      if (upperJawImageFile == null &&
+          (caseModel?.photos?.upperJawStlFile == null ||
+              caseModel?.photos?.upperJawStlFile == '')) return false;
+      if (lowerJawImageFile == null &&
+          (caseModel?.photos?.lowerJawStlFile == null ||
+              caseModel?.photos?.lowerJawStlFile == '')) return false;
+    }
+    return true;
+  }
+
+  Future<void> uploadCaseSingleImage({
+    File? file,
+    required String paramName,
+  }) async {
+    isLoading = false;
+    ResponseItem result = await AddCaseRepo.uploadCaseSingleImage(
       file: file,
       paramName: paramName,
-
-      /// todo change : when api is created
-      patientId: "patientData?.patientId.toString()",
+      id: caseModel?.id.toString() ?? "",
+      dateOfBirth: dateOfBirthController.text.trim(),
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      patientRequest: dateOfBirthController.text.trim(),
+      treatmentObjectives: dateOfBirthController.text.trim(),
     );
     isLoading = false;
     try {
@@ -82,7 +260,34 @@ class AddCaseSelectionController extends GetxController {
     update();
   }
 
-  Future<void> uploadDicomFile(File file, String forWhat) async {
+  Future<void> uploadCaseMultipleImage({required List<File> files}) async {
+    isLoading = false;
+    ResponseItem result = await AddCaseRepo.uploadCaseMultipleImage(
+      imageList: files,
+      id: caseModel?.id.toString() ?? '',
+      dateOfBirth: dateOfBirthController.text.trim(),
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      patientRequest: dateOfBirthController.text.trim(),
+      treatmentObjectives: dateOfBirthController.text.trim(),
+    );
+    isLoading = false;
+    try {
+      if (result.status) {
+        isLoading = false;
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+    update();
+  }
+
+  Future<void> uploadDicomFile(
+    File file,
+    // String forWhat,
+  ) async {
     isDcomFileLoading = true;
     uploadProgress = 0.0;
     update();
@@ -117,17 +322,14 @@ class AddCaseSelectionController extends GetxController {
           uploadProgress = (i + j / 100) / totalChunks;
           update();
         }
-        ResponseItem result = await AddPatientRepo.uploadPatientDcomFile(
+        ResponseItem result = await AddCaseRepo.uploadCaseDcomFile(
           file: chunkFile,
           chunkIndex: '$i',
           extension: fileExtension,
           totalChunks: '$totalChunks',
           uploadId: uploadId,
-
-          /// todo : add patient id when api calling
-          patientId:
-              "patientData?.patientId.toString() ?? patientId.toString()",
-          forWhat: forWhat,
+          caseSelectionId: caseModel?.id.toString(),
+          // forWhat: forWhat,
         );
         if (!result.status) {
           showAppSnackBar('Chunk $i upload failed: ${result.msg}');

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
+import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
@@ -18,6 +19,7 @@ class TreatmentPlanningScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String modelLink = Get.arguments[link] ?? "";
     return Scaffold(
       backgroundColor: appBgColor,
       appBar: appbarWithIcons(
@@ -44,35 +46,41 @@ class TreatmentPlanningScreen extends StatelessWidget {
         }),
         elevation: 0.5,
       ),
-      body:
-          (patientsDetailsController.patientDetailsModel?.patient3DModalLink !=
-                      null ||
-                  patientsDetailsController
-                          .patientDetailsModel?.patient3DModalLink !=
-                      "")
-              ? WebViewWidget(
-                  controller: WebViewController()
-                    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                    ..setBackgroundColor(const Color(0x00000000))
-                    ..setNavigationDelegate(
-                      NavigationDelegate(
-                        onProgress: (int progress) {
-                          // Update loading bar.
-                        },
-                        onPageStarted: (String url) {},
-                        onPageFinished: (String url) {},
-                        onHttpError: (HttpResponseError error) {},
-                        onWebResourceError: (WebResourceError error) {},
-                      ),
-                    )
-                    ..loadRequest(Uri.parse(patientsDetailsController
-                            .patientDetailsModel?.patient3DModalLink ??
-                        '')),
+      // body: (patientsDetailsController.isShowLatestLink
+      //         ? ((patientsDetailsController
+      //                     .patientDetailsModel?.latestPatient3dModalLink !=
+      //                 null ||
+      //             patientsDetailsController
+      //                     .patientDetailsModel?.latestPatient3dModalLink !=
+      //                 ""))
+      //         : ((patientsDetailsController.link.isNotEmpty)))
+      body: (modelLink.isNotEmpty)
+          ? WebViewWidget(
+              controller: WebViewController()
+                ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                ..setBackgroundColor(const Color(0x00000000))
+                ..setNavigationDelegate(
+                  NavigationDelegate(
+                    onProgress: (int progress) {
+                      // Update loading bar.
+                    },
+                    onPageStarted: (String url) {},
+                    onPageFinished: (String url) {},
+                    onHttpError: (HttpResponseError error) {},
+                    onWebResourceError: (WebResourceError error) {},
+                  ),
                 )
-              : Center(
-                  child: Text(LocaleKeys.noUrlAvailableToLoad.translateText)
-                      .paddingOnly(bottom: 60),
-                ),
+                ..loadRequest(Uri.parse(
+                    // patientsDetailsController.isShowLatestLink
+                    //     ? patientsDetailsController
+                    //         .patientDetailsModel!.latestPatient3dModalLink!
+                    //     : (patientsDetailsController.link),
+                    modelLink)),
+            )
+          : Center(
+              child: Text(LocaleKeys.noUrlAvailableToLoad.translateText)
+                  .paddingOnly(bottom: 60),
+            ),
     );
   }
 }

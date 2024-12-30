@@ -63,7 +63,15 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
                 .paddingOnly(right: 15)
                 .onClick(
                 () {
-                  Get.toNamed(Routes.treatmentPlanning);
+                  ctrl.isShowLatestLink = true;
+                  Get.toNamed(
+                    Routes.treatmentPlanning,
+                    arguments: {
+                      link:
+                          ctrl.patientDetailsModel?.latestPatient3dModalLink ??
+                              "",
+                    },
+                  );
                 },
               )
             : const SizedBox()),
@@ -74,7 +82,7 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
             children: [
               Column(
                 children: [
-                  24.space(),
+                  12.space(),
                   Row(
                     children: [
                       Expanded(
@@ -194,7 +202,7 @@ class _PatientsDetailsScreenState extends State<PatientsDetailsScreen> {
                       ),
                     ],
                   ),
-                  10.space(),
+                  // 10.space(),
                   Expanded(
                     child: controller.selectedScreen == 0
                         ? CommentScreen()

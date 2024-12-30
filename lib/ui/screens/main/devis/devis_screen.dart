@@ -457,30 +457,30 @@ class DevisScreen extends StatelessWidget {
                       labelText: LocaleKeys.contentionPrice.translateText,
                       showPrefixIcon: false,
                     ),
-                    15.space(),
-                    AppTextField(
-                      textEditingController: ctrl.patientSocialSecurityNumber,
-                      onChanged: (String value) {},
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          ctrl.patientSocialSecurityNumberError = true;
-                          ctrl.update();
-                          return LocaleKeys
-                              .pleaseEnterPatientSocialSecurityNumber
-                              .translateText;
-                          return "Please enter patient social security number";
-                        }
-                        ctrl.update();
-                        return null;
-                      },
-                      textFieldPadding: EdgeInsets.zero,
-                      keyboardType: TextInputType.number,
-                      hintText: LocaleKeys
-                          .enterPatientSocialSecurityNumber.translateText,
-                      labelText:
-                          LocaleKeys.patientSocialSecurityNumber.translateText,
-                      showPrefixIcon: false,
-                    ),
+                    // 15.space(),
+                    // AppTextField(
+                    //   textEditingController: ctrl.patientSocialSecurityNumber,
+                    //   onChanged: (String value) {},
+                    //   validator: (String value) {
+                    //     if (value.isEmpty) {
+                    //       ctrl.patientSocialSecurityNumberError = true;
+                    //       ctrl.update();
+                    //       return LocaleKeys
+                    //           .pleaseEnterPatientSocialSecurityNumber
+                    //           .translateText;
+                    //       return "Please enter patient social security number";
+                    //     }
+                    //     ctrl.update();
+                    //     return null;
+                    //   },
+                    //   textFieldPadding: EdgeInsets.zero,
+                    //   keyboardType: TextInputType.number,
+                    //   hintText: LocaleKeys
+                    //       .enterPatientSocialSecurityNumber.translateText,
+                    //   labelText:
+                    //       LocaleKeys.patientSocialSecurityNumber.translateText,
+                    //   showPrefixIcon: false,
+                    // ),
                     15.space(),
                     AppTextField(
                       textEditingController:
@@ -506,30 +506,30 @@ class DevisScreen extends StatelessWidget {
                           .complementaryOrganizationNumber.translateText,
                       showPrefixIcon: false,
                     ),
-                    15.space(),
-                    AppTextField(
-                      textEditingController:
-                          ctrl.contractorMemberNumberController,
-                      onChanged: (String value) {},
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          ctrl.contractorMemberNumberError = true;
-                          ctrl.update();
-                          return LocaleKeys
-                              .pleaseEnterContractorMemberNumber.translateText;
-                        }
-                        ctrl.update();
-                        return null;
-                      },
-                      textFieldPadding: EdgeInsets.zero,
-                      keyboardType: TextInputType.number,
-                      // isError: ctrl.emailError,
-                      hintText:
-                          LocaleKeys.enterContractorMemberNumber.translateText,
-                      labelText:
-                          LocaleKeys.contractorMemberNumber.translateText,
-                      showPrefixIcon: false,
-                    ),
+                    // 15.space(),
+                    // AppTextField(
+                    //   textEditingController:
+                    //       ctrl.contractorMemberNumberController,
+                    //   onChanged: (String value) {},
+                    //   validator: (String value) {
+                    //     if (value.isEmpty) {
+                    //       ctrl.contractorMemberNumberError = true;
+                    //       ctrl.update();
+                    //       return LocaleKeys
+                    //           .pleaseEnterContractorMemberNumber.translateText;
+                    //     }
+                    //     ctrl.update();
+                    //     return null;
+                    //   },
+                    //   textFieldPadding: EdgeInsets.zero,
+                    //   keyboardType: TextInputType.number,
+                    //   // isError: ctrl.emailError,
+                    //   hintText:
+                    //       LocaleKeys.enterContractorMemberNumber.translateText,
+                    //   labelText:
+                    //       LocaleKeys.contractorMemberNumber.translateText,
+                    //   showPrefixIcon: false,
+                    // ),
                     15.space(),
                     AppTextField(
                       textEditingController: ctrl.fileReferenceController,

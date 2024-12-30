@@ -4,9 +4,13 @@
 
 import 'dart:convert';
 
-LibraryListModel libraryListModelFromJson(String str) => LibraryListModel.fromJson(json.decode(str));
+import 'package:lynerdoctor/core/utils/extension.dart';
 
-String libraryListModelToJson(LibraryListModel data) => json.encode(data.toJson());
+LibraryListModel libraryListModelFromJson(String str) =>
+    LibraryListModel.fromJson(json.decode(str));
+
+String libraryListModelToJson(LibraryListModel data) =>
+    json.encode(data.toJson());
 
 class LibraryListModel {
   List<LibraryListData>? data;
@@ -19,17 +23,23 @@ class LibraryListModel {
     this.msg,
   });
 
-  factory LibraryListModel.fromJson(Map<String, dynamic> json) => LibraryListModel(
-    data: json["data"] == null ? [] : List<LibraryListData>.from(json["data"]!.map((x) => LibraryListData.fromJson(x))),
-    status: json["status"],
-    msg: json["msg"],
-  );
+  factory LibraryListModel.fromJson(Map<String, dynamic> json) =>
+      LibraryListModel(
+        data: json["data"] == null
+            ? []
+            : List<LibraryListData>.from(
+                json["data"]!.map((x) => LibraryListData.fromJson(x))),
+        status: json["status"],
+        msg: json["msg"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "status": status,
-    "msg": msg,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "status": status,
+        "msg": msg,
+      };
 }
 
 class LibraryListData {
@@ -53,25 +63,30 @@ class LibraryListData {
     this.updatedAt,
   });
 
-  factory LibraryListData.fromJson(Map<String, dynamic> json) => LibraryListData(
-    libraryId: json["library_id"],
-    title: json["title"],
-    youtubeLink: json["youtube_link"],
-    file: json["file"],
-    isYoutube: json["is_youtube"],
-    isDelete: json["is_delete"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
+  factory LibraryListData.fromJson(Map<String, dynamic> json) =>
+      LibraryListData(
+        libraryId: json["library_id"],
+        title: json["title"],
+        youtubeLink: json["youtube_link"],
+        file: json["file"],
+        isYoutube: json["is_youtube"],
+        isDelete: json["is_delete"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "library_id": libraryId,
-    "title": title,
-    "youtube_link": youtubeLink,
-    "file": file,
-    "is_youtube": isYoutube,
-    "is_delete": isDelete,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "library_id": libraryId,
+        "title": title,
+        "youtube_link": youtubeLink,
+        "file": file,
+        "is_youtube": isYoutube,
+        "is_delete": isDelete,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }

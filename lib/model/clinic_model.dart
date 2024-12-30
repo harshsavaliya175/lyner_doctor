@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 class ClinicResponseModel {
   final ClinicData clinicData;
   final String msg;
@@ -121,8 +123,10 @@ class ClinicData {
         type: json["type"] ?? '',
         isEmailNotification: json["is_email_notification"] ?? 0,
         isPhoneNotification: json["is_phone_notification"] ?? 0,
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt:
+            DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt:
+            DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
         doctorData: json["doctor_data"] == null
             ? null
             : DoctorData.fromJson(json["doctor_data"]),
@@ -188,8 +192,10 @@ class DoctorData {
         country: json["country"],
         language: json["language"],
         isDeleted: json["is_deleted"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt:
+            DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt:
+            DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {

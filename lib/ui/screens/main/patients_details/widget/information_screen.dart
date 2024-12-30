@@ -14,10 +14,12 @@ import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/patient_details_model.dart';
 import 'package:lynerdoctor/ui/screens/main/patients_details/patients_details_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_button.dart';
 import 'package:lynerdoctor/ui/widgets/app_download_text_button.dart';
+import 'package:lynerdoctor/ui/widgets/image_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -33,203 +35,348 @@ class InformationScreen extends StatelessWidget {
           return ListView(
             padding: EdgeInsets.only(top: 10, bottom: 50),
             children: [
-              if (controller.patientDetailsModel?.isDelivered == 0)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AppTextField(
-                            textEditingController:
-                                controller.refinementController,
-                            onChanged: (String value) {},
-                            validator: (String value) {
-                              if (value.isEmpty) {
-                                controller.emailError = true;
-                                controller.update();
-                                return LocaleKeys
-                                    .pleaseSelectBillingAddress.translateText;
-                              }
+              // if (controller.patientDetailsModel?.isDelivered == 0)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppTextField(
+                          textEditingController:
+                              controller.refinementController,
+                          onChanged: (String value) {},
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              controller.emailError = true;
                               controller.update();
-                              return null;
-                            },
-                            readOnly: true,
-                            showCursor: false,
-                            onTap: () {
-                              controller.showRefinementDropDown =
-                                  !controller.showRefinementDropDown;
-                              controller.update();
-                            },
-                            textFieldPadding: EdgeInsets.zero,
-                            keyboardType: TextInputType.text,
-                            // isError: ctrl.emailError,
-                            hintText: LocaleKeys.select.translateText,
-                            showPrefixWidget: Assets.icons.icDown
-                                .svg(
-                                  height: 10,
-                                  width: 10,
-                                )
-                                .paddingOnly(left: 15, right: 15),
-                            showPrefixIcon: true,
-                          ),
-                          Visibility(
-                            visible: controller.showRefinementDropDown,
-                            replacement: const SizedBox.shrink(),
-                            child: Container(
-                              // height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: primaryBrown),
-                                borderRadius: BorderRadius.circular(25),
+                              return LocaleKeys
+                                  .pleaseSelectBillingAddress.translateText;
+                            }
+                            controller.update();
+                            return null;
+                          },
+                          readOnly: true,
+                          showCursor: false,
+                          onTap: () {
+                            controller.showRefinementDropDown =
+                                !controller.showRefinementDropDown;
+                            controller.update();
+                          },
+                          textFieldPadding: EdgeInsets.zero,
+                          keyboardType: TextInputType.text,
+                          // isError: ctrl.emailError,
+                          hintText: LocaleKeys.select.translateText,
+                          showPrefixWidget: Assets.icons.icDown
+                              .svg(
+                                height: 10,
+                                width: 10,
+                              )
+                              .paddingOnly(left: 15, right: 15),
+                          showPrefixIcon: true,
+                        ),
+                        Visibility(
+                          visible: controller.showRefinementDropDown,
+                          replacement: const SizedBox.shrink(),
+                          child: Container(
+                            // height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: primaryBrown),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const PageScrollPhysics(),
+                              itemCount: controller.refinementList.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      DottedBorder(
+                                borderType: BorderType.RRect,
+                                color: primaryBrown,
+                                padding: EdgeInsets.zero,
+                                radius: const Radius.circular(35),
+                                dashPattern: const [5, 5, 5, 5],
+                                child: Container(),
                               ),
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                physics: const PageScrollPhysics(),
-                                itemCount: controller.refinementList.length,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        DottedBorder(
-                                  borderType: BorderType.RRect,
-                                  color: primaryBrown,
-                                  padding: EdgeInsets.zero,
-                                  radius: const Radius.circular(35),
-                                  dashPattern: const [5, 5, 5, 5],
-                                  child: Container(),
-                                ),
-                                itemBuilder: (BuildContext builder, int index) {
-                                  String data =
-                                      controller.refinementList[index];
-                                  return InkWell(
-                                    onTap: () {
-                                      print("onTap : $index");
-                                      controller.showRefinementDropDown =
-                                          !controller.showRefinementDropDown;
+                              itemBuilder: (BuildContext builder, int index) {
+                                String data = controller.refinementList[index];
+                                return InkWell(
+                                  onTap: () {
+                                    controller.showRefinementDropDown =
+                                        !controller.showRefinementDropDown;
+
+                                    if (index == 0) {
                                       controller.refinementController.text =
                                           '${data}';
+                                      // controller
+                                      //         .selectedRefinementDropDownIndex =
+                                      //     (index > 0) ? index - 1 : -1;
                                       controller
-                                              .selectedRefinementDropDownIndex =
-                                          (index > 0) ? index - 1 : -1;
-                                      if (controller.patientDetailsModel !=
-                                              null &&
-                                          controller.patientDetailsModel!
-                                                  .refinementList !=
-                                              null &&
-                                          (controller.patientDetailsModel!
-                                                  .refinementList?.isNotEmpty ??
-                                              false)) {
-                                        controller
-                                            .selectedRefinementData = (controller
-                                                    .selectedRefinementDropDownIndex ==
-                                                -1
-                                            ? null
-                                            : (controller
-                                                        .selectedRefinementDropDownIndex <=
-                                                    (controller
-                                                            .patientDetailsModel!
-                                                            .refinementList!
-                                                            .length -
-                                                        1))
-                                                ? controller
-                                                        .patientDetailsModel!
-                                                        .refinementList![
-                                                    controller
-                                                        .selectedRefinementDropDownIndex]
-                                                : null);
-                                        print(
-                                            "--> ${controller.selectedRefinementData}");
+                                          .selectedRefinementDropDownIndex = -1;
+                                      controller.link = controller
+                                              .patientDetailsModel
+                                              ?.patient3DModalLink ??
+                                          "";
+                                      controller.isApprove = controller
+                                              .patientDetailsModel
+                                              ?.isApproved ==
+                                          1;
+                                      if (controller
+                                              .patientDetailsModel?.linkDate !=
+                                          null) {
+                                        controller.linkDate = controller
+                                            .patientDetailsModel?.linkDate;
+                                      }
+                                    }
 
-                                        // controller
-                                        //     .selectedRefinementData =
-                                        // controller.selectedRefinementDropDownIndex == -1
-                                        //     ? null
-                                        //     : (controller.selectedRefinementDropDownIndex == (controller.patientDetailsModel?.refinementList?.length ?? 0) + 1) ? controller.patientDetailsModel?.refinementList?[
-                                        // controller
-                                        //     .selectedRefinementDropDownIndex]:null;
+                                    if (((index != 0 &&
+                                                index !=
+                                                    (controller.refinementList
+                                                            .length -
+                                                        1)) &&
+                                            ((controller.patientDetailsModel
+                                                        ?.stage ??
+                                                    "") ==
+                                                refinement)) ||
+                                        ((controller.patientDetailsModel
+                                                    ?.stage ??
+                                                "") ==
+                                            containment)) {
+                                      bool isTapped = false;
+                                      if (controller.patientDetailsModel
+                                              ?.refinementStage?.isNotEmpty ??
+                                          false) {
+                                        int refinementStageNumber = int.parse(
+                                            controller.patientDetailsModel!
+                                                .refinementStage!);
+                                        if (index <= refinementStageNumber) {
+                                          isTapped = true;
+                                        }
                                       }
-                                      if (index == 1) {
-                                        controller.selectedRefinementData =
-                                            controller.patientDetailsModel
-                                                    ?.containment ??
-                                                null;
+
+                                      if (isTapped) {
+                                        controller.refinementController.text =
+                                            '${data}';
+                                        // controller.isApprove = controller.selectedRefinementData.is
+                                        controller
+                                                .selectedRefinementDropDownIndex =
+                                            (index > 0) ? index - 1 : -1;
+                                        if (controller.patientDetailsModel !=
+                                                null &&
+                                            controller.patientDetailsModel!
+                                                    .refinementList !=
+                                                null &&
+                                            (controller
+                                                    .patientDetailsModel!
+                                                    .refinementList
+                                                    ?.isNotEmpty ??
+                                                false)) {
+                                          controller
+                                              .selectedRefinementData = (controller
+                                                      .selectedRefinementDropDownIndex ==
+                                                  -1
+                                              ? null
+                                              : (controller
+                                                          .selectedRefinementDropDownIndex <=
+                                                      (controller
+                                                              .patientDetailsModel!
+                                                              .refinementList!
+                                                              .length -
+                                                          1))
+                                                  ? controller
+                                                          .patientDetailsModel!
+                                                          .refinementList![
+                                                      controller
+                                                          .selectedRefinementDropDownIndex]
+                                                  : null);
+
+                                          controller.link = controller
+                                                  .selectedRefinementData
+                                                  ?.refinePatient3dModalLink ??
+                                              "";
+                                          controller.isApprove = controller
+                                                  .selectedRefinementData
+                                                  ?.isRefineApproved ==
+                                              1;
+                                          if (controller.patientDetailsModel
+                                                  ?.linkDate !=
+                                              null) {
+                                            controller.linkDate = controller
+                                                .selectedRefinementData
+                                                ?.refineLinkDate;
+                                          }
+                                          print(
+                                              "--> ${controller.selectedRefinementData}");
+                                        } else {
+                                          controller.selectedRefinementData =
+                                              null;
+                                          controller.link = "";
+                                          controller.isApprove = false;
+                                        }
                                       }
-                                      controller.update();
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: '${data}'.appCommonText(
-                                            color: Colors.black,
-                                            maxLine: 1,
-                                            align: TextAlign.start,
-                                            overflow: TextOverflow.ellipsis,
-                                            weight: FontWeight.w400,
-                                            size: !isTablet ? 15 : 18,
-                                          ),
+                                    }
+
+                                    // if (((controller.patientDetailsModel
+                                    //                 ?.stage ??
+                                    //             beginning) ==
+                                    //         refinement) &&
+                                    //     (controller.patientDetailsModel
+                                    //             ?.refinementStage ==
+                                    //         ("${index}"))) {
+                                    //   controller.refinementController.text =
+                                    //       '${data}';
+                                    //   controller
+                                    //           .selectedRefinementDropDownIndex =
+                                    //       (index > 0) ? index - 1 : -1;
+                                    //   if (controller.patientDetailsModel !=
+                                    //           null &&
+                                    //       controller.patientDetailsModel!
+                                    //               .refinementList !=
+                                    //           null &&
+                                    //       (controller.patientDetailsModel!
+                                    //               .refinementList?.isNotEmpty ??
+                                    //           false)) {
+                                    //     controller
+                                    //         .selectedRefinementData = (controller
+                                    //                 .selectedRefinementDropDownIndex ==
+                                    //             -1
+                                    //         ? null
+                                    //         : (controller
+                                    //                     .selectedRefinementDropDownIndex <=
+                                    //                 (controller
+                                    //                         .patientDetailsModel!
+                                    //                         .refinementList!
+                                    //                         .length -
+                                    //                     1))
+                                    //             ? controller
+                                    //                     .patientDetailsModel!
+                                    //                     .refinementList![
+                                    //                 controller
+                                    //                     .selectedRefinementDropDownIndex]
+                                    //             : null);
+                                    //
+                                    //     controller.link = controller
+                                    //             .selectedRefinementData
+                                    //             ?.refinePatient3dModalLink ??
+                                    //         "";
+                                    //     print(
+                                    //         "--> ${controller.selectedRefinementData}");
+                                    //   }
+                                    // }
+
+                                    if ((index ==
+                                            (controller.refinementList.length -
+                                                1)) &&
+                                        ((controller.patientDetailsModel
+                                                    ?.stage ??
+                                                "") !=
+                                            beginning)) {
+                                      controller
+                                          .selectedRefinementDropDownIndex = 0;
+                                      controller.refinementController.text =
+                                          '${data}';
+                                      controller.selectedRefinementData =
+                                          controller.patientDetailsModel
+                                                  ?.containment ??
+                                              null;
+                                      controller.link = "";
+                                      controller.isApprove = false;
+
+                                      print(
+                                          "---- ${controller.selectedRefinementData}");
+                                    }
+                                    // if ((controller
+                                    //             .patientDetailsModel?.stage ??
+                                    //         "") ==
+                                    //     containment) {
+                                    //   //controller.link = "";
+                                    //   controller.refinementController.text =
+                                    //       '${data}';
+                                    //   controller.selectedRefinementData =
+                                    //       controller.patientDetailsModel
+                                    //               ?.containment ??
+                                    //           null;
+                                    //   print(
+                                    //       "---- ${controller.selectedRefinementData}");
+                                    // }
+                                    controller.update();
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: '${data}'.appCommonText(
+                                          color: Colors.black,
+                                          maxLine: 1,
+                                          align: TextAlign.start,
+                                          overflow: TextOverflow.ellipsis,
+                                          weight: FontWeight.w400,
+                                          size: !isTablet ? 15 : 18,
                                         ),
-                                        if (controller.refinementController.text
-                                            .contains('${data}')) ...[
-                                          Assets.icons.icSelectArrow.svg(
-                                              colorFilter: ColorFilter.mode(
-                                            primaryBrown,
-                                            BlendMode.srcIn,
-                                          )),
-                                        ] else ...[
-                                          const SizedBox.shrink(),
-                                        ]
-                                      ],
-                                    ).paddingOnly(
-                                      left: 20,
-                                      right: 20,
-                                      top: 10,
-                                      bottom: 10,
-                                    ),
-                                  );
-                                },
-                              ).paddingOnly(top: 5, bottom: 5),
-                            ).paddingOnly(top: 15),
-                          ),
-                        ],
-                      ),
+                                      ),
+                                      if (controller.refinementController.text
+                                          .contains('${data}')) ...[
+                                        Assets.icons.icSelectArrow.svg(
+                                            colorFilter: ColorFilter.mode(
+                                          primaryBrown,
+                                          BlendMode.srcIn,
+                                        )),
+                                      ] else ...[
+                                        const SizedBox.shrink(),
+                                      ]
+                                    ],
+                                  ).paddingOnly(
+                                    left: 20,
+                                    right: 20,
+                                    top: 10,
+                                    bottom: 10,
+                                  ),
+                                );
+                              },
+                            ).paddingOnly(top: 5, bottom: 5),
+                          ).paddingOnly(top: 15),
+                        ),
+                      ],
                     ),
-                    10.space(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 8),
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        height: isTablet ? 70 : 52,
-                        alignment: Alignment.center,
-                        child: (controller.patientDetailsModel?.isDeleted == 0
-                                ? LocaleKeys.archive.translateText
-                                : LocaleKeys.unArchive.translateText)
-                            .normalText(
-                          fontWeight: FontWeight.w600,
-                          color: primaryBrown,
-                          fontSize: !isTablet ? 16 : 19,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: primaryBrown, width: 1),
-                        ),
-                      ).onClick(
-                        () {
-                          controller.deletePatient(
-                            controller.patientDetailsModel?.patientId
-                                    .toString() ??
-                                '',
-                            controller.patientDetailsModel?.isDeleted,
-                          );
-                        },
+                  ),
+                  10.space(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      height: isTablet ? 70 : 52,
+                      alignment: Alignment.center,
+                      child: (controller.patientDetailsModel?.isDeleted == 0
+                              ? LocaleKeys.archive.translateText
+                              : LocaleKeys.unArchive.translateText)
+                          .normalText(
+                        fontWeight: FontWeight.w600,
+                        color: primaryBrown,
+                        fontSize: !isTablet ? 16 : 19,
                       ),
-                    )
-                  ],
-                ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: primaryBrown, width: 1),
+                      ),
+                    ).onClick(
+                      () {
+                        controller.deletePatient(
+                          controller.patientDetailsModel?.patientId
+                                  .toString() ??
+                              '',
+                          controller.patientDetailsModel?.isDeleted,
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
               12.space(),
               LocaleKeys.information.translateText.normalText(
                 fontWeight: FontWeight.w600,
@@ -340,7 +487,7 @@ class InformationScreen extends StatelessWidget {
                                       color: blackColor,
                                       fontSize: !isTablet ? 16 : 19,
                                     )
-                                  : "${controller.patientDetailsModel!.createdAt!.ddMMYYYYFormat()}"
+                                  : "${controller.patientDetailsModel!.dateOfBirth!.ddMMYYYYFormat()}"
                                       .normalText(
                                       fontWeight: FontWeight.w500,
                                       color: blackColor,
@@ -504,51 +651,76 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if ((controller.patientDetailsModel?.toothCase
-                                    ?.totalRefinement ??
-                                0) >
-                            controller.finishingGutters) {
-                          if (controller.patientDetailsModel?.toothCase
-                                  ?.totalRefinement !=
-                              0) {
-                            // int refinementNumber = 0;
-                            //
-                            // if (controller.patientDetailsModel?.refinementList
-                            //         ?.isNotEmpty ??
-                            //     false) {
-                            //   for (int i = 0;
-                            //       i <
-                            //           controller.patientDetailsModel!
-                            //               .refinementList!.length;
-                            //       i++) {
-                            //     if (controller.patientDetailsModel!
-                            //             .refinementList![i].isDraft ==
-                            //         1) {
-                            //       refinementNumber = controller
-                            //           .patientDetailsModel!
-                            //           .refinementList![i]
-                            //           .refinementNumber;
-                            //       break;
-                            //     }
-                            //   }
-                            // }
-                            Get.toNamed(
-                              Routes.uploadPhotographsScreen,
-                              arguments: {
-                                patientIdString:
-                                    controller.patientDetailsModel?.patientId,
-                                isRefinementString: true,
-                                isRetentionString: false,
-                                refinementIdString:
-                                    controller.finishingGutters + 1,
-                              },
-                            )?.then(
-                              (value) {
-                                controller.getPatientInformationDetails();
-                              },
-                            );
+                        if (((controller.patientDetailsModel?.stage ?? "") ==
+                                refinement) &&
+                            (controller.patientDetailsModel?.containment ==
+                                null)) {
+                          int refinementStage = 0;
+                          if (controller.patientDetailsModel?.refinementStage
+                                  ?.isNotEmpty ??
+                              false) {
+                            refinementStage = int.parse(controller
+                                .patientDetailsModel!.refinementStage!);
                           }
+                          Get.toNamed(
+                            Routes.uploadPhotographsScreen,
+                            arguments: {
+                              patientIdString:
+                                  controller.patientDetailsModel?.patientId,
+                              isRefinementString: true,
+                              isRetentionString: false,
+                              refinementIdString: refinementStage,
+                            },
+                          )?.then(
+                            (value) {
+                              controller.getPatientInformationDetails();
+                            },
+                          );
                         }
+
+                        // if ((controller.patientDetailsModel?.stage ?? "") ==
+                        //     refinement) {
+                        //   bool isTapped = (controller.patientDetailsModel
+                        //           ?.refinementList?.isEmpty ??
+                        //       true);
+                        //   for (int i = 0;
+                        //       i <
+                        //           (controller.patientDetailsModel
+                        //                   ?.refinementList?.length ??
+                        //               0);
+                        //       i++) {
+                        //     if ("${controller.patientDetailsModel?.refinementStage}" ==
+                        //         "${controller.patientDetailsModel!.refinementList![i].refinementNumber}") {
+                        //       isTapped = controller.patientDetailsModel!
+                        //               .refinementList![i].isRefineShipped ==
+                        //           0;
+                        //     }
+                        //   }
+                        //
+                        //   if (isTapped) {
+                        //     int refinementStage = 0;
+                        //     if (controller.patientDetailsModel?.refinementStage
+                        //             ?.isNotEmpty ??
+                        //         false) {
+                        //       refinementStage = int.parse(controller
+                        //           .patientDetailsModel!.refinementStage!);
+                        //     }
+                        //     Get.toNamed(
+                        //       Routes.uploadPhotographsScreen,
+                        //       arguments: {
+                        //         patientIdString:
+                        //             controller.patientDetailsModel?.patientId,
+                        //         isRefinementString: true,
+                        //         isRetentionString: false,
+                        //         refinementIdString: refinementStage,
+                        //       },
+                        //     )?.then(
+                        //       (value) {
+                        //         controller.getPatientInformationDetails();
+                        //       },
+                        //     );
+                        //   }
+                        // }
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -586,9 +758,57 @@ class InformationScreen extends StatelessWidget {
                   Expanded(
                       child: GestureDetector(
                     onTap: () {
-                      if ((controller
-                              .patientDetailsModel?.containment?.isDraft !=
-                          0)) {
+                      bool isTapped = false;
+
+                      if ((controller.patientDetailsModel?.stage ?? "") !=
+                          beginning) {
+                        if ((controller.patientDetailsModel?.stage ?? "") ==
+                            containment) {
+                          if (controller
+                                  .patientDetailsModel?.containment?.isDraft ==
+                              1) {
+                            isTapped = false;
+                          } else {
+                            isTapped = true;
+                          }
+                        } else {
+                          if (((controller.patientDetailsModel?.stage ?? "") ==
+                                  refinement) &&
+                              controller.patientDetailsModel?.refinementList ==
+                                  null) {
+                            isTapped = true;
+                          } else {
+                            if (controller.patientDetailsModel?.containment ==
+                                null) {
+                              bool isAddRefinementDone = true;
+                              for (int i = 0;
+                                  i <
+                                      controller.patientDetailsModel!
+                                          .refinementList!.length;
+                                  i++) {
+                                RefinementList refinementData = controller
+                                    .patientDetailsModel!.refinementList![i];
+
+                                if (refinementData.isRefineShipped == 0) {
+                                  isAddRefinementDone = false;
+                                  break;
+                                }
+                              }
+                              if (isAddRefinementDone) {
+                                isTapped = true;
+                              }
+                            } else {
+                              if (controller.patientDetailsModel?.containment
+                                      ?.isDraft ==
+                                  1) {
+                                isTapped = true;
+                              }
+                            }
+                          }
+                        }
+                      }
+
+                      if (isTapped) {
                         Get.toNamed(
                           Routes.uploadPhotographsScreen,
                           arguments: {
@@ -604,6 +824,11 @@ class InformationScreen extends StatelessWidget {
                           },
                         );
                       }
+
+                      // if ((controller.patientDetailsModel?.stage ?? "") ==
+                      //     containment) {
+                      //
+                      // }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -637,9 +862,7 @@ class InformationScreen extends StatelessWidget {
                   ))
                 ],
               ),
-              if (controller
-                      .patientDetailsModel?.patient3DModalLink?.isNotEmpty ??
-                  false)
+              if (controller.link.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -682,7 +905,10 @@ class InformationScreen extends StatelessWidget {
                                       radius: 100,
                                       fontSize: !isTablet ? 16 : 19,
                                       weight: FontWeight.w600,
-                                      text: LocaleKeys.approved.translateText,
+                                      text: controller.isApprove
+                                          ? LocaleKeys.approved.translateText
+                                          : LocaleKeys
+                                              .pendingApproval.translateText,
                                       onTap: () {},
                                     ),
                                   ],
@@ -703,9 +929,7 @@ class InformationScreen extends StatelessWidget {
                                 bottomLeft: Radius.circular(13),
                               ),
                             ),
-                            child: (controller.patientDetailsModel
-                                        ?.technicianStartDate ==
-                                    null)
+                            child: (controller.linkDate == null)
                                 ? "-"
                                     .appCommonText(
                                       weight: FontWeight.w600,
@@ -713,7 +937,7 @@ class InformationScreen extends StatelessWidget {
                                       color: primaryBrown,
                                     )
                                     .paddingAll(12)
-                                : "${controller.patientDetailsModel!.technicianStartDate!.ddMMYYYYFormat()}"
+                                : "${controller.linkDate!.ddMMYYYYFormat()}"
                                     .appCommonText(
                                       weight: FontWeight.w600,
                                       size: !isTablet ? 16 : 19,
@@ -725,7 +949,13 @@ class InformationScreen extends StatelessWidget {
                       ),
                     ).onClick(
                       () {
-                        Get.toNamed(Routes.treatmentPlanning);
+                        controller.isShowLatestLink = false;
+                        Get.toNamed(
+                          Routes.treatmentPlanning,
+                          arguments: {
+                            link: controller.link,
+                          },
+                        );
                       },
                     ),
                   ],
@@ -835,43 +1065,81 @@ class InformationScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.profile.translateText,
-                      //
-                      imagePath: controller.getPatientAndRefinementPath(
-                          ApiUrl.patientGauche +
-                              "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
-                          ApiUrl.patientGauche +
-                              "${controller.selectedRefinementData?.profile ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: controller.getPatientAndRefinementPath(
+                              ApiUrl.patientGauche +
+                                  "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                              ApiUrl.patientGauche +
+                                  "${controller.selectedRefinementData?.profile ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.profile.translateText,
+                        //
+                        imagePath: controller.getPatientAndRefinementPath(
+                            ApiUrl.patientGauche +
+                                "${controller.patientDetailsModel?.patientPhoto?.gauche ?? ""}",
+                            ApiUrl.patientGauche +
+                                "${controller.selectedRefinementData?.profile ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.face.translateText,
-                      imagePath: /*ApiUrl.patientFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: controller.getPatientAndRefinementPath(
                               ApiUrl.patientFace +
                                   "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
                               ApiUrl.patientFace +
                                   "${controller.selectedRefinementData?.face ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.face.translateText,
+                        imagePath: /*ApiUrl.patientFace +
+                            "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientFace +
+                                    "${controller.patientDetailsModel?.patientPhoto?.face ?? ""}",
+                                ApiUrl.patientFace +
+                                    "${controller.selectedRefinementData?.face ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.smile.translateText,
-                      imagePath: /*ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientSourire +
-                                  "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
-                              ApiUrl.patientSourire +
-                                  "${controller.selectedRefinementData?.smile ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientSourire +
+                            "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientSourire +
+                                      "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                                  ApiUrl.patientSourire +
+                                      "${controller.selectedRefinementData?.smile ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.smile.translateText,
+                        imagePath: /*ApiUrl.patientSourire +
+                            "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientSourire +
+                                    "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}",
+                                ApiUrl.patientSourire +
+                                    "${controller.selectedRefinementData?.smile ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                 ],
@@ -880,32 +1148,60 @@ class InformationScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.intraMax.translateText,
-                      imagePath: /*ApiUrl.patientSourire +
-                          "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientIntraMax +
-                                  "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
-                              ApiUrl.patientIntraMax +
-                                  "${controller.selectedRefinementData?.intraMax ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientSourire +
+                            "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientIntraMax +
+                                      "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
+                                  ApiUrl.patientIntraMax +
+                                      "${controller.selectedRefinementData?.intraMax ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.intraMax.translateText,
+                        imagePath: /*ApiUrl.patientSourire +
+                            "${controller.patientDetailsModel?.patientPhoto?.sourire ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientIntraMax +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interMax ?? ""}",
+                                ApiUrl.patientIntraMax +
+                                    "${controller.selectedRefinementData?.intraMax ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(child: SizedBox()),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.intraMand.translateText,
-                      imagePath: /*ApiUrl.patientInterMandi +
-                          "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientInterMandi +
-                                  "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
-                              ApiUrl.patientInterMandi +
-                                  "${controller.selectedRefinementData?.intraMand ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientInterMandi +
+                            "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientInterMandi +
+                                      "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                                  ApiUrl.patientInterMandi +
+                                      "${controller.selectedRefinementData?.intraMand ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.intraMand.translateText,
+                        imagePath: /*ApiUrl.patientInterMandi +
+                            "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientInterMandi +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interMandi ?? ""}",
+                                ApiUrl.patientInterMandi +
+                                    "${controller.selectedRefinementData?.intraMand ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                 ],
@@ -914,44 +1210,86 @@ class InformationScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.intraRight.translateText,
-                      imagePath: /*ApiUrl.patientInterGauche +
-                          "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientInterGauche +
-                                  "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
-                              ApiUrl.patientInterGauche +
-                                  "${controller.selectedRefinementData?.interRight ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientInterGauche +
+                            "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientInterGauche +
+                                      "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                                  ApiUrl.patientInterGauche +
+                                      "${controller.selectedRefinementData?.interRight ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.intraRight.translateText,
+                        imagePath: /*ApiUrl.patientInterGauche +
+                            "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientInterGauche +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interGauche ?? ""}",
+                                ApiUrl.patientInterGauche +
+                                    "${controller.selectedRefinementData?.interRight ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.intraFace.translateText,
-                      imagePath: /*ApiUrl.patientInterFace +
-                          "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientInterFace +
-                                  "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
-                              ApiUrl.patientInterFace +
-                                  "${controller.selectedRefinementData?.interFace ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientInterFace +
+                            "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientInterFace +
+                                      "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                                  ApiUrl.patientInterFace +
+                                      "${controller.selectedRefinementData?.interFace ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.intraFace.translateText,
+                        imagePath: /*ApiUrl.patientInterFace +
+                            "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientInterFace +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interFace ?? ""}",
+                                ApiUrl.patientInterFace +
+                                    "${controller.selectedRefinementData?.interFace ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                   isTablet ? 60.space() : 10.space(),
                   Expanded(
-                    child: photoWithTitle(
-                      title: LocaleKeys.intraLeft.translateText,
-                      imagePath: /*ApiUrl.patientIntraDroite +
-                          "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}"*/
-                          controller.getPatientAndRefinementPath(
-                              ApiUrl.patientIntraDroite +
-                                  "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
-                              ApiUrl.patientIntraDroite +
-                                  "${controller.selectedRefinementData?.interLeft ?? ""}"),
-                      radiosHeight: isTablet ? 120 : null,
+                    child: InkWell(
+                      onTap: () {
+                        showImageDialog(
+                          context: context,
+                          imagePath: /*ApiUrl.patientIntraDroite +
+                            "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}"*/
+                              controller.getPatientAndRefinementPath(
+                                  ApiUrl.patientIntraDroite +
+                                      "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                                  ApiUrl.patientIntraDroite +
+                                      "${controller.selectedRefinementData?.interLeft ?? ""}"),
+                        );
+                      },
+                      child: photoWithTitle(
+                        title: LocaleKeys.intraLeft.translateText,
+                        imagePath: /*ApiUrl.patientIntraDroite +
+                            "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}"*/
+                            controller.getPatientAndRefinementPath(
+                                ApiUrl.patientIntraDroite +
+                                    "${controller.patientDetailsModel?.patientPhoto?.interDroite ?? ""}",
+                                ApiUrl.patientIntraDroite +
+                                    "${controller.selectedRefinementData?.interLeft ?? ""}"),
+                        radiosHeight: isTablet ? 120 : null,
+                      ),
                     ),
                   ),
                 ],

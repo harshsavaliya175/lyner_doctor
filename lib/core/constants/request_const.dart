@@ -103,6 +103,11 @@ class MethodNames {
   static const String approveOrder = "approveOrder";
   static const String getFinancialList = "getFinancialList";
   static const String logout = "logout";
+  static const String addCaseSelection = "addCaseSelection";
+  static const String editCaseSelection = "editCaseSelection";
+  static const String getCaseSelectionListByStatus =
+      "getCaseSelectionListByStatus";
+  static const String getCaseSelection = "getCaseSelection";
 }
 
 class RequestHeaderKey {
@@ -150,6 +155,8 @@ const int LIMIT = 10;
 
 const USER_TYPE = "user";
 const String patientIdString = "patientId";
+const String caseIdString = "caseId";
+const String link = "link";
 const String commentString = "commentString";
 const String refinementIdString = "refinementIdString";
 const String isShowCheckModificationButtonString =
@@ -178,3 +185,7 @@ void downloadCallback(String id, int status, int progress) {
 //const String patientId = "patient_id";
 const String isRefinementString = "isRefinement";
 const String isRetentionString = "isRetention";
+
+const String beginning = "beginning";
+const String refinement = "refinement";
+const String containment = "containment";

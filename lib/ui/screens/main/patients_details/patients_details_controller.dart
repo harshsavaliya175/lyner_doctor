@@ -34,7 +34,10 @@ class PatientsDetailsController extends GetxController {
   TextEditingController bondDateController = TextEditingController();
   PatientDetailsModel? patientDetailsModel;
   RxBool isShowLink = false.obs;
-  DateTime? bondDate = DateTime.now();
+  String link = "";
+  DateTime? linkDate;
+  bool isApprove = false;
+  DateTime? bondDate = DateTime.now().add(Duration(days: 10));
   PrescriptionData? prescriptionData;
   CommentModel? commentModel;
   List<CommentModel?> commentModelList = [];
@@ -48,6 +51,7 @@ class PatientsDetailsController extends GetxController {
   String commentFileName = LocaleKeys.uploadCommentFile.translateText;
   var taskId;
   var progress;
+  bool isShowLatestLink = false;
 
   int selectedScreenIndex = 0;
   double progressValue = 0.0;
@@ -58,6 +62,7 @@ class PatientsDetailsController extends GetxController {
   bool showRefinementDropDown = false;
   int selectedRefinementDropDownIndex = -1;
   int finishingGutters = 0;
+  bool isCheck = false;
 
   @override
   void onInit() {
@@ -98,6 +103,12 @@ class PatientsDetailsController extends GetxController {
       if (result.status) {
         if (result.data != null) {
           patientDetailsModel = PatientDetailsModel.fromJson(result.data);
+          // link = patientDetailsModel?.latestPatient3dModalLink ?? "";
+          link = patientDetailsModel?.patient3DModalLink ?? "";
+          isApprove = patientDetailsModel?.isApproved == 1;
+          if (patientDetailsModel?.linkDate != null) {
+            linkDate = patientDetailsModel!.linkDate;
+          }
           isShowLink.value =
               patientDetailsModel?.latestPatient3dModalLink?.isNotEmpty ??
                   false;
@@ -127,7 +138,7 @@ class PatientsDetailsController extends GetxController {
     clearRefinementList();
     if (patientDetailsModel?.refinementList?.isNotEmpty ?? false) {
       patientDetailsModel!.refinementList!.forEach(
-        (element) {
+        (RefinementList element) {
           if (element.isDraft == 0) {
             finishingGutters += 1;
           }
@@ -143,13 +154,14 @@ class PatientsDetailsController extends GetxController {
           i++) {
         refinementList.add(LocaleKeys.refinement.translateText + " $i");
       }
+      refinementList.add("Patient Containment");
     }
   }
 
   void clearRefinementList() {
     refinementList.clear();
     refinementList.add(LocaleKeys.beginningOfTreatment.translateText);
-    refinementList.add("Patient Containment");
+    // refinementList.add("Patient Containment");
     refinementController.text = refinementList[0];
   }
 
@@ -223,6 +235,7 @@ class PatientsDetailsController extends GetxController {
       isLoading = false;
       log("error ------> $e");
     }
+    commentModelList = commentModelList.reversed.toList();
     update();
   }
 

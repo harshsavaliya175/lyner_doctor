@@ -51,7 +51,7 @@ class PatientInformation extends StatelessWidget {
                     ),
                     15.space(),
                     AppTextField(
-                      textEditingController: ctrl.nameController,
+                      textEditingController: ctrl.lastNameController,
                       onChanged: (String value) {},
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -171,7 +171,7 @@ class PatientInformation extends StatelessWidget {
                 child: Container(
                   height: !isTablet ? 80 : 100,
                   width: Get.width,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: BoxDecoration(color: appBgColor),
                   child: AppButton(
                     btnHeight: !isTablet ? 55 : 70,
                     text: LocaleKeys.continueText.translateText,
@@ -180,7 +180,20 @@ class PatientInformation extends StatelessWidget {
                       if (ctrl.patientInformationFormKey.currentState!
                           .validate()) {
                         FocusScope.of(Get.context!).unfocus();
-                        ctrl.changeData(step: 1, isStepOneComplete: true);
+
+                        if (ctrl.caseId == null) {
+                          ctrl.addCaseInformation().then(
+                            (void value) {
+                              ctrl.changeData(step: 1, isStepOneComplete: true);
+                            },
+                          );
+                        } else {
+                          ctrl.editCaseInformation().then(
+                            (void value) {
+                              ctrl.changeData(step: 1, isStepOneComplete: true);
+                            },
+                          );
+                        }
                       }
                     },
                     boxShadow: [],

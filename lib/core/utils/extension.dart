@@ -23,6 +23,34 @@ extension MediaQueryValues on BuildContext {
       },
     );
   }
+
+  Size get getScreenSize => MediaQuery.sizeOf(this);
+
+  Future showAppDialog({
+    Widget? titleWidget,
+    required Widget contentWidget,
+    List<Widget>? actionWidget,
+  }) {
+    return showDialog(
+      context: this,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+          titlePadding: EdgeInsets.zero,
+          actionsPadding: EdgeInsets.zero,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          title: titleWidget ?? Container(),
+          content: contentWidget,
+          actions: actionWidget ?? [],
+        );
+      },
+    );
+  }
 }
 
 extension AddSpace on num {
@@ -133,4 +161,15 @@ String getFileIcon(int? isYoutube) {
     default:
       return Assets.images.imgPdfLibrary.path;
   }
+}
+
+String convertUtcToLocal(String utcTimeString) {
+  // Ensure UTC is recognized explicitly
+  if (!utcTimeString.endsWith("Z")) {
+    utcTimeString = "${utcTimeString}Z"; // Add Z if missing
+  }
+  // Parse as UTC and convert to local time
+  // DateTime utcTime = DateTime.parse(utcTimeString).toUtc();
+  // DateTime localTime = utcTime.toLocal();
+  return utcTimeString;
 }

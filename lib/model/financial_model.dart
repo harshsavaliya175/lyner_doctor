@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 class FinancialResponseModel {
   final FinancialModel? financialModel;
   final int? status;
@@ -105,10 +107,10 @@ class ClinicBillingAddresses {
         billingVat: json["billing_vat"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -252,10 +254,10 @@ class PatientList {
         draftViewPage: json["draft_view_page"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
         caseName: json["case_name"],
       );
 

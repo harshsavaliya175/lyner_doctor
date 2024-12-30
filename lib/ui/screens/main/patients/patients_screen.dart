@@ -311,7 +311,7 @@ String getClinicItemStatus(PatientResponseData? patientResponseData) {
       case 'Review Modification':
         return 'Modification de la révision';
       case 'Lyner Review Modification':
-        return "Modification de l'examen Lyner";
+        return "Demande en cours";
       case 'Approved By Doctor':
         return 'Approuvé par le Docteur';
       default:

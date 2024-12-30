@@ -144,7 +144,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                   ),
                 ),
-
                 Expanded(child: SizedBox()),
                 Expanded(
                   child: BottomBarItem(
@@ -172,10 +171,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //   child: BottomBarItem(
                 //     currentIndex: ctrl.currentIndex,
                 //     itemIcon: Assets.icons.icProfile,
-                //     itemIndex: 3,
+                //     itemIndex: 4,
                 //     itemText: LocaleKeys.profile,
                 //     onTap: () {
-                //       ctrl.changeData(currentIdx: 3);
+                //       ctrl.changeData(currentIdx: 4);
                 //     },
                 //   ),
                 // ),
@@ -189,14 +188,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           GetBuilder<DashboardController>(builder: (DashboardController ctrl) {
         return FloatingActionButton(
           onPressed: () {
-            // context.showAppBottomSheet(
-            //   contentWidget: AddNewPatientBottomSheet(),
-            // );
             if (ctrl.currentIndex == 0) {
               Get.toNamed(Routes.addCaseSelection);
             } else {
               Get.toNamed(Routes.addPatientScreen, arguments: null);
             }
+            // Get.toNamed(Routes.addPatientScreen, arguments: null);
           },
           child: Icon(Icons.add, size: 40, color: whiteColor),
           heroTag: Object(),

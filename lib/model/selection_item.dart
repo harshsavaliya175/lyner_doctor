@@ -8,6 +8,7 @@ class SelectionItem {
   bool dentalHistorySelected;
   TextEditingController? noteController;
   String? note;
+
   SelectionItem({
     required this.title,
     this.requiresNote = false,
@@ -16,7 +17,7 @@ class SelectionItem {
     this.dentalHistorySelected = false,
     this.noteController,
     this.note,
-  }){
+  }) {
     noteController = TextEditingController(text: note);
   }
 }

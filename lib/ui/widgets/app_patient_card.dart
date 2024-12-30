@@ -4,14 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
-import 'package:lynerdoctor/core/utils/circle_tab_indicator.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/home_image.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
-import 'package:lynerdoctor/model/patient_model.dart';
-import 'package:lynerdoctor/model/patient_resposne_model.dart';
 
 class AppPatientCard extends StatelessWidget {
   const AppPatientCard({

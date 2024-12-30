@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 class ClinicLocationResponseModel {
   final List<ClinicLocation> clinicLocation;
   final int status;
@@ -50,7 +52,8 @@ class ClinicLocation {
   final String address;
   final String latitude;
   final String longitude;
-
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   ClinicLocation({
     required this.clinicLocationId,
@@ -60,7 +63,8 @@ class ClinicLocation {
     required this.address,
     required this.latitude,
     required this.longitude,
-
+    this.createdAt,
+    this.updatedAt,
   });
 
   ClinicLocation copyWith({
@@ -82,7 +86,8 @@ class ClinicLocation {
         address: address ?? this.address,
         latitude: latitude ?? this.latitude,
         longitude: longitude ?? this.longitude,
-
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
 
   factory ClinicLocation.fromRawJson(String str) =>
@@ -98,7 +103,12 @@ class ClinicLocation {
         address: json["address"],
         latitude: json["latitude"],
         longitude: json["longitude"],
-
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -109,6 +119,7 @@ class ClinicLocation {
         "address": address,
         "latitude": latitude,
         "longitude": longitude,
-
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

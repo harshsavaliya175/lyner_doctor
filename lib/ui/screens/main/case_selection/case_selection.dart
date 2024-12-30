@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -8,10 +9,12 @@ import 'package:lynerdoctor/core/utils/extensions.dart';
 import 'package:lynerdoctor/core/utils/text_field_widget.dart';
 import 'package:lynerdoctor/gen/assets.gen.dart';
 import 'package:lynerdoctor/generated/locale_keys.g.dart';
+import 'package:lynerdoctor/model/case_response_model.dart';
 import 'package:lynerdoctor/ui/screens/main/case_selection/case_selection_controller.dart';
 import 'package:lynerdoctor/ui/widgets/app_bar.dart';
+import 'package:lynerdoctor/ui/widgets/app_case_selection_card.dart';
 import 'package:lynerdoctor/ui/widgets/app_progress_view.dart';
-import 'package:lynerdoctor/ui/widgets/patients_screen_filter_bottom_sheet.dart';
+import 'package:lynerdoctor/ui/widgets/case_filter_bottom_sheet.dart';
 
 class CaseSelectionScreen extends StatelessWidget {
   CaseSelectionScreen({super.key});
@@ -65,14 +68,14 @@ class CaseSelectionScreen extends StatelessWidget {
                           controller: ctrl.searchController,
                           action: TextInputAction.done,
                           onChange: (String value) {
-                            ctrl.patientList.clear();
+                            ctrl.caseList.clear();
                             Future.delayed(
                               Duration(seconds: 2),
                               () {
-                                //     caseSelectionController
-                                //     .getClinicListBySearchOrFilter(
-                                //   isFromSearch: true,
-                                // );
+                                caseSelectionController
+                                    .getCaseSelectionListByStatus(
+                                  isFromSearch: true,
+                                );
                               },
                             );
                           },
@@ -86,10 +89,10 @@ class CaseSelectionScreen extends StatelessWidget {
                           elevation: 0,
                           onPressed: () {
                             context.showAppBottomSheet(
-                              contentWidget: PatientsScreenFilterBottomSheet(
+                              contentWidget: CaseFilterBottomSheet(
                                 onTap: () {
                                   caseSelectionController
-                                      .getClinicListBySearchOrFilter();
+                                      .getCaseSelectionListByStatus();
                                 },
                               ),
                             );
@@ -111,14 +114,14 @@ class CaseSelectionScreen extends StatelessWidget {
                     ],
                   ),
                   24.space(),
-                  "${ctrl.caseSelectionFilterValue == 1 ? LocaleKeys.tasks.translateText : ctrl.caseSelectionFilterValue == 2 ? LocaleKeys.patients.translateText : LocaleKeys.archived.translateText} (${ctrl.patientList.length})"
+                  "${ctrl.caseSelectionFilterValue == 1 ? LocaleKeys.analysisRequested.translateText : ctrl.caseSelectionFilterValue == 2 ? LocaleKeys.ongoing.translateText : ctrl.caseSelectionFilterValue == 3 ? LocaleKeys.eligible.translateText : ctrl.caseSelectionFilterValue == 4 ? LocaleKeys.nonEligible.translateText : LocaleKeys.pendingLynerConversion.translateText} (${ctrl.caseList.length})"
                       .appCommonText(
                     weight: FontWeight.w500,
                     size: !isTablet ? 20 : 22,
                     color: Colors.black,
                   ),
                   6.space(),
-                  ctrl.patientList.isEmpty
+                  ctrl.caseList.isEmpty
                       ? Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +139,57 @@ class CaseSelectionScreen extends StatelessWidget {
                             ],
                           ),
                         )
-                      : Container(),
+                      : Expanded(
+                          child: ListView.separated(
+                            itemCount: ctrl.caseList.length,
+                            padding: EdgeInsets.only(bottom: 150, top: 6),
+                            itemBuilder: (BuildContext context, int index) {
+                              CaseSelectionData? caseData =
+                                  ctrl.caseList[index];
+                              return AppCaseSelectionCard(
+                                caseImagePath: caseData?.profile ?? "",
+                                isUnread: 0,
+                                isDraft: (caseData?.isDraft ?? false) ? 1 : 0,
+                                isShowBottomWidget:
+                                    ctrl.caseStatus == "Analysis Requested" &&
+                                            (caseData?.isDraft ?? false) ||
+                                        ctrl.caseStatus == "Eligible",
+                                isEditCard: false,
+                                title1: "Date of birth: ",
+                                title2: "Patient request: ",
+                                title3: "Treatment objectives: ",
+                                data1: (caseData?.dateOfBirth?.isBlank ?? true)
+                                    ? "-"
+                                    : "${caseData!.dateOfBirth!.ddMMYYYYFormat()}",
+                                data2: caseData?.patientRequest ?? "",
+                                data3: caseData?.treatmentObjectives ?? "",
+                                patientName:
+                                    '${caseData?.firstName ?? ''} ${caseData?.lastName ?? ''}',
+                                deleteOnTap: () {},
+                                editOrSubmitOnTap: () {
+                                  if (caseData?.isDraft == 0) {
+                                    Get.toNamed(Routes.patientsDetailsScreen,
+                                        arguments: [])?.then(
+                                      (value) {
+                                        // ctrl.getClinicListBySearchOrFilter();
+                                        // ctrl.update();
+                                      },
+                                    );
+                                  } else {
+                                    Get.toNamed(Routes.addCaseSelection,
+                                        arguments: {
+                                          caseIdString: caseData?.id,
+                                        });
+                                  }
+                                },
+                              ).onClick(
+                                () {},
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) => 12.space(),
+                          ),
+                        ),
                 ],
               ).paddingOnly(left: 20, right: 20),
               ctrl.isLoading ? AppProgressView() : Container()

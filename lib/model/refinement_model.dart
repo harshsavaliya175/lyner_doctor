@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 RefinementModel refinementModelFromJson(String str) =>
     RefinementModel.fromJson(json.decode(str));
 
@@ -81,29 +83,30 @@ class RefinementData {
   });
 
   factory RefinementData.fromJson(Map<String, dynamic> json) => RefinementData(
-        patientRefinementId: json["patient_refinement_id"] ?? 0,
-        patientId: json["patient_id"] ?? 0,
-        refinementNumber: json["refinement_number"] ?? "",
-        profile: json["profile"] ?? "",
-        face: json["face"] ?? "",
-        smile: json["smile"] ?? "",
-        intraMax: json["intra_max"] ?? "",
-        intraMand: json["intra_mand"] ?? "",
-        interRight: json["inter_right"] ?? "",
-        interFace: json["inter_face"] ?? "",
-        interLeft: json["inter_left"] ?? "",
-        panRadio: json["pan_radio"] ?? "",
-        cephalRadio: json["cephal_radio"] ?? "",
-        dicomFileName: json["dicom_file_name"] ?? "",
-        upperJawStlFile: json["upper_jaw_stl_file"] ?? "",
-        lowerJawStlFile: json["lower_jaw_stl_file"] ?? "",
-        is3Shape: json["is_3shape"] ?? 0,
-        arcadeOption: json["arcade_option"] ?? "",
-        arcadeComment: json["arcade_comment"] ?? "",
-        isDraft: json["is_draft"] ?? 0,
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
+      patientRefinementId: json["patient_refinement_id"] ?? 0,
+      patientId: json["patient_id"] ?? 0,
+      refinementNumber: json["refinement_number"] ?? "",
+      profile: json["profile"] ?? "",
+      face: json["face"] ?? "",
+      smile: json["smile"] ?? "",
+      intraMax: json["intra_max"] ?? "",
+      intraMand: json["intra_mand"] ?? "",
+      interRight: json["inter_right"] ?? "",
+      interFace: json["inter_face"] ?? "",
+      interLeft: json["inter_left"] ?? "",
+      panRadio: json["pan_radio"] ?? "",
+      cephalRadio: json["cephal_radio"] ?? "",
+      dicomFileName: json["dicom_file_name"] ?? "",
+      upperJawStlFile: json["upper_jaw_stl_file"] ?? "",
+      lowerJawStlFile: json["lower_jaw_stl_file"] ?? "",
+      is3Shape: json["is_3shape"] ?? 0,
+      arcadeOption: json["arcade_option"] ?? "",
+      arcadeComment: json["arcade_comment"] ?? "",
+      isDraft: json["is_draft"] ?? 0,
+      createdAt:
+          DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+      updatedAt:
+          DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal());
 
   Map<String, dynamic> toJson() => {
         "patient_refinement_id": patientRefinementId,

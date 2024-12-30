@@ -181,6 +181,7 @@ abstract class  LocaleKeys {
   static const ContentionIncluded = 'ContentionIncluded';
   static const inTreatmentPlanning = 'inTreatmentPlanning';
   static const approved = 'approved';
+  static const pendingApproval = 'pendingApproval';
   static const photos = 'photos';
   static const face = 'face';
   static const smile = 'smile';
@@ -358,5 +359,14 @@ abstract class  LocaleKeys {
   static const pleaseEnterTreatmentGoal = 'pleaseEnterTreatmentGoal';
   static const photographAndStlFiles = 'photographAndStlFiles';
   static const caseNotFound = 'caseNotFound';
+  static const clickOnItToCopyThePassword = 'clickOnItToCopyThePassword';
+  static const bondingDate = 'bondingDate';
+  static const pleaseCheckTheBox = 'pleaseCheckTheBox';
+  static const caseStatus = 'caseStatus';
+  static const analysisRequested = 'analysisRequested';
+  static const ongoing = 'ongoing';
+  static const eligible = 'eligible';
+  static const nonEligible = 'nonEligible';
+  static const pendingLynerConversion = 'pendingLynerConversion';
 
 }

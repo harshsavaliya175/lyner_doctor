@@ -44,6 +44,41 @@ Future datePickerDialog({
   );
 }
 
+Future bondingDatePickerDialog({
+  required BuildContext context,
+  DateTime? currentTime,
+}) {
+  DateTime currentDate = currentTime ?? DateTime.now();
+  DateTime minDate = DateTime.now().add(Duration(days: 10));
+  // DateTime maxDate = currentDate.add(Duration(days: 15));
+
+  return showDatePicker(
+    context: context,
+    initialDate: currentDate,
+    firstDate: minDate,
+    // Start from 100 years ago
+    lastDate: DateTime(3000),
+    // Up to the current date
+
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: const ColorScheme.light(
+            // change the border color
+            primary: primaryBrown,
+            // change the text color
+            onSurface: Colors.black,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: Colors.black),
+          ),
+        ),
+        child: child!,
+      );
+    },
+  );
+}
+
 class CommonDialog extends StatelessWidget {
   CommonDialog(
       {Key? key,

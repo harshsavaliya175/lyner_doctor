@@ -195,6 +195,7 @@ class CodegenLoader extends AssetLoader{
   "ContentionIncluded": "Contention Included",
   "inTreatmentPlanning": "In-Treatment Planning",
   "approved": "Approved",
+  "pendingApproval": "Pending Approval",
   "photos": "Photos",
   "face": "Face",
   "smile": "Smile",
@@ -371,7 +372,16 @@ class CodegenLoader extends AssetLoader{
   "enterTreatmentGoal": "Enter treatment goal",
   "pleaseEnterTreatmentGoal": "Please enter treatment goal.",
   "photographAndStlFiles": "Photographs and STL files",
-  "caseNotFound": "Case not found"
+  "caseNotFound": "Case not found",
+  "clickOnItToCopyThePassword": "Click on it to copy the password",
+  "bondingDate": "Bonding date",
+  "pleaseCheckTheBox": "Please check the box",
+  "caseStatus": "Case Status",
+  "analysisRequested": "Analysis Requested",
+  "ongoing": "Ongoing",
+  "eligible": "Eligible",
+  "nonEligible": "Non-Eligible",
+  "pendingLynerConversion": "Pending Lyner Conversion"
 };
 static const Map<String,dynamic> fr = {
   "appName": "Lyner Pro",
@@ -555,6 +565,7 @@ static const Map<String,dynamic> fr = {
   "ContentionIncluded": "Contention incluse",
   "inTreatmentPlanning": "En planification de traitement",
   "approved": "Approuvé",
+  "pendingApproval": "En attente d'approbation",
   "photos": "Photos",
   "face": "Face",
   "smile": "Sourire",
@@ -730,7 +741,16 @@ static const Map<String,dynamic> fr = {
   "enterTreatmentGoal": "Saisir l'objectif du traitement",
   "pleaseEnterTreatmentGoal": "Veuillez saisir l'objectif du traitement.",
   "photographAndStlFiles": "Photographies et fichiers STL",
-  "caseNotFound": "Cas non trouvé"
+  "caseNotFound": "Cas non trouvé",
+  "clickOnItToCopyThePassword": "Cliquez dessus pour copier le mot de passe",
+  "bondingDate": "Date de collage",
+  "pleaseCheckTheBox": "Veuillez cocher la case",
+  "caseStatus": "Statut du cas",
+  "analysisRequested": "Analyse demandée",
+  "ongoing": "En cours",
+  "eligible": "Éligible",
+  "nonEligible": "Non éligible",
+  "pendingLynerConversion": "En attente de conversion Lyner"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

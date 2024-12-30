@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
+
 class PatientDetailsResponseModel {
   final PatientDetailsModel? patientDetailsModel;
   final int? status;
@@ -54,6 +56,7 @@ class PatientDetailsModel {
   final DateTime? bondDate;
   final String? patient3DModalLink;
   final String? linkPassword;
+  final DateTime? linkDate;
   final String? addPlanCount;
   final String? clinicItem;
   final String? adminItem;
@@ -105,6 +108,7 @@ class PatientDetailsModel {
     this.bondDate,
     this.patient3DModalLink,
     this.linkPassword,
+    this.linkDate,
     this.addPlanCount,
     this.clinicItem,
     this.adminItem,
@@ -157,6 +161,7 @@ class PatientDetailsModel {
     DateTime? bondDate,
     String? patient3DModalLink,
     String? linkPassword,
+    DateTime? linkDate,
     String? addPlanCount,
     String? clinicItem,
     String? adminItem,
@@ -207,6 +212,7 @@ class PatientDetailsModel {
         bondDate: bondDate ?? this.bondDate,
         patient3DModalLink: patient3DModalLink ?? this.patient3DModalLink,
         linkPassword: linkPassword ?? this.linkPassword,
+        linkDate: linkDate ?? this.linkDate,
         addPlanCount: addPlanCount ?? this.addPlanCount,
         clinicItem: clinicItem ?? this.clinicItem,
         adminItem: adminItem ?? this.adminItem,
@@ -270,6 +276,9 @@ class PatientDetailsModel {
             : DateTime.parse(json["bond_date"]),
         patient3DModalLink: json["patient_3d_modal_link"],
         linkPassword: json["link_password"],
+        linkDate: json["link_date"] == null
+            ? null
+            : DateTime.parse(json["link_date"]),
         addPlanCount: json["add_plan_count"],
         clinicItem: json["clinic_item"],
         adminItem: json["admin_item"],
@@ -303,10 +312,10 @@ class PatientDetailsModel {
         refinementStage: json["refine_stage_no"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
         doctor: json["doctor"] == null ? null : Doctor.fromJson(json["doctor"]),
         patientPhoto: json["patient_photo"] == null
             ? null
@@ -343,6 +352,8 @@ class PatientDetailsModel {
             "${bondDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
         "patient_3d_modal_link": patient3DModalLink,
         "link_password": linkPassword,
+        "link_date":
+            "${linkDate!.year.toString().padLeft(4, '0')}-${bondDate!.month.toString().padLeft(2, '0')}-${bondDate!.day.toString().padLeft(2, '0')}",
         "add_plan_count": addPlanCount,
         "clinic_item": clinicItem,
         "admin_item": adminItem,
@@ -451,10 +462,10 @@ class ClinicBill {
         billingVat: json["billing_vat"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -532,10 +543,10 @@ class ClinicLoc {
         longitude: json["longitude"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -626,10 +637,10 @@ class Doctor {
         clinicId: json["clinic_id"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -774,10 +785,10 @@ class PatientPhoto {
         stlFileLink: json["stl_file_link"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -837,8 +848,10 @@ class ToothCase {
         caseSteps: json["case_steps"],
         isDeleted: json["is_deleted"],
         totalRefinement: json["total_refinement"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt:
+            DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt:
+            DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -857,10 +870,10 @@ class ToothCase {
 class RefinementList {
   int patientRefinementId;
   int patientId;
-  dynamic refinementNumber;
+  int refinementNumber;
   String profile;
   String face;
-  dynamic smile;
+  String smile;
   String intraMax;
   String intraMand;
   String interRight;
@@ -874,7 +887,12 @@ class RefinementList {
   int is3Shape;
   String arcadeOption;
   String arcadeComment;
-  dynamic refineGuideline;
+  String refineGuideline;
+  String refinePatient3dModalLink;
+  String refinePassword;
+  DateTime? refineLinkDate;
+  int isRefineApproved;
+  int isRefineShipped;
   int isDraft;
   DateTime createdAt;
   DateTime updatedAt;
@@ -901,6 +919,11 @@ class RefinementList {
     required this.arcadeComment,
     required this.refineGuideline,
     required this.isDraft,
+    required this.refinePatient3dModalLink,
+    required this.isRefineApproved,
+    required this.refineLinkDate,
+    required this.refinePassword,
+    required this.isRefineShipped,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -908,10 +931,10 @@ class RefinementList {
   RefinementList copyWith({
     int? patientRefinementId,
     int? patientId,
-    dynamic refinementNumber,
+    int? refinementNumber,
     String? profile,
     String? face,
-    dynamic smile,
+    String? smile,
     String? intraMax,
     String? intraMand,
     String? interRight,
@@ -925,8 +948,13 @@ class RefinementList {
     int? is3Shape,
     String? arcadeOption,
     String? arcadeComment,
-    dynamic refineGuideline,
+    String? refineGuideline,
     int? isDraft,
+    String? refinePatient3dModalLink,
+    String? refinePassword,
+    DateTime? refineLinkDate,
+    int? isRefineApproved,
+    int? isRefineShipped,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -952,6 +980,12 @@ class RefinementList {
         arcadeComment: arcadeComment ?? this.arcadeComment,
         refineGuideline: refineGuideline ?? this.refineGuideline,
         isDraft: isDraft ?? this.isDraft,
+        refinePatient3dModalLink:
+            refinePatient3dModalLink ?? this.refinePatient3dModalLink,
+        refinePassword: refinePassword ?? this.refinePassword,
+        refineLinkDate: refineLinkDate ?? this.refineLinkDate,
+        isRefineApproved: isRefineApproved ?? this.isRefineApproved,
+        isRefineShipped: isRefineShipped ?? this.isRefineShipped,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -978,8 +1012,17 @@ class RefinementList {
         arcadeComment: json["arcade_comment"] ?? "",
         refineGuideline: json["refine_guideline"] ?? "",
         isDraft: json["is_draft"] ?? 0,
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        refinePatient3dModalLink: json["refine_patient_3d_modal_link"] ?? "",
+        refinePassword: json["refine_password"] ?? "",
+        refineLinkDate: json["refine_link_date"] == null
+            ? null
+            : DateTime.parse(json["refine_link_date"]),
+        isRefineShipped: json["is_refine_shipped"] ?? 0,
+        isRefineApproved: json["is_refine_approved"] ?? 0,
+        createdAt:
+            DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
+        updatedAt:
+            DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1004,6 +1047,12 @@ class RefinementList {
         "arcade_comment": arcadeComment,
         "refine_guideline": refineGuideline,
         "is_draft": isDraft,
+        "refine_patient_3d_modal_link": refinePatient3dModalLink,
+        "refine_password": refinePassword,
+        "refine_link_date":
+            "${refineLinkDate!.year.toString().padLeft(4, '0')}-${refineLinkDate!.month.toString().padLeft(2, '0')}-${refineLinkDate!.day.toString().padLeft(2, '0')}",
+        "is_refine_approved": isRefineApproved,
+        "is_refine_shipped": isRefineShipped,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

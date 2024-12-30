@@ -19,8 +19,6 @@ class AddPatientRepo {
 
   static AddPatientRepo get instance => _instance ??= AddPatientRepo._();
 
-  String apiUrl = '';
-
   Future<ProductListModel> getProductsFromAssets() async {
     try {
       // Load JSON from assets

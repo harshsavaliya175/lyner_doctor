@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:lynerdoctor/core/utils/extension.dart';
 import 'package:lynerdoctor/model/lyner_connect_list_model.dart';
 
 class GlobalSearchModel {
@@ -169,7 +170,7 @@ class Archive {
         technicianId: json["technician_id"],
         technicianStartDate: json["technician_start_date"] == null
             ? null
-            : DateTime.parse(json["technician_start_date"]),
+            : DateTime.parse(json["technician_start_date"]).toLocal(),
         adminNewCase: json["admin_new_case"],
         technicianNewCase: json["technician_new_case"],
         adminTask: json["admin_task"],
@@ -188,10 +189,10 @@ class Archive {
         draftViewPage: json["draft_view_page"],
         createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["created_at"]),
+            : DateTime.parse(convertUtcToLocal(json["created_at"])).toLocal(),
         updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updated_at"]),
+            : DateTime.parse(convertUtcToLocal(json["updated_at"])).toLocal(),
         caseName: json["case_name"],
       );
 

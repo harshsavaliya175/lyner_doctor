@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lynerdoctor/config/routes/routes.dart';
 import 'package:lynerdoctor/core/constants/app_color.dart';
 import 'package:lynerdoctor/core/constants/request_const.dart';
 import 'package:lynerdoctor/core/utils/extension.dart';
@@ -58,74 +59,26 @@ class PatientPhotography extends StatelessWidget {
                   ),
                 ],
               ),
-              // !isTablet ? 10.space() : 15.space(),
+              !isTablet ? 10.space() : 15.space(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   photoCardWidget(
-                    image: Assets.images.imgInterRight.path,
-                    urlPath: "patient_inter_gauche",
-                    urlImage: "",
-                    fontSize: 12,
-                    fileImage: ctrl.intraRightImageFile ?? File(''),
-                    title: LocaleKeys.intraRight.translateText,
+                    image: Assets.images.imgProfile.path,
+                    title: LocaleKeys.profile.translateText,
+                    urlImage: (ctrl.caseModel?.photos?.gauche ?? ''),
+                    urlPath: "patient_gauche",
+                    fileImage: ctrl.profileImageFile ?? File(''),
                     onTap: () {
                       imageUploadUtils.faceDetectingOpenImageChooser(
                         context: Get.context!,
-                        imageCount: 5,
-                        title: LocaleKeys.intraRight.translateText,
-                        onImageChose: (File? file) async {
-                          ctrl.intraRightImageFile = file!;
-
-                          ctrl.uploadPatientSingleImage(
-                              paramName: 'patient_inter_gauche', file: file);
-                          ctrl.update();
-                        },
-                      );
-                    },
-                  ),
-                  10.space(),
-                  photoCardWidget(
-                    urlImage: "",
-                    fileImage: ctrl.intraFaceImageFile ?? File(''),
-                    urlPath: "patient_inter_face",
-                    image: Assets.images.imgInterFace.path,
-                    title: LocaleKeys.intraFace.translateText,
-                    fontSize: 12,
-                    onTap: () {
-                      imageUploadUtils.faceDetectingOpenImageChooser(
-                        context: Get.context!,
-                        imageCount: 6,
-                        title: LocaleKeys.intraFace.translateText,
+                        imageCount: 0,
+                        title: LocaleKeys.profile.translateText,
                         onImageChose: (File? file) async {
                           // ctrl.cuisinePhoto?[0] =(file!);
-                          ctrl.intraFaceImageFile = file!;
-                          ctrl.uploadPatientSingleImage(
-                              paramName: 'patient_inter_face', file: file);
-
-                          ctrl.update();
-                        },
-                      );
-                    },
-                  ),
-                  10.space(),
-                  photoCardWidget(
-                    urlImage: "",
-                    fileImage: ctrl.intraLeftImageFile ?? File(''),
-                    urlPath: "patient_intra_droite",
-                    image: Assets.images.imgInterLeft.path,
-                    title: LocaleKeys.intraLeft.translateText,
-                    fontSize: 12,
-                    onTap: () {
-                      imageUploadUtils.faceDetectingOpenImageChooser(
-                        context: Get.context!,
-                        imageCount: 7,
-                        title: LocaleKeys.intraLeft.translateText,
-                        onImageChose: (File file) async {
-                          // ctrl.cuisinePhoto?[0] =(file!);
-                          ctrl.intraLeftImageFile = file;
-                          ctrl.uploadPatientSingleImage(
-                            paramName: 'patient_intra_droite',
+                          ctrl.profileImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                            paramName: 'patient_gauche',
                             file: file,
                           );
                           ctrl.update();
@@ -137,9 +90,8 @@ class PatientPhotography extends StatelessWidget {
                   photoCardWidget(
                     image: Assets.images.imgFace.path,
                     title: LocaleKeys.face.translateText,
-                    urlImage: "",
+                    urlImage: (ctrl.caseModel?.photos?.face ?? ''),
                     urlPath: "patient_face",
-                    fontSize: 12,
                     fileImage: ctrl.faceImageFile ?? File(''),
                     onTap: () {
                       imageUploadUtils.faceDetectingOpenImageChooser(
@@ -149,8 +101,220 @@ class PatientPhotography extends StatelessWidget {
                         onImageChose: (File? file) async {
                           // ctrl.cuisinePhoto?[0] =(file!);
                           ctrl.faceImageFile = file!;
-                          ctrl.uploadPatientSingleImage(
+                          ctrl.uploadCaseSingleImage(
                               paramName: 'patient_face', file: file);
+                          ctrl.update();
+                        },
+                      );
+                    },
+                  ),
+                  10.space(),
+                  photoCardWidget(
+                    image: Assets.images.imgSmile.path,
+                    title: LocaleKeys.smile.translateText,
+                    urlImage: (ctrl.caseModel?.photos?.sourire ?? ''),
+                    urlPath: "patient_sourire",
+                    fileImage: ctrl.smileImageFile ?? File(''),
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 2,
+                        title: LocaleKeys.smile.translateText,
+                        onImageChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.smileImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                              paramName: 'patient_sourire', file: file);
+                          ctrl.update();
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+              5.space(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  photoCardWidget(
+                    image: Assets.images.imgIntraMax.path,
+                    title: LocaleKeys.intraMax.translateText,
+                    urlImage: (ctrl.caseModel?.photos?.interMax ?? ''),
+                    urlPath: "patient_intra_max",
+                    fileImage: ctrl.intraMaxImageFile ?? File(''),
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 3,
+                        title: LocaleKeys.intraMax.translateText,
+                        onImageChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.intraMaxImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                              paramName: 'patient_intra_max', file: file);
+                          ctrl.update();
+                        },
+                      );
+                      // imageUploadUtils.openImageChooser(
+                      //   context: Get.context!,
+                      //   onImageChose: (File? file) async {
+                      //     // ctrl.cuisinePhoto?[0] =(file!);
+                      //     ctrl.intraMaxImageFile = file!;
+                      //     ctrl.uploadPatientSingleImage(
+                      //         paramName: 'patient_intra_max', file: file);
+                      //     ctrl.update();
+                      //   },
+                      // );
+                    },
+                  ),
+                  10.space(),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            HomeImage.assetImage(
+                              path: Assets.images.imgBlackCard.path,
+                              height: !isTablet ? 123 : 200,
+                              shape: BoxShape.rectangle,
+                              width: !isTablet ? 123 : 200,
+                            ),
+                            Icon(
+                              Icons.camera_alt,
+                              color: primaryBrown,
+                              size: !isTablet ? 30 : 50,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ).onClick(
+                      () {
+                        Get.toNamed(Routes.faceDetectorView)?.then(
+                          (dynamic result) {
+                            if (result != null && result is List<File>) {
+                              ctrl.smileImg = result;
+                              ctrl.profileImageFile = ctrl.smileImg[0];
+                              ctrl.faceImageFile = ctrl.smileImg[1];
+                              ctrl.smileImageFile = ctrl.smileImg[2];
+                              ctrl.intraMaxImageFile = ctrl.smileImg[3];
+                              ctrl.intraMandImageFile = ctrl.smileImg[4];
+                              ctrl.intraRightImageFile = ctrl.smileImg[5];
+                              ctrl.intraFaceImageFile = ctrl.smileImg[6];
+                              ctrl.intraLeftImageFile = ctrl.smileImg[7];
+                              ctrl.uploadCaseMultipleImage(
+                                  files: ctrl.smileImg);
+                              ctrl.update();
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  10.space(),
+                  photoCardWidget(
+                    image: Assets.images.imgIntraMand.path,
+                    title: LocaleKeys.intraMand.translateText,
+                    urlImage: (ctrl.caseModel?.photos?.interMandi ?? ''),
+                    urlPath: "patient_intra_gauche",
+                    fileImage: ctrl.intraMandImageFile ?? File(''),
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 4,
+                        title: LocaleKeys.intraMand.translateText,
+                        onImageChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.intraMandImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                              paramName: 'patient_intra_gauche', file: file);
+                          ctrl.update();
+                        },
+                      );
+
+                      // imageUploadUtils.openImageChooser(
+                      //   context: Get.context!,
+                      //   onImageChose: (File? file) async {
+                      //     // ctrl.cuisinePhoto?[0] =(file!);
+                      //     ctrl.intraMandImageFile = file!;
+                      //     ctrl.uploadPatientSingleImage(
+                      //         paramName: 'patient_intra_gauche', file: file);
+                      //     ctrl.update();
+                      //   },
+                      // );
+                    },
+                  ),
+                ],
+              ),
+              10.space(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  photoCardWidget(
+                    image: Assets.images.imgInterRight.path,
+                    urlPath: "patient_inter_gauche",
+                    urlImage: (ctrl.caseModel?.photos?.interGauche ?? ''),
+                    fileImage: ctrl.intraRightImageFile ?? File(''),
+                    title: LocaleKeys.intraRight.translateText,
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 5,
+                        title: LocaleKeys.intraRight.translateText,
+                        onImageChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.intraRightImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                              paramName: 'patient_inter_gauche', file: file);
+                          ctrl.update();
+                        },
+                      );
+                    },
+                  ),
+                  10.space(),
+                  photoCardWidget(
+                    urlImage: (ctrl.caseModel?.photos?.interFace ?? ''),
+                    fileImage: ctrl.intraFaceImageFile ?? File(''),
+                    urlPath: "patient_inter_face",
+                    image: Assets.images.imgInterFace.path,
+                    title: LocaleKeys.intraFace.translateText,
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 6,
+                        title: LocaleKeys.intraFace.translateText,
+                        onImageChose: (File? file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.intraFaceImageFile = file!;
+                          ctrl.uploadCaseSingleImage(
+                              paramName: 'patient_inter_face', file: file);
+                          ctrl.update();
+                        },
+                      );
+                    },
+                  ),
+                  10.space(),
+                  photoCardWidget(
+                    urlImage: (ctrl.caseModel?.photos?.interDroite ?? ''),
+                    fileImage: ctrl.intraLeftImageFile ?? File(''),
+                    urlPath: "patient_intra_droite",
+                    image: Assets.images.imgInterLeft.path,
+                    title: LocaleKeys.intraLeft.translateText,
+                    onTap: () {
+                      imageUploadUtils.faceDetectingOpenImageChooser(
+                        context: Get.context!,
+                        imageCount: 7,
+                        title: LocaleKeys.intraLeft.translateText,
+                        onImageChose: (File file) async {
+                          // ctrl.cuisinePhoto?[0] =(file!);
+                          ctrl.intraLeftImageFile = file;
+                          ctrl.uploadCaseSingleImage(
+                            paramName: 'patient_intra_droite',
+                            file: file,
+                          );
                           ctrl.update();
                         },
                       );
@@ -181,35 +345,48 @@ class PatientPhotography extends StatelessWidget {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                        onTap: () {
-                          imageUploadUtils.openImageChooser(
-                            context: Get.context!,
-                            onImageChose: (File? file) async {
-                              // ctrl.cuisinePhoto?[0] =(file!);
-                              ctrl.radiosFirstImageFile = file!;
-                              ctrl.uploadPatientSingleImage(
-                                  paramName: 'patient_panoramique', file: file);
-                              ctrl.update();
-                            },
-                          );
-                        },
-                        child: (ctrl.radiosFirstImageFile != null &&
-                                ctrl.radiosFirstImageFile?.path != "")
-                            ? HomeImage.fileImage(
-                                path: ctrl.radiosFirstImageFile!.path,
-                                height: !isTablet ? 121 : 215,
-                                width: !isTablet ? 200 : 230,
-                                shape: BoxShape.rectangle,
-                                fit: BoxFit.cover,
-                                radius: BorderRadius.circular(10),
-                              )
-                            : HomeImage.assetImage(
-                                path: Assets.images.imgTab.path,
-                                height: !isTablet ? 135 : 230,
-                                width: !isTablet ? 200 : 230,
-                                shape: BoxShape.rectangle,
-                                // fit: BoxFit.cover,
-                              )),
+                      onTap: () {
+                        imageUploadUtils.openImageChooser(
+                          context: Get.context!,
+                          onImageChose: (File? file) async {
+                            // ctrl.cuisinePhoto?[0] =(file!);
+                            ctrl.radiosFirstImageFile = file!;
+                            ctrl.uploadCaseSingleImage(
+                                paramName: 'patient_panoramique', file: file);
+                            ctrl.update();
+                          },
+                        );
+                      },
+                      child: (ctrl.radiosFirstImageFile != null &&
+                              ctrl.radiosFirstImageFile?.path != "")
+                          ? HomeImage.fileImage(
+                              path: ctrl.radiosFirstImageFile!.path,
+                              height: !isTablet ? 121 : 215,
+                              width: !isTablet ? 200 : 230,
+                              shape: BoxShape.rectangle,
+                              fit: BoxFit.cover,
+                              radius: BorderRadius.circular(10),
+                            )
+                          : (ctrl.caseModel?.photos?.paramiqueRadio == "" ||
+                                  ctrl.caseModel?.photos?.paramiqueRadio ==
+                                      null)
+                              ? HomeImage.assetImage(
+                                  path: Assets.images.imgTab.path,
+                                  height: !isTablet ? 135 : 230,
+                                  width: !isTablet ? 200 : 230,
+                                  shape: BoxShape.rectangle,
+                                  // fit: BoxFit.cover,
+                                )
+                              : HomeImage.networkImage(
+                                  path:
+                                      "${ApiUrl.baseImagePatientPath}patient_panoramique/${ctrl.caseModel?.photos?.paramiqueRadio}",
+                                  height: !isTablet ? 121 : 215,
+                                  width: !isTablet ? 200 : 230,
+                                  shape: BoxShape.rectangle,
+                                  fit: BoxFit.cover,
+                                  radius: BorderRadius.circular(12),
+                                ),
+                    ),
                   ),
                   15.space(),
                   Expanded(
@@ -220,7 +397,7 @@ class PatientPhotography extends StatelessWidget {
                             onImageChose: (File? file) async {
                               // ctrl.cuisinePhoto?[0] =(file!);
                               ctrl.radiosSecondImageFile = file!;
-                              ctrl.uploadPatientSingleImage(
+                              ctrl.uploadCaseSingleImage(
                                 paramName: 'patient_cephalometrique',
                                 file: file,
                               );
@@ -361,7 +538,7 @@ class PatientPhotography extends StatelessWidget {
                                         .split('/')
                                         .last
                                     : '';
-                            ctrl.uploadPatientSingleImage(
+                            ctrl.uploadCaseSingleImage(
                                 paramName: 'upper_jaw_stl_file', file: file);
                             ctrl.update();
                           },
@@ -427,7 +604,7 @@ class PatientPhotography extends StatelessWidget {
                                         .last
                                     : '';
                             //ctrl.uploadPatientSingleImage(paramName: 'lower_jaw_stl_file', file: file);
-                            ctrl.uploadPatientSingleImage(
+                            ctrl.uploadCaseSingleImage(
                                 paramName: 'lower_jaw_stl_file', file: file);
                             ctrl.update();
                           },
@@ -507,7 +684,10 @@ class PatientPhotography extends StatelessWidget {
                                 ctrl.getFileName(ctrl.dicomFile?.path, 15);
                           }
                           ctrl.update();
-                          ctrl.uploadDicomFile(file, "patient");
+                          ctrl.uploadDicomFile(
+                            file,
+                            // "case_selection",
+                          );
                           print('Chosen file path: ${file.path}');
                         },
                       );
@@ -554,7 +734,7 @@ class PatientPhotography extends StatelessWidget {
               height: !isTablet ? 80 : 100,
               width: Get.width,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: appBgColor,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Row(
@@ -564,10 +744,7 @@ class PatientPhotography extends StatelessWidget {
                       btnHeight: !isTablet ? 55 : 70,
                       text: LocaleKeys.finishLatter.translateText,
                       onTap: () {
-                        // ctrl.addUpdatePatientDetails(
-                        //   isFromFinishStep: true,
-                        //   draftViewPage: "upload_photo_page",
-                        // );
+                        ctrl.editCaseInformation(isDraft: 1, isBack: true);
                       },
                       radius: !isTablet ? 25 : 40,
                       fontSize: !isTablet ? 18 : 22,
@@ -578,10 +755,10 @@ class PatientPhotography extends StatelessWidget {
                   Expanded(
                     child: AppButton(
                       btnHeight: !isTablet ? 55 : 70,
-                      text: LocaleKeys.next.translateText,
+                      text: LocaleKeys.submit.translateText,
                       onTap: () {
-                        if (1 == 1) {
-                          // if (ctrl.validateUploadPhotoFiles()) {
+                        if (ctrl.validateUploadPhotoFiles()) {
+                          ctrl.editCaseInformation(isDraft: 0);
                         } else {
                           showAppSnackBar(LocaleKeys
                               .pleaseSelectAllRequiredPhotos.translateText);
